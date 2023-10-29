@@ -98,6 +98,7 @@ if st.checkbox('Display Sentiment Analysis Histogram'):
     
     # Show the plot in Streamlit
     st.pyplot(fig)
+    
   
 if st.checkbox('Show Correlation Analysis'):
     st.subheader('Correlation between score3 and rating_score')
