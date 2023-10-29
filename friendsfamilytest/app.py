@@ -133,6 +133,7 @@ if st.checkbox('Text Classification'):
     # Display the plot in Streamlit
     st.pyplot(fig3)
 
+# Show word Cloud 
 if st.checkbox('Show Word Cloud'):
     st.subheader('Word Cloud')
     text = ' '.join(data['free_text'].dropna())
