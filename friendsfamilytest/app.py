@@ -10,16 +10,20 @@ st.write("Primary Care UK")
 
 @st.cache_data  # This decorator will help you cache the data
 def load_data():
-    df = load_google_sheet()
-    add_rating_score(df)
-    text_classification(df)
-    sentinment_analysis(df)
+    df = pd.read_csv('friendsfamilytest/data/data.csv')
     return df
 
 data = load_data()
-data_time = data
+
+def load_timedata():
+    df = pd.read_csv('friendsfamilytest/data/data.csv')
+    df['time'] = pd.to_datetime(df['time']) 
+    df.set_index('time', inplace=True)
+    return df
+
 # Calculate monthly averages
-data_time.set_index('time', inplace=True)
+data_time = load_timedata()
+
 monthly_avg = data_time['rating_score'].resample('M').mean()
 monthly_avg_df = monthly_avg.reset_index()
 monthly_avg_df.columns = ['Month', 'Average Rating']
@@ -51,7 +55,7 @@ if st.checkbox('Display Monthly Entry Count'):
     st.subheader('Friend & Family Test Responses per Month')
     
     # Resample and count the entries per day
-    monthly_count = data.resample('M').size()
+    monthly_count = data_time.resample('M').size()
     
     # Reset index to convert Series to DataFrame
     monthly_count = monthly_count.reset_index(name='entry_count')
