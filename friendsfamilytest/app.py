@@ -6,7 +6,7 @@ import seaborn as sns
 
 
 st.title("Friends & Family Test Dashboard")
-st.write("Primary Care UK")
+st.write("Primary Care UK - ECS")
 
 @st.cache_data  # This decorator will help you cache the data
 def load_data():
@@ -32,7 +32,7 @@ monthly_avg_df.columns = ['Month', 'Average Rating']
 st.subheader('Monthly Average Rating')
 
 fig, ax = plt.subplots(figsize=(10,4))
-sns.lineplot(x='Month', y='Average Rating', data=monthly_avg_df, color='#b1cb40', linewidth=3)
+sns.lineplot(x='Month', y='Average Rating', data=monthly_avg_df, color='#a54b49', linewidth=3)
 plt.title('Monthly Average Rating')
 plt.xticks(rotation=45)
 
@@ -48,8 +48,20 @@ for index, row in monthly_avg_df.iterrows():
 st.pyplot(fig)
 
 if st.checkbox('Show raw data'):
-    st.subheader('Raw data')
-    st.write(data)
+    # Create a slider for selecting the number of rows to display
+    # Create a slider for selecting the number of rows to display
+    num_rows = st.slider('Select number of rows to display:', min_value=5, max_value=100)
+
+    # Create a dropdown for selecting the rating_score to filter by
+    selected_rating = st.selectbox('Select rating score to filter by:', [1, 2, 3, 4, 5])
+
+    # Filter the DataFrame based on the selected rating_score
+    filtered_data = data[data['rating_score'] == selected_rating]
+
+    # Use the slider's value to display that many rows from the tail of the filtered DataFrame
+    if num_rows:
+        st.subheader(f'Displaying last {num_rows} rows of raw data with rating score {selected_rating}')
+        st.write(filtered_data.tail(num_rows))
 
 if st.checkbox('Display Monthly Entry Count'):
     st.subheader('Friend & Family Test Responses per Month')
@@ -62,7 +74,7 @@ if st.checkbox('Display Monthly Entry Count'):
     
     # Plotting
     fig, ax = plt.subplots(figsize=(12, 6))
-    sns.barplot(data=monthly_count, x='time', y='entry_count', color='#aec867')
+    sns.barplot(data=monthly_count, x='time', y='entry_count', color='#a54b49')
     
     # Customizing x-axis labels
     n = len(monthly_count['time'])
