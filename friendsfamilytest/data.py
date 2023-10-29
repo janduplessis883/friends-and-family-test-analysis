@@ -92,3 +92,5 @@ if __name__ == "__main__":
     data = add_rating_score(data)
     print(f"{Fore.BLUE}Rating score added.{Style.RESET_ALL}")
     print(f"{Fore.GREEN}Loading Data SUCCESSFUL{Style.RESET_ALL}")
+    
+    
