@@ -6,6 +6,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from colorama import init, Fore, Back, Style
 
+from friendsfamilytest.params import *
+
 init()
 
 def load_google_sheet():
@@ -92,5 +94,6 @@ if __name__ == "__main__":
     data = add_rating_score(data)
     print(f"{Fore.BLUE}Rating score added.{Style.RESET_ALL}")
     print(f"{Fore.GREEN}Loading Data SUCCESSFUL{Style.RESET_ALL}")
-    
+    data.to_csv(f'{DATA_PATH}/data.csv', index=False)
+    print(f"{Fore.YELLOW}Data saved to '/data/data.csv'{Style.RESET_ALL}")
     
