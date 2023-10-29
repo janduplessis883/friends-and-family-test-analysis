@@ -3,7 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 
-from friendsfamilytest.data import *
 
 st.title("Friends & Family Test Dashboard")
 st.write("Primary Care UK")
