@@ -15,6 +15,12 @@ all: install clean
 test:
 	@pytest -v tests
 
+app:
+	@streamlit run friendsfamilytest/app.py
+
+data:
+	@python friendsfamilytest/data.py
+
 # Specify package name
 lint:
-	@black package/
+	@black friend-family-test/

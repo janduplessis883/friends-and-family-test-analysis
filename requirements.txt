@@ -55,3 +55,6 @@ gspread
 transformers
 python-dotenv
 openai
+wordcloud
+streamlit
+python-dotenv
