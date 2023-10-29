@@ -4,9 +4,8 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import seaborn as sns
 
+st.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fft.jpg', caption='Friend & Family Test')
 
-st.title("Friends & Family Test Dashboard")
-st.write("Primary Care UK - ECS")
 
 @st.cache_data  # This decorator will help you cache the data
 def load_data():
