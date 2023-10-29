@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 # Load the .env file
 load_dotenv()
 
-secret_path = os.getenv("SECRET_PATH")
+secret_path = os.getenv("SECRET_JSON")
 
 class SheetHelper:
     def __init__(self, sheet_url=None, sheet_id=0, secret_file_path=secret_path):
