@@ -4,9 +4,6 @@ import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import seaborn as sns
 
-st.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fft.jpg', caption='Friend & Family Test')
-
-
 @st.cache_data  # This decorator will help you cache the data
 def load_data():
     df = pd.read_csv('friendsfamilytest/data/data.csv')
@@ -27,43 +24,37 @@ monthly_avg = data_time['rating_score'].resample('M').mean()
 monthly_avg_df = monthly_avg.reset_index()
 monthly_avg_df.columns = ['Month', 'Average Rating']
 
-# Plot monthly averages
-st.subheader('Monthly Average Rating')
+st.sidebar.title('Menu') 
+page = st.sidebar.selectbox('Choose an option', ['Monthly Rating', 'Monthly Count', 'Sentiment Analysis Histplot', 'Rating & Sentiment Correlation', 'Text Classification', 'Word Cloud', 'Show Raw Data', 'About'])
+st.sidebar.slider('View data for last n months?', min_value=1, max_value=12, value=1)
 
-fig, ax = plt.subplots(figsize=(10,4))
-sns.lineplot(x='Month', y='Average Rating', data=monthly_avg_df, color='#a54b49', linewidth=3)
-plt.title('Monthly Average Rating')
-plt.xticks(rotation=45)
+# Display content based on the selected page
+if page == 'Monthly Rating':
+    st.title('Friends & Family Test Monthly Rating')
+    st.write('The monthly rating by rating score.')
+    
+    # Plot monthly averages
+    st.subheader('Monthly Average Rating')
 
-# Annotate each point with its value
-for index, row in monthly_avg_df.iterrows():
-    ax.annotate(f"{row['Average Rating']:.2f}", 
-                (row['Month'], row['Average Rating']),
-                textcoords="offset points", # how to position the text
-                xytext=(0,10), # distance from text to points (x,y)
-                ha='center')  # horizontal alignment can be left, right or center
+    fig, ax = plt.subplots(figsize=(10,4))
+    sns.lineplot(x='Month', y='Average Rating', data=monthly_avg_df, color='#a54b49', linewidth=3)
+    plt.title('Monthly Average Rating')
+    plt.xticks(rotation=45)
 
-# Display the plot in Streamlit
-st.pyplot(fig)
+    # Annotate each point with its value
+    for index, row in monthly_avg_df.iterrows():
+        ax.annotate(f"{row['Average Rating']:.2f}", 
+                    (row['Month'], row['Average Rating']),
+                    textcoords="offset points", # how to position the text
+                    xytext=(0,10), # distance from text to points (x,y)
+                    ha='center')  # horizontal alignment can be left, right or center
 
-if st.checkbox('Show raw data'):
-    # Create a slider for selecting the number of rows to display
-    # Create a slider for selecting the number of rows to display
-    num_rows = st.slider('Select number of rows to display:', min_value=5, max_value=100)
-
-    # Create a dropdown for selecting the rating_score to filter by
-    selected_rating = st.selectbox('Select rating score to filter by:', [1, 2, 3, 4, 5])
-
-    # Filter the DataFrame based on the selected rating_score
-    filtered_data = data[data['rating_score'] == selected_rating]
-
-    # Use the slider's value to display that many rows from the tail of the filtered DataFrame
-    if num_rows:
-        st.subheader(f'Displaying last {num_rows} rows of raw data with rating score {selected_rating}')
-        st.write(filtered_data.tail(num_rows))
-
-if st.checkbox('Display Monthly Entry Count'):
-    st.subheader('Friend & Family Test Responses per Month')
+    # Display the plot in Streamlit
+    st.pyplot(fig)
+    
+elif page == 'Monthly Count':
+    st.title('Monthly Count')
+    st.write('Showing the number of FF Test responses received per month.')
     
     # Resample and count the entries per day
     monthly_count = data_time.resample('M').size()
@@ -84,22 +75,34 @@ if st.checkbox('Display Monthly Entry Count'):
     # Show the plot in Streamlit
     st.pyplot(fig)
     
-if st.checkbox('Display Sentiment Analysis Histogram'):
-    st.subheader('Sentiment Analysis of FF Test Responses')
+elif page == 'Sentiment Analysis Histplot':
+    st.title('Sentiment Analysis Histplot')
+    st.write('You are viewing the content of Page 2.')
     
-    # Get the sentiment scores
-    sentiment_score = data['score3']
-    
-    # Plotting
+    # Filter the data for 'Negative' and 'Positive' values in the 'score3' column
+    data_positive = data[data['label3'] == 'positive']['score3']
+    data_negative = data[data['label3'] == 'negative']['score3']
+
+    # Create the plot
     fig, ax = plt.subplots(figsize=(10, 6))
-    sns.histplot(sentiment_score, color='#749857', bins=20, kde=True)
-    plt.title("Sentiment Analysis of FF Test Responses")
-    
-    # Show the plot in Streamlit
+
+    # Plot the histograms
+    sns.histplot(data_positive, color='#69a443', bins=20, kde=True, label='Positive', ax=ax)
+    sns.histplot(data_negative, color='#a54b49', bins=20, kde=True, label='Negative', ax=ax)
+
+    # Add title and labels
+    plt.title('Sentiment Analysis of FF Test Responses')
+    plt.xlabel('Score')
+    plt.ylabel('Frequency')
+    plt.legend()
+
+    # Show the plot
     st.pyplot(fig)
     
-  
-if st.checkbox('Show Correlation Analysis'):
+elif page == 'Rating & Sentiment Correlation':
+    st.title('Rating & Sentiment Correlation')
+ 
+
     st.subheader('Correlation between score3 and rating_score')
     correlation = data['score3'].corr(data['rating_score'])
     st.write(f'Correlation: {correlation}')
@@ -111,11 +114,12 @@ if st.checkbox('Show Correlation Analysis'):
     ax1.set_xlabel('Sentiment Analysis Score')
     ax1.set_ylabel('Rating Score')
     st.pyplot(fig1)
-
-if st.checkbox('Text Classification'):
-    st.subheader('Text Classification Labels Count')
     
-    # Prepare the data
+elif page == 'Text Classification':
+    st.title('Text Classification')
+    st.write('You are viewing the content of Page 2.')
+    
+   # Prepare the data
     label_counts = data['label1'].value_counts().reset_index()
     label_counts.columns = ['label', 'count']
 
@@ -131,9 +135,11 @@ if st.checkbox('Text Classification'):
     
     # Display the plot in Streamlit
     st.pyplot(fig3)
-
-# Show word Cloud 
-if st.checkbox('Show Word Cloud'):
+    
+elif page == 'Word Cloud':
+    st.title('Word Cloud')
+    st.write('You are viewing the content of Page 2.')
+    
     st.subheader('Word Cloud')
     text = ' '.join(data['free_text'].dropna())
     wordcloud = WordCloud(background_color='white', colormap='cividis').generate(text)
@@ -141,8 +147,25 @@ if st.checkbox('Show Word Cloud'):
     plt.axis("off")
     st.pyplot(plt)
     
+elif page == 'Show Raw Data':
+    st.title('Show Raw Data')
+    st.write('You are viewing the content of Page 2.')
     
+    # Create a slider for selecting the number of rows to display
+    # Create a slider for selecting the number of rows to display
+    num_rows = st.slider('Select number of rows to display:', min_value=5, max_value=100)
+
+    # Create a dropdown for selecting the rating_score to filter by
+    selected_rating = st.selectbox('Select rating score to filter by:', [1, 2, 3, 4, 5])
+
+    # Filter the DataFrame based on the selected rating_score
+    filtered_data = data[data['rating_score'] == selected_rating]
+
+    # Use the slider's value to display that many rows from the tail of the filtered DataFrame
+    if num_rows:
+        st.subheader(f'Displaying last {num_rows} rows of raw data with rating score {selected_rating}')
+        st.write(filtered_data.tail(num_rows))
     
-
-
-
+elif page == 'About':
+    st.title('About')
+    st.write('You are viewing the content of Page 2.')
