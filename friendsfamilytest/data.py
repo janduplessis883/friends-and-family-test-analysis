@@ -15,6 +15,7 @@ secret_path = os.getenv('SECRET_PATH')
 
 init()
 
+
 def load_google_sheet():
     sh = SheetHelper(sheet_url='https://docs.google.com/spreadsheets/d/1K2d32XmZQMdGLslNzv2ZZoUquARl6yiKRT5SjUkTtIY/edit#gid=1323317089', sheet_id=0)
     data = sh.gsheet_to_df()

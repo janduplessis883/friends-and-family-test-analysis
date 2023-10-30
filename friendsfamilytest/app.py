@@ -101,7 +101,7 @@ elif page == 'Sentiment Analysis Histplot':
     
 elif page == 'Rating & Sentiment Correlation':
     st.title('Rating & Sentiment Correlation')
-    st.write('You are viewing the content of Page 2.')
+ 
 
     st.subheader('Correlation between score3 and rating_score')
     correlation = data['score3'].corr(data['rating_score'])
