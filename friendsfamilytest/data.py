@@ -7,6 +7,11 @@ import matplotlib.pyplot as plt
 from colorama import init, Fore, Back, Style
 
 from friendsfamilytest.params import *
+import os
+import warnings
+warnings.filterwarnings('ignore')
+
+secret_path = os.getenv('SECRET_PATH')
 
 init()
 
@@ -86,15 +91,15 @@ def add_rating_score(data):
 
 if __name__ == "__main__":
     data = load_google_sheet()
-    print(f"{Fore.RED}Google Sheet Loaded{Style.RESET_ALL}")
+    print(f"{Fore.RED}[+] Google Sheet Loaded{Style.RESET_ALL}")
     data = text_classification(data)
     
-    print(f"{Fore.BLUE}Text Classification completed.{Style.RESET_ALL}")
+    print(f"{Fore.BLUE}[+] Text Classification completed{Style.RESET_ALL}")
     data = sentinment_analysis(data)
-    print(f"{Fore.BLUE}Sentiment Analysis completed{Style.RESET_ALL}")
+    print(f"{Fore.BLUE}[+] Sentiment Analysis completed{Style.RESET_ALL}")
     data = add_rating_score(data)
-    print(f"{Fore.BLUE}Rating score added.{Style.RESET_ALL}")
-    print(f"{Fore.GREEN}Loading Data SUCCESSFUL{Style.RESET_ALL}")
+    print(f"{Fore.BLUE}[+] Rating score added{Style.RESET_ALL}")
+    print(f"{Fore.GREEN}[+] Data Successfully Loaded{Style.RESET_ALL}")
     data.to_csv(f'{DATA_PATH}/data.csv', index=False)
-    print(f"{Fore.YELLOW}Data saved to '/data/data.csv'{Style.RESET_ALL}")
+    print(f"{Fore.YELLOW}[+] 💾 Data saved to '/data/data.csv'{Style.RESET_ALL}")
     
