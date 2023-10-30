@@ -53,7 +53,7 @@ if page == 'Monthly Rating':
     st.write('Rating Scale 1 - 5')
     
 elif page == 'Monthly Count':
-    st.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true', use_column_width=True)
+    st.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2b.png?raw=true', use_column_width=True)
     st.subheader('Monthly Count')
     # Resample and count the entries per day
     monthly_count = data_time.resample('M').size()
@@ -63,7 +63,7 @@ elif page == 'Monthly Count':
     
     # Plotting
     fig, ax = plt.subplots(figsize=(12, 6))
-    sns.barplot(data=monthly_count, x='time', y='entry_count', color='#e3813c')
+    sns.barplot(data=monthly_count, x='time', y='entry_count', color='#7c7c6d')
     
     # Customizing x-axis labels
     n = len(monthly_count['time'])
@@ -75,45 +75,79 @@ elif page == 'Monthly Count':
     st.pyplot(fig)
     
 elif page == 'Sentiment Analysis Histogram':
-    st.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true', use_column_width=True)
+    st.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2b.png?raw=true', use_column_width=True)
     st.subheader('Sentiment Analysis Histogram')
-    # Filter the data for 'Negative' and 'Positive' values in the 'score3' column
-    data_positive = data[data['label3'] == 'positive']['score3']
-    data_negative = data[data['label3'] == 'negative']['score3']
+    
+    if st.checkbox('Review Last Month Only'):
+        # Filter the data for 'Negative' and 'Positive' values in the 'score3' column
+        data['time'] = pd.to_datetime(data['time'])
+        last_30_days = data[data['time'] > data['time'].max() - pd.Timedelta(days=30)]
+        data_positive = last_30_days[last_30_days['label3'] == 'positive']['score3']
+        data_negative = last_30_days[last_30_days['label3'] == 'negative']['score3']
 
-    # Create the plot
-    fig, ax = plt.subplots(figsize=(10, 6))
+        # Create the plot
+        fig, ax = plt.subplots(figsize=(10, 6))
+        # Plot the histograms
+        sns.histplot(data_positive, color='#777768', kde=True, label='Positive', ax=ax)
+        sns.histplot(data_negative, color='#3e3e33', kde=True, label='Negative', ax=ax)
+        # Add title and labels
+        plt.title('Sentiment Analysis of FF Test Responses')
+        plt.xlabel('Score')
+        plt.ylabel('Frequency')
+        plt.legend()
+        # Show the plot
+        st.pyplot(fig)
+    else:
+        # Filter the data for 'Negative' and 'Positive' values in the 'score3' column
+        data_positive = data[data['label3'] == 'positive']['score3']
+        data_negative = data[data['label3'] == 'negative']['score3']
 
-    # Plot the histograms
-    sns.histplot(data_positive, color='#e4c046', bins=20, kde=True, label='Positive', ax=ax)
-    sns.histplot(data_negative, color='#a54b49', bins=20, kde=True, label='Negative', ax=ax)
-
-    # Add title and labels
-    plt.title('Sentiment Analysis of FF Test Responses')
-    plt.xlabel('Score')
-    plt.ylabel('Frequency')
-    plt.legend()
-
-    # Show the plot
-    st.pyplot(fig)
+        # Create the plot
+        fig, ax = plt.subplots(figsize=(10, 6))
+        # Plot the histograms
+        sns.histplot(data_positive, color='#777768', bins=20, kde=True, label='Positive', ax=ax)
+        sns.histplot(data_negative, color='#3e3e33', bins=20, kde=True, label='Negative', ax=ax)
+        # Add title and labels
+        plt.title('Sentiment Analysis of FF Test Responses')
+        plt.xlabel('Score')
+        plt.ylabel('Frequency')
+        plt.legend()
+        # Show the plot
+        st.pyplot(fig)
     
 elif page == 'Rating & Sentiment Correlation':
-    st.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true', use_column_width=True)
+    st.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2b.png?raw=true', use_column_width=True)
     st.subheader('Sentiment Anaylsis & Rating Correlation')
 
-    correlation = data['score3'].corr(data['rating_score'])
-    st.write(f'Correlation: {correlation}')
-    
-    # Scatter Plot
-    fig1, ax1 = plt.subplots(figsize=(10,6))
-    ax1.scatter(data['score3'], data['rating_score'], color='#749857', alpha=0.7, marker="x")
-    ax1.set_title('Scatter Plot of Sentiment Analysis Score vs Rating Score')
-    ax1.set_xlabel('Sentiment Analysis Score')
-    ax1.set_ylabel('Rating Score')
-    st.pyplot(fig1)
+    import streamlit as st
+
+    if st.checkbox('Review Last Month Only'):
+        data['time'] = pd.to_datetime(data['time'])
+        last_30_days = data[data['time'] > data['time'].max() - pd.Timedelta(days=30)]
+        correlation = last_30_days['score3'].corr(last_30_days['rating_score'])
+        st.write(f'Correlation: {correlation}')
+        
+        # Scatter Plot
+        fig1, ax1 = plt.subplots(figsize=(10,6))
+        ax1.scatter(last_30_days['score3'], last_30_days['rating_score'], color='#8e8e7f', alpha=0.7, marker="x")
+        ax1.set_title('Scatter Plot of Sentiment Analysis Score vs Rating Score - Last Month Only')
+        ax1.set_xlabel('Sentiment Analysis Score')
+        ax1.set_ylabel('Rating Score')
+        st.pyplot(fig1)
+    else:
+        correlation = data['score3'].corr(data['rating_score'])
+        st.write(f'Correlation: {correlation}')
+        
+        # Scatter Plot
+        fig1, ax1 = plt.subplots(figsize=(10,6))
+        ax1.scatter(data['score3'], data['rating_score'], color='#8e8e7f', alpha=0.7, marker="x")
+        ax1.set_title('Scatter Plot of Sentiment Analysis Score vs Rating Score - All data')
+        ax1.set_xlabel('Sentiment Analysis Score')
+        ax1.set_ylabel('Rating Score')
+        st.pyplot(fig1)
     
 elif page == 'Text Classification':
-    st.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true', use_column_width=True)
+    st.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2b.png?raw=true', use_column_width=True)
     st.subheader('Text Classification')
     
    # Prepare the data
@@ -130,14 +164,14 @@ elif page == 'Text Classification':
 
     # Plot using seaborn
     fig3, ax3 = plt.subplots(figsize=(10, 6))
-    sns.barplot(data=label_counts, y='label', x='count', color="#43597d")
+    sns.barplot(data=label_counts, y='label', x='count', color="#777768")
     
     # Display the plot in Streamlit
     st.pyplot(fig3)
     st.write('Text Classification Frequency: Label 2')
     # Plot using seaborn
     fig4, ax4 = plt.subplots(figsize=(10, 6))
-    sns.barplot(data=label_counts2, y='label2', x='count', color="#4088a9")
+    sns.barplot(data=label_counts2, y='label2', x='count', color="#8e8e7f")
     
     # Display the plot in Streamlit
     st.pyplot(fig4)
@@ -150,16 +184,26 @@ elif page == 'Text Classification':
     st.write(unique_combinations)
     
 elif page == 'Word Cloud':
-    st.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true', use_column_width=True)
+    st.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2b.png?raw=true', use_column_width=True)
     st.subheader('Word Cloud')
-    text = ' '.join(data['free_text'].dropna())
-    wordcloud = WordCloud(background_color='white', colormap='cividis').generate(text)
-    plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis("off")
-    st.pyplot(plt)
+    if st.checkbox("Display Last Month Only"):
+        data['time'] = pd.to_datetime(data['time'])
+        last_30_days = data[data['time'] > data['time'].max() - pd.Timedelta(days=30)]
+        text = ' '.join(last_30_days['free_text'].dropna())
+        wordcloud = WordCloud(background_color='white', colormap='cividis').generate(text)
+        plt.imshow(wordcloud, interpolation='bilinear')
+        plt.axis("off")
+        st.pyplot(plt)
+    else:
+        text = ' '.join(data['free_text'].dropna())
+        wordcloud = WordCloud(background_color='white', colormap='cividis').generate(text)
+        plt.imshow(wordcloud, interpolation='bilinear')
+        plt.axis("off")
+        st.pyplot(plt)
+        
     
 elif page == 'Show Raw Data':
-    st.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true', use_column_width=True)
+    st.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2b.png?raw=true', use_column_width=True)
     st.subheader('View Raw Data')
     # Create a slider for selecting the number of rows to display
     # Create a slider for selecting the number of rows to display
@@ -178,7 +222,11 @@ elif page == 'Show Raw Data':
     
 elif page == 'About':
     st.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true', use_column_width=True)
-    st.subheader('About')
-    st.write("""The Friends & Family Test (FFT) is a widely-used feedback tool that aims to capture patient experiences and gauge the overall quality of healthcare services. By employing text classification and sentiment analysis techniques, we can automatically categorize patient feedback into various themes like service quality, staff behavior, or facility cleanliness. This not only streamlines the process of interpreting large volumes of free-text responses but also provides actionable insights. 
+    st.subheader('About this Dashboard')
+    st.markdown("""The Friends & Family Test (FFT) is a widely-used feedback tool that aims to capture patient experiences and gauge the overall quality of healthcare services. By employing text classification and sentiment analysis techniques, we can automatically categorize patient feedback into various themes like service quality, staff behavior, or facility cleanliness. This not only streamlines the process of interpreting large volumes of free-text responses but also provides actionable insights. 
              \nSentiment analysis further enhances this by assigning a polarity score to each response, indicating whether the sentiment is positive, negative, or neutral. This multi-layered approach allows healthcare providers to have a nuanced understanding of patient satisfaction. 
-             \nIt identifies areas for improvement, recognizes outstanding service, and ultimately, helps in making data-driven decisions to enhance patient care.""")
+             \nIt identifies areas for improvement, recognizes outstanding service, and ultimately, helps in making data-driven decisions to enhance patient care.
+             \n**Sentiment Analysis** - 🤗HuggingFace: `cardiffnlp/twitter-roberta-base-sentiment-latest`
+             \n**Text Classification** - 🤗HuggingFace: `SamLowe/roberta-base-go_emotions`
+             \n Dashboard by [janduplessis883](https://github.com/janduplessis883)""")
+    
