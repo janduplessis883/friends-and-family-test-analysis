@@ -23,4 +23,4 @@ data:
 
 # Specify package name
 lint:
-	@black friend-family-test/
+	@black friendsfamilytest/
