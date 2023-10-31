@@ -228,28 +228,35 @@ elif page == "Text Classification":
     label_counts = label_counts.sort_values(by="count", ascending=False)
     label_counts2 = label_counts2.sort_values(by="count", ascending=False)
     # Display DataFrame with index set to 3
-    st.write("Text Classification Frequency: Label 1")
+    st.write("Text Classification Frequency: Label 1 & 2")
 
-    # Plot using seaborn
-    fig3, ax3 = plt.subplots(figsize=(10, 6))
-    sns.barplot(data=label_counts, y="label", x="count", color="#777768")
+    # Create a Matplotlib figure with subplots
+    fig, axes = plt.subplots(1, 2, figsize=(20, 6))
 
-    # Display the plot in Streamlit
-    st.pyplot(fig3)
-    st.write("Text Classification Frequency: Label 2")
-    # Plot using seaborn
-    fig4, ax4 = plt.subplots(figsize=(10, 6))
-    sns.barplot(data=label_counts2, y="label2", x="count", color="#8e8e7f")
+    # First subplot using seaborn
+    sns.barplot(data=label_counts, y="label", x="count", color="#777768", ax=axes[0])
+    axes[0].set_title("Text Classification Frequency: Label 1")
 
-    # Display the plot in Streamlit
-    st.pyplot(fig4)
-    st.write("Unique Combinations of Label 1 + Label 2")
+    # Second subplot using seaborn
+    sns.barplot(data=label_counts2, y="label2", x="count", color="#8e8e7f", ax=axes[1])
+    axes[1].set_title("Text Classification Frequency: Label 2")
+
+    # Make sure the layout is tight so nothing is cut off
+    plt.tight_layout()
+
+    # Display the subplots in Streamlit
+    st.pyplot(fig)
+    st.subheader("Free Text Responses")
     unique_combinations = data[["label1", "label2"]].drop_duplicates()
 
     # Show all unique combinations
-    unique_combinations.reset_index()
-    unique_combinations.sort_values(by=["label1", "label2"])
-    st.write(unique_combinations)
+    data["time"] = pd.to_datetime(data["time"])
+    last_30_days = data[data["time"] > data["time"].max() - pd.Timedelta(days=30)]
+    for index, row in last_30_days.iterrows():
+        if type(row['full_text']) != float:
+            st.write('✏️ ', row['full_text'])
+            st.write(row['label3'], row['score3'], row['label1'], row['score1'], row['label2'], row['score2'])
+            st.markdown("---")
 
 elif page == "Word Cloud":
     st.image(
