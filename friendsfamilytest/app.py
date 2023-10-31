@@ -243,13 +243,17 @@ elif page == "Text Classification":
 
     # Display the plot in Streamlit
     st.pyplot(fig4)
-    st.write("Unique Combinations of Label 1 + Label 2")
+    st.subheader("Free Text Response")
     unique_combinations = data[["label1", "label2"]].drop_duplicates()
 
     # Show all unique combinations
-    unique_combinations.reset_index()
-    unique_combinations.sort_values(by=["label1", "label2"])
-    st.write(unique_combinations)
+    data["time"] = pd.to_datetime(data["time"])
+    last_30_days = data[data["time"] > data["time"].max() - pd.Timedelta(days=30)]
+    for index, row in last_30_days.iterrows():
+        if type(row['full_text']) != float:
+            st.write('✏️ ', row['full_text'])
+            st.write(row['label3'], row['score3'], row['label1'], row['score1'], row['label2'], row['score2'])
+            st.markdown("---")
 
 elif page == "Word Cloud":
     st.image(
