@@ -229,7 +229,7 @@ elif page == "Text Classification":
     label_counts2 = label_counts2.sort_values(by="count", ascending=False)
     # Display DataFrame with index set to 3
     st.write("Text Classification Frequency: Label 1 & 2")
-
+    
     # Create a Matplotlib figure with subplots
     fig, axes = plt.subplots(1, 2, figsize=(20, 6))
 
@@ -246,7 +246,12 @@ elif page == "Text Classification":
 
     # Display the subplots in Streamlit
     st.pyplot(fig)
-    st.subheader("Free Text Responses")
+    
+
+
+
+    st.subheader("Free Text Response")
+
     unique_combinations = data[["label1", "label2"]].drop_duplicates()
 
     # Show all unique combinations
