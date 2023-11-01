@@ -248,11 +248,7 @@ elif page == "Text Classification":
     st.pyplot(fig)
     
 
-
-
     st.subheader("Free Text Response")
-
-    unique_combinations = data[["label1", "label2"]].drop_duplicates()
 
     # Show all unique combinations
     data["time"] = pd.to_datetime(data["time"])
