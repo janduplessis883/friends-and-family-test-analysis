@@ -122,7 +122,8 @@ venv.bak/
 
 # mkdocs documentation
 /site
-/secret
+friendsfamilytest/secret/
+
 
 # mypy
 .mypy_cache/
