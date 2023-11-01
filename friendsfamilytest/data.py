@@ -9,12 +9,13 @@ from colorama import init, Fore, Back, Style
 from friendsfamilytest.params import *
 import os
 import warnings
+import subprocess
 
 warnings.filterwarnings("ignore")
 
 secret_path = os.getenv("SECRET_PATH")
 
-init()
+init(autoreset=True)
 
 
 def load_google_sheet():
@@ -103,6 +104,7 @@ def add_rating_score(data):
 
 
 if __name__ == "__main__":
+    print(f'{Fore.WHITE}{Back.BLACK}[>] Creating New data.csv from Google Sheet')
     data = load_google_sheet()
     print(f"{Fore.RED}[+] Google Sheet Loaded{Style.RESET_ALL}")
     data = text_classification(data)
@@ -115,3 +117,32 @@ if __name__ == "__main__":
     print(f"{Fore.GREEN}[+] Data Successfully Loaded{Style.RESET_ALL}")
     data.to_csv(f"{DATA_PATH}/data.csv", index=False)
     print(f"{Fore.YELLOW}[i] 💾 Data saved to '/data/data.csv'{Style.RESET_ALL}")
+    
+    print(f'{Fore.WHITE}{Back.BLACK}[>] Git: Push to GitHub Repo')
+
+    # Set the path to your local git repository
+    repo_path = LOCAL_GIT_REPO 
+
+    # Set the remote name and branch name
+    remote = 'origin'
+    branch = 'master'
+    
+    # Change to the repo directory
+    os.chdir(repo_path)
+
+    # Get the latest commits
+    subprocess.run(['git', 'fetch', remote])
+    print(f"{Fore.RED}[+] Git: fetch remote{Style.RESET_ALL}")
+    # Checkout the desired branch 
+    subprocess.run(['git', 'checkout', branch])
+
+    # Add all changes
+    subprocess.run(['git', 'add', '.'])
+
+    # Commit changes with a message
+    message = 'Automated commit from Python script'
+    subprocess.run(['git', 'commit', '-m', message]) 
+    print(f"{Fore.RED}[+] Git: commit{Style.RESET_ALL}")
+    # Push changes
+    subprocess.run(['git', 'push', remote, branch])
+    print(f"{Fore.RED}[+] Git: push to remote {branch}{Style.RESET_ALL}")
