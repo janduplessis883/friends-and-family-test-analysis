@@ -169,20 +169,29 @@ elif page == "Rating & Sentiment Correlation":
         last_30_days = data[data["time"] > data["time"].max() - pd.Timedelta(days=30)]
         correlation = last_30_days["score3"].corr(last_30_days["rating_score"])
         st.write(f"Correlation: {correlation}")
-        
-        order_legend = ['negative', 'neutral', 'positive']
-        custom_palette = {'negative': 'red', 'neutral': 'grey', 'positive': 'green'}
+
+        order_legend = ["negative", "neutral", "positive"]
+        custom_palette = {"negative": "red", "neutral": "grey", "positive": "green"}
         # Create a Matplotlib figure and axes
         fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
         # First subplot
-        sns.scatterplot(x='rating_score', y='score1', data=last_30_days, ax=axes[0], hue_order=order_legend, palette=custom_palette)
-        axes[0].set_title('Sentiment Analysis vs Rating Score')
+        sns.scatterplot(
+            x="rating_score",
+            y="score1",
+            data=last_30_days,
+            ax=axes[0],
+            hue_order=order_legend,
+            palette=custom_palette,
+        )
+        axes[0].set_title("Sentiment Analysis vs Rating Score")
 
         # Second subplot
-        sns.countplot(x='rating_score', hue='label3', data=last_30_days, ax=axes[1])
-        axes[1].set_title('Positive/Neutral/Negative Sentiment Analysis Distribution per Rating Score')
-        axes[1].legend(title='Sentiment', loc='upper left')
+        sns.countplot(x="rating_score", hue="label3", data=last_30_days, ax=axes[1])
+        axes[1].set_title(
+            "Positive/Neutral/Negative Sentiment Analysis Distribution per Rating Score"
+        )
+        axes[1].legend(title="Sentiment", loc="upper left")
 
         # Make sure the layout is tight so nothing is cut off
         plt.tight_layout()
@@ -192,19 +201,28 @@ elif page == "Rating & Sentiment Correlation":
     else:
         correlation = data["score3"].corr(data["rating_score"])
         st.write(f"Correlation: {correlation}")
-        order_legend = ['negative', 'neutral', 'positive']
-        custom_palette = {'negative': 'red', 'neutral': 'grey', 'positive': 'green'}
+        order_legend = ["negative", "neutral", "positive"]
+        custom_palette = {"negative": "red", "neutral": "grey", "positive": "green"}
         # Create the plots
         fig, axes = plt.subplots(1, 2, figsize=(14, 6))
 
         # First subplot
-        sns.scatterplot(x='rating_score', y='score1', data=data, ax=axes[0], hue_order=order_legend, palette=custom_palette)
-        axes[0].set_title('Sentiment Analysis vs Rating Score')
+        sns.scatterplot(
+            x="rating_score",
+            y="score1",
+            data=data,
+            ax=axes[0],
+            hue_order=order_legend,
+            palette=custom_palette,
+        )
+        axes[0].set_title("Sentiment Analysis vs Rating Score")
 
         # Second subplot
-        sns.countplot(x='rating_score', hue='label3', data=data, ax=axes[1])
-        axes[1].set_title('Positive/Neutral/Negative Sentiment Analysis Distribution per Rating Score')
-        axes[1].legend(title='Sentiment', loc='upper left')
+        sns.countplot(x="rating_score", hue="label3", data=data, ax=axes[1])
+        axes[1].set_title(
+            "Positive/Neutral/Negative Sentiment Analysis Distribution per Rating Score"
+        )
+        axes[1].legend(title="Sentiment", loc="upper left")
 
         plt.tight_layout()
 
@@ -228,31 +246,41 @@ elif page == "Text Classification":
     label_counts = label_counts.sort_values(by="count", ascending=False)
     label_counts2 = label_counts2.sort_values(by="count", ascending=False)
     # Display DataFrame with index set to 3
-    st.write("Text Classification Frequency: Label 1")
+    st.write("Text Classification Frequency: Label 1 & 2")
 
-    # Plot using seaborn
-    fig3, ax3 = plt.subplots(figsize=(10, 6))
-    sns.barplot(data=label_counts, y="label", x="count", color="#777768")
+    # Create a Matplotlib figure with subplots
+    fig, axes = plt.subplots(1, 2, figsize=(20, 6))
 
-    # Display the plot in Streamlit
-    st.pyplot(fig3)
-    st.write("Text Classification Frequency: Label 2")
-    # Plot using seaborn
-    fig4, ax4 = plt.subplots(figsize=(10, 6))
-    sns.barplot(data=label_counts2, y="label2", x="count", color="#8e8e7f")
+    # First subplot using seaborn
+    sns.barplot(data=label_counts, y="label", x="count", color="#777768", ax=axes[0])
+    axes[0].set_title("Text Classification Frequency: Label 1")
 
-    # Display the plot in Streamlit
-    st.pyplot(fig4)
+    # Second subplot using seaborn
+    sns.barplot(data=label_counts2, y="label2", x="count", color="#8e8e7f", ax=axes[1])
+    axes[1].set_title("Text Classification Frequency: Label 2")
+
+    # Make sure the layout is tight so nothing is cut off
+    plt.tight_layout()
+
+    # Display the subplots in Streamlit
+    st.pyplot(fig)
+
     st.subheader("Free Text Response")
-    unique_combinations = data[["label1", "label2"]].drop_duplicates()
 
     # Show all unique combinations
     data["time"] = pd.to_datetime(data["time"])
     last_30_days = data[data["time"] > data["time"].max() - pd.Timedelta(days=30)]
     for index, row in last_30_days.iterrows():
-        if type(row['full_text']) != float:
-            st.write('✏️ ', row['full_text'])
-            st.write(row['label3'], row['score3'], row['label1'], row['score1'], row['label2'], row['score2'])
+        if type(row["full_text"]) != float:
+            st.write("✏️ ", row["full_text"])
+            st.write(
+                row["label3"],
+                row["score3"],
+                row["label1"],
+                row["score1"],
+                row["label2"],
+                row["score2"],
+            )
             st.markdown("---")
 
 elif page == "Word Cloud":
