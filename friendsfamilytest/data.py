@@ -1,5 +1,6 @@
 import os
-os.environ["TOKENIZERS_PARALLELISM"] = "false" 
+
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 import pandas as pd
 from transformers import pipeline
@@ -25,7 +26,9 @@ def load_google_sheet():
     data.columns = ["time", "rating", "free_text", "do_better"]
     data["time"] = pd.to_datetime(data["time"], format="%d/%m/%Y %H:%M:%S")
     data["full_text"] = (
-        data["free_text"].astype("str") + " Anything we can do to make your experience better? " + data["do_better"].astype("str")
+        data["free_text"].astype("str")
+        + " Anything we can do to make your experience better? "
+        + data["do_better"].astype("str")
     )
     data["full_text"] = (
         data["full_text"].str.replace("\s+", " ", regex=True).str.strip()
@@ -102,7 +105,7 @@ def add_rating_score(data):
 
 
 if __name__ == "__main__":
-    print(f'{Fore.WHITE}{Back.BLACK}[>] Creating New data.csv from Google Sheet')
+    print(f"{Fore.WHITE}{Back.BLACK}[>] Creating New data.csv from Google Sheet")
     data = load_google_sheet()
     print(f"{Fore.RED}[+] Google Sheet Loaded")
     data = text_classification(data)
@@ -115,33 +118,33 @@ if __name__ == "__main__":
     print(f"{Fore.GREEN}[+] Data Successfully Loaded")
     data.to_csv(f"{DATA_PATH}/data.csv", index=False)
     print(f"{Fore.YELLOW}[i] 💾 Data saved to '/data/data.csv'")
-    
-    print(f'{Fore.WHITE}{Back.BLACK}[>] Git: Push to GitHub Repo')
+
+    print(f"{Fore.WHITE}{Back.BLACK}[>] Git: Push to GitHub Repo")
 
     # Set the path to your local git repository
-    repo_path = LOCAL_GIT_REPO 
+    repo_path = LOCAL_GIT_REPO
 
     # Set the remote name and branch name
-    remote = 'origin'
-    branch = 'master'
-    
+    remote = "origin"
+    branch = "master"
+
     # Change to the repo directory
     os.chdir(repo_path)
 
     # Get the latest commits
-    subprocess.run(['git', 'fetch', remote])
+    subprocess.run(["git", "fetch", remote])
     print(f"{Fore.RED}[+] Git: fetch remote")
-    # Checkout the desired branch 
-    subprocess.run(['git', 'checkout', branch])
+    # Checkout the desired branch
+    subprocess.run(["git", "checkout", branch])
 
     # Add all changes
-    subprocess.run(['git', 'add', '.'])
+    subprocess.run(["git", "add", "."])
 
     # Commit changes with a message
-    message = 'Automated commit from Python script'
-    subprocess.run(['git', 'commit', '-m', message]) 
+    message = "Automated commit from Python script"
+    subprocess.run(["git", "commit", "-m", message])
     print(f"{Fore.RED}[+] Git: commit")
     # Push changes
-    subprocess.run(['git', 'push', remote, branch])
+    subprocess.run(["git", "push", remote, branch])
     print(f"{Fore.RED}[+] Git: push to remote {branch}")
     print(f"{Fore.YELLOW}[i] ✅ Git push successful")
