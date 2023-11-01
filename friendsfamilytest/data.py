@@ -1,20 +1,18 @@
+import os
+os.environ["TOKENIZERS_PARALLELISM"] = "false" 
+
 import pandas as pd
 from transformers import pipeline
-
 from sheethelper import SheetHelper
 import seaborn as sns
 import matplotlib.pyplot as plt
 from colorama import init, Fore, Back, Style
-
 from friendsfamilytest.params import *
-import os
 import warnings
 import subprocess
 
 warnings.filterwarnings("ignore")
-
 secret_path = os.getenv("SECRET_PATH")
-
 init(autoreset=True)
 
 
@@ -27,7 +25,7 @@ def load_google_sheet():
     data.columns = ["time", "rating", "free_text", "do_better"]
     data["time"] = pd.to_datetime(data["time"], format="%d/%m/%Y %H:%M:%S")
     data["full_text"] = (
-        data["free_text"].astype("str") + " " + data["do_better"].astype("str")
+        data["free_text"].astype("str") + " Anything to make your experience better? " + data["do_better"].astype("str")
     )
     data["full_text"] = (
         data["full_text"].str.replace("\s+", " ", regex=True).str.strip()
