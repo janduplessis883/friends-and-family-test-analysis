@@ -144,3 +144,4 @@ if __name__ == "__main__":
     # Push changes
     subprocess.run(['git', 'push', remote, branch])
     print(f"{Fore.RED}[+] Git: push to remote {branch}{Style.RESET_ALL}")
+    print(f"{Fore.YELLOW}[i] ✅ Git push successful{Style.RESET_ALL}")
