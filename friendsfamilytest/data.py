@@ -139,7 +139,7 @@ if __name__ == "__main__":
     print(f"{Fore.RED}[+] Git: fetch remote")
     
     # Checkout the desired branch
-    subprocess.run(["git", "checkout", branch])
+    #subprocess.run(["git", "checkout", branch])
 
     # Add all changes
     subprocess.run(["git", "add", "."])
