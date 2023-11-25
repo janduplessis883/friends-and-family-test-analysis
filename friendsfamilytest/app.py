@@ -56,7 +56,7 @@ if page == "Monthly Rating":
 
     fig, ax = plt.subplots(figsize=(10, 4))
     sns.lineplot(
-        x="Month", y="Average Rating", data=monthly_avg_df, color="#a54b49", linewidth=3
+        x="Month", y="Average Rating", data=monthly_avg_df, color="#ec8b33", linewidth=3
     )
     plt.title("Monthly Average Rating")
     plt.xticks(rotation=45)
