@@ -135,8 +135,8 @@ if __name__ == "__main__":
     os.chdir(repo_path)
 
     # Get the latest commits
-    subprocess.run(["git", "fetch", remote])
-    print(f"{Fore.RED}[+] Git: fetch remote")
+    # subprocess.run(["git", "fetch", remote])
+    #print(f"{Fore.RED}[+] Git: fetch remote")
     
     # Checkout the desired branch
     #subprocess.run(["git", "checkout", branch])

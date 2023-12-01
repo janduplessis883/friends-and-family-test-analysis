@@ -5,9 +5,7 @@ from wordcloud import WordCloud
 import seaborn as sns
 
 
-@st.cache_data  # This decorator will help you cache the data
 def load_data():
-
     df = pd.read_csv('friendsfamilytest/data/data.csv')
     return df
 
@@ -57,7 +55,7 @@ if page == "Monthly Rating":
 
     fig, ax = plt.subplots(figsize=(10, 4))
     sns.lineplot(
-        x="Month", y="Average Rating", data=monthly_avg_df, color="#ec8b33", linewidth=3
+        x="Month", y="Average Rating", data=monthly_avg_df, color="#2b6688", linewidth=3
     )
     plt.title("Monthly Average Rating")
     plt.xticks(rotation=45)
@@ -84,7 +82,6 @@ elif page == "Monthly Count":
     st.subheader("Monthly Count")
     # Resample and count the entries per day
     monthly_count = data_time.resample("M").size()
-
     # Reset index to convert Series to DataFrame
     monthly_count = monthly_count.reset_index(name="entry_count")
 
