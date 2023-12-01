@@ -3,7 +3,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import seaborn as sns
-from streamlit_gsheets import GSheetsConnection
 
 
 @st.cache_data  # This decorator will help you cache the data
