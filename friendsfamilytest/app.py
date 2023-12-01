@@ -9,8 +9,7 @@ from streamlit_gsheets import GSheetsConnection
 @st.cache_data  # This decorator will help you cache the data
 def load_data():
 
-    conn = st.experimental_connection("gsheets", type=GSheetsConnection)
-    df = conn.read()
+    df = pd.read_csv('friendsfamilytest/data/data.csv')
     return df
 
 
