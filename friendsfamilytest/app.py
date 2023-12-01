@@ -3,11 +3,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import seaborn as sns
+from streamlit_gsheets import GSheetsConnection
 
 
 @st.cache_data  # This decorator will help you cache the data
 def load_data():
-    df = pd.read_csv("friendsfamilytest/data/data.csv")
+
+    conn = st.experimental_connection("gsheets", type=GSheetsConnection)
+    df = conn.read()
     return df
 
 
