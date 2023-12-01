@@ -145,7 +145,7 @@ if __name__ == "__main__":
     subprocess.run(["git", "add", "."])
 
     # Commit changes with a message
-    message = "Automated commit from Python script"
+    message = "Automated commit from Python script 2"
     subprocess.run(["git", "commit", "-m", message])
     print(f"{Fore.RED}[+] Git: commit")
     
