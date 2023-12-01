@@ -105,7 +105,7 @@ def add_rating_score(data):
 
 
 if __name__ == "__main__":
-    print(f"{Fore.WHITE}{Back.BLACK}[>] Creating New data.csv from Google Sheet")
+    print(f"{Fore.WHITE}{Back.BLACK}[*] Creating New data.csv from Google Sheet")
     
     data = load_google_sheet()
     print(f"{Fore.RED}[+] Google Sheet Loaded")
