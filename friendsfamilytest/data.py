@@ -107,22 +107,21 @@ def add_rating_score(data):
 if __name__ == "__main__":
     print(f"{Fore.WHITE}{Back.BLACK}[*] Creating New data.csv from Google Sheet")
     
+    print(f"{Fore.RED}[+] Google Sheet Loading")
     data = load_google_sheet()
-    print(f"{Fore.RED}[+] Google Sheet Loaded")
     
+    print(f"{Fore.BLUE}[+] Text Classification")
     data = text_classification(data)
-    print(f"{Fore.BLUE}[+] Text Classification completed")
     
+    print(f"{Fore.BLUE}[+] Sentiment Analysis")
     data = sentinment_analysis(data)
-    print(f"{Fore.BLUE}[+] Sentiment Analysis completed")
     
-    data = add_rating_score(data)
     print(f"{Fore.BLUE}[+] Rating score added")
-    
-    print(f"{Fore.GREEN}[+] Data Successfully Loaded")
-    
-    data.to_csv(f"{DATA_PATH}/data.csv", index=False)
+    data = add_rating_score(data)
+
     print(f"{Fore.YELLOW}[i] 💾 Data saved to '/data/data.csv'")
+    data.to_csv(f"{DATA_PATH}/data.csv", index=False)
+    
 
     print(f"{Fore.WHITE}{Back.BLACK}[>] Git: Push to GitHub Repo")
 
@@ -145,11 +144,12 @@ if __name__ == "__main__":
     subprocess.run(["git", "add", "."])
 
     # Commit changes with a message
+    print(f"{Fore.RED}[+] Git: commit")
     message = "Automated commit from Python script 2"
     subprocess.run(["git", "commit", "-m", message])
-    print(f"{Fore.RED}[+] Git: commit")
     
     # Push changes
-    subprocess.run(["git", "push", remote, branch])
     print(f"{Fore.RED}[+] Git: push to remote {branch}")
+    subprocess.run(["git", "push", remote, branch])
+    
     print(f"{Fore.YELLOW}[i] ✅ data.csv push to GitHub successful")
