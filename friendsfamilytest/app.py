@@ -75,10 +75,6 @@ if page == "Monthly Rating":
     st.write("Rating Scale 1 - 5")
 
 elif page == "Monthly Count":
-    st.image(
-        "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true",
-        use_column_width=True,
-    )
     st.subheader("Monthly Count")
     # Resample and count the entries per day
     monthly_count = data_time.resample("M").size()
