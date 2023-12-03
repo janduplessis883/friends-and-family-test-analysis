@@ -1,4 +1,5 @@
 import os
+import time
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -66,7 +67,7 @@ def text_classification(data):
     return data
 
 
-def sentinment_analysis(data):
+def sentiment_analysis(data):
     sentiment_task = pipeline(
         "sentiment-analysis", model="cardiffnlp/twitter-roberta-base-sentiment-latest"
     )
@@ -105,51 +106,49 @@ def add_rating_score(data):
 
 
 if __name__ == "__main__":
-    print(f"{Fore.WHITE}{Back.BLACK}[*] Creating New data.csv from Google Sheet")
-    
+
+    print(f"{Fore.WHITE}{Back.BLACK}[*] Starting the script")
+
+    start_time = time.time()
     print(f"{Fore.RED}[+] Google Sheet Loading")
     data = load_google_sheet()
-    
+    print(f"Time taken: {time.time() - start_time:.2f} seconds")
+
+    start_time = time.time()
     print(f"{Fore.BLUE}[+] Text Classification")
     data = text_classification(data)
-    
+    print(f"Time taken: {time.time() - start_time:.2f} seconds")
+
+    start_time = time.time()
     print(f"{Fore.BLUE}[+] Sentiment Analysis")
-    data = sentinment_analysis(data)
-    
+    data = sentiment_analysis(data)  # Corrected spelling of sentiment_analysis
+    print(f"Time taken: {time.time() - start_time:.2f} seconds")
+
+    start_time = time.time()
     print(f"{Fore.BLUE}[+] Rating score added")
     data = add_rating_score(data)
+    print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
+    start_time = time.time()
     print(f"{Fore.YELLOW}[i] 💾 Data saved to '/data/data.csv'")
     data.to_csv(f"{DATA_PATH}/data.csv", index=False)
-    
+    print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
+    start_time = time.time()
     print(f"{Fore.WHITE}{Back.BLACK}[>] Git: Push to GitHub Repo")
 
-    # Set the path to your local git repository
     repo_path = LOCAL_GIT_REPO
-    # Set the remote name and branch name
     remote = "origin"
     branch = "master"
-    # Change to the repo directory
     os.chdir(repo_path)
 
-    # Get the latest commits
-    # subprocess.run(["git", "fetch", remote])
-    #print(f"{Fore.RED}[+] Git: fetch remote")
-    
-    # Checkout the desired branch
-    #subprocess.run(["git", "checkout", branch])
-
-    # Add all changes
     subprocess.run(["git", "add", "."])
-
-    # Commit changes with a message
     print(f"{Fore.RED}[+] Git: commit")
     message = "Automated commit from Python script 2"
     subprocess.run(["git", "commit", "-m", message])
-    
-    # Push changes
     print(f"{Fore.RED}[+] Git: push to remote {branch}")
     subprocess.run(["git", "push", remote, branch])
-    
+    print(f"Time taken: {time.time() - start_time:.2f} seconds")
+
     print(f"{Fore.YELLOW}[i] ✅ data.csv push to GitHub successful")
+
