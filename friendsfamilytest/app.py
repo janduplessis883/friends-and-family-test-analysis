@@ -76,7 +76,7 @@ if page == "Monthly Rating":
 
 elif page == "Monthly Count":
     st.image(
-        "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2b.png?raw=true",
+        "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true",
         use_column_width=True,
     )
     st.subheader("Monthly Count")
@@ -87,7 +87,7 @@ elif page == "Monthly Count":
 
     # Plotting
     fig, ax = plt.subplots(figsize=(12, 6))
-    sns.barplot(data=monthly_count, x="time", y="entry_count", color="#7c7c6d")
+    sns.barplot(data=monthly_count, x="time", y="entry_count", color="#2d668f")
 
     # Customizing x-axis labels
     n = len(monthly_count["time"])
