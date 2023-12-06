@@ -70,6 +70,7 @@ if page == "Monthly Rating & Count":
         )  # horizontal alignment can be left, right or center
 
     # Display the plot in Streamlit
+    ax.yaxis.grid(True, linestyle='--', linewidth=0.5, color='#888888')
     st.pyplot(fig)
     st.write("Rating Scale 1 - 5")
     
@@ -95,7 +96,7 @@ if page == "Monthly Rating & Count":
         rotation=45,
     )
     plt.title("Friend & Family Test Responses per Month")
-
+    ax.yaxis.grid(True, linestyle='--', linewidth=0.5, color='#888888')
     # Show the plot in Streamlit
     st.pyplot(fig)
 
