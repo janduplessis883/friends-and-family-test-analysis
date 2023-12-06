@@ -91,9 +91,20 @@ def summarization(data):
     # Iterate over DataFrame rows and classify text
     for _, row in data.iterrows():
         sentence = row["free_text"]
-        model_outputs = summ(sentence, max_length=15, min_length=1, do_sample=False)
-        summ_list.append(model_outputs[0]["summary_text"])
-
+        if sentence != '':
+            sentence_length = len(sentence.split())
+            if sentence_length > 10:
+                model_outputs = summ(sentence, max_length=int(sentence_length - (sentence_length/3)), min_length=1, do_sample=False)
+                summ_list.append(model_outputs[0]["summary_text"])
+                print(f'{Fore.RED}{sentence}')
+                print(model_outputs[0]["summary_text"])
+            else:
+                summ_list.append('')
+        else:
+            summ_list.append('')
+    data["free_text_summary"] = summ_list
+    
+    return data
 
     # Add labels and scores as new columns
     data["free_text_summary"] = summ_list
