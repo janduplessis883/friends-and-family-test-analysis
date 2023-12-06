@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import seaborn as sns
+from datetime import datetime
 
 
 def load_data():
@@ -50,14 +51,14 @@ if page == "Monthly Rating & Count":
     )
 
     # Plot monthly averages
-    st.subheader("Average Rating per Month")
+    st.subheader("Average Monthly Rating")
     st.write('''The Friends and Family Test (FFT) is a feedback tool used in the healthcare sector, particularly in the UK's National Health Service (NHS), to help measure patient satisfaction with services. It allows patients to provide feedback on their experience with a particular service, including General Practitioner (GP) surgeries. The test is straightforward, usually asking whether the patient would recommend the service to friends and family if needed. Patients can typically respond with options like "extremely likely," "likely," "neither likely nor unlikely," "unlikely," "extremely unlikely," and "don't know."''')
 
     fig, ax = plt.subplots(figsize=(10, 4))
     sns.lineplot(
         x="Month", y="Average Rating", data=monthly_avg_df, color="#2b6688", linewidth=3
     )
-    plt.title("Monthly Average Rating")
+    plt.title("Average Monthly Rating")
 
     plt.xticks(rotation=45)
 
@@ -76,7 +77,7 @@ if page == "Monthly Rating & Count":
     st.pyplot(fig)
     
     
-    st.subheader("Count per Month")
+    st.subheader("No of Reviews per Month")
     st.write("""
 A "FFT (Friends and Family Test) Count per Month" plot is a visual representation used to display the number of responses received for the FFT in a GP surgery over a series of months. This type of plot is particularly useful for understanding patient engagement and the volume of feedback over time. """)
     # Resample and count the entries per day
@@ -231,22 +232,41 @@ elif page == "Rating & Sentiment Correlation":
 elif page == "Text Classification":
 
     st.header("Text Classification")
-
-    class_list = list(data['classif'].unique())
-    selected_rating = st.selectbox("Review Patient Feedback by Classification:", class_list)
     
-    filtered_class = data[data["classif"] == selected_rating]
-    st.subheader(f'{selected_rating.capitalize()} ({str(filtered_class.shape[0])})')
-    for text in filtered_class['free_text']:  # Assuming 'Review' is the column with the text you want to display
-        if str(text) != 'nan':
-            st.write('- ' + str(text))
+    if st.checkbox("Review Last Month Only"):
+        # Last Months Results
+        # Convert the 'time' column to datetime
+        data['time'] = pd.to_datetime(data['time'])
+
+        # Get the current month and year
+        current_month = datetime.now().month
+        current_year = datetime.now().year
+
+        # Filter data for the current month and year
+        current_month_data = data[(data['time'].dt.month == current_month) & (data['time'].dt.year == current_year)]
+
+        # Now, proceed with your original code but use the filtered DataFrame
+        class_list = list(current_month_data['classif'].unique())
+        selected_rating = st.selectbox("Viewing Patient Feedback by Classification (Current Month Only):", class_list)
+
+        filtered_class = current_month_data[current_month_data["classif"] == selected_rating]
+        st.subheader(f'{selected_rating.capitalize()} ({str(filtered_class.shape[0])})')
+        for text in filtered_class['free_text']:  # Assuming 'free_text' is the column with the text you want to display
+            if str(text) != 'nan':
+                st.write('- ' + str(text))
+        
+    else:
+        class_list = list(data['classif'].unique())
+        selected_rating = st.selectbox("Viewing Patient Feedback by Classification (All Reviews):", class_list)
+        
+        filtered_class = data[data["classif"] == selected_rating]
+        st.subheader(f'{selected_rating.capitalize()} ({str(filtered_class.shape[0])})')
+        for text in filtered_class['free_text']:  # Assuming 'Review' is the column with the text you want to display
+            if str(text) != 'nan':
+                st.write('- ' + str(text))
 
 elif page == "Word Cloud":
-    st.image(
-        "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2b.png?raw=true",
-        use_column_width=True,
-    )
-    st.subheader("Word Cloud")
+    st.header("Word Cloud")
     if st.checkbox("Display Last Month Only"):
         data["time"] = pd.to_datetime(data["time"])
         last_30_days = data[data["time"] > data["time"].max() - pd.Timedelta(days=30)]
