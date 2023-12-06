@@ -31,7 +31,7 @@ st.sidebar.title("Menu")
 page = st.sidebar.selectbox(
     "Choose an option",
     [
-        "Monthly Rating + Count",
+        "Monthly Rating & Count",
         "Sentiment Analysis Histogram",
         "Rating & Sentiment Correlation",
         "Text Classification",
