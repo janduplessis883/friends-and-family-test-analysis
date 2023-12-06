@@ -50,13 +50,15 @@ if page == "Monthly Rating & Count":
     )
 
     # Plot monthly averages
-    st.subheader("Monthly Average Rating")
+    st.subheader("Average Rating per Month")
+    st.write('''The Friends and Family Test (FFT) is a feedback tool used in the healthcare sector, particularly in the UK's National Health Service (NHS), to help measure patient satisfaction with services. It allows patients to provide feedback on their experience with a particular service, including General Practitioner (GP) surgeries. The test is straightforward, usually asking whether the patient would recommend the service to friends and family if needed. Patients can typically respond with options like "extremely likely," "likely," "neither likely nor unlikely," "unlikely," "extremely unlikely," and "don't know."''')
 
     fig, ax = plt.subplots(figsize=(10, 4))
     sns.lineplot(
         x="Month", y="Average Rating", data=monthly_avg_df, color="#2b6688", linewidth=3
     )
     plt.title("Monthly Average Rating")
+
     plt.xticks(rotation=45)
 
     # Annotate each point with its value
@@ -72,9 +74,11 @@ if page == "Monthly Rating & Count":
     # Display the plot in Streamlit
     ax.yaxis.grid(True, linestyle='--', linewidth=0.5, color='#888888')
     st.pyplot(fig)
-    st.write("Rating Scale 1 - 5")
     
-    st.subheader("Monthly Count")
+    
+    st.subheader("Count per Month")
+    st.write("""
+A "FFT (Friends and Family Test) Count per Month" plot is a visual representation used to display the number of responses received for the FFT in a GP surgery over a series of months. This type of plot is particularly useful for understanding patient engagement and the volume of feedback over time. """)
     # Resample and count the entries per day
     monthly_count = data_time.resample("M").size()
     # Reset index to convert Series to DataFrame
@@ -225,58 +229,17 @@ elif page == "Rating & Sentiment Correlation":
         st.pyplot(fig)
 
 elif page == "Text Classification":
-    st.image(
-        "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2b.png?raw=true",
-        use_column_width=True,
-    )
-    st.subheader("Text Classification")
 
-    # Prepare the data
-    label_counts = data["label1"].value_counts().reset_index()
-    label_counts.columns = ["label", "count"]
-    label_counts2 = data["label2"].value_counts().reset_index()
-    label_counts2.columns = ["label2", "count"]
+    st.header("Text Classification")
 
-    # Sort the dataframe by count
-    label_counts = label_counts.sort_values(by="count", ascending=False)
-    label_counts2 = label_counts2.sort_values(by="count", ascending=False)
-    # Display DataFrame with index set to 3
-    st.write("Text Classification Frequency: Label 1 & 2")
-
-    # Create a Matplotlib figure with subplots
-    fig, axes = plt.subplots(1, 2, figsize=(20, 6))
-
-    # First subplot using seaborn
-    sns.barplot(data=label_counts, y="label", x="count", color="#777768", ax=axes[0])
-    axes[0].set_title("Text Classification Frequency: Label 1")
-
-    # Second subplot using seaborn
-    sns.barplot(data=label_counts2, y="label2", x="count", color="#8e8e7f", ax=axes[1])
-    axes[1].set_title("Text Classification Frequency: Label 2")
-
-    # Make sure the layout is tight so nothing is cut off
-    plt.tight_layout()
-
-    # Display the subplots in Streamlit
-    st.pyplot(fig)
-
-    st.subheader("Free Text Response")
-
-    # Show all unique combinations
-    data["time"] = pd.to_datetime(data["time"])
-    last_30_days = data[data["time"] > data["time"].max() - pd.Timedelta(days=30)]
-    for index, row in last_30_days.iterrows():
-        if type(row["full_text"]) != float:
-            st.write("✏️ ", row["full_text"])
-            st.write(
-                row["label3"],
-                row["score3"],
-                row["label1"],
-                row["score1"],
-                row["label2"],
-                row["score2"],
-            )
-            st.markdown("---")
+    class_list = list(data['classif'].unique())
+    selected_rating = st.selectbox("Review Patient Feedback by Classification:", class_list)
+    
+    filtered_class = data[data["classif"] == selected_rating]
+    st.subheader(f'{selected_rating.capitalize()} ({str(filtered_class.shape[0])})')
+    for text in filtered_class['free_text']:  # Assuming 'Review' is the column with the text you want to display
+        if str(text) != 'nan':
+            st.write('- ' + str(text))
 
 elif page == "Word Cloud":
     st.image(
