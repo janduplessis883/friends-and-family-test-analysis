@@ -33,11 +33,9 @@ page = st.sidebar.selectbox(
     "Choose an option",
     [
         "Monthly Rating & Count",
-        "Sentiment Analysis Histogram",
         "Rating & Sentiment Correlation",
         "Text Classification",
         "Word Cloud",
-        "Show Raw Data",
         "About",
     ],
 )
@@ -107,127 +105,35 @@ A "FFT (Friends and Family Test) Count per Month" plot is a visual representatio
 
 
 
-elif page == "Sentiment Analysis Histogram":
-    st.image(
-        "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2b.png?raw=true",
-        use_column_width=True,
-    )
-    st.subheader("Sentiment Analysis Histogram")
-
-    if st.checkbox("Review Last Month Only"):
-        # Filter the data for 'Negative' and 'Positive' values in the 'score3' column
-        data["time"] = pd.to_datetime(data["time"])
-        last_30_days = data[data["time"] > data["time"].max() - pd.Timedelta(days=30)]
-        data_positive = last_30_days[last_30_days["label3"] == "positive"]["score3"]
-        data_negative = last_30_days[last_30_days["label3"] == "negative"]["score3"]
-
-        # Create the plot
-        fig, ax = plt.subplots(figsize=(10, 6))
-        # Plot the histograms
-        sns.histplot(data_positive, color="#777768", kde=True, label="Positive", ax=ax)
-        sns.histplot(data_negative, color="#3e3e33", kde=True, label="Negative", ax=ax)
-        # Add title and labels
-        plt.title("Sentiment Analysis of FF Test Responses")
-        plt.xlabel("Score")
-        plt.ylabel("Frequency")
-        plt.legend()
-        # Show the plot
-        st.pyplot(fig)
-    else:
-        # Filter the data for 'Negative' and 'Positive' values in the 'score3' column
-        data_positive = data[data["label3"] == "positive"]["score3"]
-        data_negative = data[data["label3"] == "negative"]["score3"]
-
-        # Create the plot
-        fig, ax = plt.subplots(figsize=(10, 6))
-        # Plot the histograms
-        sns.histplot(
-            data_positive, color="#777768", bins=20, kde=True, label="Positive", ax=ax
-        )
-        sns.histplot(
-            data_negative, color="#3e3e33", bins=20, kde=True, label="Negative", ax=ax
-        )
-        # Add title and labels
-        plt.title("Sentiment Analysis of FF Test Responses")
-        plt.xlabel("Score")
-        plt.ylabel("Frequency")
-        plt.legend()
-        # Show the plot
-        st.pyplot(fig)
 
 elif page == "Rating & Sentiment Correlation":
-    st.image(
-        "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2b.png?raw=true",
-        use_column_width=True,
-    )
-    st.subheader("Sentiment Anaylsis & Rating Correlation")
 
-    import streamlit as st
+    st.header("Sentiment Anaylsis & Rating Correlation")
 
     if st.checkbox("Review Last Month Only"):
-        data["time"] = pd.to_datetime(data["time"])
-        last_30_days = data[data["time"] > data["time"].max() - pd.Timedelta(days=30)]
-        correlation = last_30_days["score3"].corr(last_30_days["rating_score"])
-        st.write(f"Correlation: {correlation}")
+        data['time'] = pd.to_datetime(data['time'])
+        # Get the current month and year
+        current_month = datetime.now().month
+        current_year = datetime.now().year
+        # Filter data for the current month and year
+        current_month_data = data[(data['time'].dt.month == current_month) & (data['time'].dt.year == current_year)]
 
-        order_legend = ["negative", "neutral", "positive"]
-        custom_palette = {"negative": "red", "neutral": "grey", "positive": "green"}
-        # Create a Matplotlib figure and axes
-        fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+        plt.figure(figsize=(10, 6))  # You can adjust the figure size as needed
+        sns.scatterplot(data=current_month_data, x='rating_score', y='sentiment_score', hue='sentiment', s=45)
 
-        # First subplot
-        sns.scatterplot(
-            x="rating_score",
-            y="score1",
-            data=last_30_days,
-            ax=axes[0],
-            hue_order=order_legend,
-            palette=custom_palette,
-        )
-        axes[0].set_title("Sentiment Analysis vs Rating Score")
+        # Display the plot in Streamlit
+        st.pyplot(plt)
+        st.subheader("Viewing Last Month's Data Only")
+        st.write('''The plot maps 'rating_score' along the x-axis and 'sentiment_score' along the y-axis. Points on the scatter plot are color-coded to represent three categories of sentiment: positive (blue), neutral (orange), and negative (green). Most of the data points appear to be concentrated at the higher end of the rating scale (closer to 5.0), suggesting a large number of positive sentiment scores. The spread and density of points suggest that higher rating scores correlate with more positive sentiment.''')
 
-        # Second subplot
-        sns.countplot(x="rating_score", hue="label3", data=last_30_days, ax=axes[1])
-        axes[1].set_title(
-            "Positive/Neutral/Negative Sentiment Analysis Distribution per Rating Score"
-        )
-        axes[1].legend(title="Sentiment", loc="upper left")
-
-        # Make sure the layout is tight so nothing is cut off
-        plt.tight_layout()
-
-        # Show the plot in Streamlit
-        st.pyplot(fig)
     else:
-        correlation = data["score3"].corr(data["rating_score"])
-        st.write(f"Correlation: {correlation}")
-        order_legend = ["negative", "neutral", "positive"]
-        custom_palette = {"negative": "red", "neutral": "grey", "positive": "green"}
-        # Create the plots
-        fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+        plt.figure(figsize=(10, 6))  # You can adjust the figure size as needed
+        sns.scatterplot(data=data, x='rating_score', y='sentiment_score', hue='sentiment', s=45)
 
-        # First subplot
-        sns.scatterplot(
-            x="rating_score",
-            y="score1",
-            data=data,
-            ax=axes[0],
-            hue_order=order_legend,
-            palette=custom_palette,
-        )
-        axes[0].set_title("Sentiment Analysis vs Rating Score")
-
-        # Second subplot
-        sns.countplot(x="rating_score", hue="label3", data=data, ax=axes[1])
-        axes[1].set_title(
-            "Positive/Neutral/Negative Sentiment Analysis Distribution per Rating Score"
-        )
-        axes[1].legend(title="Sentiment", loc="upper left")
-
-        plt.tight_layout()
-
-        # Show the plot in Streamlit
-        st.pyplot(fig)
+        # Display the plot in Streamlit
+        st.pyplot(plt)
+        st.subheader('Viewing All Data')
+        st.write('''The plot maps 'rating_score' along the x-axis and 'sentiment_score' along the y-axis. Points on the scatter plot are color-coded to represent three categories of sentiment: positive (blue), neutral (orange), and negative (green). Most of the data points appear to be concentrated at the higher end of the rating scale (closer to 5.0), suggesting a large number of positive sentiment scores. The spread and density of points suggest that higher rating scores correlate with more positive sentiment.''')
 
 elif page == "Text Classification":
 
@@ -237,17 +143,15 @@ elif page == "Text Classification":
         # Last Months Results
         # Convert the 'time' column to datetime
         data['time'] = pd.to_datetime(data['time'])
-
         # Get the current month and year
         current_month = datetime.now().month
         current_year = datetime.now().year
-
         # Filter data for the current month and year
         current_month_data = data[(data['time'].dt.month == current_month) & (data['time'].dt.year == current_year)]
 
         # Now, proceed with your original code but use the filtered DataFrame
         class_list = list(current_month_data['classif'].unique())
-        selected_rating = st.selectbox("Viewing Patient Feedback by Classification (Current Month Only):", class_list)
+        selected_rating = st.selectbox("Viewing Patient Feedback by Classification (❗️Current Month Only):", class_list)
 
         filtered_class = current_month_data[current_month_data["classif"] == selected_rating]
         st.subheader(f'{selected_rating.capitalize()} ({str(filtered_class.shape[0])})')
@@ -271,7 +175,7 @@ elif page == "Word Cloud":
         data["time"] = pd.to_datetime(data["time"])
         last_30_days = data[data["time"] > data["time"].max() - pd.Timedelta(days=30)]
         text = " ".join(last_30_days["free_text"].dropna())
-        wordcloud = WordCloud(background_color="white", colormap="cividis").generate(
+        wordcloud = WordCloud(background_color="white", colormap="Blues").generate(
             text
         )
         plt.imshow(wordcloud, interpolation="bilinear")
@@ -279,7 +183,7 @@ elif page == "Word Cloud":
         st.pyplot(plt)
     else:
         text = " ".join(data["free_text"].dropna())
-        wordcloud = WordCloud(background_color="white", colormap="cividis").generate(
+        wordcloud = WordCloud(background_color="white", colormap="Blues").generate(
             text
         )
         plt.imshow(wordcloud, interpolation="bilinear")
@@ -287,37 +191,10 @@ elif page == "Word Cloud":
         st.pyplot(plt)
 
 
-elif page == "Show Raw Data":
-    st.image(
-        "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2b.png?raw=true",
-        use_column_width=True,
-    )
-    st.subheader("View Raw Data")
-    # Create a slider for selecting the number of rows to display
-    # Create a slider for selecting the number of rows to display
-    num_rows = st.slider(
-        "Select number of rows to display:", min_value=5, max_value=100
-    )
-
-    # Create a dropdown for selecting the rating_score to filter by
-    selected_rating = st.selectbox("Select rating score to filter by:", [1, 2, 3, 4, 5])
-
-    # Filter the DataFrame based on the selected rating_score
-    filtered_data = data[data["rating_score"] == selected_rating]
-
-    # Use the slider's value to display that many rows from the tail of the filtered DataFrame
-    if num_rows:
-        st.subheader(
-            f"Displaying last {num_rows} rows of raw data with rating score {selected_rating}"
-        )
-        st.write(filtered_data.tail(num_rows))
 
 elif page == "About":
-    st.image(
-        "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true",
-        use_column_width=True,
-    )
-    st.subheader("About this Dashboard")
+
+    st.header("About this App")
     st.markdown(
         """The Friends & Family Test (FFT) is a widely-used feedback tool that aims to capture patient experiences and gauge the overall quality of healthcare services. By employing text classification and sentiment analysis techniques, we can automatically categorize patient feedback into various themes like service quality, staff behavior, or facility cleanliness. This not only streamlines the process of interpreting large volumes of free-text responses but also provides actionable insights. 
              \nSentiment analysis further enhances this by assigning a polarity score to each response, indicating whether the sentiment is positive, negative, or neutral. This multi-layered approach allows healthcare providers to have a nuanced understanding of patient satisfaction. 
