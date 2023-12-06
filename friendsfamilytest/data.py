@@ -1,17 +1,18 @@
 import os
 import time
-
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
-
 import pandas as pd
 from transformers import pipeline
 from sheethelper import SheetHelper
 import seaborn as sns
 import matplotlib.pyplot as plt
 from colorama import init, Fore, Back, Style
-from friendsfamilytest.params import *
 import warnings
 import subprocess
+
+from friendsfamilytest.params import *
+from friendsfamilytest.utils import *
+
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 warnings.filterwarnings("ignore")
 secret_path = os.getenv("SECRET_PATH")
@@ -26,14 +27,10 @@ def load_google_sheet():
     data = sh.gsheet_to_df()
     data.columns = ["time", "rating", "free_text", "do_better"]
     data["time"] = pd.to_datetime(data["time"], format="%d/%m/%Y %H:%M:%S")
-    data["full_text"] = (
-        data["free_text"].astype("str")
-        + " Anything we can do to make your experience better? "
-        + data["do_better"].astype("str")
-    )
-    data["full_text"] = (
-        data["full_text"].str.replace("\s+", " ", regex=True).str.strip()
-    )
+
+    data['do_better'] = data['do_better'].apply(clean_and_replace)
+    data['free_text'] = data['free_text'].apply(clean_and_replace)
+    
     return data
 
 
@@ -44,25 +41,21 @@ def text_classification(data):
     )
 
     # Initialize lists to store labels and scores
-    labels1 = []
-    scores1 = []
-    labels2 = []
-    scores2 = []
+    classif = []
+    classif_scores = []
+
 
     # Iterate over DataFrame rows and classify text
     for _, row in data.iterrows():
-        sentence = row["full_text"]
+        sentence = row["free_text"]
         model_outputs = classifier(sentence)
-        labels1.append(model_outputs[0][0]["label"])
-        scores1.append(model_outputs[0][0]["score"])
-        labels2.append(model_outputs[0][1]["label"])
-        scores2.append(model_outputs[0][1]["score"])
+        classif.append(model_outputs[0][0]["label"])
+        classif_scores.append(model_outputs[0][0]["score"])
+
 
     # Add labels and scores as new columns
-    data["label1"] = labels1
-    data["score1"] = scores1
-    data["label2"] = labels2
-    data["score2"] = scores2
+    data["classif"] = classif
+    data["classif_scores"] = classif_scores
 
     return data
 
@@ -73,19 +66,19 @@ def sentiment_analysis(data):
     )
 
     # Initialize lists to store labels and scores
-    labels3 = []
-    scores3 = []
+    sentiment = []
+    sentiment_score = []
 
     # Iterate over DataFrame rows and classify text
     for _, row in data.iterrows():
-        sentence = row["full_text"]
+        sentence = row["free_text"]
         model_outputs = sentiment_task(sentence)
-        labels3.append(model_outputs[0]["label"])
-        scores3.append(model_outputs[0]["score"])
+        sentiment.append(model_outputs[0]["label"])
+        sentiment_score.append(model_outputs[0]["score"])
 
     # Add labels and scores as new columns
-    data["label3"] = labels3
-    data["score3"] = scores3
+    data["sentiment"] = sentiment
+    data["sentiment_score"] =sentiment_score
 
     return data
 
@@ -107,7 +100,7 @@ def add_rating_score(data):
 
 if __name__ == "__main__":
 
-    print(f"{Fore.WHITE}{Back.BLACK}[*] Starting the script")
+    print(f"{Fore.WHITE}{Back.BLACK}[*] Parsing Friends & Family Test Data")
 
     start_time = time.time()
     print(f"{Fore.RED}[+] Google Sheet Loading")
