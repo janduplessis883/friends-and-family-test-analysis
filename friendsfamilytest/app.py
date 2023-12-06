@@ -31,8 +31,7 @@ st.sidebar.title("Menu")
 page = st.sidebar.selectbox(
     "Choose an option",
     [
-        "Monthly Rating",
-        "Monthly Count",
+        "Monthly Rating + Count",
         "Sentiment Analysis Histogram",
         "Rating & Sentiment Correlation",
         "Text Classification",
@@ -44,7 +43,7 @@ page = st.sidebar.selectbox(
 
 
 # Display content based on the selected page
-if page == "Monthly Rating":
+if page == "Monthly Rating & Count":
     st.image(
         "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true",
         use_column_width=True,
