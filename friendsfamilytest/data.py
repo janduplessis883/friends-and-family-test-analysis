@@ -82,6 +82,22 @@ def sentiment_analysis(data):
 
     return data
 
+def summarization(data):
+    summ = pipeline("summarization", model="Falconsai/text_summarization")
+
+    # Initialize lists to store labels and scores
+    summ_list = []
+
+    # Iterate over DataFrame rows and classify text
+    for _, row in data.iterrows():
+        sentence = row["free_text"]
+        model_outputs = summ(sentence, max_length=15, min_length=1, do_sample=False)
+        summ_list.append(model_outputs[0]["summary_text"])
+
+
+    # Add labels and scores as new columns
+    data["free_text_summary"] = summ_list
+    return data
 
 def add_rating_score(data):
     # Mapping dictionary
@@ -114,7 +130,12 @@ if __name__ == "__main__":
 
     start_time = time.time()
     print(f"{Fore.BLUE}[+] Sentiment Analysis")
-    data = sentiment_analysis(data)  # Corrected spelling of sentiment_analysis
+    data = sentiment_analysis(data)  
+    print(f"Time taken: {time.time() - start_time:.2f} seconds")
+    
+    start_time = time.time()
+    print(f"{Fore.BLUE}[+] Summarise Free_Text")
+    data = summarization(data)  
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     start_time = time.time()
