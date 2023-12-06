@@ -73,8 +73,7 @@ if page == "Monthly Rating":
     # Display the plot in Streamlit
     st.pyplot(fig)
     st.write("Rating Scale 1 - 5")
-
-elif page == "Monthly Count":
+    
     st.subheader("Monthly Count")
     # Resample and count the entries per day
     monthly_count = data_time.resample("M").size()
@@ -100,6 +99,8 @@ elif page == "Monthly Count":
 
     # Show the plot in Streamlit
     st.pyplot(fig)
+
+
 
 elif page == "Sentiment Analysis Histogram":
     st.image(
