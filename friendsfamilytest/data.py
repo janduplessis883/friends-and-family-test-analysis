@@ -144,10 +144,10 @@ if __name__ == "__main__":
     data = sentiment_analysis(data)  
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
     
-    start_time = time.time()
-    print(f"{Fore.BLUE}[+] Summarise Free_Text")
-    data = summarization(data)  
-    print(f"Time taken: {time.time() - start_time:.2f} seconds")
+    # start_time = time.time()
+    # print(f"{Fore.BLUE}[+] Summarise Free_Text")
+    # data = summarization(data)  
+    # print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     start_time = time.time()
     print(f"{Fore.BLUE}[+] Rating score added")
