@@ -28,9 +28,9 @@ def load_google_sheet():
     data.columns = ["time", "rating", "free_text", "do_better"]
     data["time"] = pd.to_datetime(data["time"], format="%d/%m/%Y %H:%M:%S")
 
-    data['do_better'] = data['do_better'].apply(clean_and_replace)
-    data['free_text'] = data['free_text'].apply(clean_and_replace)
-    
+    data["do_better"] = data["do_better"].apply(clean_and_replace)
+    data["free_text"] = data["free_text"].apply(clean_and_replace)
+
     return data
 
 
@@ -44,14 +44,12 @@ def text_classification(data):
     classif = []
     classif_scores = []
 
-
     # Iterate over DataFrame rows and classify text
     for _, row in data.iterrows():
         sentence = row["free_text"]
         model_outputs = classifier(sentence)
         classif.append(model_outputs[0][0]["label"])
         classif_scores.append(model_outputs[0][0]["score"])
-
 
     # Add labels and scores as new columns
     data["classif"] = classif
@@ -78,9 +76,10 @@ def sentiment_analysis(data):
 
     # Add labels and scores as new columns
     data["sentiment"] = sentiment
-    data["sentiment_score"] =sentiment_score
+    data["sentiment_score"] = sentiment_score
 
     return data
+
 
 def summarization(data):
     summ = pipeline("summarization", model="Falconsai/text_summarization")
@@ -91,24 +90,30 @@ def summarization(data):
     # Iterate over DataFrame rows and classify text
     for _, row in data.iterrows():
         sentence = row["free_text"]
-        if sentence != '':
+        if sentence != "":
             sentence_length = len(sentence.split())
             if sentence_length > 10:
-                model_outputs = summ(sentence, max_length=int(sentence_length - (sentence_length/3)), min_length=1, do_sample=False)
+                model_outputs = summ(
+                    sentence,
+                    max_length=int(sentence_length - (sentence_length / 3)),
+                    min_length=1,
+                    do_sample=False,
+                )
                 summ_list.append(model_outputs[0]["summary_text"])
-                print(f'{Fore.RED}{sentence}')
+                print(f"{Fore.RED}{sentence}")
                 print(model_outputs[0]["summary_text"])
             else:
-                summ_list.append('')
+                summ_list.append("")
         else:
-            summ_list.append('')
+            summ_list.append("")
     data["free_text_summary"] = summ_list
-    
+
     return data
 
     # Add labels and scores as new columns
     data["free_text_summary"] = summ_list
     return data
+
 
 def add_rating_score(data):
     # Mapping dictionary
@@ -126,14 +131,13 @@ def add_rating_score(data):
 
 
 if __name__ == "__main__":
-
     print(f"{Fore.WHITE}{Back.BLACK}[*] Parsing Friends & Family Test Data")
 
     start_time = time.time()
     print(f"{Fore.RED}[+] Google Sheet Loading")
     data = load_google_sheet()
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
-    
+
     start_time = time.time()
     print(f"{Fore.BLUE}[+] Rating score added")
     data = add_rating_score(data)
@@ -146,12 +150,12 @@ if __name__ == "__main__":
 
     start_time = time.time()
     print(f"{Fore.BLUE}[+] Sentiment Analysis")
-    data = sentiment_analysis(data)  
+    data = sentiment_analysis(data)
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
-    
+
     # start_time = time.time()
     # print(f"{Fore.BLUE}[+] Summarise Free_Text")
-    # data = summarization(data)  
+    # data = summarization(data)
     # print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     start_time = time.time()
@@ -176,4 +180,3 @@ if __name__ == "__main__":
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     print(f"{Fore.YELLOW}[i] ✅ data.csv push to GitHub successful")
-

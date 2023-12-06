@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 def load_data():
-    df = pd.read_csv('friendsfamilytest/data/data.csv')
+    df = pd.read_csv("friendsfamilytest/data/data.csv")
     return df
 
 
@@ -33,7 +33,7 @@ page = st.sidebar.selectbox(
     "Choose an option",
     [
         "Monthly Rating & Count",
-        "Rating & Sentiment Correlation",
+        "Rating & Sentiment Analysis Correlation",
         "Text Classification",
         "Word Cloud",
         "About",
@@ -49,8 +49,6 @@ if page == "Monthly Rating & Count":
     )
 
     # Plot monthly averages
-    st.subheader("Average Monthly Rating")
-    st.write('''The Friends and Family Test (FFT) is a feedback tool used in the healthcare sector, particularly in the UK's National Health Service (NHS), to help measure patient satisfaction with services. It allows patients to provide feedback on their experience with a particular service, including General Practitioner (GP) surgeries. The test is straightforward, usually asking whether the patient would recommend the service to friends and family if needed. Patients can typically respond with options like "extremely likely," "likely," "neither likely nor unlikely," "unlikely," "extremely unlikely," and "don't know."''')
 
     fig, ax = plt.subplots(figsize=(10, 4))
     sns.lineplot(
@@ -71,13 +69,16 @@ if page == "Monthly Rating & Count":
         )  # horizontal alignment can be left, right or center
 
     # Display the plot in Streamlit
-    ax.yaxis.grid(True, linestyle='--', linewidth=0.5, color='#888888')
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
     st.pyplot(fig)
-    
-    
-    st.subheader("No of Reviews per Month")
-    st.write("""
-A "FFT (Friends and Family Test) Count per Month" plot is a visual representation used to display the number of responses received for the FFT in a GP surgery over a series of months. This type of plot is particularly useful for understanding patient engagement and the volume of feedback over time. """)
+
+    st.subheader("Average Monthly Rating")
+    st.write(
+        '''The Friends and Family Test (FFT) is a feedback tool used in the healthcare sector, particularly in the UK's National Health Service (NHS), to help measure patient satisfaction with services. It allows patients to provide feedback on their experience with a particular service, including General Practitioner (GP) surgeries. The test is straightforward, usually asking whether the patient would recommend the service to friends and family if needed. Patients can typically respond with options like "extremely likely," "likely," "neither likely nor unlikely," "unlikely," "extremely unlikely," and "don't know."'''
+    )
+
+    st.markdown("---")
+
     # Resample and count the entries per day
     monthly_count = data_time.resample("M").size()
     # Reset index to convert Series to DataFrame
@@ -99,75 +100,105 @@ A "FFT (Friends and Family Test) Count per Month" plot is a visual representatio
         rotation=45,
     )
     plt.title("Friend & Family Test Responses per Month")
-    ax.yaxis.grid(True, linestyle='--', linewidth=0.5, color='#888888')
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
     # Show the plot in Streamlit
     st.pyplot(fig)
 
+    st.subheader("No of Reviews per Month")
+    st.write(
+        """A "FFT (Friends and Family Test) Count per Month" plot is a visual representation used to display the number of responses received for the FFT in a GP surgery over a series of months. This type of plot is particularly useful for understanding patient engagement and the volume of feedback over time. """
+    )
 
 
-
-elif page == "Rating & Sentiment Correlation":
-
+elif page == "Rating & Sentiment Analysis Correlation":
     st.header("Sentiment Anaylsis & Rating Correlation")
 
     if st.checkbox("Review Last Month Only"):
-        data['time'] = pd.to_datetime(data['time'])
+        data["time"] = pd.to_datetime(data["time"])
         # Get the current month and year
         current_month = datetime.now().month
         current_year = datetime.now().year
         # Filter data for the current month and year
-        current_month_data = data[(data['time'].dt.month == current_month) & (data['time'].dt.year == current_year)]
+        current_month_data = data[
+            (data["time"].dt.month == current_month)
+            & (data["time"].dt.year == current_year)
+        ]
 
         plt.figure(figsize=(10, 6))  # You can adjust the figure size as needed
-        sns.scatterplot(data=current_month_data, x='rating_score', y='sentiment_score', hue='sentiment', s=45)
+        sns.scatterplot(
+            data=current_month_data,
+            x="rating_score",
+            y="sentiment_score",
+            hue="sentiment",
+            s=45,
+        )
 
         # Display the plot in Streamlit
         st.pyplot(plt)
         st.subheader("Viewing Last Month's Data Only")
-        st.write('''The plot maps 'rating_score' along the x-axis and 'sentiment_score' along the y-axis. Points on the scatter plot are color-coded to represent three categories of sentiment: positive (blue), neutral (orange), and negative (green). Most of the data points appear to be concentrated at the higher end of the rating scale (closer to 5.0), suggesting a large number of positive sentiment scores. The spread and density of points suggest that higher rating scores correlate with more positive sentiment.''')
+        st.write(
+            """The plot maps 'rating_score' along the x-axis and 'sentiment_score' along the y-axis. Points on the scatter plot are color-coded to represent three categories of sentiment: positive (blue), neutral (orange), and negative (green). Most of the data points appear to be concentrated at the higher end of the rating scale (closer to 5.0), suggesting a large number of positive sentiment scores. The spread and density of points suggest that higher rating scores correlate with more positive sentiment."""
+        )
 
     else:
         plt.figure(figsize=(10, 6))  # You can adjust the figure size as needed
-        sns.scatterplot(data=data, x='rating_score', y='sentiment_score', hue='sentiment', s=45)
+        sns.scatterplot(
+            data=data, x="rating_score", y="sentiment_score", hue="sentiment", s=45
+        )
 
         # Display the plot in Streamlit
         st.pyplot(plt)
-        st.subheader('Viewing All Data')
-        st.write('''The plot maps 'rating_score' along the x-axis and 'sentiment_score' along the y-axis. Points on the scatter plot are color-coded to represent three categories of sentiment: positive (blue), neutral (orange), and negative (green). Most of the data points appear to be concentrated at the higher end of the rating scale (closer to 5.0), suggesting a large number of positive sentiment scores. The spread and density of points suggest that higher rating scores correlate with more positive sentiment.''')
+        st.subheader("Viewing All Data")
+        st.write(
+            """The plot maps 'rating_score' along the x-axis and 'sentiment_score' along the y-axis. Points on the scatter plot are color-coded to represent three categories of sentiment: positive (blue), neutral (orange), and negative (green). Most of the data points appear to be concentrated at the higher end of the rating scale (closer to 5.0), suggesting a large number of positive sentiment scores. The spread and density of points suggest that higher rating scores correlate with more positive sentiment."""
+        )
 
 elif page == "Text Classification":
-
     st.header("Text Classification")
-    
+
     if st.checkbox("Review Last Month Only"):
         # Last Months Results
         # Convert the 'time' column to datetime
-        data['time'] = pd.to_datetime(data['time'])
+        data["time"] = pd.to_datetime(data["time"])
         # Get the current month and year
         current_month = datetime.now().month
         current_year = datetime.now().year
         # Filter data for the current month and year
-        current_month_data = data[(data['time'].dt.month == current_month) & (data['time'].dt.year == current_year)]
+        current_month_data = data[
+            (data["time"].dt.month == current_month)
+            & (data["time"].dt.year == current_year)
+        ]
 
         # Now, proceed with your original code but use the filtered DataFrame
-        class_list = list(current_month_data['classif'].unique())
-        selected_rating = st.selectbox("Viewing Patient Feedback by Classification (❗️Current Month Only):", class_list)
+        class_list = list(current_month_data["classif"].unique())
+        selected_rating = st.selectbox(
+            "Viewing Patient Feedback by Classification (❗️Current Month Only):",
+            class_list,
+        )
 
-        filtered_class = current_month_data[current_month_data["classif"] == selected_rating]
-        st.subheader(f'{selected_rating.capitalize()} ({str(filtered_class.shape[0])})')
-        for text in filtered_class['free_text']:  # Assuming 'free_text' is the column with the text you want to display
-            if str(text) != 'nan':
-                st.write('- ' + str(text))
-        
+        filtered_class = current_month_data[
+            current_month_data["classif"] == selected_rating
+        ]
+        st.subheader(f"{selected_rating.capitalize()} ({str(filtered_class.shape[0])})")
+        for text in filtered_class[
+            "free_text"
+        ]:  # Assuming 'free_text' is the column with the text you want to display
+            if str(text) != "nan":
+                st.write("- " + str(text))
+
     else:
-        class_list = list(data['classif'].unique())
-        selected_rating = st.selectbox("Viewing Patient Feedback by Classification (All Reviews):", class_list)
-        
+        class_list = list(data["classif"].unique())
+        selected_rating = st.selectbox(
+            "Viewing Patient Feedback by Classification (✅ All Reviews):", class_list
+        )
+
         filtered_class = data[data["classif"] == selected_rating]
-        st.subheader(f'{selected_rating.capitalize()} ({str(filtered_class.shape[0])})')
-        for text in filtered_class['free_text']:  # Assuming 'Review' is the column with the text you want to display
-            if str(text) != 'nan':
-                st.write('- ' + str(text))
+        st.subheader(f"{selected_rating.capitalize()} ({str(filtered_class.shape[0])})")
+        for text in filtered_class[
+            "free_text"
+        ]:  # Assuming 'Review' is the column with the text you want to display
+            if str(text) != "nan":
+                st.write("- " + str(text))
 
 elif page == "Word Cloud":
     st.header("Word Cloud")
@@ -175,31 +206,35 @@ elif page == "Word Cloud":
         data["time"] = pd.to_datetime(data["time"])
         last_30_days = data[data["time"] > data["time"].max() - pd.Timedelta(days=30)]
         text = " ".join(last_30_days["free_text"].dropna())
-        wordcloud = WordCloud(background_color="white", colormap="Blues").generate(
-            text
-        )
+        wordcloud = WordCloud(background_color="white", colormap="Blues").generate(text)
         plt.imshow(wordcloud, interpolation="bilinear")
         plt.axis("off")
         st.pyplot(plt)
     else:
         text = " ".join(data["free_text"].dropna())
-        wordcloud = WordCloud(background_color="white", colormap="Blues").generate(
-            text
-        )
+        wordcloud = WordCloud(background_color="white", colormap="Blues").generate(text)
         plt.imshow(wordcloud, interpolation="bilinear")
         plt.axis("off")
         st.pyplot(plt)
 
 
-
 elif page == "About":
-
     st.header("About this App")
+    st.subheader("Welcome to the Friends & Family Test (FFT) Dashboard")
     st.markdown(
-        """The Friends & Family Test (FFT) is a widely-used feedback tool that aims to capture patient experiences and gauge the overall quality of healthcare services. By employing text classification and sentiment analysis techniques, we can automatically categorize patient feedback into various themes like service quality, staff behavior, or facility cleanliness. This not only streamlines the process of interpreting large volumes of free-text responses but also provides actionable insights. 
-             \nSentiment analysis further enhances this by assigning a polarity score to each response, indicating whether the sentiment is positive, negative, or neutral. This multi-layered approach allows healthcare providers to have a nuanced understanding of patient satisfaction. 
-             \nIt identifies areas for improvement, recognizes outstanding service, and ultimately, helps in making data-driven decisions to enhance patient care.
-             \n**Sentiment Analysis** - 🤗HuggingFace: `cardiffnlp/twitter-roberta-base-sentiment-latest`
-             \n**Text Classification** - 🤗HuggingFace: `SamLowe/roberta-base-go_emotions`
-             \n Dashboard by [janduplessis883](https://github.com/janduplessis883)"""
+        """The FFT is a cornerstone of patient feedback, offering invaluable insights into the quality of healthcare services through the eyes of those who matter most — the patients. Our dashboard harnesses the power of advanced text classification and sentiment analysis to seamlessly sift through and categorize a wealth of patient feedback into distinct themes.
+
+\nWhat does this mean for healthcare? It translates patient voices into actionable data. By scrutinizing the sentiment behind each response, whether positive, negative, or neutral, we assign a nuanced polarity score that goes beyond mere numbers. It's a deep dive into patient satisfaction, providing a clear view of performance and pinpointing specific areas that need attention or deserve applause.
+
+\nHealthcare providers gain a comprehensive understanding of patient experiences, allowing them to celebrate excellence in care and address areas needing refinement. It's more than a feedback loop; it's a pathway to data-driven enhancements in patient care.
+
+\nThis dashboard draws on data from a dedicated GP surgery in West London, reflecting real-world applications of patient-centered healthcare analysis.
+
+\nWelcome aboard — let's navigate the nuances of patient feedback together and steer towards exceptional healthcare delivery.
+             \n Streamlit App by [janduplessis883](https://github.com/janduplessis883)"""
+    )
+    st.markdown("---")
+    st.image(
+        "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/about.png?raw=true",
+        width=200,
     )
