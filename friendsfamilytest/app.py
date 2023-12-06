@@ -189,7 +189,7 @@ elif page == "Text Classification":
     else:
         class_list = list(data["classif"].unique())
         selected_rating = st.selectbox(
-            "Viewing Patient Feedback by Classification (✅ All Reviews):", class_list
+            "Viewing Patient Feedback by Classification ( ✅ All Reviews):", class_list
         )
 
         filtered_class = data[data["classif"] == selected_rating]
