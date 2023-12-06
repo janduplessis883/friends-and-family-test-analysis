@@ -133,6 +133,11 @@ if __name__ == "__main__":
     print(f"{Fore.RED}[+] Google Sheet Loading")
     data = load_google_sheet()
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
+    
+    start_time = time.time()
+    print(f"{Fore.BLUE}[+] Rating score added")
+    data = add_rating_score(data)
+    print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     start_time = time.time()
     print(f"{Fore.BLUE}[+] Text Classification")
@@ -148,11 +153,6 @@ if __name__ == "__main__":
     # print(f"{Fore.BLUE}[+] Summarise Free_Text")
     # data = summarization(data)  
     # print(f"Time taken: {time.time() - start_time:.2f} seconds")
-
-    start_time = time.time()
-    print(f"{Fore.BLUE}[+] Rating score added")
-    data = add_rating_score(data)
-    print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     start_time = time.time()
     print(f"{Fore.YELLOW}[i] 💾 Data saved to '/data/data.csv'")
