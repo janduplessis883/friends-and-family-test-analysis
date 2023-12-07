@@ -126,13 +126,17 @@ elif page == "Rating & Sentiment Analysis Correlation":
         ]
 
         plt.figure(figsize=(10, 6))  # You can adjust the figure size as needed
-        sns.scatterplot(
+        scatter_plot = sns.scatterplot(
             data=current_month_data,
             x="rating_score",
             y="sentiment_score",
             hue="sentiment",
-            s=45,
+            s=55,
         )
+
+        # Setting x-axis ticks to 1, 2, 3, 4, 5
+        scatter_plot.set_xticks([0.5, 1, 2, 3, 4, 5])
+        plt.grid(axis='y', color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
         # Display the plot in Streamlit
         st.pyplot(plt)
@@ -143,9 +147,17 @@ elif page == "Rating & Sentiment Analysis Correlation":
 
     else:
         plt.figure(figsize=(10, 6))  # You can adjust the figure size as needed
-        sns.scatterplot(
-            data=data, x="rating_score", y="sentiment_score", hue="sentiment", s=45
+        scatter_plot = sns.scatterplot(
+            data=data,
+            x="rating_score",
+            y="sentiment_score",
+            hue="sentiment",
+            s=55,
         )
+
+        # Setting x-axis ticks to 1, 2, 3, 4, 5
+        scatter_plot.set_xticks([0.5, 1, 2, 3, 4, 5])
+        plt.grid(axis='y', color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
         # Display the plot in Streamlit
         st.pyplot(plt)
