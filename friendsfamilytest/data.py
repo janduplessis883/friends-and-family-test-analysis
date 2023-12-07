@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from colorama import init, Fore, Back, Style
 import warnings
 import subprocess
+from datetime import datetime
 
 from friendsfamilytest.params import *
 from friendsfamilytest.utils import *
@@ -173,7 +174,13 @@ if __name__ == "__main__":
 
     subprocess.run(["git", "add", "."])
     print(f"{Fore.RED}[+] Git: commit")
-    message = "Automated commit from Python script 2"
+    
+    # Get the current date and time
+    current_timestamp = datetime.now()
+    # Format the timestamp to include date, hour, and minute
+    formatted_timestamp = current_timestamp.strftime("%Y-%m-%d %H:%M")
+
+    message = f"Automated commit from Python script - {formatted_timestamp}"
     subprocess.run(["git", "commit", "-m", message])
     print(f"{Fore.RED}[+] Git: push to remote {branch}")
     subprocess.run(["git", "push", remote, branch])
