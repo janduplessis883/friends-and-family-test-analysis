@@ -338,10 +338,22 @@ elif page == "About":
 \nWelcome aboard — let's navigate the nuances of patient feedback together and steer towards exceptional healthcare delivery.
              \n Streamlit App by [janduplessis883](https://github.com/janduplessis883)"""
     )
+
     st.markdown("---")
-    st.image(
+    
+    col1, col2 = st.columns(2)
+
+    # Use 'col1' to display content in the first column
+    with col1:
+        st.image(
         "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/about.png?raw=true",
         width=200,
     )
-    
-    
+
+    # Use 'col2' to display content in the second column
+    with col2:
+        st.image(
+            "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/hf-logo-with-title.png?raw=true",
+            width=200,
+        )
+        st.markdown("**Text Classification** and **Sentiment Analysis** by Huggingface.co")
