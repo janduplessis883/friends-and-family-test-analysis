@@ -34,8 +34,9 @@ page = st.sidebar.selectbox(
     [
         "Monthly Rating & Count",
         "Rating & Sentiment Analysis Correlation",
-        "Text Classification",
+        "Feedback Classification",
         "Word Cloud",
+        "Improvement Opportunities",
         "About",
     ],
 )
@@ -153,8 +154,8 @@ elif page == "Rating & Sentiment Analysis Correlation":
             """The plot maps 'rating_score' along the x-axis and 'sentiment_score' along the y-axis. Points on the scatter plot are color-coded to represent three categories of sentiment: positive (blue), neutral (orange), and negative (green). Most of the data points appear to be concentrated at the higher end of the rating scale (closer to 5.0), suggesting a large number of positive sentiment scores. The spread and density of points suggest that higher rating scores correlate with more positive sentiment."""
         )
 
-elif page == "Text Classification":
-    st.header("Text Classification")
+elif page == "Feedback Classification":
+    st.header("Feedback Classification")
 
     if st.checkbox("Review Last Month Only"):
         # Last Months Results
@@ -216,7 +217,34 @@ elif page == "Word Cloud":
         plt.imshow(wordcloud, interpolation="bilinear")
         plt.axis("off")
         st.pyplot(plt)
-
+        
+elif page == "Improvement Opportunities":
+    st.header("Improvement Opportunities")
+    exclude_list = ['fine', 'no', 'nan', 'not', 'ok', 'nothing', 'anything', 'okay', 'nathing', 'good', 'excellent', 'happy', 'professionally', 'professional', 'amazing', 'thanks']
+    
+    if st.checkbox("Display Last Month Only"):
+        st.subheader("Last Month's Suggestions")
+        data["time"] = pd.to_datetime(data["time"])
+        # Get the current month and year
+        current_month = datetime.now().month
+        current_year = datetime.now().year
+        # Filter data for the current month and year
+        current_month_data = data[
+            (data["time"].dt.month == current_month)
+            & (data["time"].dt.year == current_year)
+        ]
+    
+        for text in current_month_data['do_better']:
+            words = str(text).lower().split()  # Split the text into words and convert to lowercase
+            if not any(word in exclude_list for word in words):
+                st.write("- " + str(text))
+                
+    else:
+        st.subheader('All Suggestions')
+        for text in data['do_better']:
+            words = str(text).lower().split()  # Split the text into words and convert to lowercase
+            if not any(word in exclude_list for word in words):
+                st.write("- " + str(text))
 
 elif page == "About":
     st.header("About this App")
