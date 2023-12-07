@@ -48,7 +48,7 @@ if page == "Monthly Rating & Count":
         "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true",
         use_column_width=True,
     )
-    st.header('Monthly Rating & Count')
+    st.header("Average Monthly Rating")
     # Plot monthly averages
 
     fig, ax = plt.subplots(figsize=(10, 4))
@@ -72,8 +72,6 @@ if page == "Monthly Rating & Count":
     # Display the plot in Streamlit
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
     st.pyplot(fig)
-
-    st.subheader("Average Monthly Rating")
     st.write(
         '''The Friends and Family Test (FFT) is a feedback tool used in the healthcare sector, particularly in the UK's National Health Service (NHS), to help measure patient satisfaction with services. It allows patients to provide feedback on their experience with a particular service, including General Practitioner (GP) surgeries. The test is straightforward, usually asking whether the patient would recommend the service to friends and family if needed. Patients can typically respond with options like "extremely likely," "likely," "neither likely nor unlikely," "unlikely," "extremely unlikely," and "don't know."'''
     )
@@ -84,7 +82,10 @@ if page == "Monthly Rating & Count":
 
     # Use the columns
     with col1:
-        st.write(f'Total **Feedback**')
+        st.image(
+            "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/arrow.png?raw=true",
+            use_column_width=True,
+        )
 
     with col2:
         st.markdown(f'# {data.shape[0]}')
@@ -97,7 +98,7 @@ if page == "Monthly Rating & Count":
     monthly_count = data_time.resample("M").size()
     # Reset index to convert Series to DataFrame
     monthly_count = monthly_count.reset_index(name="entry_count")
-
+    st.header("Monthly Responses")
     # Plotting
     fig, ax = plt.subplots(figsize=(12, 6))
     sns.barplot(data=monthly_count, x="time", y="entry_count", color="#2d668f")
@@ -117,8 +118,6 @@ if page == "Monthly Rating & Count":
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
     # Show the plot in Streamlit
     st.pyplot(fig)
-
-    st.subheader("No of Reviews per Month")
     st.write(
         """A "FFT (Friends and Family Test) Count per Month" plot is a visual representation used to display the number of responses received for the FFT in a GP surgery over a series of months. This type of plot is particularly useful for understanding patient engagement and the volume of feedback over time. """
     )
