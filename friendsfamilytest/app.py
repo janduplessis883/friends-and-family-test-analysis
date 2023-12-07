@@ -35,7 +35,7 @@ page = st.sidebar.selectbox(
         "Monthly Rating & Count",
         "Rating & Sentiment Analysis Correlation",
         "Feedback Classification",
-        "Word Cloud",
+        "Feedback Word Cloud",
         "Improvement Opportunities",
         "About",
     ],
@@ -48,7 +48,7 @@ if page == "Monthly Rating & Count":
         "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true",
         use_column_width=True,
     )
-
+    st.header('Monthly Rating & Count')
     # Plot monthly averages
 
     fig, ax = plt.subplots(figsize=(10, 4))
@@ -112,7 +112,7 @@ if page == "Monthly Rating & Count":
 
 
 elif page == "Rating & Sentiment Analysis Correlation":
-    st.header("Sentiment Anaylsis & Rating Correlation")
+    st.header("Rating & Sentiment Analysis Correlation")
 
     if st.checkbox("Review Last Month Only"):
         data["time"] = pd.to_datetime(data["time"])
@@ -201,12 +201,19 @@ elif page == "Feedback Classification":
             if str(text) != "nan":
                 st.write("- " + str(text))
 
-elif page == "Word Cloud":
-    st.header("Word Cloud")
+elif page == "Feedback Word Cloud":
+    st.header("Feedback Word Cloud")
     if st.checkbox("Display Last Month Only"):
         data["time"] = pd.to_datetime(data["time"])
-        last_30_days = data[data["time"] > data["time"].max() - pd.Timedelta(days=30)]
-        text = " ".join(last_30_days["free_text"].dropna())
+        # Get the current month and year
+        current_month = datetime.now().month
+        current_year = datetime.now().year
+        # Filter data for the current month and year
+        current_month_data = data[
+            (data["time"].dt.month == current_month)
+            & (data["time"].dt.year == current_year)
+        ]
+        text = " ".join(current_month_data["free_text"].dropna())
         wordcloud = WordCloud(background_color="white", colormap="Blues").generate(text)
         plt.imshow(wordcloud, interpolation="bilinear")
         plt.axis("off")
@@ -220,7 +227,7 @@ elif page == "Word Cloud":
         
 elif page == "Improvement Opportunities":
     st.header("Improvement Opportunities")
-    exclude_list = ['fine', 'no', 'nan', 'not', 'ok', 'nothing', 'anything', 'okay', 'nathing', 'good', 'excellent', 'happy', 'professionally', 'professional', 'amazing', 'thanks']
+    exclude_list = ['fine', 'no', 'nan', 'not', 'ok', 'nothing', 'anything', 'okay', 'nathing', 'good', 'excellent', 'happy', 'professionally', 'professional', 'amazing', 'thanks', 'satisfied']
     
     if st.checkbox("Display Last Month Only"):
         st.subheader("Last Month's Suggestions")
