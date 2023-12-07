@@ -79,6 +79,19 @@ if page == "Monthly Rating & Count":
     )
 
     st.markdown("---")
+    # Create two columns
+    col1, col2 = st.columns(2)
+
+    # Use the columns
+    with col1:
+        st.write(f'Total **Feedback**')
+
+    with col2:
+        st.markdown(f'# {data.shape[0]}')
+        st.write(f'Total **Feedback**')
+    
+    
+    st.markdown("---")
 
     # Resample and count the entries per day
     monthly_count = data_time.resample("M").size()
