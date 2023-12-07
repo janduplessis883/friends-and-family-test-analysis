@@ -71,10 +71,14 @@ if page == "Monthly Rating & Count":
 
     # Display the plot in Streamlit
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_visible(False)
     st.pyplot(fig)
-    st.write(
-        '''The Friends and Family Test (FFT) is a feedback tool used in the healthcare sector, particularly in the UK's National Health Service (NHS), to help measure patient satisfaction with services. It allows patients to provide feedback on their experience with a particular service, including General Practitioner (GP) surgeries. The test is straightforward, usually asking whether the patient would recommend the service to friends and family if needed. Patients can typically respond with options like "extremely likely," "likely," "neither likely nor unlikely," "unlikely," "extremely unlikely," and "don't know."'''
-    )
+    st.markdown(
+        '''The Friends and Family Test (FFT) is a feedback tool used in the healthcare sector, particularly in the UK's National Health Service (NHS), to help measure patient satisfaction with services. It allows patients to provide feedback on their experience with a particular service, including General Practitioner (GP) surgeries. The test is straightforward, usually asking whether the patient would recommend the service to friends and family if needed. 
+        \nPatients can typically respond with options like "extremely likely," "likely," "neither likely nor unlikely," "unlikely," "extremely unlikely," and "don't know." 
+        \nThis visualization aids in quickly assessing the performance and patient satisfaction over the months in question.''')
 
     st.markdown("---")
     # Create two columns
@@ -89,8 +93,7 @@ if page == "Monthly Rating & Count":
 
     with col2:
         st.markdown(f'# {data.shape[0]}')
-        st.write(f'Total **Feedback**')
-    
+        st.write(f'Total **Feedback** since Aug 23.')
     
     st.markdown("---")
 
@@ -114,8 +117,23 @@ if page == "Monthly Rating & Count":
         ],
         rotation=45,
     )
+
     plt.title("Friend & Family Test Responses per Month")
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+
+    # Removing top, left and right borders
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+
+    # Annotating each bar with the height (number of entries)
+    for p in ax.patches:
+        ax.annotate(f'{int(p.get_height())}', 
+                    (p.get_x() + p.get_width() / 2., p.get_height()), 
+                    ha='center', va='center', 
+                    xytext=(0, 10), 
+                    textcoords='offset points')
+
     # Show the plot in Streamlit
     st.pyplot(fig)
     st.write(
@@ -137,7 +155,7 @@ elif page == "Rating & Sentiment Analysis Correlation":
             & (data["time"].dt.year == current_year)
         ]
 
-        plt.figure(figsize=(10, 6))  # You can adjust the figure size as needed
+        plt.figure(figsize=(10, 6))  # Adjusting the figure size
         scatter_plot = sns.scatterplot(
             data=current_month_data,
             x="rating_score",
@@ -150,8 +168,14 @@ elif page == "Rating & Sentiment Analysis Correlation":
         scatter_plot.set_xticks([0.5, 1, 2, 3, 4, 5])
         plt.grid(axis='y', color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
 
+        # Removing the left, top, and right spines
+        scatter_plot.spines['left'].set_visible(False)
+        scatter_plot.spines['top'].set_visible(False)
+        scatter_plot.spines['right'].set_visible(False)
+
         # Display the plot in Streamlit
         st.pyplot(plt)
+        
         st.subheader("Viewing Last Month's Data Only")
         st.write(
             """The plot maps 'rating_score' along the x-axis and 'sentiment_score' along the y-axis. Points on the scatter plot are color-coded to represent three categories of sentiment: positive (blue), neutral (orange), and negative (green). Most of the data points appear to be concentrated at the higher end of the rating scale (closer to 5.0), suggesting a large number of positive sentiment scores. The spread and density of points suggest that higher rating scores correlate with more positive sentiment."""
@@ -170,6 +194,11 @@ elif page == "Rating & Sentiment Analysis Correlation":
         # Setting x-axis ticks to 1, 2, 3, 4, 5
         scatter_plot.set_xticks([0.5, 1, 2, 3, 4, 5])
         plt.grid(axis='y', color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
+        
+        # Removing the left, top, and right spines
+        scatter_plot.spines['left'].set_visible(False)
+        scatter_plot.spines['top'].set_visible(False)
+        scatter_plot.spines['right'].set_visible(False)
 
         # Display the plot in Streamlit
         st.pyplot(plt)
@@ -196,34 +225,46 @@ elif page == "Feedback Classification":
 
         # Now, proceed with your original code but use the filtered DataFrame
         class_list = list(current_month_data["classif"].unique())
-        selected_rating = st.selectbox(
-            "Viewing Patient Feedback by Classification (❗️Current Month Only):",
+        selected_ratings = st.multiselect(
+            "Viewing Patient Feedback by Classification ( 📅 Current Month Only):",
             class_list,
         )
 
-        filtered_class = current_month_data[
-            current_month_data["classif"] == selected_rating
-        ]
-        st.subheader(f"{selected_rating.capitalize()} ({str(filtered_class.shape[0])})")
-        for text in filtered_class[
-            "free_text"
-        ]:  # Assuming 'free_text' is the column with the text you want to display
-            if str(text) != "nan":
-                st.write("- " + str(text))
+        # Filter based on the selected classifications
+        filtered_classes = current_month_data[current_month_data["classif"].isin(selected_ratings)]
+
+        # If there are no selected ratings, don't display anything
+        if not selected_ratings:
+            st.warning("Please select at least one classification.")
+        else:
+            for rating in selected_ratings:
+                specific_class = filtered_classes[filtered_classes["classif"] == rating]
+                st.subheader(f"{rating.capitalize()} ({str(specific_class.shape[0])})")
+                for text in specific_class["free_text"]:  # Assuming 'free_text' is the column with the text you want to display
+                    if str(text) != "nan":
+                        st.write("- " + str(text))
+
 
     else:
         class_list = list(data["classif"].unique())
-        selected_rating = st.selectbox(
-            "Viewing Patient Feedback by Classification ( ✅ All Reviews):", class_list
+        selected_ratings = st.multiselect(
+            "Viewing Patient Feedback by Classification ( ✅ All Reviews):", 
+            class_list
         )
 
-        filtered_class = data[data["classif"] == selected_rating]
-        st.subheader(f"{selected_rating.capitalize()} ({str(filtered_class.shape[0])})")
-        for text in filtered_class[
-            "free_text"
-        ]:  # Assuming 'Review' is the column with the text you want to display
-            if str(text) != "nan":
-                st.write("- " + str(text))
+        # Filter the data based on the selected classifications
+        filtered_classes = data[data["classif"].isin(selected_ratings)]
+
+        if not selected_ratings:
+            st.warning("Please select at least one classification.")
+        else:
+            for rating in selected_ratings:
+                specific_class = filtered_classes[filtered_classes["classif"] == rating]
+                st.subheader(f"{rating.capitalize()} ({str(specific_class.shape[0])})")
+                for text in specific_class["free_text"]:  # Assuming 'free_text' is the column with the text you want to display
+                    if str(text) != "nan":
+                        st.write("- " + str(text))
+
 
 elif page == "Feedback Word Cloud":
     st.header("Feedback Word Cloud")
