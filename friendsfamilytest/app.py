@@ -204,6 +204,7 @@ elif page == "Feedback Classification":
 elif page == "Feedback Word Cloud":
     st.header("Feedback Word Cloud")
     if st.checkbox("Display Last Month Only"):
+
         data["time"] = pd.to_datetime(data["time"])
         # Get the current month and year
         current_month = datetime.now().month
