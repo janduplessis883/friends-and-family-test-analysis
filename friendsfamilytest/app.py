@@ -320,7 +320,11 @@ elif page == "Improvement Opportunities":
                 st.write("- " + str(text))
 
 elif page == "About":
-    st.header("About this App")
+    st.image(
+    "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true",
+    use_column_width=True,
+    )
+    st.header("About")
     st.subheader("Welcome to the Friends & Family Test (FFT) Dashboard")
     st.markdown(
         """The FFT is a cornerstone of patient feedback, offering invaluable insights into the quality of healthcare services through the eyes of those who matter most — the patients. Our dashboard harnesses the power of advanced text classification and sentiment analysis to seamlessly sift through and categorize a wealth of patient feedback into distinct themes.
