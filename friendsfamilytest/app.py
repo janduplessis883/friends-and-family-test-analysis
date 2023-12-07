@@ -228,7 +228,7 @@ elif page == "Feedback Word Cloud":
         
 elif page == "Improvement Opportunities":
     st.header("Improvement Opportunities")
-    exclude_list = ['fine', 'no', 'nan', 'not', 'ok', 'nothing', 'anything', 'okay', 'nathing', 'good', 'excellent', 'happy', 'professionally', 'professional', 'amazing', 'thanks', 'satisfied']
+    exclude_list = ['fine', 'no', 'nan', 'not', 'ok', 'nothing', 'anything', 'okay', 'nathing', 'good', 'excellent', 'happy', 'professionally', 'professional', 'amazing', 'thanks', 'satisfied', 'yes', 'na', 'thank']
     
     if st.checkbox("Display Last Month Only"):
         st.subheader("Last Month's Suggestions")
