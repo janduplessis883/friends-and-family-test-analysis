@@ -8,7 +8,7 @@ from datetime import datetime
 
 def load_data():
     df = pd.read_csv("friendsfamilytest/data/data.csv")
-    #df['time'] = pd.to_datetime(df['time'], format='%d/%m/%Y %H:%M')
+    df['time'] = pd.to_datetime(df['time'], format='%d/%m/%Y %H:%M')
     return df
 
 
@@ -72,6 +72,7 @@ if page == "Monthly Rating & Count":
 
     # Display the plot in Streamlit
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.xaxis.grid(False)
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
     ax.spines['left'].set_visible(False)
@@ -123,6 +124,7 @@ if page == "Monthly Rating & Count":
 
     plt.title("Friend & Family Test Responses per Month")
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.xaxis.grid(False)
 
     # Removing top, left and right borders
     ax.spines['top'].set_visible(False)
