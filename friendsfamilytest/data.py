@@ -112,47 +112,53 @@ def summarization(data):
     return data
 
 # Zer0-shot classification - do_better column
-def improvement_classification(data):
-    from transformers import AutoModelForSequenceClassification, AutoTokenizer
+from transformers import AutoModelForSequenceClassification, AutoTokenizer, pipeline
+import pandas as pd
 
+def batch_generator(data, column_name, batch_size):
+    for i in range(0, len(data), batch_size):
+        yield data[column_name][i:i + batch_size], i  # Yield the batch and the starting index
+
+def improvement_classification(data, batch_size=16):
+    # Load model and tokenizer
     model = AutoModelForSequenceClassification.from_pretrained("facebook/bart-large-mnli").to('cpu')
     tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-mnli")
 
+    # Create classifier pipeline
     classifier = pipeline("zero-shot-classification", model=model, tokenizer=tokenizer)
 
-
-    # Initialize lists to store labels and scores
-    improvement_labels = []
-    improvement_scores = []
-
+    # Labels
     improvement_label_list = [
-        "Reception",
-        "Ambiance",
-        "Modernization",
-        "Nursing",
-        "Wait-times",
-        "Referrals",
-        "Knowledge",
-        "Staffing",
-        "Morale",
-        "Accessibility",
+        "Reception", "Ambiance", "Modernization", "Nursing", "Wait-times",
+        "Referrals", "Knowledge", "Staffing", "Morale", "Accessibility",
     ]
-    # Iterate over DataFrame rows and classify text
-    count = 1
-    for _, row in data.iterrows():
-        sentence = row["do_better"]
-        if not sentence or sentence.isspace():  # Checks if sentence is empty or whitespace
-            improvement_labels.append('')
-            continue  # Skip this iteration
-        model_outputs = classifier(sentence, improvement_label_list, device='cpu')
-        print(f"Zero-shot Classification Row: {count}")
-        improvement_labels.append(model_outputs["labels"][0][0])
-        count = count + 1
 
-    # Add labels and scores as new columns
+    # Initialize the list to store labels
+    improvement_labels = [''] * len(data)  # Pre-fill with empty strings
+
+    # Iterate over batches
+    for batch, start_index in batch_generator(data, "do_better", batch_size):
+        # Filter out empty or whitespace-only sentences
+        valid_sentences = [(sentence, idx) for idx, sentence in enumerate(batch) if sentence and not sentence.isspace()]
+        sentences, valid_indices = zip(*valid_sentences) if valid_sentences else ([], [])
+        
+        # Classify the batch
+        if sentences:
+            model_outputs = classifier(list(sentences), improvement_label_list, device='cpu')
+            # Assign labels to corresponding indices
+            for output, idx in zip(model_outputs, valid_indices):
+                improvement_labels[start_index + idx] = output["labels"][0]
+                print(f"{Fore.GREEN}Batch processed: {start_index + idx + 1}/{len(data)}")
+
+    # Add labels as a new column
     data["improvement_labels"] = improvement_labels
     
     return data
+
+# Example usage
+# Assuming 'data' is your DataFrame and 'do_better' is the column with sentences
+# data = improvement_classification(data, batch_size=16)
+
 
 
 def add_rating_score(data):
@@ -195,7 +201,7 @@ if __name__ == "__main__":
 
     start_time = time.time()
     print(f"{Fore.BLUE}[+] Improvement Classification - do_better column")
-    data = improvement_classification(data)
+    data = improvement_classification(data, batch_size=16)
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     start_time = time.time()
