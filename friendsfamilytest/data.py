@@ -132,7 +132,7 @@ def improvement_classification(data, batch_size=16):
 
     # Labels
     improvement_labels_list = [
-        "Reception Service",
+        "Reception Services",
         "Ambiance of Facility",
         "Modernization and Upgrades",
         "Nursing Quality",
@@ -141,30 +141,32 @@ def improvement_classification(data, batch_size=16):
         "Staff Knowledge",
         "Staffing Levels",
         "Facility Accessibility",
-        "Quality of Results",
         "Communication Effectiveness",
         "Online Services",
         "Patient Safety",
         "Weekend Service Availability",
-        "Patient Contentment",
         "Location Convenience",
         "Telephone Service",
-        "Physiotherapy Services",
-        "Hydration Facilities",
-        "Seating Comfort",
+        "Hydration and Catering Facilities",
         "Website Usability",
-        "Educational Resources",
         "Medical Equipment",
         "After-Hours Service",
-        "Staff Training",
+        "Staff Training and Development",
         "Diagnostic Services",
         "Prescription Process",
-        "Operational Efficiency",
-        "Medical Advice Quality",
-        "Patient Experience",
-        "Overall Satisfaction",
-        "Appointment Availability",
+        "Quality of Medical Advice",
+        "Specific Aspects of Patient Experience",
+        "Overall Patient Satisfaction",
+        "Appointment System Efficiency",
+        "Efficiency in Test Result Delivery",
+        "Patient Representation and Involvement",
+        "Mental Health Services",
+        "Telehealth and Technology Use",
+        "Social Prescribing Services",
+        "Chronic Disease Managment",
+        "No Improvment Suggestion",
     ]
+
 
 
 

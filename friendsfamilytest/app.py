@@ -38,6 +38,7 @@ page = st.sidebar.selectbox(
         "Feedback Classification",
         "Feedback Word Cloud",
         "Improvement Opportunities",
+        "View Dataframe",
         "About",
     ],
 )
@@ -77,7 +78,7 @@ if page == "Monthly Rating & Count":
     ax.spines['right'].set_visible(False)
     ax.spines['left'].set_visible(False)
     st.pyplot(fig)
-    st.dataframe(data)
+    
     
     st.markdown(
         '''The Friends and Family Test (FFT) is a feedback tool used in the healthcare sector, particularly in the UK's National Health Service (NHS), to help measure patient satisfaction with services. It allows patients to provide feedback on their experience with a particular service, including General Practitioner (GP) surgeries. The test is straightforward, usually asking whether the patient would recommend the service to friends and family if needed. 
@@ -351,11 +352,25 @@ elif page == "Improvement Opportunities":
 
         # Streamlit function to display matplotlib figures
         st.pyplot(plt)
-        st.subheader("Current Month's Suggestions")
-        for text in current_month_data['do_better']:
-            words = str(text).lower().split()  # Split the text into words and convert to lowercase
-            if not any(word in exclude_list for word in words):
-                st.write("- " + str(text))
+        
+        
+        improvement_list = list(current_month_data["improvement_labels"].unique())
+        selected_ratings = st.multiselect(
+            "Select Improvement Categories:", 
+            improvement_list
+        )
+
+        # Filter the data based on the selected classifications
+        # Ensure you're filtering current_month_data, not data
+        if selected_ratings:
+            filtered_classes = current_month_data[current_month_data["improvement_labels"].isin(selected_ratings)]
+            for rating in selected_ratings:
+                specific_class = filtered_classes[filtered_classes["improvement_labels"] == rating]
+                st.subheader(f"{rating.capitalize()} ({str(specific_class.shape[0])})")
+                for text in specific_class["do_better"]:  # Assuming 'do_better' is the column with the text you want to display
+                    st.write("- " + str(text))
+        else:
+            st.warning("Please select at least one classification.")
                 
     else:
         # Calculate value counts
@@ -379,12 +394,30 @@ elif page == "Improvement Opportunities":
 
         # Streamlit function to display matplotlib figures
         st.pyplot(plt)
-        st.subheader('All Suggestions')
-        for text in data['do_better']:
-            words = str(text).lower().split()  # Split the text into words and convert to lowercase
-            if not any(word in exclude_list for word in words):
-                st.write("- " + str(text))
+        
+        improvement_list = list(data["improvement_labels"].unique())
+        selected_ratings = st.multiselect(
+            "Select Improvement Categories:", 
+            improvement_list
+        )
 
+        # Filter the data based on the selected classifications
+        filtered_classes = data[data["improvement_labels"].isin(selected_ratings)]
+
+        if not selected_ratings:
+            st.warning("Please select at least one classification.")
+        else:
+            for rating in selected_ratings:
+                specific_class = filtered_classes[filtered_classes["improvement_labels"] == rating]
+                st.subheader(f"{str(rating).capitalize()} ({str(specific_class.shape[0])})")
+                for text in specific_class["do_better"]:  # Assuming 'free_text' is the column with the text you want to display
+                    st.write("- " + str(text))
+                
+elif page == "View Dataframe":
+    st.header("Dataframe")
+    st.dataframe(data)
+    
+    
 elif page == "About":
     st.image(
     "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true",
