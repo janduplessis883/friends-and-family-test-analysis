@@ -253,7 +253,7 @@ if __name__ == "__main__":
         if f.tell() == 0 or f.read(1) != '\n':
             f.write('\n')
             
-    data.to_csv(f'{DATA_PATH}/data.csv', mode='a', header=True, index=False)
+    data.to_csv(f'{DATA_PATH}/data.csv', mode='a', header=False, index=False)
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     start_time = time.time()
