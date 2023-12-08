@@ -247,7 +247,13 @@ if __name__ == "__main__":
 
     start_time = time.time()
     print(f"{Fore.YELLOW}[i] 💾 Append new data to '/data/data.csv'")
-    data.to_csv(f'{DATA_PATH}/data.csv', mode='a', header=False, index=False)
+    # Check if the CSV file ends with a newline and add one if not
+    with open(f'{DATA_PATH}/data.csv', 'a+', newline='') as f:
+        f.seek(0, 2)  # Move to the end of the file
+        if f.tell() == 0 or f.read(1) != '\n':
+            f.write('\n')
+            
+    data.to_csv(f'{DATA_PATH}/data.csv', mode='a', header=True, index=False)
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     start_time = time.time()
