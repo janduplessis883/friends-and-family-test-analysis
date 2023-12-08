@@ -34,10 +34,10 @@ page = st.sidebar.selectbox(
     "Choose an option",
     [
         "Monthly Rating & Count",
-        "Rating & Sentiment Analysis Correlation",
         "Feedback Classification",
-        "Feedback Word Cloud",
         "Improvement Opportunities",
+        "Rating & Sentiment Analysis Correlation",
+        "Feedback Word Cloud",
         "View Dataframe",
         "About",
     ],
@@ -228,11 +228,34 @@ elif page == "Feedback Classification":
             (data["time"].dt.month == current_month)
             & (data["time"].dt.year == current_year)
         ]
+        
+        # Calculate value counts
+        label_counts = current_month_data['classif'].value_counts(ascending=False) # Use ascending=True to match the order in your image
 
+        # Convert the Series to a DataFrame
+        label_counts_df = label_counts.reset_index()
+        label_counts_df.columns = ['Feedback Classification', 'Counts']
+
+        # Define the palette conditionally based on the category names
+        palette = ['#ddec9c' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#4088a9' for label in label_counts_df['Feedback Classification']]
+
+        # Create a Seaborn bar plot
+        plt.figure(figsize=(10, 8))
+        sns.barplot(x='Counts', y='Feedback Classification', data=label_counts_df, color="#2d668f")
+
+        # Adding titles and labels for clarity
+        plt.title('Counts of Feedback Classification')
+        plt.xlabel('Counts')
+        plt.ylabel('')
+
+        # Streamlit function to display matplotlib figures
+        st.pyplot(plt)
+
+        st.subheader("View Patient Feedback")
         # Now, proceed with your original code but use the filtered DataFrame
-        class_list = list(current_month_data["classif"].unique())   
+        class_list = list(current_month_data["classif"].unique()) 
         selected_ratings = st.multiselect(
-            "Multi-Categorical Classification to Review Feedback ( 📅 Current Month Only):",
+            "Select a Feedback Categories:",
             class_list,
         )
 
@@ -252,9 +275,32 @@ elif page == "Feedback Classification":
 
 
     else:
+        
+        # Calculate value counts
+        label_counts = data['classif'].value_counts(ascending=False) # Use ascending=True to match the order in your image
+
+        # Convert the Series to a DataFrame
+        label_counts_df = label_counts.reset_index()
+        label_counts_df.columns = ['Feedback Classification', 'Counts']
+
+        # Define the palette conditionally based on the category names
+        palette = ['#ddec9c' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#4088a9' for label in label_counts_df['Feedback Classification']]
+
+        # Create a Seaborn bar plot
+        plt.figure(figsize=(10, 8))
+        sns.barplot(x='Counts', y='Feedback Classification', data=label_counts_df, color="#2d668f")
+
+        # Adding titles and labels for clarity
+        plt.title('Counts of Feedback Classification')
+        plt.xlabel('Counts')
+        plt.ylabel('')
+
+        # Streamlit function to display matplotlib figures
+        st.pyplot(plt)
+        st.subheader("View Patient Feedback")
         class_list = list(data["classif"].unique())
         selected_ratings = st.multiselect(
-            "Multi-Categorical Classification to Review Feedback ( ✅ All Reviews):", 
+            "Select Feedback Categories:", 
             class_list
         )
 
@@ -285,6 +331,7 @@ elif page == "Feedback Word Cloud":
             (data["time"].dt.month == current_month)
             & (data["time"].dt.year == current_year)
         ]
+        
         st.subheader("Feedback")
         text = " ".join(current_month_data["free_text"].dropna())
         wordcloud = WordCloud(background_color="white", colormap="Blues").generate(text)
@@ -292,7 +339,7 @@ elif page == "Feedback Word Cloud":
         plt.axis("off")
         st.pyplot(plt)
         st.markdown("---")
-        st.subheader("Improvements")
+        st.subheader("Improvement")
         text2 = " ".join(current_month_data["do_better"].dropna())
         wordcloud = WordCloud(background_color="white", colormap="Reds").generate(text2)
         plt.imshow(wordcloud, interpolation="bilinear")
@@ -306,7 +353,7 @@ elif page == "Feedback Word Cloud":
         plt.axis("off")
         st.pyplot(plt)
         st.markdown("---")
-        st.subheader("Improvements")
+        st.subheader("Improvement")
         text2 = " ".join(data["do_better"].dropna())
         wordcloud = WordCloud(background_color="white", colormap="Reds").generate(text2)
         plt.imshow(wordcloud, interpolation="bilinear")
@@ -315,6 +362,7 @@ elif page == "Feedback Word Cloud":
         
 elif page == "Improvement Opportunities":
     st.header("Improvement Opportunities")
+
     
     
     exclude_list = ['fine', 'no', 'nan', 'not', 'ok', 'nothing', 'anything', 'okay', 'nathing', 'good', 'excellent', 'happy', 'professionally', 'professional', 'amazing', 'thanks', 'satisfied', 'yes', 'na', 'thank']
@@ -339,7 +387,7 @@ elif page == "Improvement Opportunities":
         label_counts_df.columns = ['Improvement Labels', 'Counts']
 
         # Define the palette conditionally based on the category names
-        palette = ['#ddec9c' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#4088a9' for label in label_counts_df['Improvement Labels']]
+        palette = ['#b8babf' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#168aad' for label in label_counts_df['Improvement Labels']]
 
         # Create a Seaborn bar plot
         plt.figure(figsize=(10, 8))
@@ -353,11 +401,12 @@ elif page == "Improvement Opportunities":
         # Streamlit function to display matplotlib figures
         st.pyplot(plt)
         
+        st.subheader("View Patient Improvement Suggestions")
         
         improvement_list = [label for label in label_counts_df['Improvement Labels']]
 
         selected_ratings = st.multiselect(
-            "Select Improvement Categories:", 
+            "Select Categories:", 
             improvement_list
         )
 
@@ -372,7 +421,8 @@ elif page == "Improvement Opportunities":
                     st.write("- " + str(text))
         else:
             st.warning("Please select at least one classification.")
-                
+        
+   
     else:
         # Calculate value counts
         label_counts = data['improvement_labels'].value_counts(ascending=False) # Use ascending=True to match the order in your image
@@ -382,7 +432,7 @@ elif page == "Improvement Opportunities":
         label_counts_df.columns = ['Improvement Labels', 'Counts']
 
         # Define the palette conditionally based on the category names
-        palette = ['#ddec9c' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#4088a9' for label in label_counts_df['Improvement Labels']]
+        palette = ['#b8babf' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#168aad' for label in label_counts_df['Improvement Labels']]
 
         # Create a Seaborn bar plot
         plt.figure(figsize=(10, 8))
@@ -395,11 +445,11 @@ elif page == "Improvement Opportunities":
 
         # Streamlit function to display matplotlib figures
         st.pyplot(plt)
-        
+        st.subheader("View Patient Improvement Suggestions")
         improvement_list = [label for label in label_counts_df['Improvement Labels']]
     
         selected_ratings = st.multiselect(
-            "Select Improvement Categories:", 
+            "Select Categories:", 
             improvement_list
         )
 
@@ -414,10 +464,16 @@ elif page == "Improvement Opportunities":
                 st.subheader(f"{str(rating).capitalize()} ({str(specific_class.shape[0])})")
                 for text in specific_class["do_better"]:  # Assuming 'free_text' is the column with the text you want to display
                     st.write("- " + str(text))
+ 
                 
 elif page == "View Dataframe":
     st.header("Dataframe")
-    st.dataframe(data)
+    # Create a slider and get the number of rows to display
+    num_rows_to_display = st.slider('Select number of rows to display', 5, len(data), 10)
+
+    # Display the specified number of rows from the DataFrame
+    st.dataframe(data.tail(num_rows_to_display))
+
     
     
 elif page == "About":
