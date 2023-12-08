@@ -8,7 +8,7 @@ from datetime import datetime
 
 def load_data():
     df = pd.read_csv("friendsfamilytest/data/data.csv")
-    df['time'] = pd.to_datetime(df['time'], format='%d/%m/%Y %H:%M')
+    df['time'] = pd.to_datetime(df['time'])
     return df
 
 
