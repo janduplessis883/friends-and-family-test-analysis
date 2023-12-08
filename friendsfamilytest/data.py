@@ -33,19 +33,6 @@ def load_google_sheet():
     data["free_text"] = data["free_text"].apply(clean_and_replace)
     return data
 
-def update_datetime_format(df, column_name):
-    """
-    Update the format of a datetime column in a DataFrame.
-
-    :param df: DataFrame containing the datetime column.
-    :param column_name: Name of the column to be formatted.
-    :return: DataFrame with the updated datetime format.
-    """
-
-    # First, ensure the column is in datetime forma
-    df[column_name] = pd.to_datetime(df[column_name])
-
-    return df
 
 # Example usage:
 # Assuming you have a DataFrame 'data' with a datetime column named 'time'
@@ -234,9 +221,9 @@ if __name__ == "__main__":
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
     
     start_time = time.time()
-    print(f"{Fore.RED}[+] Loading Pre-processed data (raw data from data.csv)")
+    print(f"{Fore.RED}[+] Loading Pre-processed data (processed_data from data.csv)")
     processed_data = pd.read_csv(f"{DATA_PATH}/data.csv")
-    processed_data['time'] = pd.to_datetime(processed_data['time'], format="%d/%m/%Y %H:%M")
+    processed_data['time'] = pd.to_datetime(processed_data['time'], dayfirst=True)
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
     
     start_time = time.time()
@@ -265,15 +252,10 @@ if __name__ == "__main__":
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     start_time = time.time()
-    print(f"{Fore.YELLOW}[i] 💾 Append new data to '/data/data.csv'")
-    # Check if the CSV file ends with a newline and add one if not
-    with open(f'{DATA_PATH}/data.csv', 'a+', newline='') as f:
-        f.seek(0, 2)  # Move to the end of the file
-        if f.tell() == 0 or f.read(1) != '\n':
-            f.write('\n')
-            
-    data = update_datetime_format(data, 'time')
-    data.to_csv(f'{DATA_PATH}/data.csv', mode='a', header=False, index=False)
+    print(f"{Fore.YELLOW}[i] 💾 Concat dataframes and save combined_data to '/data/data.csv'")
+    # Concatenate the DataFrames one below the other
+    combined_data = pd.concat([processed_data, data], ignore_index=True)
+    combined_data.to_csv(f'{DATA_PATH}/data.csv', index=False)
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     start_time = time.time()
