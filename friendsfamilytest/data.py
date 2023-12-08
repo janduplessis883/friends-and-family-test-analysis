@@ -46,9 +46,6 @@ def update_datetime_format(df, column_name):
     if not pd.api.types.is_datetime64_any_dtype(df[column_name]):
         df[column_name] = pd.to_datetime(df[column_name])
 
-    # Then, format the datetime column
-    df[column_name] = df[column_name].dt.strftime('%d/%m/%Y %H:%M')
-
     return df
 
 # Example usage:
