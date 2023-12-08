@@ -497,9 +497,9 @@ elif page == "About":
     )
     
     st.markdown("""**Machine Learning** - Various Machine Learning techniques are used to analyse the data:
-- Sentiment Analysis - [Huggingface](https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest) `cardiffnlp/twitter-roberta-base-sentiment-latest`
-- Text Classification of Patient Feedback - [Huggingface](https://huggingface.co/SamLowe/roberta-base-go_emotions) `SamLowe/roberta-base-go_emotions`
-- Zero-shot Classification of Patient Improvement Feedback- [Huggingface](https://huggingface.co/facebook/bart-large-mnli) `facebook/bart-large-mnli`""" )
+- **Sentiment Analysis** - [Huggingface](https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest) `cardiffnlp/twitter-roberta-base-sentiment-latest`
+- **Text Classification** of Patient Feedback - [Huggingface](https://huggingface.co/SamLowe/roberta-base-go_emotions) `SamLowe/roberta-base-go_emotions`
+- **Zero-shot Classification** of Patient Improvement Feedback- [Huggingface](https://huggingface.co/facebook/bart-large-mnli) `facebook/bart-large-mnli`""" )
     st.markdown("Streamlit App by [janduplessis883](https://github.com/janduplessis883)")
     st.markdown("")
     st.markdown("---")
