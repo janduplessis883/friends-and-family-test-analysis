@@ -230,7 +230,7 @@ elif page == "Feedback Classification":
         ]
 
         # Now, proceed with your original code but use the filtered DataFrame
-        class_list = list(current_month_data["classif"].unique())
+        class_list = list(current_month_data["classif"].unique().sort())
         selected_ratings = st.multiselect(
             "Multi-Categorical Classification to Review Feedback ( 📅 Current Month Only):",
             class_list,
@@ -252,7 +252,7 @@ elif page == "Feedback Classification":
 
 
     else:
-        class_list = list(data["classif"].unique())
+        class_list = list(data["classif"].unique().sort())
         selected_ratings = st.multiselect(
             "Multi-Categorical Classification to Review Feedback ( ✅ All Reviews):", 
             class_list
@@ -354,7 +354,7 @@ elif page == "Improvement Opportunities":
         st.pyplot(plt)
         
         
-        improvement_list = list(current_month_data["improvement_labels"].unique())
+        improvement_list = list(current_month_data["improvement_labels"].unique().sort())
         selected_ratings = st.multiselect(
             "Select Improvement Categories:", 
             improvement_list
@@ -395,7 +395,7 @@ elif page == "Improvement Opportunities":
         # Streamlit function to display matplotlib figures
         st.pyplot(plt)
         
-        improvement_list = list(data["improvement_labels"].unique())
+        improvement_list = list(data["improvement_labels"].unique().sort())
         selected_ratings = st.multiselect(
             "Select Improvement Categories:", 
             improvement_list
