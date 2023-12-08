@@ -111,8 +111,47 @@ def summarization(data):
 
     return data
 
+# Zer0-shot classification - do_better column
+def improvement_classification(data):
+    from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+    model = AutoModelForSequenceClassification.from_pretrained("facebook/bart-large-mnli").to('cpu')
+    tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-mnli")
+
+    classifier = pipeline("zero-shot-classification", model=model, tokenizer=tokenizer)
+
+
+    # Initialize lists to store labels and scores
+    improvement_labels = []
+    improvement_scores = []
+
+    improvement_label_list = [
+        "Reception",
+        "Ambiance",
+        "Modernization",
+        "Nursing",
+        "Wait-times",
+        "Referrals",
+        "Knowledge",
+        "Staffing",
+        "Morale",
+        "Accessibility",
+    ]
+    # Iterate over DataFrame rows and classify text
+    count = 1
+    for _, row in data.iterrows():
+        sentence = row["do_better"]
+        if not sentence or sentence.isspace():  # Checks if sentence is empty or whitespace
+            improvement_labels.append('')
+            continue  # Skip this iteration
+        model_outputs = classifier(sentence, improvement_label_list, device='cpu')
+        print(f"Zero-shot Classification Row: {count}")
+        improvement_labels.append(model_outputs["labels"][0][0])
+        count = count + 1
+
     # Add labels and scores as new columns
-    data["free_text_summary"] = summ_list
+    data["improvement_labels"] = improvement_labels
+    
     return data
 
 
@@ -144,20 +183,20 @@ if __name__ == "__main__":
     data = add_rating_score(data)
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
-    start_time = time.time()
-    print(f"{Fore.BLUE}[+] Text Classification")
-    data = text_classification(data)
-    print(f"Time taken: {time.time() - start_time:.2f} seconds")
-
-    start_time = time.time()
-    print(f"{Fore.BLUE}[+] Sentiment Analysis")
-    data = sentiment_analysis(data)
-    print(f"Time taken: {time.time() - start_time:.2f} seconds")
+    # start_time = time.time()
+    # print(f"{Fore.BLUE}[+] Text Classification")
+    # data = text_classification(data)
+    # print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     # start_time = time.time()
-    # print(f"{Fore.BLUE}[+] Summarise Free_Text")
-    # data = summarization(data)
+    # print(f"{Fore.BLUE}[+] Sentiment Analysis")
+    # data = sentiment_analysis(data)
     # print(f"Time taken: {time.time() - start_time:.2f} seconds")
+
+    start_time = time.time()
+    print(f"{Fore.BLUE}[+] Improvement Classification - do_better column")
+    data = improvement_classification(data)
+    print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     start_time = time.time()
     print(f"{Fore.YELLOW}[i] 💾 Data saved to '/data/data.csv'")
