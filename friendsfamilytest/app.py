@@ -93,7 +93,7 @@ if page == "Monthly Rating & Count":
 
     with col2:
         st.markdown(f'# {data.shape[0]}')
-        st.write(f'Total **Feedback** since Aug 23.')
+        st.write(f'Total **Feedback** since Aug 23')
     
     st.markdown("---")
 
@@ -144,7 +144,7 @@ if page == "Monthly Rating & Count":
 elif page == "Rating & Sentiment Analysis Correlation":
     st.header("Rating & Sentiment Analysis Correlation")
 
-    if st.checkbox("Review Last Month Only"):
+    if st.checkbox("Current Month Only"):
         data["time"] = pd.to_datetime(data["time"])
         # Get the current month and year
         current_month = datetime.now().month
@@ -210,7 +210,7 @@ elif page == "Rating & Sentiment Analysis Correlation":
 elif page == "Feedback Classification":
     st.header("Feedback Classification")
 
-    if st.checkbox("Review Last Month Only"):
+    if st.checkbox("Current Month Only"):
         # Last Months Results
         # Convert the 'time' column to datetime
         data["time"] = pd.to_datetime(data["time"])
@@ -226,7 +226,7 @@ elif page == "Feedback Classification":
         # Now, proceed with your original code but use the filtered DataFrame
         class_list = list(current_month_data["classif"].unique())
         selected_ratings = st.multiselect(
-            "Viewing Patient Feedback by Classification ( 📅 Current Month Only):",
+            "Multi-Categorical Classification to Review Feedback ( 📅 Current Month Only):",
             class_list,
         )
 
@@ -248,7 +248,7 @@ elif page == "Feedback Classification":
     else:
         class_list = list(data["classif"].unique())
         selected_ratings = st.multiselect(
-            "Viewing Patient Feedback by Classification ( ✅ All Reviews):", 
+            "Multi-Categorical Classification to Review Feedback ( ✅ All Reviews):", 
             class_list
         )
 
@@ -268,7 +268,7 @@ elif page == "Feedback Classification":
 
 elif page == "Feedback Word Cloud":
     st.header("Feedback Word Cloud")
-    if st.checkbox("Display Last Month Only"):
+    if st.checkbox("Current Month Only"):
 
         data["time"] = pd.to_datetime(data["time"])
         # Get the current month and year
@@ -279,14 +279,30 @@ elif page == "Feedback Word Cloud":
             (data["time"].dt.month == current_month)
             & (data["time"].dt.year == current_year)
         ]
+        st.subheader("Feedback")
         text = " ".join(current_month_data["free_text"].dropna())
         wordcloud = WordCloud(background_color="white", colormap="Blues").generate(text)
         plt.imshow(wordcloud, interpolation="bilinear")
         plt.axis("off")
         st.pyplot(plt)
+        st.markdown("---")
+        st.subheader("Improvement")
+        text2 = " ".join(current_month_data["do_better"].dropna())
+        wordcloud = WordCloud(background_color="white", colormap="Reds").generate(text2)
+        plt.imshow(wordcloud, interpolation="bilinear")
+        plt.axis("off")
+        st.pyplot(plt)
     else:
+        st.subheader("Feedback")
         text = " ".join(data["free_text"].dropna())
         wordcloud = WordCloud(background_color="white", colormap="Blues").generate(text)
+        plt.imshow(wordcloud, interpolation="bilinear")
+        plt.axis("off")
+        st.pyplot(plt)
+        st.markdown("---")
+        st.subheader("Improvement")
+        text2 = " ".join(data["do_better"].dropna())
+        wordcloud = WordCloud(background_color="white", colormap="Reds").generate(text2)
         plt.imshow(wordcloud, interpolation="bilinear")
         plt.axis("off")
         st.pyplot(plt)
@@ -295,7 +311,7 @@ elif page == "Improvement Opportunities":
     st.header("Improvement Opportunities")
     exclude_list = ['fine', 'no', 'nan', 'not', 'ok', 'nothing', 'anything', 'okay', 'nathing', 'good', 'excellent', 'happy', 'professionally', 'professional', 'amazing', 'thanks', 'satisfied', 'yes', 'na', 'thank']
     
-    if st.checkbox("Display Last Month Only"):
+    if st.checkbox("Current Month Only"):
         st.subheader("Last Month's Suggestions")
         data["time"] = pd.to_datetime(data["time"])
         # Get the current month and year
@@ -347,7 +363,7 @@ elif page == "About":
     with col1:
         st.image(
         "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/about.png?raw=true",
-        width=200,
+        width=250,
     )
 
     # Use 'col2' to display content in the second column
