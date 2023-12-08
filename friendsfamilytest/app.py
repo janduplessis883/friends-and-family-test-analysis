@@ -35,7 +35,7 @@ page = st.sidebar.selectbox(
     [
         "Monthly Rating & Count",
         "Feedback Classification",
-        "Improvement Opportunities",
+        "Improvement Suggestions",
         "Rating & Sentiment Analysis Correlation",
         "Feedback Word Cloud",
         "View Dataframe",
@@ -241,8 +241,14 @@ elif page == "Feedback Classification":
 
         # Create a Seaborn bar plot
         plt.figure(figsize=(10, 8))
-        sns.barplot(x='Counts', y='Feedback Classification', data=label_counts_df, color="#2d668f")
-
+        ax = sns.barplot(x='Counts', y='Feedback Classification', data=label_counts_df, color="#2d668f")
+        ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        ax.yaxis.grid(False)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['left'].set_visible(True)
+        ax.spines['bottom'].set_visible(False)
+        
         # Adding titles and labels for clarity
         plt.title('Counts of Feedback Classification')
         plt.xlabel('Counts')
@@ -288,8 +294,13 @@ elif page == "Feedback Classification":
 
         # Create a Seaborn bar plot
         plt.figure(figsize=(10, 8))
-        sns.barplot(x='Counts', y='Feedback Classification', data=label_counts_df, color="#2d668f")
-
+        ax = sns.barplot(x='Counts', y='Feedback Classification', data=label_counts_df, color="#2d668f")
+        ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        ax.yaxis.grid(False)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['left'].set_visible(True)
+        ax.spines['bottom'].set_visible(False)
         # Adding titles and labels for clarity
         plt.title('Counts of Feedback Classification')
         plt.xlabel('Counts')
@@ -360,10 +371,8 @@ elif page == "Feedback Word Cloud":
         plt.axis("off")
         st.pyplot(plt)
         
-elif page == "Improvement Opportunities":
-    st.header("Improvement Opportunities")
-
-    
+elif page == "Improvement Suggestions":
+    st.header("Improvement Suggestions")
     
     exclude_list = ['fine', 'no', 'nan', 'not', 'ok', 'nothing', 'anything', 'okay', 'nathing', 'good', 'excellent', 'happy', 'professionally', 'professional', 'amazing', 'thanks', 'satisfied', 'yes', 'na', 'thank']
     
@@ -387,14 +396,19 @@ elif page == "Improvement Opportunities":
         label_counts_df.columns = ['Improvement Labels', 'Counts']
 
         # Define the palette conditionally based on the category names
-        palette = ['#d9ed92' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#168aad' for label in label_counts_df['Improvement Labels']]
+        palette = ['#5c6853' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#168aad' for label in label_counts_df['Improvement Labels']]
 
         # Create a Seaborn bar plot
         plt.figure(figsize=(10, 8))
-        sns.barplot(x='Counts', y='Improvement Labels', data=label_counts_df, palette=palette)
-
+        ax = sns.barplot(x='Counts', y='Improvement Labels', data=label_counts_df, palette=palette)
+        ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        ax.yaxis.grid(False)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['left'].set_visible(True)
+        ax.spines['bottom'].set_visible(False)
         # Adding titles and labels for clarity
-        plt.title('Counts of Different Improvement Labels')
+        plt.title('Counts of Improvement Categories')
         plt.xlabel('Counts')
         plt.ylabel('')
 
@@ -432,14 +446,19 @@ elif page == "Improvement Opportunities":
         label_counts_df.columns = ['Improvement Labels', 'Counts']
 
         # Define the palette conditionally based on the category names
-        palette = ['#d9ed92' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#168aad' for label in label_counts_df['Improvement Labels']]
+        palette = ['#5c6853' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#168aad' for label in label_counts_df['Improvement Labels']]
 
         # Create a Seaborn bar plot
         plt.figure(figsize=(10, 8))
-        sns.barplot(x='Counts', y='Improvement Labels', data=label_counts_df, palette=palette)
-
+        ax = sns.barplot(x='Counts', y='Improvement Labels', data=label_counts_df, palette=palette)
+        ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        ax.yaxis.grid(False)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['left'].set_visible(True)
+        ax.spines['bottom'].set_visible(False)
         # Adding titles and labels for clarity
-        plt.title('Counts of Different Improvement Labels')
+        plt.title('Counts of Improvement Catergories')
         plt.xlabel('Counts')
         plt.ylabel('')
 
@@ -482,28 +501,27 @@ elif page == "About":
     use_column_width=True,
     )
     st.header("About")
-    st.subheader("Welcome to the Friends & Family Test (FFT) Dashboard")
+    st.subheader("Friends & Family Test (FFT) Dashboard")
     st.markdown(
-        """The FFT is a cornerstone of patient feedback, offering invaluable insights into the quality of healthcare services through the eyes of those who matter most — the patients. Our dashboard harnesses the power of advanced text classification and sentiment analysis to seamlessly sift through and categorize a wealth of patient feedback into distinct themes.
+        """Welcome to our new dashboard, aimed at enhancing how healthcare providers understand and use patient feedback. This tool focuses on the Friends and Family Test (FFT), which is essential for collecting patients' views on healthcare services. Our approach uses advanced text classification and sentiment analysis to organize and interpret this feedback more effectively.
 
-\nWhat does this mean for healthcare? It translates patient voices into actionable data. By scrutinizing the sentiment behind each response, whether positive, negative, or neutral, we assign a nuanced polarity score that goes beyond mere numbers. It's a deep dive into patient satisfaction, providing a clear view of performance and pinpointing specific areas that need attention or deserve applause.
+Here's the core idea: Instead of just counting responses, the dashboard analyzes the sentiments behind them—whether positive, negative, or neutral. It assigns a detailed score to each piece of feedback, allowing for a more nuanced understanding of patient satisfaction. This method helps identify specific areas needing improvement and those that are performing well, based on real patient experiences.
 
-\nHealthcare providers gain a comprehensive understanding of patient experiences, allowing them to celebrate excellence in care and address areas needing refinement. It's more than a feedback loop; it's a pathway to data-driven enhancements in patient care.
+For healthcare providers, this tool offers a more insightful way to look at patient feedback. It doesn’t just provide data; it offers a clearer picture of how patients feel about their care. This can help highlight excellence in services and pinpoint areas for potential improvements.
 
-\nThis dashboard draws on data from a dedicated GP surgery in West London, reflecting real-world applications of patient-centered healthcare analysis.
+The data we use comes from a GP surgery in West London, showing how this tool can be applied in a real healthcare setting.
 
-\nWelcome aboard — let's navigate the nuances of patient feedback together and steer towards exceptional healthcare delivery.
-             \n"""
-    )
-    
-    st.markdown("""**Machine Learning** - Various Machine Learning techniques are used to analyse the data:
-- **Sentiment Analysis** - [Huggingface](https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest) `cardiffnlp/twitter-roberta-base-sentiment-latest`
-- **Text Classification** of Patient Feedback - [Huggingface](https://huggingface.co/SamLowe/roberta-base-go_emotions) `SamLowe/roberta-base-go_emotions`
-- **Zero-shot Classification** of Patient Improvement Feedback- [Huggingface](https://huggingface.co/facebook/bart-large-mnli) `facebook/bart-large-mnli`""" )
-    st.markdown("Streamlit App by [janduplessis883](https://github.com/janduplessis883)")
-    st.markdown("")
-    st.markdown("---")
-    
+We employ several machine learning techniques for analysis:
+
+1. **Sentiment Analysis:** Using Huggingface's 'cardiffnlp/twitter-roberta-base-sentiment-latest' model, we determine the emotional tone of the feedback.
+2. **Text Classification of Patient Feedback:** To categorize feedback into different emotional themes, we use the 'SamLowe/roberta-base-go_emotions' model from Huggingface.
+3. **Zero-shot Classification of Patient Improvement Suggestions:** The 'facebook/bart-large-mnli' model helps us identify and classify suggestions for improving patient care, even when the model hasn’t been specifically trained on healthcare data.
+
+This system is available through a Streamlit app developed by janduplessis883, making it easy for healthcare professionals to use.
+
+So, join us in using this tool to better understand and respond to patient feedback, aiming to improve healthcare delivery based on what patients actually say and feel.""")
+
+    st.markdown('---')
     col1, col2 = st.columns(2)
 
     # Use 'col1' to display content in the first column
