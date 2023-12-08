@@ -387,7 +387,7 @@ elif page == "Improvement Opportunities":
         label_counts_df.columns = ['Improvement Labels', 'Counts']
 
         # Define the palette conditionally based on the category names
-        palette = ['#b8babf' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#168aad' for label in label_counts_df['Improvement Labels']]
+        palette = ['#d9ed92' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#168aad' for label in label_counts_df['Improvement Labels']]
 
         # Create a Seaborn bar plot
         plt.figure(figsize=(10, 8))
@@ -432,7 +432,7 @@ elif page == "Improvement Opportunities":
         label_counts_df.columns = ['Improvement Labels', 'Counts']
 
         # Define the palette conditionally based on the category names
-        palette = ['#b8babf' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#168aad' for label in label_counts_df['Improvement Labels']]
+        palette = ['#d9ed92' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#168aad' for label in label_counts_df['Improvement Labels']]
 
         # Create a Seaborn bar plot
         plt.figure(figsize=(10, 8))
