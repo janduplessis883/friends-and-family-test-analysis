@@ -129,7 +129,6 @@ def improvement_classification(data, batch_size=16):
 
     # Labels
     improvement_labels_list = [
-    "GP",
     "Reception",
     "Ambiance",
     "Modernization",
@@ -144,7 +143,7 @@ def improvement_classification(data, batch_size=16):
     "Online",
     "Safety",
     "Weekends",
-    "Comfort",
+    "Content",
     "Location",
     "Telephone",
     "Physiotherapy",
@@ -162,7 +161,8 @@ def improvement_classification(data, batch_size=16):
     "Advice",
     "Experience",
     "Results",
-    "Accessibility"
+    "Accessibility",
+    "Satisfied"
 ]
 
 
@@ -222,15 +222,15 @@ if __name__ == "__main__":
     data = add_rating_score(data)
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
-    # start_time = time.time()
-    # print(f"{Fore.BLUE}[+] Text Classification")
-    # data = text_classification(data)
-    # print(f"Time taken: {time.time() - start_time:.2f} seconds")
+    start_time = time.time()
+    print(f"{Fore.BLUE}[+] Text Classification")
+    data = text_classification(data)
+    print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
-    # start_time = time.time()
-    # print(f"{Fore.BLUE}[+] Sentiment Analysis")
-    # data = sentiment_analysis(data)
-    # print(f"Time taken: {time.time() - start_time:.2f} seconds")
+    start_time = time.time()
+    print(f"{Fore.BLUE}[+] Sentiment Analysis")
+    data = sentiment_analysis(data)
+    print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     start_time = time.time()
     print(f"{Fore.BLUE}[+] Improvement Classification - do_better column")
