@@ -309,6 +309,8 @@ elif page == "Feedback Word Cloud":
         
 elif page == "Improvement Opportunities":
     st.header("Improvement Opportunities")
+    
+    
     exclude_list = ['fine', 'no', 'nan', 'not', 'ok', 'nothing', 'anything', 'okay', 'nathing', 'good', 'excellent', 'happy', 'professionally', 'professional', 'amazing', 'thanks', 'satisfied', 'yes', 'na', 'thank']
     
     if st.checkbox("Current Month Only"):
@@ -323,12 +325,54 @@ elif page == "Improvement Opportunities":
             & (data["time"].dt.year == current_year)
         ]
     
+        # Calculate value counts
+        label_counts = current_month_data['improvement_labels'].value_counts(ascending=False)
+
+        # Convert the Series to a DataFrame
+        label_counts_df = label_counts.reset_index()
+        label_counts_df.columns = ['Improvement Labels', 'Counts']
+
+        # Seaborn styling
+        sns.set(style="whitegrid")
+
+        # Create a Seaborn bar plot
+        plt.figure(figsize=(10, 8))
+        sns.barplot(x='Counts', y='Improvement Labels', data=label_counts_df, palette="viridis")
+
+        # Adding titles and labels for clarity
+        plt.title('Counts of Different Improvement Labels')
+        plt.xlabel('Counts')
+        plt.ylabel('')
+
+        # Streamlit function to display matplotlib figures
+        st.pyplot(plt)
         for text in current_month_data['do_better']:
             words = str(text).lower().split()  # Split the text into words and convert to lowercase
             if not any(word in exclude_list for word in words):
                 st.write("- " + str(text))
                 
     else:
+        # Calculate value counts
+        label_counts = data['improvement_labels'].value_counts(ascending=False)
+
+        # Convert the Series to a DataFrame
+        label_counts_df = label_counts.reset_index()
+        label_counts_df.columns = ['Improvement Labels', 'Counts']
+
+        # Seaborn styling
+        sns.set(style="whitegrid")
+
+        # Create a Seaborn bar plot
+        plt.figure(figsize=(10, 8))
+        sns.barplot(x='Counts', y='Improvement Labels', data=label_counts_df, palette="viridis")
+
+        # Adding titles and labels for clarity
+        plt.title('Counts of Different Improvement Labels')
+        plt.xlabel('Counts')
+        plt.ylabel('')
+
+        # Streamlit function to display matplotlib figures
+        st.pyplot(plt)
         st.subheader('All Suggestions')
         for text in data['do_better']:
             words = str(text).lower().split()  # Split the text into words and convert to lowercase

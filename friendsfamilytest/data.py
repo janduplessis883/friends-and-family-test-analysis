@@ -159,6 +159,7 @@ def improvement_classification(data, batch_size=16):
         "Medical Advice Quality",
         "Patient Experience",
         "Overall Satisfaction",
+        "Appointment Availability",
     ]
 
 
@@ -279,5 +280,3 @@ if __name__ == "__main__":
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     print(f"{Fore.YELLOW}{Back.GREEN}[i] ✅ data.csv push to GitHub successful")
-
-# To do Run the normal calssificatioin on do_better and list unique finds for the group
