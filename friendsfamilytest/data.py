@@ -186,6 +186,6 @@ if __name__ == "__main__":
     subprocess.run(["git", "push", remote, branch])
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
-    print(f"{Fore.YELLOW}[i] ✅ data.csv push to GitHub successful")
+    print(f"{Fore.YELLOW}{Back.GREEN}[i] ✅ data.csv push to GitHub successful")
 
 # To do Run the normal calssificatioin on do_better and list unique finds for the group
