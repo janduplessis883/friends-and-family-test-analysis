@@ -128,10 +128,43 @@ def improvement_classification(data, batch_size=16):
     classifier = pipeline("zero-shot-classification", model=model, tokenizer=tokenizer)
 
     # Labels
-    improvement_label_list = [
-        "Reception", "Ambiance", "Modernization", "Nursing", "Wait-times",
-        "Referrals", "Knowledge", "Staffing", "Morale", "Accessibility",
-    ]
+    improvement_labels_list = [
+    "GP",
+    "Reception",
+    "Ambiance",
+    "Modernization",
+    "Nursing",
+    "Wait-times",
+    "Referrals",
+    "Knowledge",
+    "Staffing",
+    "Accessibility",
+    "Results",
+    "Communication",
+    "Online",
+    "Safety",
+    "Weekends",
+    "Comfort",
+    "Location",
+    "Telephone",
+    "Physiotherapy",
+    "Hydration",
+    "Comfort",
+    "Website",
+    "Education",
+    "Equipment",
+    "After-Hours",
+    "Training",
+    "Nursing",
+    "Diagnostics",
+    "Prescriptions",
+    "Efficiency",
+    "Advice",
+    "Experience",
+    "Results",
+    "Accessibility"
+]
+
 
     # Initialize the list to store labels
     improvement_labels = [''] * len(data)  # Pre-fill with empty strings
@@ -144,7 +177,7 @@ def improvement_classification(data, batch_size=16):
         
         # Classify the batch
         if sentences:
-            model_outputs = classifier(list(sentences), improvement_label_list, device='cpu')
+            model_outputs = classifier(list(sentences), improvement_labels_list, device='cpu')
             # Assign labels to corresponding indices
             for output, idx in zip(model_outputs, valid_indices):
                 improvement_labels[start_index + idx] = output["labels"][0]
