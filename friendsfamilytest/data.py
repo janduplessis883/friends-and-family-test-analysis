@@ -31,7 +31,6 @@ def load_google_sheet():
 
     data["do_better"] = data["do_better"].apply(clean_and_replace)
     data["free_text"] = data["free_text"].apply(clean_and_replace)
-
     return data
 
 
@@ -212,10 +211,20 @@ if __name__ == "__main__":
     print(f"{Fore.WHITE}{Back.BLACK}[*] Parsing Friends & Family Test Data")
 
     start_time = time.time()
-    print(f"{Fore.RED}[+] Google Sheet Loading")
-    data = load_google_sheet()
+    print(f"{Fore.RED}[+] Google Sheet Loading (raw data)")
+    raw_data = load_google_sheet()
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
-
+    
+    start_time = time.time()
+    print(f"{Fore.RED}[+] Loading Pre-processed data (raw data from data.csv)")
+    processed_data = pd.read_csv(f"{DATA_PATH}/data.csv")
+    print(f"Time taken: {time.time() - start_time:.2f} seconds")
+    
+    start_time = time.time()
+    print(f"{Fore.RED}[+] Identify new data to process")
+    data = raw_data[~raw_data.index.isin(processed_data.index)]
+    print(f"Time taken: {time.time() - start_time:.2f} seconds")
+    
     start_time = time.time()
     print(f"{Fore.BLUE}[+] Rating score added")
     data = add_rating_score(data)
@@ -237,8 +246,8 @@ if __name__ == "__main__":
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     start_time = time.time()
-    print(f"{Fore.YELLOW}[i] 💾 Data saved to '/data/data.csv'")
-    data.to_csv(f"{DATA_PATH}/data.csv", index=False)
+    print(f"{Fore.YELLOW}[i] 💾 Append new data to '/data/data.csv'")
+    data.to_csv(f'{DATA_PATH}/data.csv', mode='a', header=False)
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     start_time = time.time()
