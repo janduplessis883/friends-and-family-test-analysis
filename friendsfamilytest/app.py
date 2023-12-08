@@ -373,3 +373,4 @@ elif page == "About":
             width=200,
         )
         st.markdown("**Text Classification** and **Sentiment Analysis** by Huggingface.co")
+
