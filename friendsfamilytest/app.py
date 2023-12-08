@@ -314,7 +314,7 @@ elif page == "Improvement Opportunities":
     exclude_list = ['fine', 'no', 'nan', 'not', 'ok', 'nothing', 'anything', 'okay', 'nathing', 'good', 'excellent', 'happy', 'professionally', 'professional', 'amazing', 'thanks', 'satisfied', 'yes', 'na', 'thank']
     
     if st.checkbox("Current Month Only"):
-        st.subheader("Last Month's Suggestions")
+        
         data["time"] = pd.to_datetime(data["time"])
         # Get the current month and year
         current_month = datetime.now().month
@@ -346,6 +346,7 @@ elif page == "Improvement Opportunities":
 
         # Streamlit function to display matplotlib figures
         st.pyplot(plt)
+        st.subheader("Current Month's Suggestions")
         for text in current_month_data['do_better']:
             words = str(text).lower().split()  # Split the text into words and convert to lowercase
             if not any(word in exclude_list for word in words):
