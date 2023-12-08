@@ -8,6 +8,7 @@ from datetime import datetime
 
 def load_data():
     df = pd.read_csv("friendsfamilytest/data/data.csv")
+    #df['time'] = pd.to_datetime(df['time'], format='%d/%m/%Y %H:%M')
     return df
 
 
@@ -75,6 +76,8 @@ if page == "Monthly Rating & Count":
     ax.spines['right'].set_visible(False)
     ax.spines['left'].set_visible(False)
     st.pyplot(fig)
+    st.dataframe(data)
+    
     st.markdown(
         '''The Friends and Family Test (FFT) is a feedback tool used in the healthcare sector, particularly in the UK's National Health Service (NHS), to help measure patient satisfaction with services. It allows patients to provide feedback on their experience with a particular service, including General Practitioner (GP) surgeries. The test is straightforward, usually asking whether the patient would recommend the service to friends and family if needed. 
         \nPatients can typically respond with options like "extremely likely," "likely," "neither likely nor unlikely," "unlikely," "extremely unlikely," and "don't know." 
