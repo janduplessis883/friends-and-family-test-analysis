@@ -247,7 +247,7 @@ if __name__ == "__main__":
 
     start_time = time.time()
     print(f"{Fore.YELLOW}[i] 💾 Append new data to '/data/data.csv'")
-    data.to_csv(f'{DATA_PATH}/data.csv', mode='a', header=False)
+    data.to_csv(f'{DATA_PATH}/data.csv', mode='a', header=False, index=False)
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     start_time = time.time()
