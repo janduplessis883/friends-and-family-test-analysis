@@ -230,7 +230,7 @@ elif page == "Feedback Classification":
         ]
 
         # Now, proceed with your original code but use the filtered DataFrame
-        class_list = list(current_month_data["classif"].unique().sort())
+        class_list = list(current_month_data["classif"].unique())   
         selected_ratings = st.multiselect(
             "Multi-Categorical Classification to Review Feedback ( 📅 Current Month Only):",
             class_list,
@@ -252,7 +252,7 @@ elif page == "Feedback Classification":
 
 
     else:
-        class_list = list(data["classif"].unique().sort())
+        class_list = list(data["classif"].unique())
         selected_ratings = st.multiselect(
             "Multi-Categorical Classification to Review Feedback ( ✅ All Reviews):", 
             class_list
@@ -332,18 +332,18 @@ elif page == "Improvement Opportunities":
         ]
     
         # Calculate value counts
-        label_counts = current_month_data['improvement_labels'].value_counts(ascending=False)
+        label_counts = current_month_data['improvement_labels'].value_counts(ascending=False) # Use ascending=True to match the order in your image
 
         # Convert the Series to a DataFrame
         label_counts_df = label_counts.reset_index()
         label_counts_df.columns = ['Improvement Labels', 'Counts']
 
-        # Seaborn styling
-        sns.set(style="whitegrid")
+        # Define the palette conditionally based on the category names
+        palette = ['#ddec9c' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#4088a9' for label in label_counts_df['Improvement Labels']]
 
         # Create a Seaborn bar plot
         plt.figure(figsize=(10, 8))
-        sns.barplot(x='Counts', y='Improvement Labels', data=label_counts_df, palette="viridis")
+        sns.barplot(x='Counts', y='Improvement Labels', data=label_counts_df, palette=palette)
 
         # Adding titles and labels for clarity
         plt.title('Counts of Different Improvement Labels')
@@ -354,7 +354,8 @@ elif page == "Improvement Opportunities":
         st.pyplot(plt)
         
         
-        improvement_list = list(current_month_data["improvement_labels"].unique().sort())
+        improvement_list = [label for label in label_counts_df['Improvement Labels']]
+
         selected_ratings = st.multiselect(
             "Select Improvement Categories:", 
             improvement_list
@@ -374,18 +375,18 @@ elif page == "Improvement Opportunities":
                 
     else:
         # Calculate value counts
-        label_counts = data['improvement_labels'].value_counts(ascending=False)
+        label_counts = data['improvement_labels'].value_counts(ascending=False) # Use ascending=True to match the order in your image
 
         # Convert the Series to a DataFrame
         label_counts_df = label_counts.reset_index()
         label_counts_df.columns = ['Improvement Labels', 'Counts']
 
-        # Seaborn styling
-        sns.set(style="whitegrid")
+        # Define the palette conditionally based on the category names
+        palette = ['#ddec9c' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#4088a9' for label in label_counts_df['Improvement Labels']]
 
         # Create a Seaborn bar plot
         plt.figure(figsize=(10, 8))
-        sns.barplot(x='Counts', y='Improvement Labels', data=label_counts_df, palette="viridis")
+        sns.barplot(x='Counts', y='Improvement Labels', data=label_counts_df, palette=palette)
 
         # Adding titles and labels for clarity
         plt.title('Counts of Different Improvement Labels')
@@ -395,7 +396,8 @@ elif page == "Improvement Opportunities":
         # Streamlit function to display matplotlib figures
         st.pyplot(plt)
         
-        improvement_list = list(data["improvement_labels"].unique().sort())
+        improvement_list = [label for label in label_counts_df['Improvement Labels']]
+    
         selected_ratings = st.multiselect(
             "Select Improvement Categories:", 
             improvement_list
@@ -435,9 +437,15 @@ elif page == "About":
 \nThis dashboard draws on data from a dedicated GP surgery in West London, reflecting real-world applications of patient-centered healthcare analysis.
 
 \nWelcome aboard — let's navigate the nuances of patient feedback together and steer towards exceptional healthcare delivery.
-             \n Streamlit App by [janduplessis883](https://github.com/janduplessis883)"""
+             \n"""
     )
-
+    
+    st.markdown("""**Machine Learning** - Various Machine Learning techniques are used to analyse the data:
+- Sentiment Analysis - [Huggingface](https://huggingface.co/cardiffnlp/twitter-roberta-base-sentiment-latest) `cardiffnlp/twitter-roberta-base-sentiment-latest`
+- Text Classification of Patient Feedback - [Huggingface](https://huggingface.co/SamLowe/roberta-base-go_emotions) `SamLowe/roberta-base-go_emotions`
+- Zero-shot Classification of Patient Improvement Feedback- [Huggingface](https://huggingface.co/facebook/bart-large-mnli) `facebook/bart-large-mnli`""" )
+    st.markdown("Streamlit App by [janduplessis883](https://github.com/janduplessis883)")
+    st.markdown("")
     st.markdown("---")
     
     col1, col2 = st.columns(2)
