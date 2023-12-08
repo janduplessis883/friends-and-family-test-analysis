@@ -42,9 +42,8 @@ def update_datetime_format(df, column_name):
     :return: DataFrame with the updated datetime format.
     """
 
-    # First, ensure the column is in datetime format
-    if not pd.api.types.is_datetime64_any_dtype(df[column_name]):
-        df[column_name] = pd.to_datetime(df[column_name])
+    # First, ensure the column is in datetime forma
+    df[column_name] = pd.to_datetime(df[column_name])
 
     return df
 
@@ -237,6 +236,7 @@ if __name__ == "__main__":
     start_time = time.time()
     print(f"{Fore.RED}[+] Loading Pre-processed data (raw data from data.csv)")
     processed_data = pd.read_csv(f"{DATA_PATH}/data.csv")
+    processed_data['time'] = pd.to_datetime(processed_data['time'], format="%d/%m/%Y %H:%M")
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
     
     start_time = time.time()
