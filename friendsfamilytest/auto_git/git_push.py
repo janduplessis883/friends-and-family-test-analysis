@@ -16,7 +16,6 @@ def get_current_branch():
     return branch
 
 @time_it
-@time_it
 def do_git_push():
     os.chdir(repo_path)
     current_branch = get_current_branch()
