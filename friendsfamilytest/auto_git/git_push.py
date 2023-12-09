@@ -26,16 +26,16 @@ def do_git_push():
         perform_git_operations(current_branch)
         # Pulling the latest changes from master before merging
         subprocess.run(["git", "checkout", "master"])
-        print(f"{Fore.GREEN}[+] Pulling latest changes from master")
+        print(f"{Fore.BLUE}[+] Pulling latest changes from master")
         subprocess.run(["git", "pull", "origin", "master"])
         # Merging the current branch into master
-        print(f"{Fore.GREEN}[+] Merging {current_branch} into master")
+        print(f"{Fore.BLUE}[+] Merging {current_branch} into master")
         subprocess.run(["git", "merge", current_branch])
         # Pushing the merged changes to master
-        print(f"{Fore.GREEN}[+] Pushing merged changes to master")
+        print(f"{Fore.BLUE}[+] Pushing merged changes to master")
         subprocess.run(["git", "push", "origin", "master"])
         # Switching back to the original branch
-        print(f"{Fore.GREEN}[+] Switching back to {current_branch}")
+        print(f"{Fore.BLUE}[+] Switching back to {current_branch}")
         subprocess.run(["git", "checkout", current_branch])
 
 
