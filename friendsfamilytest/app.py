@@ -208,28 +208,66 @@ if page == "Monthly Rating & Count":
 # == Rating & Sentiment Analysis Correlation ===============================================
 elif page == "Rating & Sentiment Analysis Correlation":
     st.subheader("Rating & Sentiment Analysis Correlation")
-
-    plt.figure(figsize=(10, 6))  # You can adjust the figure size as needed
+    palette_colors = {'positive': '#4187aa', 'neutral': '#d8ae46', 'negative': '#be6933'}
+    plt.figure(figsize=(10, 3))  # You can adjust the figure size as needed
     scatter_plot = sns.scatterplot(
         data=filtered_data,
         x="rating_score",
         y="sentiment_score",
         hue="sentiment",
         s=55,
+        palette = palette_colors,
+        marker='x'
     )
 
     # Setting x-axis ticks to 1, 2, 3, 4, 5
+    # Define the color palette as a dictionary
+    
     scatter_plot.set_xticks([0.5, 1, 2, 3, 4, 5])
     plt.grid(axis="y", color="grey", linestyle="-", linewidth=0.5, alpha=0.6)
 
     scatter_plot.spines["left"].set_visible(False)
     scatter_plot.spines["top"].set_visible(False)
     scatter_plot.spines["right"].set_visible(False)
+    plt.tight_layout()
     st.pyplot(plt)
 
-    st.write(
-        """The plot maps 'rating_score' along the x-axis and 'sentiment_score' along the y-axis. Points on the scatter plot are color-coded to represent three categories of sentiment: positive (blue), neutral (orange), and negative (green). Most of the data points appear to be concentrated at the higher end of the rating scale (closer to 5.0), suggesting a large number of positive sentiment scores. The spread and density of points suggest that higher rating scores correlate with more positive sentiment."""
-    )
+    # Create two columns
+    col1, col2 = st.columns(2)
+
+    # Content for the first column
+    with col1:
+        # Negative sentiment plot
+        neg_sentiment = filtered_data[filtered_data['sentiment'] == "negative"]
+        plt.figure(figsize=(5, 2))  # Optional: Adjust the figure size
+        sns.histplot(data=neg_sentiment, x='sentiment_score', color='#be6933', kde=True)
+        plt.xlabel("Sentiment Score")
+        plt.title("NEGATIVE Sentiment")
+        st.pyplot(plt)  # Display the plot in Streamlit
+
+    # Content for the second column
+    with col2:
+        # Positive sentiment plot
+        pos_sentiment = filtered_data[filtered_data['sentiment'] == "positive"]
+        plt.figure(figsize=(5, 2))  # Optional: Adjust the figure size
+        sns.histplot(data=pos_sentiment, x='sentiment_score', color='#4187aa', kde=True)
+        plt.xlabel("Sentiment Score")
+        plt.title("POSITIVE Sentiment")
+        st.pyplot(plt)  # Display the plot in Streamlit
+    
+    selected_feedback = filtered_data[(filtered_data['sentiment'] == "negative") & \
+                                   (filtered_data['sentiment_score'] >= 0.65)].sort_values(by='sentiment_score', ascending=False)
+    st.subheader('Selected Feedback')
+    for index, row in selected_feedback.iterrows():
+        st.markdown(f"**Feedback**: {row['free_text']}")
+        st.markdown(f"**Do Better**: {row['do_better']}")
+        st.markdown(f"`{row['improvement_labels']}`")
+        st.markdown("---")  # This adds a separator line after each entry
+
+
+
+    
+    
 # == Feedback Classification ==========================================================
 elif page == "Feedback Classification":
     st.subheader("Feedback Classification")

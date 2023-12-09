@@ -1,5 +1,4 @@
 import os
-import time
 import pandas as pd
 from transformers import pipeline
 from sheethelper import SheetHelper
@@ -7,8 +6,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from colorama import init, Fore, Back, Style
 import warnings
-import subprocess
-from datetime import datetime
+from transformers import AutoModelForSequenceClassification, AutoTokenizer, pipeline
+import pandas as pd
 
 from friendsfamilytest.params import *
 from friendsfamilytest.utils import *
@@ -35,12 +34,6 @@ def load_google_sheet():
     data["do_better"] = data["do_better"].apply(clean_and_replace)
     data["free_text"] = data["free_text"].apply(clean_and_replace)
     return data
-
-
-# Example usage:
-# Assuming you have a DataFrame 'data' with a datetime column named 'time'
-# data = update_datetime_format(data, 'time')
-
 
 @time_it
 def text_classification(data):
@@ -120,12 +113,7 @@ def summarization(data):
 
     return data
 
-
 # Zer0-shot classification - do_better column
-from transformers import AutoModelForSequenceClassification, AutoTokenizer, pipeline
-import pandas as pd
-
-
 def batch_generator(data, column_name, batch_size):
     for i in range(0, len(data), batch_size):
         yield data[column_name][
@@ -175,8 +163,8 @@ def improvement_classification(data, batch_size=16):
         "Home Visits",
         "Cancer Screening",
         "Vaccinations",
-        "Phlebotomy Service & Blood Test Results",
-        "Clinical Pharmacist Service",
+        "Test Results",
+        "Clinical Pharmacist",
     ]
 
     # Initialize the list to store labels
@@ -208,13 +196,7 @@ def improvement_classification(data, batch_size=16):
 
     # Add labels as a new column
     data["improvement_labels"] = improvement_labels
-
     return data
-
-
-# Example usage
-# Assuming 'data' is your DataFrame and 'do_better' is the column with sentences
-# data = improvement_classification(data, batch_size=16)
 
 
 @time_it
@@ -232,33 +214,37 @@ def add_rating_score(data):
     data["rating_score"] = data["rating"].map(rating_map)
     return data
 
+@time_it
+def concat_save_final_df(processed_df, new_df):
+    combined_data = pd.concat([processed_df, new_df], ignore_index=True)
+    combined_data.to_csv(f"{DATA_PATH}/data.csv", index=False)
+    print(f'💾 data.csv saved to: {DATA_PATH}')
+    
+@time_it
+def load_local_data():
+    df = pd.read_csv(f"{DATA_PATH}/data.csv")
+    df["time"] = pd.to_datetime(df["time"], dayfirst=True)
+    return df
+    
+    
 
 if __name__ == "__main__":
-    print(f"{Fore.WHITE}{Back.BLACK}[*] Parsing Friends & Family Test Data")
-
+    print(f"{Fore.WHITE}{Back.BLACK}[🆕] Friends & Family Test Analysis - MAKE DATA")
+    
+    # Load new data from Google Sheet
     raw_data = load_google_sheet()
-
-    processed_data = pd.read_csv(f"{DATA_PATH}/data.csv")
-    processed_data["time"] = pd.to_datetime(processed_data["time"], dayfirst=True)
-
+    
+    # Load local data.csv to dataframe
+    processed_data = load_local_data()
+ 
+    # Return new data for processing
     data = raw_data[~raw_data.index.isin(processed_data.index)]
 
     data = add_rating_score(data)
-
     data = text_classification(data)
-
     data = sentiment_analysis(data)
-
     data = improvement_classification(data, batch_size=16)
-
-    start_time = time.time()
-    print(
-        f"{Fore.YELLOW}[i] 💾 Concat dataframes and save combined_data to '/data/data.csv'"
-    )
-    # Concatenate the DataFrames one below the other
-    combined_data = pd.concat([processed_data, data], ignore_index=True)
-    combined_data.to_csv(f"{DATA_PATH}/data.csv", index=False)
-    print(f"Time taken: {time.time() - start_time:.2f} seconds")
-
-    # Call Auto Git Push Master
+    concat_save_final_df(processed_data, data)
+    
+    # Push everything to GitHub
     do_git_merge()
