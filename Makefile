@@ -27,6 +27,11 @@ gsheet:
 data:
 	@python friendsfamilytest/data.py
 
+git_merge:
+	$(MAKE) clean
+	$(MAKE) lint
+	@python friendsfamilytest/auto_git/git_merge.py
+
 git_push:
 	$(MAKE) clean
 	$(MAKE) lint
