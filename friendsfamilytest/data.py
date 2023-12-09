@@ -176,7 +176,7 @@ def improvement_classification(data, batch_size=16):
         "Cancer Screening",
         "Vaccinations",
         "Phlebotomy Service & Blood Test Results",
-        "Clinical Pharmacist Service"
+        "Clinical Pharmacist Service",
     ]
 
     # Initialize the list to store labels
