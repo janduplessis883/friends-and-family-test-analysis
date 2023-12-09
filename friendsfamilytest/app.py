@@ -378,7 +378,7 @@ elif page == "Improvement Suggestions":
         "#ffba08"
         if (
             label == "Overall Patient Satisfaction"
-            or label == "No Improvment Suggestion"
+            or label == "No Improvement Suggestion"
         )
         else "#e85d04"
         for label in label_counts_df["Improvement Labels"]
