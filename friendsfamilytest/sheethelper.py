@@ -39,9 +39,3 @@ class SheetHelper:
 
     def gsheet_to_df(self) -> pd.DataFrame:
         return pd.DataFrame.from_dict(self.sheet_instance.get_all_records())
-
-
-# Example usage with environment variable for the secret path
-# os.environ['GSHEET_SECRET_FILE'] = "/path/to/secret.json"
-
-# sh = SheetHelper(sheet_url="some_url", sheet_id=0)
