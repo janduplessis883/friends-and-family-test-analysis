@@ -96,14 +96,14 @@ if page == "Monthly Rating & Count":
 
             ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
             ax.xaxis.grid(False)
-            ax.xaxis.set_major_formatter(mdates.DateFormatter('%d %b'))
+            ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
             # Customize the plot - remove the top, right, and left spines
             ax.spines["top"].set_visible(False)
             ax.spines["right"].set_visible(False)
             ax.spines["left"].set_visible(False)
 
             # Rotate x-axis labels
-            #plt.setp(ax.get_xticklabels(), rotation=45, ha="right")
+            # plt.setp(ax.get_xticklabels(), rotation=45, ha="right")
 
             # Annotate the line graph
             for index, row in monthly_avg_df.iterrows():
@@ -119,8 +119,12 @@ if page == "Monthly Rating & Count":
             plt.xlabel("")
             plt.ylabel("Average Rating")
 
-            ax_title = ax.set_title('Average Monthly Rating', loc='right')  # loc parameter aligns the title
-            ax_title.set_position((1,1))  # Adjust these values to align your title as needed   
+            ax_title = ax.set_title(
+                "Average Monthly Rating", loc="right"
+            )  # loc parameter aligns the title
+            ax_title.set_position(
+                (1, 1)
+            )  # Adjust these values to align your title as needed
             # Display the plot in Streamlit
             st.pyplot(fig)
         except:
@@ -136,18 +140,19 @@ if page == "Monthly Rating & Count":
         data=daily_count_df, x="Date", y="Daily Count", color="#168aad", linewidth=2
     )
 
-
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
     ax.xaxis.grid(False)
 
     # Customizing the x-axis labels for better readability
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%d %b'))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
 
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["left"].set_visible(False)
-    ax_title = ax.set_title('Daily FFT Responses', loc='right')  # loc parameter aligns the title
-    ax_title.set_position((1,1))  # Adjust these values to align your title as needed   
+    ax_title = ax.set_title(
+        "Daily FFT Responses", loc="right"
+    )  # loc parameter aligns the title
+    ax_title.set_position((1, 1))  # Adjust these values to align your title as needed
     plt.xlabel("")
     plt.tight_layout()
     st.pyplot(fig)
@@ -156,17 +161,14 @@ if page == "Monthly Rating & Count":
     monthly_count_filtered = filtered_data.resample("M", on="time").size()
     monthly_count_filtered_df = monthly_count_filtered.reset_index()
     monthly_count_filtered_df.columns = ["Month", "Monthly Count"]
-    monthly_count_filtered_df['Month'] = pd.to_datetime(monthly_count_filtered_df['Month'])
+    monthly_count_filtered_df["Month"] = pd.to_datetime(
+        monthly_count_filtered_df["Month"]
+    )
     # Create the figure and the bar plot
     fig, ax = plt.subplots(figsize=(12, 3))
     sns.barplot(
-        data=monthly_count_filtered_df,
-        x="Month",
-        y="Monthly Count",
-        color="#168aad"
+        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#168aad"
     )
-
-
 
     # Set grid, spines and annotations as before
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
@@ -187,7 +189,7 @@ if page == "Monthly Rating & Count":
         )
 
     # Set title to the right
-    ax_title = ax.set_title('Monthly FFT Responses', loc='right')
+    ax_title = ax.set_title("Monthly FFT Responses", loc="right")
     ax_title.set_position((1.02, 1))  # Adjust title position
 
     # Redraw the figure to ensure the formatter is applied

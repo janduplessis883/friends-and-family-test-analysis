@@ -28,6 +28,8 @@ data:
 	@python friendsfamilytest/data.py
 
 git_push:
+	$(MAKE) clean
+	$(MAKE) lint
 	@python friendsfamilytest/auto_git/git_push.py
 
 # Specify package name

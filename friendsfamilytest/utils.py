@@ -35,27 +35,35 @@ def clean_and_replace(text):
         return ""
     else:
         return cleaned_text
-    
+
+
 # = Decorators =================================================================
 
 import time
 from colorama import Fore, Back, Style, init
+
 init(autoreset=True)
+
 
 def time_it(func):
     def wrapper(*args, **kwargs):
         start_time = time.time()
         print(f"{Fore.WHITE}{Back.BLACK}[FUNCTION] {func.__name__}() - Timing")
         result = func(*args, **kwargs)
-        print(f"{Fore.BLACK}{Back.GREEN}[✅] Completed - Time taken: {time.time() - start_time:.2f} seconds")
+        print(
+            f"{Fore.BLACK}{Back.GREEN}[✅] Completed - Time taken: {time.time() - start_time:.2f} seconds"
+        )
         return result
+
     return wrapper
+
 
 # Now, decorate your functions with @time_it
 @time_it
 def text_classification(data):
     # Your existing code for text classification
     pass
+
 
 @time_it
 def sentiment_analysis(data):
