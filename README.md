@@ -15,10 +15,10 @@ We employ several machine learning techniques for analysis:
 2. **Text Classification of Patient Feedback:** To categorize feedback into different emotional themes, we use the 'SamLowe/roberta-base-go_emotions' model from Huggingface.
 3. **Zero-shot Classification of Patient Improvement Suggestions:** The 'facebook/bart-large-mnli' model helps us identify and classify suggestions for improving patient care, even when the model hasn’t been specifically trained on healthcare data.
 
-This system is available through a Streamlit app developed by [janduplessis883(https://github.com/janduplessis883/friends-and-family-test-analysis)], making it easy for healthcare professionals to use.
+Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-family-test-analysis)
 
 So, join us in using this tool to better understand and respond to patient feedback, aiming to improve healthcare delivery based on what patients actually say and feel.
 
 
 
-# [View the Stremlit App](https://friends-and-family-test-analysis-pqev4j3c9katnrlv8kktnb.streamlit.app/)
+# [View the Streamlit App](https://friends-and-family-test-analysis-pqev4j3c9katnrlv8kktnb.streamlit.app/)
