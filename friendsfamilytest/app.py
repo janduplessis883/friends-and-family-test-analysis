@@ -218,11 +218,11 @@ elif page == "Feedback Classification":
     label_counts_df.columns = ['Feedback Classification', 'Counts']
 
     # Define the palette conditionally based on the category names
-    palette = ['#ddec9c' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#4088a9' for label in label_counts_df['Feedback Classification']]
+    palette = ['#76c893' if (label == 'neutral') else '#168aad' for label in label_counts_df['Feedback Classification']]
 
     # Create a Seaborn bar plot
     plt.figure(figsize=(10, 8))
-    ax = sns.barplot(x='Counts', y='Feedback Classification', data=label_counts_df, color="#168aad")
+    ax = sns.barplot(x='Counts', y='Feedback Classification', data=label_counts_df, palette=palette)
     ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
     ax.yaxis.grid(False)
     ax.spines['top'].set_visible(False)
@@ -253,7 +253,7 @@ elif page == "Feedback Classification":
             specific_class = filtered_classes[filtered_classes["classif"] == rating]
             st.subheader(f"{rating.capitalize()} ({str(specific_class.shape[0])})")
             for text in specific_class["free_text"]:  # Assuming 'free_text' is the column with the text you want to display
-                if str(text) != "nan":
+                if str(text).lower() != "nan" and str(text).lower() != "neutral":
                     st.write("- " + str(text))
 
 
