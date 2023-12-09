@@ -45,7 +45,7 @@ init(autoreset=True)
 def time_it(func):
     def wrapper(*args, **kwargs):
         start_time = time.time()
-        print(f"{Fore.WHITE}{Back.BLACK}[FUNCTION] {func.__name__}() - Timing")
+        print(f"{Fore.WHITE}{Back.BLACK}[FUNCTION] {func.__name__}() <Timer>")
         result = func(*args, **kwargs)
         print(f"{Fore.BLACK}{Back.GREEN}[✅] Completed - Time taken: {time.time() - start_time:.2f} seconds")
         return result
