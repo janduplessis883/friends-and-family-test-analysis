@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 from wordcloud import WordCloud
 import seaborn as sns
 from datetime import datetime
@@ -48,6 +49,7 @@ page = st.sidebar.selectbox(
 start_date = date(2023, 7, 13)
 current_date = date.today()
 
+
 # Create a date range slider
 selected_date_range = st.slider(
     "Select a date range",
@@ -66,7 +68,7 @@ filtered_data = data[
 # Display content based on the selected page
 if page == "Monthly Rating & Count":
     st.markdown("### Friends & Family Test (FFT) Dashboard")
-    col1, col2 = st.columns([3, 1])
+    col1, col2 = st.columns([5, 1])
 
     # Use the columns
     with col1:
@@ -94,14 +96,14 @@ if page == "Monthly Rating & Count":
 
             ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
             ax.xaxis.grid(False)
-
+            ax.xaxis.set_major_formatter(mdates.DateFormatter('%d %b'))
             # Customize the plot - remove the top, right, and left spines
             ax.spines["top"].set_visible(False)
             ax.spines["right"].set_visible(False)
             ax.spines["left"].set_visible(False)
 
             # Rotate x-axis labels
-            plt.xticks(rotation=45)
+            #plt.setp(ax.get_xticklabels(), rotation=45, ha="right")
 
             # Annotate the line graph
             for index, row in monthly_avg_df.iterrows():
@@ -114,10 +116,11 @@ if page == "Monthly Rating & Count":
                 )
 
             # Add labels and title
-            plt.xlabel("Month")
+            plt.xlabel("")
             plt.ylabel("Average Rating")
-            plt.title("Average Monthly Rating")
 
+            ax_title = ax.set_title('Average Monthly Rating', loc='right')  # loc parameter aligns the title
+            ax_title.set_position((1,1))  # Adjust these values to align your title as needed   
             # Display the plot in Streamlit
             st.pyplot(fig)
         except:
@@ -133,51 +136,46 @@ if page == "Monthly Rating & Count":
         data=daily_count_df, x="Date", y="Daily Count", color="#168aad", linewidth=2
     )
 
-    plt.title("Daily FFT Responses")
+
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
     ax.xaxis.grid(False)
 
     # Customizing the x-axis labels for better readability
-    plt.xticks(rotation=45)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%d %b'))
 
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["left"].set_visible(False)
-
-    # Show the plot in Streamlit
+    ax_title = ax.set_title('Daily FFT Responses', loc='right')  # loc parameter aligns the title
+    ax_title.set_position((1,1))  # Adjust these values to align your title as needed   
+    plt.xlabel("")
+    plt.tight_layout()
     st.pyplot(fig)
 
     # Resample and count the entries per month from filtered data
     monthly_count_filtered = filtered_data.resample("M", on="time").size()
     monthly_count_filtered_df = monthly_count_filtered.reset_index()
     monthly_count_filtered_df.columns = ["Month", "Monthly Count"]
-
+    monthly_count_filtered_df['Month'] = pd.to_datetime(monthly_count_filtered_df['Month'])
+    # Create the figure and the bar plot
     fig, ax = plt.subplots(figsize=(12, 3))
     sns.barplot(
-        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#168aad"
+        data=monthly_count_filtered_df,
+        x="Month",
+        y="Monthly Count",
+        color="#168aad"
     )
 
-    # Customizing x-axis labels
-    n = len(monthly_count_filtered_df["Month"])
-    tick_frequency = max(1, n // 4)  # Ensure tick_frequency is at least 1
 
-    plt.xticks(
-        ticks=range(0, n, tick_frequency),
-        labels=[
-            monthly_count_filtered_df["Month"].iloc[i].strftime("%Y-%m-%d")
-            for i in range(0, n, tick_frequency)
-        ],
-        rotation=45,
-    )
 
-    plt.title("Monthly FFT Responses (Filtered)")
+    # Set grid, spines and annotations as before
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
     ax.xaxis.grid(False)
-
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["left"].set_visible(False)
 
+    # Annotate bars with the height (monthly count)
     for p in ax.patches:
         ax.annotate(
             f"{int(p.get_height())}",
@@ -188,6 +186,18 @@ if page == "Monthly Rating & Count":
             textcoords="offset points",
         )
 
+    # Set title to the right
+    ax_title = ax.set_title('Monthly FFT Responses', loc='right')
+    ax_title.set_position((1.02, 1))  # Adjust title position
+
+    # Redraw the figure to ensure the formatter is applied
+    fig.canvas.draw()
+
+    # Remove xlabel as it's redundant with the dates
+    plt.xlabel("")
+
+    # Apply tight layout and display plot
+    plt.tight_layout()
     st.pyplot(fig)
     # Create two columns
     col1, col2 = st.columns(2)
@@ -196,7 +206,7 @@ if page == "Monthly Rating & Count":
 elif page == "Rating & Sentiment Analysis Correlation":
     st.subheader("Rating & Sentiment Analysis Correlation")
 
-    plt.figure(figsize=(10, 4))  # You can adjust the figure size as needed
+    plt.figure(figsize=(10, 6))  # You can adjust the figure size as needed
     scatter_plot = sns.scatterplot(
         data=filtered_data,
         x="rating_score",
@@ -209,12 +219,9 @@ elif page == "Rating & Sentiment Analysis Correlation":
     scatter_plot.set_xticks([0.5, 1, 2, 3, 4, 5])
     plt.grid(axis="y", color="grey", linestyle="-", linewidth=0.5, alpha=0.6)
 
-    # Removing the left, top, and right spines
     scatter_plot.spines["left"].set_visible(False)
     scatter_plot.spines["top"].set_visible(False)
     scatter_plot.spines["right"].set_visible(False)
-
-    # Display the plot in Streamlit
     st.pyplot(plt)
 
     st.write(
@@ -250,7 +257,7 @@ elif page == "Feedback Classification":
     ax.spines["left"].set_visible(True)
     ax.spines["bottom"].set_visible(False)
     # Adding titles and labels for clarity
-    plt.title("Counts of Feedback Classification (All Time)")
+    plt.title("Counts of Feedback Classification")
     plt.xlabel("Counts")
     plt.ylabel("")
 
@@ -385,7 +392,7 @@ elif page == "Improvement Suggestions":
     ax.spines["left"].set_visible(True)
     ax.spines["bottom"].set_visible(False)
     # Adding titles and labels for clarity
-    plt.title("Counts of Improvement Catergories (All Time)")
+    plt.title("Counts of Improvement Catergories")
     plt.xlabel("Counts")
     plt.ylabel("")
 
