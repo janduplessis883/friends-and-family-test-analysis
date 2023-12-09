@@ -385,7 +385,7 @@ elif page == "Improvement Suggestions":
     ]
 
     # Create a Seaborn bar plot
-    plt.figure(figsize=(10, 9))
+    plt.figure(figsize=(10, 8))
     ax = sns.barplot(
         x="Counts", y="Improvement Labels", data=label_counts_df, palette=palette
     )

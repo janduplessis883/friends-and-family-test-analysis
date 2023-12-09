@@ -37,6 +37,7 @@ git_push:
 	$(MAKE) lint
 	@python friendsfamilytest/auto_git/git_push.py
 
-# Specify package name
+
 lint:
 	@black friendsfamilytest/
+
