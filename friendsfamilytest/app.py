@@ -65,7 +65,7 @@ filtered_data = data[
 ]
 
 
-# Display content based on the selected page
+# == DASHBOARD ================================================================
 if page == "Monthly Rating & Count":
     st.markdown("### Friends & Family Test (FFT) Dashboard")
     col1, col2 = st.columns([5, 1])
@@ -84,13 +84,13 @@ if page == "Monthly Rating & Count":
             monthly_avg_df = monthly_avg.reset_index()
 
             # Create a line plot
-            fig, ax = plt.subplots(figsize=(8, 3))
+            fig, ax = plt.subplots(figsize=(10, 3))
             sns.lineplot(
                 x="time",
                 y="rating_score",
                 data=monthly_avg_df,
                 ax=ax,
-                linewidth=4,
+                linewidth=6,
                 color="#e85d04",
             )
 
@@ -113,12 +113,13 @@ if page == "Monthly Rating & Count":
                     textcoords="offset points",
                     xytext=(0, 10),
                     ha="center",
+                    fontsize=16,  # Adjust this value as needed
                 )
 
             # Add labels and title
             plt.xlabel("")
             plt.ylabel("Average Rating")
-
+            plt.tight_layout()
             ax_title = ax.set_title(
                 "Average Monthly Rating", loc="right"
             )  # loc parameter aligns the title
@@ -204,7 +205,7 @@ if page == "Monthly Rating & Count":
     # Create two columns
     col1, col2 = st.columns(2)
 
-
+# == Rating & Sentiment Analysis Correlation ===============================================
 elif page == "Rating & Sentiment Analysis Correlation":
     st.subheader("Rating & Sentiment Analysis Correlation")
 
@@ -229,7 +230,7 @@ elif page == "Rating & Sentiment Analysis Correlation":
     st.write(
         """The plot maps 'rating_score' along the x-axis and 'sentiment_score' along the y-axis. Points on the scatter plot are color-coded to represent three categories of sentiment: positive (blue), neutral (orange), and negative (green). Most of the data points appear to be concentrated at the higher end of the rating scale (closer to 5.0), suggesting a large number of positive sentiment scores. The spread and density of points suggest that higher rating scores correlate with more positive sentiment."""
     )
-
+# == Feedback Classification ==========================================================
 elif page == "Feedback Classification":
     st.subheader("Feedback Classification")
     # Calculate value counts
@@ -243,7 +244,7 @@ elif page == "Feedback Classification":
 
     # Define the palette conditionally based on the category names
     palette = [
-        "#76c893" if (label == "neutral") else "#168aad"
+        "#90e0ef" if (label == "neutral") else "#0096c7"
         for label in label_counts_df["Feedback Classification"]
     ]
 
@@ -284,7 +285,7 @@ elif page == "Feedback Classification":
                 if str(text).lower() != "nan" and str(text).lower() != "neutral":
                     st.write("- " + str(text))
 
-
+# == Word Count ==========================================================
 elif page == "Word Cloud":
     try:
         st.subheader("Feedback Word Cloud")
@@ -305,7 +306,7 @@ elif page == "Word Cloud":
     except:
         st.warning("No improvement suggestions available for this date range.")
 
-
+# == Dataframe ==========================================================
 elif page == "View Dataframe":
     st.subheader("Dataframe")
     st.write("The data below is filtered based on the date range selected above.")
@@ -313,7 +314,7 @@ elif page == "View Dataframe":
     # Display the filtered DataFrame
     st.write(filtered_data)
 
-
+# == About ==========================================================
 elif page == "About":
     st.image(
         "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true",
@@ -359,6 +360,7 @@ Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-fa
             "**Text Classification** and **Sentiment Analysis** by Huggingface.co"
         )
 
+# == Improvement Suggestions ==========================================================
 elif page == "Improvement Suggestions":
     st.subheader("Improvement Suggestions")
 
@@ -373,12 +375,12 @@ elif page == "Improvement Suggestions":
 
     # Define the palette conditionally based on the category names
     palette = [
-        "#d9ed92"
+        "#ffba08"
         if (
             label == "Overall Patient Satisfaction"
             or label == "No Improvment Suggestion"
         )
-        else "#34a0a4"
+        else "#e85d04"
         for label in label_counts_df["Improvement Labels"]
     ]
 
