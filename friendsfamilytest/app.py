@@ -250,7 +250,7 @@ elif page == "Feedback Classification":
         ax.spines['bottom'].set_visible(False)
         
         # Adding titles and labels for clarity
-        plt.title('Counts of Feedback Classification')
+        plt.title('Counts of Feedback Classification (Current Month)')
         plt.xlabel('Counts')
         plt.ylabel('')
 
@@ -302,7 +302,7 @@ elif page == "Feedback Classification":
         ax.spines['left'].set_visible(True)
         ax.spines['bottom'].set_visible(False)
         # Adding titles and labels for clarity
-        plt.title('Counts of Feedback Classification')
+        plt.title('Counts of Feedback Classification (All Time)')
         plt.xlabel('Counts')
         plt.ylabel('')
 
@@ -408,7 +408,7 @@ elif page == "Improvement Suggestions":
         ax.spines['left'].set_visible(True)
         ax.spines['bottom'].set_visible(False)
         # Adding titles and labels for clarity
-        plt.title('Counts of Improvement Categories')
+        plt.title('Counts of Improvement Categories (Current Month)')
         plt.xlabel('Counts')
         plt.ylabel('')
 
@@ -458,7 +458,7 @@ elif page == "Improvement Suggestions":
         ax.spines['left'].set_visible(True)
         ax.spines['bottom'].set_visible(False)
         # Adding titles and labels for clarity
-        plt.title('Counts of Improvement Catergories')
+        plt.title('Counts of Improvement Catergories (All Time)')
         plt.xlabel('Counts')
         plt.ylabel('')
 
