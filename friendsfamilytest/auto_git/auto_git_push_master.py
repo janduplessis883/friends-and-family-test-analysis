@@ -9,12 +9,17 @@ init(autoreset=True)
 from friendsfamilytest.params import LOCAL_GIT_REPO
 from friendsfamilytest.utils import *
 
+repo_path = LOCAL_GIT_REPO
+
 @time_it
 def do_git_push():
-    repo_path = LOCAL_GIT_REPO
+    
     remote = "origin"
     branch = "master"
     os.chdir(repo_path)
+    
+    print(f"{Fore.RED}[+] git status")
+    subprocess.run(["git", "status", "."])
     
     print(f"{Fore.RED}[+] git add .")
     subprocess.run(["git", "add", "."])
@@ -28,7 +33,7 @@ def do_git_push():
     
     print(f"{Fore.RED}[+] git push origin {branch}")
     subprocess.run(["git", "push", remote, branch])
-
+    
 
 if __name__ == "__main__":
     do_git_push()

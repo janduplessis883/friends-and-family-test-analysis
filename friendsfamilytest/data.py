@@ -12,6 +12,7 @@ from datetime import datetime
 
 from friendsfamilytest.params import *
 from friendsfamilytest.utils import *
+from friendsfamilytest.auto_git.auto_git_push_master import *
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -277,3 +278,6 @@ if __name__ == "__main__":
     combined_data = pd.concat([processed_data, data], ignore_index=True)
     combined_data.to_csv(f"{DATA_PATH}/data.csv", index=False)
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
+
+    # Call Auto Git Push Master
+    do_git_push()
