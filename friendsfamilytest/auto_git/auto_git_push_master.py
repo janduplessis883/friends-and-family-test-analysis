@@ -7,11 +7,10 @@ from colorama import Fore, Back, Style, init
 init(autoreset=True)
 
 from friendsfamilytest.params import LOCAL_GIT_REPO
+from friendsfamilytest.utils import *
 
-if __name__ == "__main__":
-    start_time = time.time()
-    print(f"{Fore.WHITE}{Back.BLACK}[AUTO] Git: Push to GitHub Repo")
-
+@time_it
+def do_git_push():
     repo_path = LOCAL_GIT_REPO
     remote = "origin"
     branch = "master"
@@ -32,3 +31,6 @@ if __name__ == "__main__":
     
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
     print(f"{Fore.BLACK}{Back.GREEN}[✅] GIT PUSH SUCCESSFUL!")
+
+if __name__ == "__main__":
+    do_git_push()

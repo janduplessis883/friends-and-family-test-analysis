@@ -277,27 +277,3 @@ if __name__ == "__main__":
     combined_data = pd.concat([processed_data, data], ignore_index=True)
     combined_data.to_csv(f"{DATA_PATH}/data.csv", index=False)
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
-
-    start_time = time.time()
-    print(f"{Fore.WHITE}{Back.BLACK}[>] Git: Push to GitHub Repo")
-
-    repo_path = LOCAL_GIT_REPO
-    remote = "origin"
-    branch = "master"
-    os.chdir(repo_path)
-
-    subprocess.run(["git", "add", "."])
-    print(f"{Fore.RED}[+] Git: commit")
-
-    # Get the current date and time
-    current_timestamp = datetime.now()
-    # Format the timestamp to include date, hour, and minute
-    formatted_timestamp = current_timestamp.strftime("%Y-%m-%d %H:%M")
-
-    message = f"Automated commit from Python script - {formatted_timestamp}"
-    subprocess.run(["git", "commit", "-m", message])
-    print(f"{Fore.RED}[+] Git: push to remote {branch}")
-    subprocess.run(["git", "push", remote, branch])
-    print(f"Time taken: {time.time() - start_time:.2f} seconds")
-
-    print(f"{Fore.YELLOW}{Back.GREEN}[i] ✅ data.csv push to GitHub successful")
