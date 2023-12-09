@@ -14,13 +14,14 @@ from friendsfamilytest.params import *
 from friendsfamilytest.utils import *
 from friendsfamilytest.auto_git.git_merge import *
 
+
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 warnings.filterwarnings("ignore")
 secret_path = os.getenv("SECRET_PATH")
 init(autoreset=True)
 
-
+@time_it
 def load_google_sheet():
     sh = SheetHelper(
         sheet_url="https://docs.google.com/spreadsheets/d/1K2d32XmZQMdGLslNzv2ZZoUquARl6yiKRT5SjUkTtIY/edit#gid=1323317089",
@@ -39,7 +40,7 @@ def load_google_sheet():
 # Assuming you have a DataFrame 'data' with a datetime column named 'time'
 # data = update_datetime_format(data, 'time')
 
-
+@time_it
 def text_classification(data):
     # Initialize classifier
     classifier = pipeline(
@@ -63,7 +64,7 @@ def text_classification(data):
 
     return data
 
-
+@time_it
 def sentiment_analysis(data):
     sentiment_task = pipeline(
         "sentiment-analysis", model="cardiffnlp/twitter-roberta-base-sentiment-latest"
@@ -128,7 +129,7 @@ def batch_generator(data, column_name, batch_size):
             i : i + batch_size
         ], i  # Yield the batch and the starting index
 
-
+@time_it
 def improvement_classification(data, batch_size=16):
     # Load model and tokenizer
     model = AutoModelForSequenceClassification.from_pretrained(
@@ -215,7 +216,7 @@ def improvement_classification(data, batch_size=16):
 # Assuming 'data' is your DataFrame and 'do_better' is the column with sentences
 # data = improvement_classification(data, batch_size=16)
 
-
+@time_it
 def add_rating_score(data):
     # Mapping dictionary
     rating_map = {
@@ -233,42 +234,23 @@ def add_rating_score(data):
 
 if __name__ == "__main__":
     print(f"{Fore.WHITE}{Back.BLACK}[*] Parsing Friends & Family Test Data")
-
-    start_time = time.time()
-    print(f"{Fore.RED}[+] Google Sheet Loading (raw data)")
+    
     raw_data = load_google_sheet()
-    print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
-    start_time = time.time()
-    print(f"{Fore.RED}[+] Loading Pre-processed data (processed_data from data.csv)")
     processed_data = pd.read_csv(f"{DATA_PATH}/data.csv")
     processed_data["time"] = pd.to_datetime(processed_data["time"], dayfirst=True)
-    print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
-    start_time = time.time()
-    print(f"{Fore.RED}[+] Identify new data to process")
     data = raw_data[~raw_data.index.isin(processed_data.index)]
-    print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
-    start_time = time.time()
-    print(f"{Fore.BLUE}[+] Rating score added")
     data = add_rating_score(data)
-    print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
-    start_time = time.time()
-    print(f"{Fore.BLUE}[+] Text Classification")
     data = text_classification(data)
-    print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
-    start_time = time.time()
-    print(f"{Fore.BLUE}[+] Sentiment Analysis")
+
     data = sentiment_analysis(data)
-    print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
-    start_time = time.time()
-    print(f"{Fore.BLUE}[+] Improvement Classification - do_better column")
     data = improvement_classification(data, batch_size=16)
-    print(f"Time taken: {time.time() - start_time:.2f} seconds")
+
 
     start_time = time.time()
     print(
@@ -280,4 +262,4 @@ if __name__ == "__main__":
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     # Call Auto Git Push Master
-    do_git_push()
+    do_git_merge()

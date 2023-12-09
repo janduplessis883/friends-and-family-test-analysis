@@ -20,7 +20,7 @@ def get_current_branch():
 
 
 @time_it
-def do_git_push():
+def do_git_merge():
     os.chdir(repo_path)
     current_branch = get_current_branch()
 
@@ -61,4 +61,4 @@ def perform_git_operations(branch):
 
 
 if __name__ == "__main__":
-    do_git_push()
+    do_git_merge()
