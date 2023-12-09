@@ -49,7 +49,7 @@ def time_it(func):
     def wrapper(*args, **kwargs):
         start_time = time.time()
         print(
-            f"{Fore.WHITE}{Back.BLACK}[FUCTION]{Style.RESET_ALL}{Style.BRIGHT} {func.__name__}() - Timing"
+            f"{Fore.RED}[FUCTION]{Style.RESET_ALL}{Style.BRIGHT} {func.__name__}() - Timing"
         )
         result = func(*args, **kwargs)
         print(
