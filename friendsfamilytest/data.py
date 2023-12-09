@@ -158,12 +158,9 @@ def improvement_classification(data, batch_size=16):
         "Online Services & Digital Health",
         "Patient Safety",
         "Weekend Service Availability",
-        "Location Convenience",
         "Telephone Service",
-        "Hydration and Catering Facilities",
         "After-Hours Service",
         "Staff Training and Development",
-        "Diagnostic Services",
         "Prescription Process",
         "Quality of Medical Advice",
         "Overall Patient Satisfaction",
@@ -178,6 +175,8 @@ def improvement_classification(data, batch_size=16):
         "Home Visits",
         "Cancer Screening",
         "Vaccinations",
+        "Phlebotomy Service & Blood Test Results",
+        "Clinical Pharmacist Service"
     ]
 
     # Initialize the list to store labels
