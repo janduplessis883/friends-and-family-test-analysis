@@ -12,12 +12,12 @@ The data we use comes from a GP surgery in West London, showing how this tool ca
 We employ several machine learning techniques for analysis:
 
 1. **Sentiment Analysis:** Using Huggingface's 'cardiffnlp/twitter-roberta-base-sentiment-latest' model, we determine the emotional tone of the feedback.
-2. **Text Classification of Patient Feedback:** To categorize feedback into different emotional themes, we use the 'SamLowe/roberta-base-go_emotions' model from Huggingface.
-3. **Zero-shot Classification of Patient Improvement Suggestions:** The 'facebook/bart-large-mnli' model helps us identify and classify suggestions for improving patient care, even when the model hasn’t been specifically trained on healthcare data.
+2. **Text Classification** of Patient Feedback: To categorize feedback into different emotional themes, we use the 'SamLowe/roberta-base-go_emotions' model from Huggingface.
+3. **Zero-shot Classification** of Patient Improvement Suggestions: The 'facebook/bart-large-mnli' model helps us identify and classify suggestions for improving patient care, even when the model hasn’t been specifically trained on healthcare data.
 
 Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-family-test-analysis)
 
-So, join us in using this tool to better understand and respond to patient feedback, aiming to improve healthcare delivery based on what patients actually say and feel.
+Collaboration welcomed!
 
 
 
