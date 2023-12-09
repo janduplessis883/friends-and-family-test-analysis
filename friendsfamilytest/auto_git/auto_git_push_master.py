@@ -16,7 +16,7 @@ def do_git_push():
     branch = "master"
     os.chdir(repo_path)
     
-    print(f"{Fore.RED}[+] git add")
+    print(f"{Fore.RED}[+] git add .")
     subprocess.run(["git", "add", "."])
     
     print(f"{Fore.RED}[+] git commit")
@@ -28,9 +28,7 @@ def do_git_push():
     
     print(f"{Fore.RED}[+] git push origin {branch}")
     subprocess.run(["git", "push", remote, branch])
-    
-    print(f"Time taken: {time.time() - start_time:.2f} seconds")
-    print(f"{Fore.BLACK}{Back.GREEN}[✅] GIT PUSH SUCCESSFUL!")
+
 
 if __name__ == "__main__":
     do_git_push()
