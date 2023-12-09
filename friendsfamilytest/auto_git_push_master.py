@@ -10,7 +10,7 @@ from friendsfamilytest.params import LOCAL_GIT_REPO
 
 if __name__ == "__main__":
     start_time = time.time()
-    print(f"\n{Fore.WHITE}{Back.BLACK}[AUTO] Git: Push to GitHub Repo")
+    print(f"{Fore.WHITE}{Back.BLACK}[AUTO] Git: Push to GitHub Repo")
 
     repo_path = LOCAL_GIT_REPO
     remote = "origin"
