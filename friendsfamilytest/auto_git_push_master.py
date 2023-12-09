@@ -31,4 +31,4 @@ if __name__ == "__main__":
     subprocess.run(["git", "push", remote, branch])
     
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
-    print(f"{Fore.BLACK}{Back.YELLOW}[✅] GIT PUSH SUCCESSFUL!")
+    print(f"{Fore.BLACK}{Back.GREEN}[✅] GIT PUSH SUCCESSFUL!")
