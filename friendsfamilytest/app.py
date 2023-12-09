@@ -90,7 +90,7 @@ if page == "Monthly Rating & Count":
                 y="rating_score",
                 data=monthly_avg_df,
                 ax=ax,
-                linewidth=6,
+                linewidth=4,
                 color="#e85d04",
             )
 
@@ -208,7 +208,11 @@ if page == "Monthly Rating & Count":
 # == Rating & Sentiment Analysis Correlation ===============================================
 elif page == "Rating & Sentiment Analysis Correlation":
     st.subheader("Rating & Sentiment Analysis Correlation")
-    palette_colors = {'positive': '#4187aa', 'neutral': '#d8ae46', 'negative': '#be6933'}
+    palette_colors = {
+        "positive": "#4187aa",
+        "neutral": "#d8ae46",
+        "negative": "#be6933",
+    }
     plt.figure(figsize=(10, 3))  # You can adjust the figure size as needed
     scatter_plot = sns.scatterplot(
         data=filtered_data,
@@ -216,13 +220,13 @@ elif page == "Rating & Sentiment Analysis Correlation":
         y="sentiment_score",
         hue="sentiment",
         s=55,
-        palette = palette_colors,
-        marker='x'
+        palette=palette_colors,
+        marker="x",
     )
 
     # Setting x-axis ticks to 1, 2, 3, 4, 5
     # Define the color palette as a dictionary
-    
+
     scatter_plot.set_xticks([0.5, 1, 2, 3, 4, 5])
     plt.grid(axis="y", color="grey", linestyle="-", linewidth=0.5, alpha=0.6)
 
@@ -238,9 +242,9 @@ elif page == "Rating & Sentiment Analysis Correlation":
     # Content for the first column
     with col1:
         # Negative sentiment plot
-        neg_sentiment = filtered_data[filtered_data['sentiment'] == "negative"]
+        neg_sentiment = filtered_data[filtered_data["sentiment"] == "negative"]
         plt.figure(figsize=(5, 2))  # Optional: Adjust the figure size
-        sns.histplot(data=neg_sentiment, x='sentiment_score', color='#be6933', kde=True)
+        sns.histplot(data=neg_sentiment, x="sentiment_score", color="#be6933", kde=True)
         plt.xlabel("Sentiment Score")
         plt.title("NEGATIVE Sentiment")
         st.pyplot(plt)  # Display the plot in Streamlit
@@ -248,26 +252,55 @@ elif page == "Rating & Sentiment Analysis Correlation":
     # Content for the second column
     with col2:
         # Positive sentiment plot
-        pos_sentiment = filtered_data[filtered_data['sentiment'] == "positive"]
+        pos_sentiment = filtered_data[filtered_data["sentiment"] == "positive"]
         plt.figure(figsize=(5, 2))  # Optional: Adjust the figure size
-        sns.histplot(data=pos_sentiment, x='sentiment_score', color='#4187aa', kde=True)
+        sns.histplot(data=pos_sentiment, x="sentiment_score", color="#4187aa", kde=True)
         plt.xlabel("Sentiment Score")
         plt.title("POSITIVE Sentiment")
         st.pyplot(plt)  # Display the plot in Streamlit
-    
-    selected_feedback = filtered_data[(filtered_data['sentiment'] == "negative") & \
-                                   (filtered_data['sentiment_score'] >= 0.65)].sort_values(by='sentiment_score', ascending=False)
-    st.subheader('Selected Feedback')
-    for index, row in selected_feedback.iterrows():
-        st.markdown(f"**Feedback**: {row['free_text']}")
-        st.markdown(f"**Do Better**: {row['do_better']}")
-        st.markdown(f"`{row['improvement_labels']}`")
-        st.markdown("---")  # This adds a separator line after each entry
+
+    # View SELECTED Patient Feedback with Sentiment Analaysis NEG >= 0.5
+    selected_feedback = filtered_data[
+        (filtered_data["sentiment"] == "negative")
+        & (filtered_data["sentiment_score"] >= 0.60)
+    ].sort_values(by="sentiment_score", ascending=False)
+
+    st.subheader("View Patient Feedback")
+
+    class_list = list(selected_feedback["classif"].unique())
+    selected_ratings = st.multiselect(
+        "Select Feedback with Sentiment Analysis NEG > 0.6:", class_list
+    )
+
+    # Filter the data based on the selected classifications
+    filtered_classes = selected_feedback[
+        selected_feedback["classif"].isin(selected_ratings)
+    ]
+
+    if not selected_ratings:
+        st.warning("Please select at least one classification.")
+    else:
+        for rating in selected_ratings:
+            specific_class = filtered_classes[filtered_classes["classif"] == rating]
+            st.subheader(f"{rating.capitalize()} ({str(specific_class.shape[0])})")
+            for _, row in specific_class.iterrows():
+                text = row["free_text"]
+                do_better = row["do_better"]
+                improvement_labels = row["improvement_labels"]
+
+                # Check if the text is valid and not neutral or nan
+                if str(text).lower() not in ["nan", "neutral", "admiration"]:
+                    st.markdown("🗣️ " + str(text))
+                    if str(do_better).lower() not in ["nan", "neutrall", "admiration"]:
+                        st.markdown("🔧 " + str(do_better))
+                    if str(improvement_labels).lower() not in [
+                        "nan",
+                        "neutral",
+                        "admiration",
+                    ]:
+                        st.markdown("- `" + str(improvement_labels) + "`")
 
 
-
-    
-    
 # == Feedback Classification ==========================================================
 elif page == "Feedback Classification":
     st.subheader("Feedback Classification")
@@ -304,6 +337,8 @@ elif page == "Feedback Classification":
 
     # Streamlit function to display matplotlib figures
     st.pyplot(plt)
+
+    # View Patient Feedback
     st.subheader("View Patient Feedback")
     class_list = list(filtered_data["classif"].unique())
     selected_ratings = st.multiselect("Select Feedback Categories:", class_list)

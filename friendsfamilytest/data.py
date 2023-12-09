@@ -35,6 +35,7 @@ def load_google_sheet():
     data["free_text"] = data["free_text"].apply(clean_and_replace)
     return data
 
+
 @time_it
 def text_classification(data):
     # Initialize classifier
@@ -112,6 +113,7 @@ def summarization(data):
     data["free_text_summary"] = summ_list
 
     return data
+
 
 # Zer0-shot classification - do_better column
 def batch_generator(data, column_name, batch_size):
@@ -214,29 +216,30 @@ def add_rating_score(data):
     data["rating_score"] = data["rating"].map(rating_map)
     return data
 
+
 @time_it
 def concat_save_final_df(processed_df, new_df):
     combined_data = pd.concat([processed_df, new_df], ignore_index=True)
     combined_data.to_csv(f"{DATA_PATH}/data.csv", index=False)
-    print(f'💾 data.csv saved to: {DATA_PATH}')
-    
+    print(f"💾 data.csv saved to: {DATA_PATH}")
+
+
 @time_it
 def load_local_data():
     df = pd.read_csv(f"{DATA_PATH}/data.csv")
     df["time"] = pd.to_datetime(df["time"], dayfirst=True)
     return df
-    
-    
+
 
 if __name__ == "__main__":
     print(f"{Fore.WHITE}{Back.BLACK}[🆕] Friends & Family Test Analysis - MAKE DATA")
-    
+
     # Load new data from Google Sheet
     raw_data = load_google_sheet()
-    
+
     # Load local data.csv to dataframe
     processed_data = load_local_data()
- 
+
     # Return new data for processing
     data = raw_data[~raw_data.index.isin(processed_data.index)]
 
@@ -245,6 +248,6 @@ if __name__ == "__main__":
     data = sentiment_analysis(data)
     data = improvement_classification(data, batch_size=16)
     concat_save_final_df(processed_data, data)
-    
+
     # Push everything to GitHub
     do_git_merge()
