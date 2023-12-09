@@ -12,7 +12,7 @@ from datetime import datetime
 
 from friendsfamilytest.params import *
 from friendsfamilytest.utils import *
-from friendsfamilytest.auto_git.auto_git_push_master import *
+from friendsfamilytest.auto_git.git_push import *
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
