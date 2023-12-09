@@ -48,7 +48,9 @@ init(autoreset=True)
 def time_it(func):
     def wrapper(*args, **kwargs):
         start_time = time.time()
-        print(f"{Fore.WHITE}{Back.BLACK}[FUCTION]{Style.RESET_ALL} {func.__name__}() - Timing")
+        print(
+            f"{Fore.WHITE}{Back.BLACK}[FUCTION]{Style.RESET_ALL}{Style.BRIGHT} {func.__name__}() - Timing"
+        )
         result = func(*args, **kwargs)
         print(
             f"{Fore.BLACK}{Back.GREEN}[✅] Completed - Time taken: {time.time() - start_time:.2f} seconds"
@@ -56,16 +58,3 @@ def time_it(func):
         return result
 
     return wrapper
-
-
-# Now, decorate your functions with @time_it
-@time_it
-def text_classification(data):
-    # Your existing code for text classification
-    pass
-
-
-@time_it
-def sentiment_analysis(data):
-    # Your existing code for sentiment analysis
-    pass

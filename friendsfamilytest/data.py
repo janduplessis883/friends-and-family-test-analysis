@@ -21,6 +21,7 @@ warnings.filterwarnings("ignore")
 secret_path = os.getenv("SECRET_PATH")
 init(autoreset=True)
 
+
 @time_it
 def load_google_sheet():
     sh = SheetHelper(
@@ -39,6 +40,7 @@ def load_google_sheet():
 # Example usage:
 # Assuming you have a DataFrame 'data' with a datetime column named 'time'
 # data = update_datetime_format(data, 'time')
+
 
 @time_it
 def text_classification(data):
@@ -63,6 +65,7 @@ def text_classification(data):
     data["classif_scores"] = classif_scores
 
     return data
+
 
 @time_it
 def sentiment_analysis(data):
@@ -128,6 +131,7 @@ def batch_generator(data, column_name, batch_size):
         yield data[column_name][
             i : i + batch_size
         ], i  # Yield the batch and the starting index
+
 
 @time_it
 def improvement_classification(data, batch_size=16):
@@ -216,6 +220,7 @@ def improvement_classification(data, batch_size=16):
 # Assuming 'data' is your DataFrame and 'do_better' is the column with sentences
 # data = improvement_classification(data, batch_size=16)
 
+
 @time_it
 def add_rating_score(data):
     # Mapping dictionary
@@ -234,7 +239,7 @@ def add_rating_score(data):
 
 if __name__ == "__main__":
     print(f"{Fore.WHITE}{Back.BLACK}[*] Parsing Friends & Family Test Data")
-    
+
     raw_data = load_google_sheet()
 
     processed_data = pd.read_csv(f"{DATA_PATH}/data.csv")
@@ -246,11 +251,9 @@ if __name__ == "__main__":
 
     data = text_classification(data)
 
-
     data = sentiment_analysis(data)
 
     data = improvement_classification(data, batch_size=16)
-
 
     start_time = time.time()
     print(
