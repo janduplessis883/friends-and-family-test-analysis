@@ -9,7 +9,7 @@ from datetime import date
 
 def load_data():
     df = pd.read_csv("friendsfamilytest/data/data.csv")
-    df['time'] = pd.to_datetime(df['time'])
+    df["time"] = pd.to_datetime(df["time"])
     return df
 
 
@@ -53,12 +53,14 @@ selected_date_range = st.slider(
     "Select a date range",
     min_value=start_date,
     max_value=current_date,
-    value=(start_date, current_date)  # Set default range
+    value=(start_date, current_date),  # Set default range
 )
 
 # Filter the DataFrame based on the selected date range
-filtered_data = data[(data['time'].dt.date >= selected_date_range[0]) & 
-                    (data['time'].dt.date <= selected_date_range[1])]
+filtered_data = data[
+    (data["time"].dt.date >= selected_date_range[0])
+    & (data["time"].dt.date <= selected_date_range[1])
+]
 
 
 # Display content based on the selected page
@@ -69,43 +71,52 @@ if page == "Monthly Rating & Count":
     # Use the columns
     with col1:
         # Add more content to col2 as needed
-        daily_count = filtered_data.resample('D', on='time').size()
+        daily_count = filtered_data.resample("D", on="time").size()
         daily_count_df = daily_count.reset_index()
-        daily_count_df.columns = ['Date', 'Daily Count']
+        daily_count_df.columns = ["Date", "Daily Count"]
         try:
             # Resample to get monthly average rating
-            monthly_avg = filtered_data.resample('M', on='time')['rating_score'].mean()
+            monthly_avg = filtered_data.resample("M", on="time")["rating_score"].mean()
 
             # Reset index to make 'time' a column again
             monthly_avg_df = monthly_avg.reset_index()
 
             # Create a line plot
             fig, ax = plt.subplots(figsize=(8, 3))
-            sns.lineplot(x='time', y='rating_score', data=monthly_avg_df, ax=ax, linewidth=5, color="#e85d04")
-            
+            sns.lineplot(
+                x="time",
+                y="rating_score",
+                data=monthly_avg_df,
+                ax=ax,
+                linewidth=5,
+                color="#e85d04",
+            )
+
             ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
             ax.xaxis.grid(False)
 
             # Customize the plot - remove the top, right, and left spines
-            ax.spines['top'].set_visible(False)
-            ax.spines['right'].set_visible(False)
-            ax.spines['left'].set_visible(False)
+            ax.spines["top"].set_visible(False)
+            ax.spines["right"].set_visible(False)
+            ax.spines["left"].set_visible(False)
 
             # Rotate x-axis labels
             plt.xticks(rotation=45)
 
             # Annotate the line graph
             for index, row in monthly_avg_df.iterrows():
-                ax.annotate(f'{row["rating_score"]:.2f}', 
-                            (row['time'], row['rating_score']),
-                            textcoords="offset points",
-                            xytext=(0,10),
-                            ha='center')
+                ax.annotate(
+                    f'{row["rating_score"]:.2f}',
+                    (row["time"], row["rating_score"]),
+                    textcoords="offset points",
+                    xytext=(0, 10),
+                    ha="center",
+                )
 
             # Add labels and title
-            plt.xlabel('Month')
-            plt.ylabel('Average Rating')
-            plt.title('Average Monthly Rating')
+            plt.xlabel("Month")
+            plt.ylabel("Average Rating")
+            plt.title("Average Monthly Rating")
 
             # Display the plot in Streamlit
             st.pyplot(fig)
@@ -113,13 +124,14 @@ if page == "Monthly Rating & Count":
             st.warning("No rating available for this date range.")
 
     with col2:
-        st.markdown(f'# {filtered_data.shape[0]}')
+        st.markdown(f"# {filtered_data.shape[0]}")
         st.write("Total Responses")
-    
-        
+
     # Plotting the line plot
     fig, ax = plt.subplots(figsize=(12, 3))
-    sns.lineplot(data=daily_count_df, x='Date', y='Daily Count', color="#168aad", linewidth=2)
+    sns.lineplot(
+        data=daily_count_df, x="Date", y="Daily Count", color="#168aad", linewidth=2
+    )
 
     plt.title("Daily FFT Responses")
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
@@ -128,61 +140,62 @@ if page == "Monthly Rating & Count":
     # Customizing the x-axis labels for better readability
     plt.xticks(rotation=45)
 
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_visible(False)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
 
     # Show the plot in Streamlit
     st.pyplot(fig)
 
     # Resample and count the entries per month from filtered data
-    monthly_count_filtered = filtered_data.resample('M', on='time').size()
+    monthly_count_filtered = filtered_data.resample("M", on="time").size()
     monthly_count_filtered_df = monthly_count_filtered.reset_index()
-    monthly_count_filtered_df.columns = ['Month', 'Monthly Count']
+    monthly_count_filtered_df.columns = ["Month", "Monthly Count"]
 
     fig, ax = plt.subplots(figsize=(12, 3))
-    sns.barplot(data=monthly_count_filtered_df, x='Month', y='Monthly Count', color="#168aad")
+    sns.barplot(
+        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#168aad"
+    )
 
     # Customizing x-axis labels
-    n = len(monthly_count_filtered_df['Month'])
+    n = len(monthly_count_filtered_df["Month"])
     tick_frequency = max(1, n // 4)  # Ensure tick_frequency is at least 1
 
     plt.xticks(
         ticks=range(0, n, tick_frequency),
         labels=[
-            monthly_count_filtered_df['Month'].iloc[i].strftime("%Y-%m-%d")
+            monthly_count_filtered_df["Month"].iloc[i].strftime("%Y-%m-%d")
             for i in range(0, n, tick_frequency)
         ],
         rotation=45,
     )
 
-
     plt.title("Monthly FFT Responses (Filtered)")
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
     ax.xaxis.grid(False)
 
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_visible(False)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
 
     for p in ax.patches:
-        ax.annotate(f'{int(p.get_height())}', 
-                    (p.get_x() + p.get_width() / 2., p.get_height()), 
-                    ha='center', va='center', 
-                    xytext=(0, 10), 
-                    textcoords='offset points')
+        ax.annotate(
+            f"{int(p.get_height())}",
+            (p.get_x() + p.get_width() / 2.0, p.get_height()),
+            ha="center",
+            va="center",
+            xytext=(0, 10),
+            textcoords="offset points",
+        )
 
     st.pyplot(fig)
-        # Create two columns
+    # Create two columns
     col1, col2 = st.columns(2)
-
-
-        
 
 
 elif page == "Rating & Sentiment Analysis Correlation":
     st.subheader("Rating & Sentiment Analysis Correlation")
-    
+
     plt.figure(figsize=(10, 4))  # You can adjust the figure size as needed
     scatter_plot = sns.scatterplot(
         data=filtered_data,
@@ -194,16 +207,16 @@ elif page == "Rating & Sentiment Analysis Correlation":
 
     # Setting x-axis ticks to 1, 2, 3, 4, 5
     scatter_plot.set_xticks([0.5, 1, 2, 3, 4, 5])
-    plt.grid(axis='y', color='grey', linestyle='-', linewidth=0.5, alpha=0.6)
-    
+    plt.grid(axis="y", color="grey", linestyle="-", linewidth=0.5, alpha=0.6)
+
     # Removing the left, top, and right spines
-    scatter_plot.spines['left'].set_visible(False)
-    scatter_plot.spines['top'].set_visible(False)
-    scatter_plot.spines['right'].set_visible(False)
+    scatter_plot.spines["left"].set_visible(False)
+    scatter_plot.spines["top"].set_visible(False)
+    scatter_plot.spines["right"].set_visible(False)
 
     # Display the plot in Streamlit
     st.pyplot(plt)
- 
+
     st.write(
         """The plot maps 'rating_score' along the x-axis and 'sentiment_score' along the y-axis. Points on the scatter plot are color-coded to represent three categories of sentiment: positive (blue), neutral (orange), and negative (green). Most of the data points appear to be concentrated at the higher end of the rating scale (closer to 5.0), suggesting a large number of positive sentiment scores. The spread and density of points suggest that higher rating scores correlate with more positive sentiment."""
     )
@@ -211,37 +224,41 @@ elif page == "Rating & Sentiment Analysis Correlation":
 elif page == "Feedback Classification":
     st.subheader("Feedback Classification")
     # Calculate value counts
-    label_counts = filtered_data['classif'].value_counts(ascending=False) # Use ascending=True to match the order in your image
+    label_counts = filtered_data["classif"].value_counts(
+        ascending=False
+    )  # Use ascending=True to match the order in your image
 
     # Convert the Series to a DataFrame
     label_counts_df = label_counts.reset_index()
-    label_counts_df.columns = ['Feedback Classification', 'Counts']
+    label_counts_df.columns = ["Feedback Classification", "Counts"]
 
     # Define the palette conditionally based on the category names
-    palette = ['#76c893' if (label == 'neutral') else '#168aad' for label in label_counts_df['Feedback Classification']]
+    palette = [
+        "#76c893" if (label == "neutral") else "#168aad"
+        for label in label_counts_df["Feedback Classification"]
+    ]
 
     # Create a Seaborn bar plot
     plt.figure(figsize=(10, 8))
-    ax = sns.barplot(x='Counts', y='Feedback Classification', data=label_counts_df, palette=palette)
+    ax = sns.barplot(
+        x="Counts", y="Feedback Classification", data=label_counts_df, palette=palette
+    )
     ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
     ax.yaxis.grid(False)
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_visible(True)
-    ax.spines['bottom'].set_visible(False)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(True)
+    ax.spines["bottom"].set_visible(False)
     # Adding titles and labels for clarity
-    plt.title('Counts of Feedback Classification (All Time)')
-    plt.xlabel('Counts')
-    plt.ylabel('')
+    plt.title("Counts of Feedback Classification (All Time)")
+    plt.xlabel("Counts")
+    plt.ylabel("")
 
     # Streamlit function to display matplotlib figures
     st.pyplot(plt)
     st.subheader("View Patient Feedback")
     class_list = list(filtered_data["classif"].unique())
-    selected_ratings = st.multiselect(
-        "Select Feedback Categories:", 
-        class_list
-    )
+    selected_ratings = st.multiselect("Select Feedback Categories:", class_list)
 
     # Filter the data based on the selected classifications
     filtered_classes = filtered_data[filtered_data["classif"].isin(selected_ratings)]
@@ -252,13 +269,14 @@ elif page == "Feedback Classification":
         for rating in selected_ratings:
             specific_class = filtered_classes[filtered_classes["classif"] == rating]
             st.subheader(f"{rating.capitalize()} ({str(specific_class.shape[0])})")
-            for text in specific_class["free_text"]:  # Assuming 'free_text' is the column with the text you want to display
+            for text in specific_class[
+                "free_text"
+            ]:  # Assuming 'free_text' is the column with the text you want to display
                 if str(text).lower() != "nan" and str(text).lower() != "neutral":
                     st.write("- " + str(text))
 
 
 elif page == "Word Cloud":
-    
     try:
         st.subheader("Feedback Word Cloud")
         text = " ".join(filtered_data["free_text"].dropna())
@@ -276,9 +294,9 @@ elif page == "Word Cloud":
         plt.axis("off")
         st.pyplot(plt)
     except:
-        st.warning("No improvement suggestions available for this date range.") 
+        st.warning("No improvement suggestions available for this date range.")
 
-                
+
 elif page == "View Dataframe":
     st.subheader("Dataframe")
     st.write("The data below is filtered based on the date range selected above.")
@@ -286,12 +304,11 @@ elif page == "View Dataframe":
     # Display the filtered DataFrame
     st.write(filtered_data)
 
-    
-    
+
 elif page == "About":
     st.image(
-    "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true",
-    use_column_width=True,
+        "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true",
+        use_column_width=True,
     )
     st.subheader("Friends & Family Test (FFT) Dashboard")
     st.markdown(
@@ -310,17 +327,18 @@ We employ several machine learning techniques for analysis:
 3. **Zero-shot Classification** of Patient Improvement Suggestions: The 'facebook/bart-large-mnli' model helps us identify and classify suggestions for improving patient care, even when the model hasn’t been specifically trained on healthcare data.
 
 Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-family-test-analysis)
-""")
+"""
+    )
 
-    st.markdown('---')
+    st.markdown("---")
     col1, col2 = st.columns(2)
 
     # Use 'col1' to display content in the first column
     with col1:
         st.image(
-        "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/about.png?raw=true",
-        width=250,
-    )
+            "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/about.png?raw=true",
+            width=250,
+        )
 
     # Use 'col2' to display content in the second column
     with col2:
@@ -328,53 +346,70 @@ Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-fa
             "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/hf-logo-with-title.png?raw=true",
             width=200,
         )
-        st.markdown("**Text Classification** and **Sentiment Analysis** by Huggingface.co")
+        st.markdown(
+            "**Text Classification** and **Sentiment Analysis** by Huggingface.co"
+        )
 
 elif page == "Improvement Suggestions":
     st.subheader("Improvement Suggestions")
 
     # Calculate value counts
-    label_counts = filtered_data['improvement_labels'].value_counts(ascending=False) # Use ascending=True to match the order in your image
+    label_counts = filtered_data["improvement_labels"].value_counts(
+        ascending=False
+    )  # Use ascending=True to match the order in your image
 
     # Convert the Series to a DataFrame
     label_counts_df = label_counts.reset_index()
-    label_counts_df.columns = ['Improvement Labels', 'Counts']
+    label_counts_df.columns = ["Improvement Labels", "Counts"]
 
     # Define the palette conditionally based on the category names
-    palette = ['#d9ed92' if (label == 'Overall Patient Satisfaction' or label == 'No Improvment Suggestion') else '#34a0a4' for label in label_counts_df['Improvement Labels']]
+    palette = [
+        "#d9ed92"
+        if (
+            label == "Overall Patient Satisfaction"
+            or label == "No Improvment Suggestion"
+        )
+        else "#34a0a4"
+        for label in label_counts_df["Improvement Labels"]
+    ]
 
     # Create a Seaborn bar plot
     plt.figure(figsize=(10, 9))
-    ax = sns.barplot(x='Counts', y='Improvement Labels', data=label_counts_df, palette=palette)
+    ax = sns.barplot(
+        x="Counts", y="Improvement Labels", data=label_counts_df, palette=palette
+    )
     ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
     ax.yaxis.grid(False)
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    ax.spines['left'].set_visible(True)
-    ax.spines['bottom'].set_visible(False)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(True)
+    ax.spines["bottom"].set_visible(False)
     # Adding titles and labels for clarity
-    plt.title('Counts of Improvement Catergories (All Time)')
-    plt.xlabel('Counts')
-    plt.ylabel('')
+    plt.title("Counts of Improvement Catergories (All Time)")
+    plt.xlabel("Counts")
+    plt.ylabel("")
 
     # Streamlit function to display matplotlib figures
     st.pyplot(plt)
     st.subheader("View Patient Improvement Suggestions")
-    improvement_list = [label for label in label_counts_df['Improvement Labels']]
+    improvement_list = [label for label in label_counts_df["Improvement Labels"]]
 
-    selected_ratings = st.multiselect(
-        "Select Categories:", 
-        improvement_list
-    )
+    selected_ratings = st.multiselect("Select Categories:", improvement_list)
 
     # Filter the data based on the selected classifications
-    filtered_classes = filtered_data[filtered_data["improvement_labels"].isin(selected_ratings)]
+    filtered_classes = filtered_data[
+        filtered_data["improvement_labels"].isin(selected_ratings)
+    ]
 
     if not selected_ratings:
         st.warning("Please select at least one classification.")
     else:
         for rating in selected_ratings:
-            specific_class = filtered_classes[filtered_classes["improvement_labels"] == rating]
+            specific_class = filtered_classes[
+                filtered_classes["improvement_labels"] == rating
+            ]
             st.subheader(f"{str(rating).capitalize()} ({str(specific_class.shape[0])})")
-            for text in specific_class["do_better"]:  # Assuming 'free_text' is the column with the text you want to display
+            for text in specific_class[
+                "do_better"
+            ]:  # Assuming 'free_text' is the column with the text you want to display
                 st.write("- " + str(text))

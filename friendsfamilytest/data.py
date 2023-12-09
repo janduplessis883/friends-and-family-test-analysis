@@ -38,6 +38,7 @@ def load_google_sheet():
 # Assuming you have a DataFrame 'data' with a datetime column named 'time'
 # data = update_datetime_format(data, 'time')
 
+
 def text_classification(data):
     # Initialize classifier
     classifier = pipeline(
@@ -114,17 +115,24 @@ def summarization(data):
 
     return data
 
+
 # Zer0-shot classification - do_better column
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, pipeline
 import pandas as pd
 
+
 def batch_generator(data, column_name, batch_size):
     for i in range(0, len(data), batch_size):
-        yield data[column_name][i:i + batch_size], i  # Yield the batch and the starting index
+        yield data[column_name][
+            i : i + batch_size
+        ], i  # Yield the batch and the starting index
+
 
 def improvement_classification(data, batch_size=16):
     # Load model and tokenizer
-    model = AutoModelForSequenceClassification.from_pretrained("facebook/bart-large-mnli").to('cpu')
+    model = AutoModelForSequenceClassification.from_pretrained(
+        "facebook/bart-large-mnli"
+    ).to("cpu")
     tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-mnli")
 
     # Create classifier pipeline
@@ -169,36 +177,42 @@ def improvement_classification(data, batch_size=16):
         "Home Visits",
     ]
 
-
-
-
-
     # Initialize the list to store labels
-    improvement_labels = [''] * len(data)  # Pre-fill with empty strings
+    improvement_labels = [""] * len(data)  # Pre-fill with empty strings
 
     # Iterate over batches
     for batch, start_index in batch_generator(data, "do_better", batch_size):
         # Filter out empty or whitespace-only sentences
-        valid_sentences = [(sentence, idx) for idx, sentence in enumerate(batch) if sentence and not sentence.isspace()]
-        sentences, valid_indices = zip(*valid_sentences) if valid_sentences else ([], [])
-        
+        valid_sentences = [
+            (sentence, idx)
+            for idx, sentence in enumerate(batch)
+            if sentence and not sentence.isspace()
+        ]
+        sentences, valid_indices = (
+            zip(*valid_sentences) if valid_sentences else ([], [])
+        )
+
         # Classify the batch
         if sentences:
-            model_outputs = classifier(list(sentences), improvement_labels_list, device='cpu')
+            model_outputs = classifier(
+                list(sentences), improvement_labels_list, device="cpu"
+            )
             # Assign labels to corresponding indices
             for output, idx in zip(model_outputs, valid_indices):
                 improvement_labels[start_index + idx] = output["labels"][0]
-                print(f"{Fore.GREEN}Batch processed: {start_index + idx + 1}/{len(data)}")
+                print(
+                    f"{Fore.GREEN}Batch processed: {start_index + idx + 1}/{len(data)}"
+                )
 
     # Add labels as a new column
     data["improvement_labels"] = improvement_labels
-    
+
     return data
+
 
 # Example usage
 # Assuming 'data' is your DataFrame and 'do_better' is the column with sentences
 # data = improvement_classification(data, batch_size=16)
-
 
 
 def add_rating_score(data):
@@ -223,18 +237,18 @@ if __name__ == "__main__":
     print(f"{Fore.RED}[+] Google Sheet Loading (raw data)")
     raw_data = load_google_sheet()
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
-    
+
     start_time = time.time()
     print(f"{Fore.RED}[+] Loading Pre-processed data (processed_data from data.csv)")
     processed_data = pd.read_csv(f"{DATA_PATH}/data.csv")
-    processed_data['time'] = pd.to_datetime(processed_data['time'], dayfirst=True)
+    processed_data["time"] = pd.to_datetime(processed_data["time"], dayfirst=True)
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
-    
+
     start_time = time.time()
     print(f"{Fore.RED}[+] Identify new data to process")
     data = raw_data[~raw_data.index.isin(processed_data.index)]
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
-    
+
     start_time = time.time()
     print(f"{Fore.BLUE}[+] Rating score added")
     data = add_rating_score(data)
@@ -256,10 +270,12 @@ if __name__ == "__main__":
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     start_time = time.time()
-    print(f"{Fore.YELLOW}[i] 💾 Concat dataframes and save combined_data to '/data/data.csv'")
+    print(
+        f"{Fore.YELLOW}[i] 💾 Concat dataframes and save combined_data to '/data/data.csv'"
+    )
     # Concatenate the DataFrames one below the other
     combined_data = pd.concat([processed_data, data], ignore_index=True)
-    combined_data.to_csv(f'{DATA_PATH}/data.csv', index=False)
+    combined_data.to_csv(f"{DATA_PATH}/data.csv", index=False)
     print(f"Time taken: {time.time() - start_time:.2f} seconds")
 
     start_time = time.time()
@@ -272,7 +288,7 @@ if __name__ == "__main__":
 
     subprocess.run(["git", "add", "."])
     print(f"{Fore.RED}[+] Git: commit")
-    
+
     # Get the current date and time
     current_timestamp = datetime.now()
     # Format the timestamp to include date, hour, and minute
