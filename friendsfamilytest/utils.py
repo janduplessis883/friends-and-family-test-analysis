@@ -48,10 +48,10 @@ init(autoreset=True)
 def time_it(func):
     def wrapper(*args, **kwargs):
         start_time = time.time()
-        print(f"🕥{Fore.MAGENTA}{Style.BRIGHT} FUCTION: {func.__name__}()")
+        print(f"🕥{Fore.MAGENTA}{Style.BRIGHT}-FUCTION: {func.__name__}()")
         result = func(*args, **kwargs)
         print(
-            f"{Fore.GREEN}{Style.DIM}✅ Completed: Time taken: {time.time() - start_time:.2f} seconds"
+            f"{Fore.GREEN}{Style.DIM}✅-Completed: Time taken: {time.time() - start_time:.2f} seconds"
         )
         return result
 
