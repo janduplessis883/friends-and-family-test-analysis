@@ -28,7 +28,7 @@ data:
 	@python friendsfamilytest/data.py
 
 git_push:
-	@python friendsfamilytest/auto_git_push_master.py
+	@python friendsfamilytest/auto_git/auto_git_push_master.py
 
 # Specify package name
 lint:
