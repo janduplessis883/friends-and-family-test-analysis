@@ -232,7 +232,7 @@ def load_local_data():
 
 
 if __name__ == "__main__":
-    print(f"{Fore.WHITE}{Back.BLACK}[🆕] Friends & Family Test Analysis - MAKE DATA")
+    print(f"{Fore.WHITE}{Back.BLACK}[+] Friends & Family Test Analysis - MAKE DATA")
 
     # Load new data from Google Sheet
     raw_data = load_google_sheet()

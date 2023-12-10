@@ -90,7 +90,7 @@ if page == "Monthly Rating & Count":
                 y="rating_score",
                 data=monthly_avg_df,
                 ax=ax,
-                linewidth=4,
+                linewidth=6,
                 color="#e85d04",
             )
 
