@@ -13,7 +13,6 @@ from friendsfamilytest.params import *
 from friendsfamilytest.utils import *
 from friendsfamilytest.auto_git.git_merge import *
 
-
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 warnings.filterwarnings("ignore")
@@ -136,38 +135,39 @@ def improvement_classification(data, batch_size=16):
 
     # Labels
     improvement_labels_list = [
-        "Reception Services",
-        "Ambiance of Facility",
-        "Facility Modernization and Upgrades",
-        "Nursing Quality",
-        "Waiting Times",
-        "Referral Process",
-        "Staffing Levels",
-        "Facility Accessibility",
-        "Poor Communication",
-        "Online Services & Digital Health",
-        "Patient Safety",
-        "Weekend Service Availability",
-        "Telephone Service",
-        "After-Hours Service",
-        "Staff Training and Development",
-        "Prescription Process",
-        "Quality of Medical Advice",
-        "Overall Patient Satisfaction",
-        "Appointment System Efficiency",
-        "Blood Test Results & Imaging",
-        "Patient Participation Group",
-        "Mental Health Services",
-        "Social Prescribing Services",
-        "Chronic Disease Management",
-        "No Improvement Suggestion",
-        "Doctor Consultations",
-        "Home Visits",
-        "Cancer Screening",
-        "Vaccinations",
-        "Test Results",
-        "Clinical Pharmacist",
+        'Reception Services',
+        'Ambiance of Facility',
+        'Facility Modernization and Upgrades',
+        'Nursing Quality',
+        'Waiting Times',
+        'Referral Process',
+        'Staffing Levels',
+        'Facility Accessibility',
+        'Poor Communication',
+        'Online Services & Digital Health',
+        'Patient Safety',
+        'Weekend Service Availability',
+        'Telephone Service',
+        'After-Hours Service',
+        'Staff Training and Development',
+        'Prescription Process',
+        'Quality of Medical Advice',
+        'Overall Patient Satisfaction',
+        'Appointment System Efficiency',
+        'Blood Test Results & Imaging',
+        'Patient Participation Group',
+        'Mental Health Services',
+        'Social Prescribing Services',
+        'Chronic Disease Management',
+        'No Improvement Suggestion',
+        'Doctor Consultations',
+        'Home Visits',
+        'Cancer Screening',
+        'Vaccinations',
+        'Test Results',
+        'Clinical Pharmacist',
     ]
+
 
     # Initialize the list to store labels
     improvement_labels = [""] * len(data)  # Pre-fill with empty strings
@@ -199,6 +199,11 @@ def improvement_classification(data, batch_size=16):
     # Add labels as a new column
     data["improvement_labels"] = improvement_labels
     return data
+
+def gpt3_improvement_classification(df):
+    improvement_gpt3_list = df['do_better'].tolist()
+    
+    return improvement_gpt3_list
 
 
 @time_it
@@ -246,7 +251,8 @@ if __name__ == "__main__":
     data = add_rating_score(data)
     data = text_classification(data)
     data = sentiment_analysis(data)
-    data = improvement_classification(data, batch_size=16)
+    gpt3_improvement_classification(data)
+    #data = improvement_classification(data, batch_size=16)
     concat_save_final_df(processed_data, data)
 
     # Push everything to GitHub
