@@ -251,8 +251,9 @@ if __name__ == "__main__":
     data = add_rating_score(data)
     data = text_classification(data)
     data = sentiment_analysis(data)
-    gpt3_improvement_classification(data)
-    #data = improvement_classification(data, batch_size=16)
+    
+    data = improvement_classification(data, batch_size=16)
+    print(gpt3_improvement_classification(data))
     concat_save_final_df(processed_data, data)
 
     # Push everything to GitHub
