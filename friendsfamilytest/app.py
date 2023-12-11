@@ -6,8 +6,10 @@ from wordcloud import WordCloud
 import seaborn as sns
 from datetime import datetime
 from datetime import date
+from matplotlib.patches import Patch
 
 
+# Load the dataframe
 def load_data():
     df = pd.read_csv("friendsfamilytest/data/data.csv")
     df["time"] = pd.to_datetime(df["time"])
@@ -90,7 +92,7 @@ if page == "Monthly Rating & Count":
                 y="rating_score",
                 data=monthly_avg_df,
                 ax=ax,
-                linewidth=6,
+                linewidth=4,
                 color="#e85d04",
             )
 
@@ -113,7 +115,7 @@ if page == "Monthly Rating & Count":
                     textcoords="offset points",
                     xytext=(0, 10),
                     ha="center",
-                    fontsize=16,  # Adjust this value as needed
+                    fontsize=12,  # Adjust this value as needed
                 )
 
             # Add labels and title
@@ -134,6 +136,64 @@ if page == "Monthly Rating & Count":
     with col2:
         st.markdown(f"# {filtered_data.shape[0]}")
         st.write("Total Responses")
+
+    order = [
+        "Extremely likely",
+        "Likely",
+        "Neither likely nor unlikely",
+        "Unlikely",
+        "Extremely unlikely",
+        "Don't know",
+    ]
+
+    palette = {
+        "Extremely likely": "#6a994e",
+        "Likely": "#A7C957",
+        "Neither likely nor unlikely": "#219ebc",
+        "Unlikely": "#ffb700",
+        "Extremely unlikely": "#bc4749",
+        "Don't know": "#F2E8CF",
+    }
+
+    # Set the figure size (width, height) in inches
+    plt.figure(figsize=(12, 3))
+
+    # Create the countplot
+    sns.countplot(data=filtered_data, y="rating", order=order, palette=palette)
+    ax = plt.gca()
+
+    # Remove y-axis labels
+    ax.set_yticklabels([])
+
+    # Create a custom legend
+    from matplotlib.patches import Patch
+
+    legend_patches = [
+        Patch(color=color, label=label) for label, color in palette.items()
+    ]
+    plt.legend(
+        handles=legend_patches,
+        title="Rating Categories",
+        bbox_to_anchor=(1, 1),
+        loc="best",
+    )
+
+    # Iterate through the rectangles (bars) of the plot for width annotations
+    for p in ax.patches:
+        width = p.get_width()
+        y = p.get_y() + p.get_height() / 2
+        ax.text(width + 1, y, f"{int(width)}", va="center", fontsize=10)
+
+    # Adjust plot appearance
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["bottom"].set_visible(False)
+    ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.yaxis.grid(False)
+    plt.xlabel("Count")
+    plt.ylabel("Rating")
+    plt.tight_layout()
+    st.pyplot(plt)
 
     # Plotting the line plot
     fig, ax = plt.subplots(figsize=(12, 3))
@@ -204,6 +264,7 @@ if page == "Monthly Rating & Count":
     st.pyplot(fig)
     # Create two columns
     col1, col2 = st.columns(2)
+
 
 # == Rating & Sentiment Analysis Correlation ===============================================
 elif page == "Rating & Sentiment Analysis Correlation":
