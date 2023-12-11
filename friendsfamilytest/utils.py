@@ -33,7 +33,16 @@ def clean_and_replace(text):
         str.maketrans("", "", string.punctuation + string.digits)
     )
 
-    remove_list = ["no", "none", "no...", "nothing", "nan", "an", "nope", "no everyting is fine"]
+    remove_list = [
+        "no",
+        "none",
+        "no...",
+        "nothing",
+        "nan",
+        "an",
+        "nope",
+        "no everyting is fine",
+    ]
     # Replace 'no' with None
     if cleaned_text in remove_list:
         return ""
@@ -42,6 +51,7 @@ def clean_and_replace(text):
 
 
 # = Decorators =================================================================
+
 
 def time_it(func):
     def wrapper(*args, **kwargs):
