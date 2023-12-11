@@ -1,4 +1,5 @@
 from openai import OpenAI
+
 client = OpenAI()
 
 input_list = [
@@ -10,7 +11,7 @@ input_list = [
     "It is difficult to get hold of the Pharmacist when I meed a repeat prescription",
     "no everything was good",
     "thanks",
-    "I am very happy with the service"
+    "I am very happy with the service",
 ]
 
 system_prompt = """you are an expert practice manager for a GP Surgery, you will review improvement suggestions from patients and classify them into one of the following categories:
@@ -53,11 +54,11 @@ thank you"""
 
 for input in input_list:
     completion = client.chat.completions.create(
-    model="gpt-3.5-turbo-1106",
-    messages=[
-        {"role": "system", "content": system_prompt},
-        {"role": "user", "content": input}
-    ]
+        model="gpt-3.5-turbo-1106",
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": input},
+        ],
     )
 
     print(completion.choices[0].message.content)

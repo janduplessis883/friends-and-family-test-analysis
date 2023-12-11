@@ -8,6 +8,9 @@ from colorama import init, Fore, Back, Style
 import warnings
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, pipeline
 import pandas as pd
+from openai import OpenAI
+
+client = OpenAI()
 
 from friendsfamilytest.params import *
 from friendsfamilytest.utils import *
@@ -135,39 +138,38 @@ def improvement_classification(data, batch_size=16):
 
     # Labels
     improvement_labels_list = [
-        'Reception Services',
-        'Ambiance of Facility',
-        'Facility Modernization and Upgrades',
-        'Nursing Quality',
-        'Waiting Times',
-        'Referral Process',
-        'Staffing Levels',
-        'Facility Accessibility',
-        'Poor Communication',
-        'Online Services & Digital Health',
-        'Patient Safety',
-        'Weekend Service Availability',
-        'Telephone Service',
-        'After-Hours Service',
-        'Staff Training and Development',
-        'Prescription Process',
-        'Quality of Medical Advice',
-        'Overall Patient Satisfaction',
-        'Appointment System Efficiency',
-        'Blood Test Results & Imaging',
-        'Patient Participation Group',
-        'Mental Health Services',
-        'Social Prescribing Services',
-        'Chronic Disease Management',
-        'No Improvement Suggestion',
-        'Doctor Consultations',
-        'Home Visits',
-        'Cancer Screening',
-        'Vaccinations',
-        'Test Results',
-        'Clinical Pharmacist',
+        "Reception Services",
+        "Ambiance of Facility",
+        "Facility Modernization and Upgrades",
+        "Nursing Quality",
+        "Waiting Times",
+        "Referral Process",
+        "Staffing Levels",
+        "Facility Accessibility",
+        "Poor Communication",
+        "Online Services & Digital Health",
+        "Patient Safety",
+        "Weekend Service Availability",
+        "Telephone Service",
+        "After-Hours Service",
+        "Staff Training and Development",
+        "Prescription Process",
+        "Quality of Medical Advice",
+        "Overall Patient Satisfaction",
+        "Appointment System Efficiency",
+        "Blood Test Results & Imaging",
+        "Patient Participation Group",
+        "Mental Health Services",
+        "Social Prescribing Services",
+        "Chronic Disease Management",
+        "No Improvement Suggestion",
+        "Doctor Consultations",
+        "Home Visits",
+        "Cancer Screening",
+        "Vaccinations",
+        "Test Results",
+        "Clinical Pharmacist",
     ]
-
 
     # Initialize the list to store labels
     improvement_labels = [""] * len(data)  # Pre-fill with empty strings
@@ -200,10 +202,76 @@ def improvement_classification(data, batch_size=16):
     data["improvement_labels"] = improvement_labels
     return data
 
+
+def openai_classify_string(input_string):
+    prompt = """you are an expert practice manager for a GP Surgery, you will review improvement suggestions from patients and classify them into one of the following categories:
+improvement_labels_list = [
+        "Reception Services",
+        "Ambiance of Facility",
+        "Facility Modernisation and Upgrades",
+        "Nursing Quality",
+        "Waiting Times",
+        "Referral Process",
+        "Staffing Levels",
+        "Facility Accessibility",
+        "Poor Communication",
+        "Online Services & Digital Health",
+        "Patient Safety",
+        "Weekend Service Availability",
+        "Telephone Service",
+        "After-Hours Service",
+        "Staff Training and Development",
+        "Prescription Process",
+        "Quality of Medical Advice",
+        "Overall Patient Satisfaction",
+        "Appointment System Efficiency",
+        "Blood Test Results & Imaging",
+        "Patient Participation Group",
+        "Mental Health Services",
+        "Social Prescribing Services",
+        "Chronic Disease Management",
+        "No Improvement Suggestion",
+        "Doctor Consultations",
+        "Home Visits",
+        "Cancer Screening",
+        "Vaccinations",
+        "Test Results",
+        "Clinical Pharmacist",
+    ]
+when you respond only select the most appropriate category and only return the category as specified in the 'improvement_labels_list', do not return any other text. if the text provided does not fit into an improvement suggestion category classify it as 'No Improvement Suggestion'
+You should only ever return one of the 'improvement_labels_list' classifications or nothing at all. This is very important. Positive comments without any improvement suggestions should be classified as 'Overall Patient Satisfaction', and phrases that are very short and has no meaning should be classified as 'No Improvement Suggestion'. """
+
+    completion = client.chat.completions.create(
+        model="gpt-3.5-turbo-1106",
+        messages=[
+            {"role": "system", "content": prompt},
+            {"role": "user", "content": input_string},
+        ],
+    )
+
+    gpt3_classification = completion.choices[0].message.content
+    print(
+        f"[GPT3 working] - {Fore.LIGHTGREEN_EX}{input_string} ::: {Fore.BLUE}{gpt3_classification}"
+    )
+
+    return gpt3_classification
+
+
+@time_it
 def gpt3_improvement_classification(df):
-    improvement_gpt3_list = df['do_better'].tolist()
-    
-    return improvement_gpt3_list
+    do_better_list = df["do_better"].tolist()
+    gpt3_labels = []
+
+    for input in do_better_list:
+        if pd.isna(input):
+            gpt3_labels.append("")  # Append an empty string for NaN values
+        else:
+            # gpt3_classification = openai_classify_string(input)
+            gpt3_labels.append("gpt3_classification")  # Append classification label
+
+    df["improvement_gpt3"] = gpt3_labels
+
+    return df
 
 
 @time_it
@@ -247,14 +315,16 @@ if __name__ == "__main__":
 
     # Return new data for processing
     data = raw_data[~raw_data.index.isin(processed_data.index)]
+    print(f"{Fore.MAGENTA}😀-New rows to process: {data.shape[0]}")
 
     data = add_rating_score(data)
     data = text_classification(data)
     data = sentiment_analysis(data)
-    
+
     data = improvement_classification(data, batch_size=16)
-    print(gpt3_improvement_classification(data))
+    data = gpt3_improvement_classification(data)
+
     concat_save_final_df(processed_data, data)
 
     # Push everything to GitHub
-    do_git_merge()
+    # do_git_merge()
