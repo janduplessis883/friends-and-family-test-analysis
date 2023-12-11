@@ -1,6 +1,10 @@
 import string
 import re
 import numpy as np
+import time
+from colorama import Fore, Back, Style, init
+
+init(autoreset=True)
 
 
 # Function to remove emojis
@@ -29,7 +33,7 @@ def clean_and_replace(text):
         str.maketrans("", "", string.punctuation + string.digits)
     )
 
-    remove_list = ["no", "none", "no...", "nothing", "nan", "an", "nope"]
+    remove_list = ["no", "none", "no...", "nothing", "nan", "an", "nope", "no everyting is fine"]
     # Replace 'no' with None
     if cleaned_text in remove_list:
         return ""
@@ -38,12 +42,6 @@ def clean_and_replace(text):
 
 
 # = Decorators =================================================================
-
-import time
-from colorama import Fore, Back, Style, init
-
-init(autoreset=True)
-
 
 def time_it(func):
     def wrapper(*args, **kwargs):
