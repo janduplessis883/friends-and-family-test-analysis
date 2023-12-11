@@ -69,7 +69,19 @@ filtered_data = data[
 
 # == DASHBOARD ================================================================
 if page == "Monthly Rating & Count":
-    st.markdown("### Friends & Family Test (FFT) Dashboard")
+    st.subheader("Friends & Family Test (FFT) Dashboard")
+    toggle = st.checkbox('Explain this page?')
+
+    # React to the toggle's state
+    if toggle:
+        st.markdown("""1. **Average Monthly Rating (Line Chart)**:
+This line chart shows the average rating given by patients each month. The y-axis represents the average rating, and the x-axis represents time. Each point on the line represents the average rating for that month, allowing viewers to track changes over time.
+2. **Rating Distribution (Horizontal Bar Chart)**:
+The horizontal bar chart below the line chart represents the distribution of ratings across different categories such as 'Extremely likely', 'Likely', 'Neither likely nor unlikely', 'Unlikely', 'Extremely unlikely', and 'Don't know'. The length of each bar correlates with the count of responses in each category.
+3. **Daily FFT Responses (Time Series Plot)**:
+This time series plot displays the daily count of FFT responses over the same period. The y-axis shows the number of responses, while the x-axis corresponds to the days within each month. Spikes in the graph may indicate specific days when an unusually high number of responses were collected.
+4. **Monthly FFT Responses (Bar Chart)**:
+The final plot is a vertical bar chart showing the total count of FFT responses collected each month. The y-axis represents the count of responses, and the x-axis indicates the month. Each bar's height represents the total number of responses for that month, providing a clear comparison of month-to-month variation in the volume of feedback.""")
     col1, col2 = st.columns([5, 1])
 
     # Use the columns
@@ -266,23 +278,25 @@ if page == "Monthly Rating & Count":
     col1, col2 = st.columns(2)
 
     # Create a toggle box
-    toggle = st.checkbox('Explain this page?')
 
-    # React to the toggle's state
-    if toggle:
-        st.markdown("""1. **Average Monthly Rating (Line Chart)**:
-This line chart shows the average rating given by patients each month. The y-axis represents the average rating, and the x-axis represents time. Each point on the line represents the average rating for that month, allowing viewers to track changes over time.
-2. **Rating Distribution (Horizontal Bar Chart)**:
-The horizontal bar chart below the line chart represents the distribution of ratings across different categories such as 'Extremely likely', 'Likely', 'Neither likely nor unlikely', 'Unlikely', 'Extremely unlikely', and 'Don't know'. The length of each bar correlates with the count of responses in each category.
-3. **Daily FFT Responses (Time Series Plot)**:
-This time series plot displays the daily count of FFT responses over the same period. The y-axis shows the number of responses, while the x-axis corresponds to the days within each month. Spikes in the graph may indicate specific days when an unusually high number of responses were collected.
-4. **Monthly FFT Responses (Bar Chart)**:
-The final plot is a vertical bar chart showing the total count of FFT responses collected each month. The y-axis represents the count of responses, and the x-axis indicates the month. Each bar's height represents the total number of responses for that month, providing a clear comparison of month-to-month variation in the volume of feedback.""")
 
 
 # == Rating & Sentiment Analysis Correlation ===============================================
 elif page == "Rating & Sentiment Analysis Correlation":
     st.subheader("Rating & Sentiment Analysis Correlation")
+    toggle = st.checkbox('Explain this page?')
+
+    # React to the toggle's state
+    if toggle:
+        st.markdown("""1. **Scatter Plot (Top Plot)**:
+This plot compares patient feedback sentiment scores with feedback rating scores. On the x-axis, we have the rating score, which likely corresponds to a numerical score given by the patient in their feedback, and on the y-axis, we have the sentiment score, which is derived from sentiment analysis of the textual feedback provided by the patient. Each point represents a piece of feedback, categorized as 'positive', 'neutral', or 'negative' sentiment, depicted by different markers. The scatter plot shows a clear positive correlation between the sentiment score and the feedback rating score, especially visible with the concentration of 'positive' sentiment scores at the higher end of the rating score scale, suggesting that more positive text feedback corresponds to higher numerical ratings.
+2. **Histogram with a Density Curve (Bottom Left - NEGATIVE Sentiment)**:
+This histogram displays the distribution of sentiment scores specifically for negative sentiment feedback. The x-axis represents the sentiment score (presumably on a scale from 0 to 1), and the y-axis represents the count of feedback instances within each score range. The bars show the frequency of feedback at different levels of negative sentiment, and the curve overlaid on the histogram provides a smooth estimate of the distribution. The distribution suggests that most negative feedback has a sentiment score around 0.7 to 0.8.
+3. **Histogram with a Density Curve (Bottom Right - POSITIVE Sentiment)**:
+Similar to the negative sentiment histogram, this one represents the distribution of sentiment scores for positive sentiment feedback. Here, we see a right-skewed distribution with a significant concentration of feedback in the higher sentiment score range, particularly close to 1.0. This indicates that the positive feedback is often associated with high sentiment scores, which is consistent with the expected outcome of sentiment analysis.
+4. **View Patient Feedback (Multi-Select Input)**:
+Select Patient feedback to review, this page only displays feedback that on Sentiment Analysis scored NEGATIVE > 0.6, indicating negative feedback despite rating given by the patient. It is very important to review. In this section both feedback and Improvement Suggestions are displayed to review them in context, together with the automated category assigned by our machine learning model.""")
+    
     palette_colors = {
         "positive": "#4187aa",
         "neutral": "#d8ae46",
@@ -376,6 +390,7 @@ elif page == "Rating & Sentiment Analysis Correlation":
                         st.markdown("- `" + str(improvement_labels) + "`")
 
 
+
 # == Feedback Classification ==========================================================
 elif page == "Feedback Classification":
     st.subheader("Feedback Classification")
@@ -433,7 +448,7 @@ elif page == "Feedback Classification":
                 if str(text).lower() != "nan" and str(text).lower() != "neutral":
                     st.write("- " + str(text))
 
-# == Word Count ==========================================================
+# == Word Cloud ==========================================================
 elif page == "Word Cloud":
     try:
         st.subheader("Feedback Word Cloud")
