@@ -265,6 +265,20 @@ if page == "Monthly Rating & Count":
     # Create two columns
     col1, col2 = st.columns(2)
 
+    # Create a toggle box
+    toggle = st.checkbox('Explain this page?')
+
+    # React to the toggle's state
+    if toggle:
+        st.markdown("""1. **Average Monthly Rating (Line Chart)**:
+This line chart shows the average rating given by patients each month. The y-axis represents the average rating, and the x-axis represents time. Each point on the line represents the average rating for that month, allowing viewers to track changes over time.
+2. **Rating Distribution (Horizontal Bar Chart)**:
+The horizontal bar chart below the line chart represents the distribution of ratings across different categories such as 'Extremely likely', 'Likely', 'Neither likely nor unlikely', 'Unlikely', 'Extremely unlikely', and 'Don't know'. The length of each bar correlates with the count of responses in each category.
+3. **Daily FFT Responses (Time Series Plot)**:
+This time series plot displays the daily count of FFT responses over the same period. The y-axis shows the number of responses, while the x-axis corresponds to the days within each month. Spikes in the graph may indicate specific days when an unusually high number of responses were collected.
+4. **Monthly FFT Responses (Bar Chart)**:
+The final plot is a vertical bar chart showing the total count of FFT responses collected each month. The y-axis represents the count of responses, and the x-axis indicates the month. Each bar's height represents the total number of responses for that month, providing a clear comparison of month-to-month variation in the volume of feedback.""")
+
 
 # == Rating & Sentiment Analysis Correlation ===============================================
 elif page == "Rating & Sentiment Analysis Correlation":
