@@ -279,8 +279,6 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Create two columns
     col1, col2 = st.columns(2)
 
-    # Create a toggle box
-
 
 # == Rating & Sentiment Analysis Correlation ===============================================
 elif page == "Rating & Sentiment Analysis Correlation":
