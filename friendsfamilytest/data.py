@@ -322,9 +322,9 @@ if __name__ == "__main__":
     data = sentiment_analysis(data)
 
     data = improvement_classification(data, batch_size=16)
-    data = gpt3_improvement_classification(data)
+    # data = gpt3_improvement_classification(data)
 
     concat_save_final_df(processed_data, data)
 
     # Push everything to GitHub
-    # do_git_merge()
+    do_git_merge()
