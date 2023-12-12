@@ -92,7 +92,7 @@ def time_it(func):
         print(f"{Fore.YELLOW}[F] FUCTION: {func.__name__}()")
         result = func(*args, **kwargs)
         print(
-            f"{Fore.GREEN}{Style.DIM}✅ Completed: {func.__name__}() - Time taken: {time.time() - start_time:.2f} seconds"
+            f"{Fore.GREEN}{Style.DIM} ✅ Completed: {func.__name__}() - Time taken: {time.time() - start_time:.2f} seconds"
         )
         return result
 
