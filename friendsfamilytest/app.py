@@ -486,19 +486,18 @@ Below the chart is a multi-select field where you can choose to filter and revie
 
 # == Word Cloud ==========================================================
 elif page == "Word Cloud":
-    toggle = st.checkbox("Explain this page?")
-    if toggle:
-        st.markdown(
-            """1. The **Feedback Word Cloud**:
-From response to FFT Q1: Please tell us why you feel this way? 
-A **word cloud** is a visual representation of text data where the size of each word indicates its frequency or importance. In a word cloud, commonly occurring words are usually displayed in larger fonts or bolder colors, while less frequent words appear smaller. This makes it easy to perceive the most prominent terms within a large body of text at a glance.
-In the context of patient feedback, a word cloud can be especially useful to quickly identify the key themes or subjects that are most talked about by patients. For example, if many patients mention terms like "waiting times" or "friendly staff," these words will stand out in the word cloud, indicating areas that are notably good or need improvement..
-
-2. The **Improvement Suggestions Word Cloud** is a creative and intuitive representation of the feedback collected from patients through the Friends and Family Test (FFT). When patients are asked, "Is there anything that would have made your experience better?" their responses provide invaluable insights into how healthcare services can be enhanced."""
-        )
-
     try:
         st.subheader("Feedback Word Cloud")
+        toggle = st.checkbox("Explain this page?")
+        if toggle:
+            st.markdown(
+                """1. The **Feedback Word Cloud**:
+    From response to FFT Q1: Please tell us why you feel this way? 
+    A **word cloud** is a visual representation of text data where the size of each word indicates its frequency or importance. In a word cloud, commonly occurring words are usually displayed in larger fonts or bolder colors, while less frequent words appear smaller. This makes it easy to perceive the most prominent terms within a large body of text at a glance.
+    In the context of patient feedback, a word cloud can be especially useful to quickly identify the key themes or subjects that are most talked about by patients. For example, if many patients mention terms like "waiting times" or "friendly staff," these words will stand out in the word cloud, indicating areas that are notably good or need improvement..
+
+    2. The **Improvement Suggestions Word Cloud** is a creative and intuitive representation of the feedback collected from patients through the Friends and Family Test (FFT). When patients are asked, "Is there anything that would have made your experience better?" their responses provide invaluable insights into how healthcare services can be enhanced."""
+            )
         text = " ".join(filtered_data["free_text"].dropna())
         wordcloud = WordCloud(background_color="white", colormap="Blues").generate(text)
         plt.imshow(wordcloud, interpolation="bilinear")
@@ -519,6 +518,7 @@ In the context of patient feedback, a word cloud can be especially useful to qui
 
 # == Dataframe ==========================================================
 elif page == "View Dataframe":
+    st.subheader("Dataframe")
     toggle = st.checkbox("Explain this page?")
     if toggle:
         st.markdown(
@@ -529,7 +529,6 @@ Each column in a DataFrame has a name, which you can use to locate data more eas
 
 Rows are labeled with an Index, which you can think of as the address of the data. This makes finding specific records simple and fast."""
         )
-    st.subheader("Dataframe")
     st.write("The data below is filtered based on the date range selected above.")
 
     # Display the filtered DataFrame

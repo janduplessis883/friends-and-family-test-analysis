@@ -8,19 +8,15 @@ from colorama import init, Fore, Back, Style
 import warnings
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, pipeline
 import pandas as pd
-from openai import OpenAI
-
-client = OpenAI()
 
 from friendsfamilytest.params import *
 from friendsfamilytest.utils import *
 from friendsfamilytest.auto_git.git_merge import *
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
-
+init(autoreset=True)
 warnings.filterwarnings("ignore")
 secret_path = os.getenv("SECRET_PATH")
-init(autoreset=True)
 
 
 @time_it
