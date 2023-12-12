@@ -33,10 +33,14 @@ def load_google_sheet():
     data.columns = ["time", "rating", "free_text", "do_better"]
     data["time"] = pd.to_datetime(data["time"], format="%d/%m/%Y %H:%M:%S")
 
-    data["do_better"] = data["do_better"].apply(clean_and_replace)
-    data["free_text"] = data["free_text"].apply(clean_and_replace)
     return data
 
+@time_it
+def clean_text(df):
+    df["do_better"] = df["do_better"].apply(clean_and_replace)
+    df["free_text"] = df["free_text"].apply(clean_and_replace)
+    
+    return df
 
 @time_it
 def text_classification(data):
@@ -317,6 +321,7 @@ if __name__ == "__main__":
     data = raw_data[~raw_data.index.isin(processed_data.index)]
     print(f"{Fore.BLUE}🆕----New rows to process: {data.shape[0]}")
 
+    data = clean_text(data)
     data = add_rating_score(data)
     data = text_classification(data)
     data = sentiment_analysis(data)
