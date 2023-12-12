@@ -333,8 +333,12 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     with col1:
         # Negative sentiment plot
         neg_sentiment = filtered_data[filtered_data["sentiment"] == "negative"]
-        slider_start = neg_sentiment["sentiment_score"].min()
-        slider_end = neg_sentiment["sentiment_score"].max()
+        slider_start_point = neg_sentiment["sentiment_score"].min()
+        if slider_start_point == 0:
+            slider_start = 0.5
+        else:
+            slider_start = slider_start_point
+            
         plt.figure(figsize=(5, 2))  # Optional: Adjust the figure size
         sns.histplot(data=neg_sentiment, x="sentiment_score", color="#be6933", kde=True)
         plt.xlabel("Sentiment Score")
@@ -519,8 +523,12 @@ elif page == "View Dataframe":
     toggle = st.checkbox("Explain this page?")
     if toggle:
         st.markdown(
-            """1. **Page Info Coming Soon**:
-More information about this page will be added soon."""
+            """**Dataframe**:
+A dataFrame as a big, organized table full of raw data. It's like a virtual spreadsheet with many rows and columns, where every row represents a single record, and each column stands for a particular variable. If your DataFrame contains all the raw data, it means that it hasn't been processed or filtered - it's the data in its original form as collected.
+
+Each column in a DataFrame has a name, which you can use to locate data more easily. Columns can contain all sorts of data types, including numbers, strings, and dates, and each one typically holds the same kind of data throughout. For instance, one column might hold ages while another lists names, and yet another records dates of visits.
+
+Rows are labeled with an Index, which you can think of as the address of the data. This makes finding specific records simple and fast."""
         )
     st.subheader("Dataframe")
     st.write("The data below is filtered based on the date range selected above.")
@@ -534,7 +542,7 @@ elif page == "About":
         "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true",
         use_column_width=True,
     )
-    st.subheader("Friends & Family Test (FFT) Dashboard")
+    st.subheader("Friends & Family Test (FFT) Dashboard v 2.5")
     st.markdown(
         """Welcome to our new dashboard, aimed at enhancing how healthcare providers understand and use patient feedback. This tool focuses on the Friends and Family Test (FFT), which is essential for collecting patients' views on healthcare services. Our approach uses advanced text classification and sentiment analysis to organize and interpret this feedback more effectively.
 
