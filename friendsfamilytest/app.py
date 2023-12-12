@@ -70,8 +70,8 @@ filtered_data = data[
 # == DASHBOARD ================================================================
 if page == "Monthly Rating & Count":
     st.subheader("Friends & Family Test (FFT) Dashboard")
-    toggle = st.checkbox("Explain this page?")
 
+    toggle = st.checkbox("Explain this page?")
     # React to the toggle's state
     if toggle:
         st.markdown(
@@ -333,6 +333,8 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     with col1:
         # Negative sentiment plot
         neg_sentiment = filtered_data[filtered_data["sentiment"] == "negative"]
+        slider_start = neg_sentiment["sentiment_score"].min()
+        slider_end = neg_sentiment["sentiment_score"].max()
         plt.figure(figsize=(5, 2))  # Optional: Adjust the figure size
         sns.histplot(data=neg_sentiment, x="sentiment_score", color="#be6933", kde=True)
         plt.xlabel("Sentiment Score")
@@ -352,13 +354,20 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     st.subheader("View Patient Feedback")
 
     # Create the slider
-    slider_value = st.slider(
-        label="Select Negative Sentiment Analsysis threshold:",  # Text displayed with the slider
-        min_value=0.2,  # Set the minimum value of the slider
-        max_value=1.0,  # Set the maximum value of the slider
-        value=0.90,  # Set the initial value of the slider
-        step=0.05,  # Set the step of the slider
-    )
+    try:
+        # The value parameter is set to slider_end, which is the maximum value
+        slider_value = st.slider(
+            label="Select Negative Sentiment Analysis threshold:",
+            min_value=slider_start,
+            max_value=1.0,
+            value=0.9,  # Set initial value to the max value
+            step=0.05,
+        )
+    except Exception as e:
+        # This will catch any exceptions and display an info message
+        st.info("No value to select. Please check the slider configuration.")
+        # Optionally, you can also display the exception message
+        st.error(f"An error occurred: {e}")
 
     # View SELECTED Patient Feedback with Sentiment Analaysis NEG >= 0.5
     selected_feedback = filtered_data[
@@ -405,6 +414,18 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 # == Feedback Classification ==========================================================
 elif page == "Feedback Classification":
     st.subheader("Feedback Classification")
+
+    toggle = st.checkbox("Explain this page?")
+    if toggle:
+        st.markdown(
+            """1. **Bar Chart**:
+This bar chart illustrates the range of emotions captured in the FFT feedback, as categorized by a sentiment analysis model trained on the `go_emotions` dataset. Each bar represents one of the 27 emotion labels that the model can assign, showing how often each emotion was detected in the patient feedback.
+The **'neutral' category**, which has been assigned the most counts, includes instances where patients did not provide any textual feedback, defaulting to a 'neutral' classification. Other emotions, such as 'admiration' and 'approval', show varying lower counts, reflecting the variety of sentiments expressed by patients regarding their care experiences.
+
+2. **Multi-select Input Field**:
+Below the chart is a multi-select field where you can choose to filter and review the feedback based on these emotion labels. This feature allows you to delve deeper into the qualitative data, understanding the nuances behind the ratings patients have given and potentially uncovering areas for improvement in patient experience."""
+        )
+
     # Calculate value counts
     label_counts = filtered_data["classif"].value_counts(
         ascending=False
@@ -461,6 +482,18 @@ elif page == "Feedback Classification":
 
 # == Word Cloud ==========================================================
 elif page == "Word Cloud":
+    toggle = st.checkbox("Explain this page?")
+    if toggle:
+        st.markdown(
+            """1. **Feedback Word Cloud**:
+From response to FFT Q1: Please tell us why you feel this way? 
+A **word cloud** is a visual representation of text data where the size of each word indicates its frequency or importance. In a word cloud, commonly occurring words are usually displayed in larger fonts or bolder colors, while less frequent words appear smaller. This makes it easy to perceive the most prominent terms within a large body of text at a glance.
+In the context of patient feedback, a word cloud can be especially useful to quickly identify the key themes or subjects that are most talked about by patients. For example, if many patients mention terms like "waiting times" or "friendly staff," these words will stand out in the word cloud, indicating areas that are notably good or need improvement..
+
+2. **Improvement Suggestions Word Cloud**:
+From FFT Q2: Is there anything that would have made your experience better?"""
+        )
+
     try:
         st.subheader("Feedback Word Cloud")
         text = " ".join(filtered_data["free_text"].dropna())
@@ -472,6 +505,7 @@ elif page == "Word Cloud":
         st.warning("No feedback available for this date range.")
     try:
         st.subheader("Improvement Suggestions Word Cloud")
+
         text2 = " ".join(filtered_data["do_better"].dropna())
         wordcloud = WordCloud(background_color="white", colormap="Reds").generate(text2)
         plt.imshow(wordcloud, interpolation="bilinear")
@@ -482,6 +516,12 @@ elif page == "Word Cloud":
 
 # == Dataframe ==========================================================
 elif page == "View Dataframe":
+    toggle = st.checkbox("Explain this page?")
+    if toggle:
+        st.markdown(
+            """1. **Page Info Coming Soon**:
+More information about this page will be added soon."""
+        )
     st.subheader("Dataframe")
     st.write("The data below is filtered based on the date range selected above.")
 
@@ -537,6 +577,15 @@ Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-fa
 # == Improvement Suggestions ==========================================================
 elif page == "Improvement Suggestions":
     st.subheader("Improvement Suggestions")
+    toggle = st.checkbox("Explain this page?")
+    if toggle:
+        st.markdown(
+            """1. This **horizontal bar chart** provides an analysis of patient feedback addressing areas for potential improvement in healthcare services. Each bar represents a unique category of improvement suggestion derived from patient feedback using zero-shot classification with the `facebook/bart-large-mnli` model. Prior to classification, one-word responses are filtered out to ensure meaningful data is processed.
+The category **"No Improvement Suggestion"** includes feedback that did not suggest any specific changes, which could be interpreted as a form of passive satisfaction. Similarly, the **"Overall Patient Satisfaction"** category likely captures comments that are generally positive, without indicating a need for improvement.
+The length of each bar signifies the count of feedback entries that fall into the corresponding category, providing clear insight into common themes within patient suggestions. For instance, categories like "Reception Services" and "Ambiance of Facility" appear frequently, indicating areas where patients have more frequently suggested improvements.
+
+2. Below the chart is a **multi-select input field** allowing for a more granular exploration of the feedback. This tool enables users to select specific categories and review the actual comments associated with them, aiding healthcare providers in understanding patient perspectives in greater detail and potentially guiding quality improvement initiatives."""
+        )
 
     # Calculate value counts
     label_counts = filtered_data["improvement_labels"].value_counts(
