@@ -315,7 +315,7 @@ if __name__ == "__main__":
 
     # Return new data for processing
     data = raw_data[~raw_data.index.isin(processed_data.index)]
-    print(f"{Fore.MAGENTA}😀-New rows to process: {data.shape[0]}")
+    print(f"{Fore.BLUE}🆕----New rows to process: {data.shape[0]}")
 
     data = add_rating_score(data)
     data = text_classification(data)
