@@ -338,7 +338,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
             slider_start = 0.5
         else:
             slider_start = slider_start_point
-            
+
         plt.figure(figsize=(5, 2))  # Optional: Adjust the figure size
         sns.histplot(data=neg_sentiment, x="sentiment_score", color="#be6933", kde=True)
         plt.xlabel("Sentiment Score")
