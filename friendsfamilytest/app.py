@@ -306,18 +306,18 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     plt.figure(figsize=(10, 3))  # You can adjust the figure size as needed
     scatter_plot = sns.scatterplot(
         data=filtered_data,
-        x="rating_score",
-        y="sentiment_score",
+        y="rating_score",
+        x="sentiment_score",
         hue="sentiment",
-        s=55,
+        s=75,
         palette=palette_colors,
-        marker="x",
+        marker="o",
     )
 
     # Setting x-axis ticks to 1, 2, 3, 4, 5
     # Define the color palette as a dictionary
 
-    scatter_plot.set_xticks([0.5, 1, 2, 3, 4, 5])
+  
     plt.grid(axis="y", color="grey", linestyle="-", linewidth=0.5, alpha=0.6)
 
     scatter_plot.spines["left"].set_visible(False)
@@ -339,20 +339,32 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         else:
             slider_start = slider_start_point
 
-        plt.figure(figsize=(5, 2))  # Optional: Adjust the figure size
+        fig, ax = plt.subplots(figsize=(5, 2))
         sns.histplot(data=neg_sentiment, x="sentiment_score", color="#be6933", kde=True)
+        # Set grid, spines and annotations as before
+        ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        ax.xaxis.grid(False)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.spines["left"].set_visible(False)
         plt.xlabel("Sentiment Score")
-        plt.title("NEGATIVE Sentiment")
+        plt.title("Negative Sentiment")
         st.pyplot(plt)  # Display the plot in Streamlit
 
     # Content for the second column
     with col2:
         # Positive sentiment plot
         pos_sentiment = filtered_data[filtered_data["sentiment"] == "positive"]
-        plt.figure(figsize=(5, 2))  # Optional: Adjust the figure size
+        fig, ax = plt.subplots(figsize=(5, 2))
         sns.histplot(data=pos_sentiment, x="sentiment_score", color="#4187aa", kde=True)
+        # Set grid, spines and annotations as before
+        ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        ax.xaxis.grid(False)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.spines["left"].set_visible(False)
         plt.xlabel("Sentiment Score")
-        plt.title("POSITIVE Sentiment")
+        plt.title("Positive Sentiment")
         st.pyplot(plt)  # Display the plot in Streamlit
 
     st.subheader("View Patient Feedback")

@@ -18,8 +18,8 @@ test:
 app:
 	@streamlit run friendsfamilytest/app.py
 
-app2:
-	@streamlit run friendsfamilytest/app2.py
+app_wide:
+	@streamlit run friendsfamilytest/app_wide.py
 
 gsheet:
 	@streamlit run friendsfamilytest/gsheet_connect.py
