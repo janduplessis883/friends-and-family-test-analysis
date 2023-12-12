@@ -23,7 +23,6 @@ secret_path = os.getenv("SECRET_PATH")
 init(autoreset=True)
 
 
-@debug_info
 @time_it
 def load_google_sheet():
     sh = SheetHelper(
@@ -335,4 +334,4 @@ if __name__ == "__main__":
     concat_save_final_df(processed_data, data)
 
     # Push everything to GitHub
-    # do_git_merge()
+    do_git_merge()
