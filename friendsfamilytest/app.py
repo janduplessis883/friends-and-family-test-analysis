@@ -489,13 +489,12 @@ elif page == "Word Cloud":
     toggle = st.checkbox("Explain this page?")
     if toggle:
         st.markdown(
-            """1. **Feedback Word Cloud**:
+            """1. The **Feedback Word Cloud**:
 From response to FFT Q1: Please tell us why you feel this way? 
 A **word cloud** is a visual representation of text data where the size of each word indicates its frequency or importance. In a word cloud, commonly occurring words are usually displayed in larger fonts or bolder colors, while less frequent words appear smaller. This makes it easy to perceive the most prominent terms within a large body of text at a glance.
 In the context of patient feedback, a word cloud can be especially useful to quickly identify the key themes or subjects that are most talked about by patients. For example, if many patients mention terms like "waiting times" or "friendly staff," these words will stand out in the word cloud, indicating areas that are notably good or need improvement..
 
-2. **Improvement Suggestions Word Cloud**:
-From FFT Q2: Is there anything that would have made your experience better?"""
+2. The **Improvement Suggestions Word Cloud** is a creative and intuitive representation of the feedback collected from patients through the Friends and Family Test (FFT). When patients are asked, "Is there anything that would have made your experience better?" their responses provide invaluable insights into how healthcare services can be enhanced."""
         )
 
     try:
