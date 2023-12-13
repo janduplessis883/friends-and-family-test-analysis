@@ -126,6 +126,11 @@ def batch_generator(data, column_name, batch_size):
             i : i + batch_size
         ], i  # Yield the batch and the starting index
 
+# Zero-Shot Classification (facebook model tried), now review the BartForConditionalGeneration
+# facebook/bart-large-mnli
+# trl-internal-testing/tiny-random-BartForConditionalGeneration ❌
+# ybelkada/tiny-random-T5ForConditionalGeneration-calibrated
+# MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli
 
 @time_it
 def improvement_classification(data, batch_size=16):
@@ -140,7 +145,7 @@ def improvement_classification(data, batch_size=16):
 
     # Labels
     improvement_labels_list = [
-        "Reception Services",
+        "Reception Staff",
         "Ambiance of Facility",
         "Facility Modernization and Upgrades",
         "Nursing Quality",
@@ -208,7 +213,7 @@ def improvement_classification(data, batch_size=16):
 def openai_classify_string(input_string):
     prompt = """you are an expert practice manager for a GP Surgery, you will review improvement suggestions from patients and classify them into one of the following categories:
 improvement_labels_list = [
-        "Reception Services",
+        "Reception Staff",
         "Ambiance of Facility",
         "Facility Modernisation and Upgrades",
         "Nursing Quality",

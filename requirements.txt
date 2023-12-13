@@ -62,3 +62,4 @@ pandasql  # this is for example/st_app.py only
 torch 
 torchvision
 torchaudio
+sentencepiece
