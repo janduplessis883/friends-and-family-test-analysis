@@ -9,11 +9,14 @@ from datetime import date
 from matplotlib.patches import Patch
 
 st.set_page_config(layout="wide")
+
+
 # Load the dataframe
 def load_data():
     df = pd.read_csv("friendsfamilytest/data/data.csv")
     df["time"] = pd.to_datetime(df["time"])
     return df
+
 
 hex_codes = ["#1E152A", "#4E6766", "#5AB1BB", "#A5C882", "#F7DD72", "#f0e8d1"]
 
@@ -33,7 +36,6 @@ data_time = load_timedata()
 monthly_avg = data_time["rating_score"].resample("M").mean()
 monthly_avg_df = monthly_avg.reset_index()
 monthly_avg_df.columns = ["Month", "Average Rating"]
-
 
 
 # Define start date and current date
@@ -215,9 +217,7 @@ ax.set_yticklabels([])
 # Create a custom legend
 from matplotlib.patches import Patch
 
-legend_patches = [
-    Patch(color=color, label=label) for label, color in palette.items()
-]
+legend_patches = [Patch(color=color, label=label) for label, color in palette.items()]
 plt.legend(
     handles=legend_patches,
     title="Rating Categories",
@@ -274,7 +274,7 @@ col1, col2 = st.columns(2)
 st.subheader("Rating & Sentiment Analysis Correlation")
 toggle = st.checkbox("Explain this page?")
 
-    # React to the toggle's state
+# React to the toggle's state
 if toggle:
     st.markdown(
         """1. **Scatter Plot (Top Plot)**:
@@ -508,7 +508,6 @@ except:
 # == Dataframe ==========================================================
 
 
-
 # == Improvement Suggestions ==========================================================
 
 st.subheader("Improvement Suggestions")
@@ -534,10 +533,7 @@ label_counts_df.columns = ["Improvement Labels", "Counts"]
 # Define the palette conditionally based on the category names
 palette = [
     "#ffba08"
-    if (
-        label == "Overall Patient Satisfaction"
-        or label == "No Improvement Suggestion"
-    )
+    if (label == "Overall Patient Satisfaction" or label == "No Improvement Suggestion")
     else "#e85d04"
     for label in label_counts_df["Improvement Labels"]
 ]

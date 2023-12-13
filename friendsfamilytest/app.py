@@ -73,6 +73,7 @@ if page == "Monthly Rating & Count":
 
     toggle = st.checkbox("Explain this page?")
     # React to the toggle's state
+
     if toggle:
         st.markdown(
             """1. **Average Monthly Rating (Line Chart)**:
@@ -148,10 +149,9 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
             st.warning("No rating available for this date range.")
 
     with col2:
-        st.text('')
-        st.text('')
+        st.text("")
+        st.text("")
         st.metric("Total Responses", filtered_data.shape[0])
-
 
     order = [
         "Extremely likely",
@@ -311,7 +311,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         y="rating_score",
         x="sentiment_score",
         hue="sentiment",
-        s=75,
+        s=65,
         palette=palette_colors,
         marker="o",
     )
@@ -319,7 +319,6 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     # Setting x-axis ticks to 1, 2, 3, 4, 5
     # Define the color palette as a dictionary
 
-  
     plt.grid(axis="y", color="grey", linestyle="-", linewidth=0.5, alpha=0.6)
 
     scatter_plot.spines["left"].set_visible(False)
