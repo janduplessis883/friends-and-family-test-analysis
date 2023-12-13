@@ -606,8 +606,11 @@ The length of each bar signifies the count of feedback entries that fall into th
 2. Below the chart is a **multi-select input field** allowing for a more granular exploration of the feedback. This tool enables users to select specific categories and review the actual comments associated with them, aiding healthcare providers in understanding patient perspectives in greater detail and potentially guiding quality improvement initiatives."""
         )
 
+    improvement_data = filtered_data[
+        (filtered_data["improvement_labels"] != "No Improvement Suggestion")
+    ]
     # Calculate value counts
-    label_counts = filtered_data["improvement_labels"].value_counts(
+    label_counts = improvement_data["improvement_labels"].value_counts(
         ascending=False
     )  # Use ascending=True to match the order in your image
 
@@ -650,8 +653,8 @@ The length of each bar signifies the count of feedback entries that fall into th
     selected_ratings = st.multiselect("Select Categories:", improvement_list)
 
     # Filter the data based on the selected classifications
-    filtered_classes = filtered_data[
-        filtered_data["improvement_labels"].isin(selected_ratings)
+    filtered_classes = improvement_data[
+        improvement_data["improvement_labels"].isin(selected_ratings)
     ]
 
     if not selected_ratings:
