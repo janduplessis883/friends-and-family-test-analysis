@@ -148,8 +148,10 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
             st.warning("No rating available for this date range.")
 
     with col2:
-        st.markdown(f"# {filtered_data.shape[0]}")
-        st.write("Total Responses")
+        st.text('')
+        st.text('')
+        st.metric("Total Responses", filtered_data.shape[0])
+
 
     order = [
         "Extremely likely",
