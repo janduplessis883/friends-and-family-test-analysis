@@ -31,6 +31,11 @@ def load_google_sheet():
 
     return data
 
+@time_it
+def word_count(df):
+    df['free_text_len'] = df['free_text'].str.split().apply(len)
+    df['do_better_len'] = df['do_better'].str.split().apply(len) 
+    return df
 
 @time_it
 def clean_text(df):
@@ -132,7 +137,6 @@ def batch_generator(data, column_name, batch_size):
 # trl-internal-testing/tiny-random-BartForConditionalGeneration ❌
 # ybelkada/tiny-random-T5ForConditionalGeneration-calibrated
 # MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli
-
 
 @time_it
 def improvement_classification(data, batch_size=16):
@@ -324,17 +328,13 @@ if __name__ == "__main__":
 
     # Return new data for processing
     data = raw_data[~raw_data.index.isin(processed_data.index)]
-    print(f"{Fore.BLUE}🆕----New rows to process: {data.shape[0]}")
+    print(f"{Fore.BLUE}[*] New rows to process: {data.shape[0]}")
 
-    data = clean_text(data)
+    data = clean_text(data) # clean text
+    data = word_count(data) # word count
     data = add_rating_score(data)
     data = text_classification(data)
     data = sentiment_analysis(data)
-
-    data = improvement_classification(data, batch_size=16)
-    # data = gpt3_improvement_classification(data)
-
+    data = improvement_classification(data, batch_size=16) # data = gpt3_improvement_classification(data)
     concat_save_final_df(processed_data, data)
-
-    # Push everything to GitHub
-    do_git_merge()
+    do_git_merge() # Push everything to GitHub

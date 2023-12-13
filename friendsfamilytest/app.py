@@ -305,7 +305,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         "neutral": "#d8ae46",
         "negative": "#be6933",
     }
-    plt.figure(figsize=(10, 3))  # You can adjust the figure size as needed
+    plt.figure(figsize=(10, 4))  # You can adjust the figure size as needed
     scatter_plot = sns.scatterplot(
         data=filtered_data,
         y="rating_score",
