@@ -574,6 +574,9 @@ Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-fa
     )
 
     st.markdown("---")
+    st.markdown(
+        "![Static Badge](https://img.shields.io/badge/GitHub-janduplessis883-%23aabd3b)  ![Static Badge](https://img.shields.io/badge/Python-3.10.6-%23ae4f4d) ![Static Badge](https://img.shields.io/badge/Telegram-%40jdp145-%2354a7e5?logo=telegram)"
+    )
     col1, col2 = st.columns(2)
 
     # Use 'col1' to display content in the first column
@@ -592,6 +595,7 @@ Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-fa
         st.markdown(
             "**Text Classification** and **Sentiment Analysis** by Huggingface.co"
         )
+
 
 # == Improvement Suggestions ==========================================================
 elif page == "Improvement Suggestions":
