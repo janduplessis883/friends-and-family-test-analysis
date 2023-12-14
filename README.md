@@ -19,6 +19,6 @@ Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-fa
 
 Collaboration welcomed!
 
-
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white) ![Xcode](https://img.shields.io/badge/Xcode-007ACC?style=for-the-badge&logo=Xcode&logoColor=white)
 
 # [View the Streamlit App](https://friends-and-family-test-analysis-pqev4j3c9katnrlv8kktnb.streamlit.app/)
