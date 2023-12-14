@@ -1,517 +1,517 @@
-time,rating,free_text,do_better,rating_score,classif,classif_scores,sentiment,sentiment_score,improvement_labels
-2023-07-13 15:28:22,Extremely likely,very friendly caring staff treated me with respect and listened to my problem,,5.0,admiration,0.5889297127723694,positive,0.8664062023162842,
-2023-07-13 15:29:16,Extremely likely,so good so confidential,,5.0,admiration,0.9109464287757874,positive,0.9255226850509644,
-2023-07-13 15:29:21,Extremely likely,the doctor was very understanding and very knowledgeable,no it was the best,5.0,admiration,0.875547468662262,positive,0.9683501124382019,Overall Patient Satisfaction
-2023-07-13 15:30:10,Extremely likely,dr e was extremely nice,the receptionist was very unkind,5.0,admiration,0.9054943323135376,positive,0.975968599319458,Reception Staff
-2023-07-13 15:31:48,Extremely likely,i was spoken to politely on the phone and a telephone appointment arranged with my doctor which due to a mistake on a locked phone i wasn’t able to answer but i was called back twice to complete my assessment of my health worry,no i was happy with everything,5.0,neutral,0.23401008546352386,neutral,0.7578620910644531,Overall Patient Satisfaction
-2023-07-13 15:32:45,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-13 15:32:52,Extremely likely,very professional and very kind i feel comfortable when i attend my appointment there,no it is already perfect,5.0,admiration,0.5584059953689575,positive,0.9753274321556091,No Improvement Suggestion
-2023-07-13 15:33:01,Extremely likely,faster appointment  treatment ,,5.0,neutral,0.9263331294059753,neutral,0.7282750010490417,
-2023-07-13 15:33:02,Extremely likely,love the practice,,5.0,love,0.9278172254562378,positive,0.9617505073547363,
-2023-07-13 15:33:33,Extremely likely,the nurse miss aleksandra florko was absolutely amazing understanding kind fun thorough careful she is the best,,5.0,admiration,0.9371101260185242,positive,0.9777503609657288,
-2023-07-13 15:37:50,Likely,i have been with surgery for considerable  years and was well looked after by dr param  hoping the work ethic continues apart that good service good location etc,i think it is getting better the ladies at the reception can be so rude it would not do any harm to smile be friendly put the patient at ease,4.0,optimism,0.904801070690155,positive,0.9328970313072205,Reception Staff
-2023-07-13 15:38:26,Likely,efficient friendly  staff,the basement is a bit dark and gloomy and reception area could also do with an upgrade,4.0,admiration,0.5458567142486572,positive,0.8665761351585388,Ambiance of Facility
-2023-07-13 15:39:40,Extremely likely,good service,,5.0,admiration,0.9451923966407776,positive,0.7508882284164429,
-2023-07-13 15:40:54,Extremely likely,because the staff are very helpful,,5.0,admiration,0.7708873748779297,positive,0.9670317769050598,
-2023-07-13 15:42:00,Likely,nurse alex is really helpful and look after us,earls court surgery is really lucky to have nurse alex,4.0,caring,0.5655018091201782,positive,0.9673465490341187,Quality of Medical Advice
-2023-07-13 15:49:20,Extremely likely,friendly  professional and easily accessible,,5.0,approval,0.5506277084350586,positive,0.7529975175857544,
-2023-07-13 16:12:29,Likely,dr great,,4.0,admiration,0.9460420608520508,positive,0.829523503780365,
-2023-07-13 16:15:17,Extremely likely,the receptionist was really very very helpful,yes of course she showed me the easy and a great way to apply for my medicine,5.0,admiration,0.5772374272346497,positive,0.9767670035362244,Prescription Process
-2023-07-13 16:21:38,Extremely likely,happy with my doctor  ,,5.0,joy,0.8749310374259949,positive,0.9829634428024292,
-2023-07-13 16:28:52,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-13 16:28:57,Extremely likely,i was there treated properly,everything was done professionally,5.0,approval,0.578069806098938,positive,0.6608191132545471,Ambiance of Facility
-2023-07-13 16:32:04,Extremely likely,satisfied the service,the staff and especially the gp are very good in service,5.0,approval,0.5168399214744568,neutral,0.6707364320755005,Quality of Medical Advice
-2023-07-13 16:36:29,Extremely likely,all the colleagues are nice and professional,,5.0,admiration,0.9152131676673889,positive,0.9599661827087402,
-2023-07-13 16:38:17,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-13 16:59:32,Likely,staff at surger,,4.0,neutral,0.9658781290054321,neutral,0.8672947883605957,
-2023-07-13 17:23:48,Extremely likely,the gp was very calm friendly and helpful,,5.0,admiration,0.5651254653930664,positive,0.9469082355499268,
-2023-07-13 17:38:30,Extremely likely,i’m with earls court surgery about  years i’m very happy they do excellent service,,5.0,joy,0.7735661864280701,positive,0.9817678928375244,
-2023-07-13 17:48:49,Extremely likely,care and good service… what more does a patient wants,,5.0,admiration,0.5637052059173584,positive,0.7057591676712036,
-2023-07-13 17:51:39,Likely,i always manage to get an appointment with the doctor or nurse within a reasonable timeframe i feel the doctor and nurses are competent and attentive,,4.0,admiration,0.7154925465583801,positive,0.915386974811554,
-2023-07-13 18:05:20,Extremely likely,coz never  put me down,everything  fine,5.0,neutral,0.9571658372879028,neutral,0.5571339726448059,Overall Patient Satisfaction
-2023-07-13 19:06:08,Extremely likely,immediate appointment great doctor and very caring staff,,5.0,admiration,0.9450832605361938,positive,0.9781954288482666,
-2023-07-13 19:27:12,Extremely likely,friendly and good,can’t think of anything,5.0,approval,0.41054102778434753,positive,0.8799332976341248,No Improvement Suggestion
-2023-07-13 19:44:26,Likely,i did not have an appointment with the surgery i had one with earls court fitness centre,yes they didnt have my xray for my arm  a waste off time for me there,4.0,neutral,0.8995001316070557,neutral,0.8844156265258789,Test Results
-2023-07-13 20:12:37,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-13 20:12:42,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-13 20:12:48,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-13 20:12:59,Extremely likely,love the practice,,5.0,love,0.9278172254562378,positive,0.9617505073547363,
-2023-07-13 20:55:36,Extremely likely,help what i needthank you so much,sendn me to specialistthe best,5.0,gratitude,0.9858026504516602,positive,0.8551568388938904,Referral Process
-2023-07-14 07:36:18,Extremely unlikely,not caring practice i am afraid,more knowledge newly qualified doctors  enthusiastic,1.0,fear,0.881950318813324,negative,0.7774248123168945,Doctor Consultations
-2023-07-14 10:07:08,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-14 10:26:34,Extremely likely,everything is good clinic doctors and all staff good,,5.0,admiration,0.8809381723403931,positive,0.9421530961990356,
-2023-07-14 10:26:55,Extremely likely,everything is good clinic doctors and all staff good,,5.0,admiration,0.8809381723403931,positive,0.9421530961990356,
+time,rating,free_text,do_better,free_text_len,do_better_len,rating_score,classif,classif_scores,sentiment,sentiment_score,improvement_labels
+2023-07-13 15:28:22,Extremely likely,very friendly caring staff treated me with respect and listened to my problem,,13,0,5.0,admiration,0.5889297127723694,positive,0.8664062023162842,
+2023-07-13 15:29:16,Extremely likely,so good so confidential,,4,0,5.0,admiration,0.9109464287757874,positive,0.9255226850509644,
+2023-07-13 15:29:21,Extremely likely,the doctor was very understanding and very knowledgeable,no it was the best,8,5,5.0,admiration,0.875547468662262,positive,0.9683501124382019,Overall Patient Satisfaction
+2023-07-13 15:30:10,Extremely likely,dr e was extremely nice,the receptionist was very unkind,5,5,5.0,admiration,0.9054943323135376,positive,0.975968599319458,Reception Staff
+2023-07-13 15:31:48,Extremely likely,i was spoken to politely on the phone and a telephone appointment arranged with my doctor which due to a mistake on a locked phone i wasn’t able to answer but i was called back twice to complete my assessment of my health worry,no i was happy with everything,44,6,5.0,neutral,0.23401008546352386,neutral,0.7578620910644531,Overall Patient Satisfaction
+2023-07-13 15:32:45,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-13 15:32:52,Extremely likely,very professional and very kind i feel comfortable when i attend my appointment there,no it is already perfect,14,5,5.0,admiration,0.5584059953689575,positive,0.9753274321556091,No Improvement Suggestion
+2023-07-13 15:33:01,Extremely likely,faster appointment  treatment ,,3,0,5.0,neutral,0.9263331294059753,neutral,0.7282750010490417,
+2023-07-13 15:33:02,Extremely likely,love the practice,,3,0,5.0,love,0.9278172254562378,positive,0.9617505073547363,
+2023-07-13 15:33:33,Extremely likely,the nurse miss aleksandra florko was absolutely amazing understanding kind fun thorough careful she is the best,,17,0,5.0,admiration,0.9371101260185242,positive,0.9777503609657288,
+2023-07-13 15:37:50,Likely,i have been with surgery for considerable  years and was well looked after by dr param  hoping the work ethic continues apart that good service good location etc,i think it is getting better the ladies at the reception can be so rude it would not do any harm to smile be friendly put the patient at ease,28,30,4.0,optimism,0.904801070690155,positive,0.9328970313072205,Reception Staff
+2023-07-13 15:38:26,Likely,efficient friendly  staff,the basement is a bit dark and gloomy and reception area could also do with an upgrade,3,17,4.0,admiration,0.5458567142486572,positive,0.8665761351585388,Ambiance of Facility
+2023-07-13 15:39:40,Extremely likely,good service,,2,0,5.0,admiration,0.9451923966407776,positive,0.7508882284164429,
+2023-07-13 15:40:54,Extremely likely,because the staff are very helpful,,6,0,5.0,admiration,0.7708873748779297,positive,0.9670317769050598,
+2023-07-13 15:42:00,Likely,nurse alex is really helpful and look after us,earls court surgery is really lucky to have nurse alex,9,10,4.0,caring,0.5655018091201782,positive,0.9673465490341187,Quality of Medical Advice
+2023-07-13 15:49:20,Extremely likely,friendly  professional and easily accessible,,5,0,5.0,approval,0.5506277084350586,positive,0.7529975175857544,
+2023-07-13 16:12:29,Likely,dr great,,2,0,4.0,admiration,0.9460420608520508,positive,0.829523503780365,
+2023-07-13 16:15:17,Extremely likely,the receptionist was really very very helpful,yes of course she showed me the easy and a great way to apply for my medicine,7,17,5.0,admiration,0.5772374272346497,positive,0.9767670035362244,Prescription Process
+2023-07-13 16:21:38,Extremely likely,happy with my doctor  ,,4,0,5.0,joy,0.8749310374259949,positive,0.9829634428024292,
+2023-07-13 16:28:52,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-13 16:28:57,Extremely likely,i was there treated properly,everything was done professionally,5,4,5.0,approval,0.578069806098938,positive,0.6608191132545471,Ambiance of Facility
+2023-07-13 16:32:04,Extremely likely,satisfied the service,the staff and especially the gp are very good in service,3,11,5.0,approval,0.5168399214744568,neutral,0.6707364320755005,Quality of Medical Advice
+2023-07-13 16:36:29,Extremely likely,all the colleagues are nice and professional,,7,0,5.0,admiration,0.9152131676673889,positive,0.9599661827087402,
+2023-07-13 16:38:17,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-13 16:59:32,Likely,staff at surger,,3,0,4.0,neutral,0.9658781290054321,neutral,0.8672947883605957,
+2023-07-13 17:23:48,Extremely likely,the gp was very calm friendly and helpful,,8,0,5.0,admiration,0.5651254653930664,positive,0.9469082355499268,
+2023-07-13 17:38:30,Extremely likely,i’m with earls court surgery about  years i’m very happy they do excellent service,,14,0,5.0,joy,0.7735661864280701,positive,0.9817678928375244,
+2023-07-13 17:48:49,Extremely likely,care and good service… what more does a patient wants,,10,0,5.0,admiration,0.5637052059173584,positive,0.7057591676712036,
+2023-07-13 17:51:39,Likely,i always manage to get an appointment with the doctor or nurse within a reasonable timeframe i feel the doctor and nurses are competent and attentive,,26,0,4.0,admiration,0.7154925465583801,positive,0.915386974811554,
+2023-07-13 18:05:20,Extremely likely,coz never  put me down,everything  fine,5,2,5.0,neutral,0.9571658372879028,neutral,0.5571339726448059,Overall Patient Satisfaction
+2023-07-13 19:06:08,Extremely likely,immediate appointment great doctor and very caring staff,,8,0,5.0,admiration,0.9450832605361938,positive,0.9781954288482666,
+2023-07-13 19:27:12,Extremely likely,friendly and good,can’t think of anything,3,4,5.0,approval,0.41054102778434753,positive,0.8799332976341248,No Improvement Suggestion
+2023-07-13 19:44:26,Likely,i did not have an appointment with the surgery i had one with earls court fitness centre,yes they didnt have my xray for my arm  a waste off time for me there,17,16,4.0,neutral,0.8995001316070557,neutral,0.8844156265258789,Test Results
+2023-07-13 20:12:37,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-13 20:12:42,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-13 20:12:48,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-13 20:12:59,Extremely likely,love the practice,,3,0,5.0,love,0.9278172254562378,positive,0.9617505073547363,
+2023-07-13 20:55:36,Extremely likely,help what i needthank you so much,sendn me to specialistthe best,7,5,5.0,gratitude,0.9858026504516602,positive,0.8551568388938904,Referral Process
+2023-07-14 07:36:18,Extremely unlikely,not caring practice i am afraid,more knowledge newly qualified doctors  enthusiastic,6,6,1.0,fear,0.881950318813324,negative,0.7774248123168945,Doctor Consultations
+2023-07-14 10:07:08,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-14 10:26:34,Extremely likely,everything is good clinic doctors and all staff good,,9,0,5.0,admiration,0.8809381723403931,positive,0.9421530961990356,
+2023-07-14 10:26:55,Extremely likely,everything is good clinic doctors and all staff good,,9,0,5.0,admiration,0.8809381723403931,positive,0.9421530961990356,
 2023-07-14 14:13:56,Likely,"staff is friendly and you get good care and nurse is available i don’t need to go to hospital for small injuries 
-doctors waiting is not long easily available",nothing i can think about,4.0,approval,0.3975352644920349,positive,0.6416797637939453,No Improvement Suggestion
-2023-07-14 20:15:34,Extremely likely,because all staffs are helpful friendly as well,,5.0,neutral,0.45821478962898254,positive,0.9594113230705261,
-2023-07-15 09:41:01,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-15 09:41:06,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-15 09:41:11,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-15 11:10:55,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-15 11:11:23,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-15 11:20:12,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+doctors waiting is not long easily available",nothing i can think about,29,5,4.0,approval,0.3975352644920349,positive,0.6416797637939453,No Improvement Suggestion
+2023-07-14 20:15:34,Extremely likely,because all staffs are helpful friendly as well,,8,0,5.0,neutral,0.45821478962898254,positive,0.9594113230705261,
+2023-07-15 09:41:01,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-15 09:41:06,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-15 09:41:11,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-15 11:10:55,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-15 11:11:23,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-15 11:20:12,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
 2023-07-15 14:59:54,Extremely likely,"everybody is helpful qualified and humanitarian  
-honestly my doctor nurses and receptionists are very good people i’m so happy to be registered there i am a doctor as well but in another country so i know what i’m talking about very good people very good specialists",more doctors in the surgery,5.0,admiration,0.7382869720458984,positive,0.9791942238807678,Staffing Levels
-2023-07-15 16:14:00,Extremely likely,i have been satisfied of my call to my gp practice on that day,,5.0,approval,0.591679036617279,positive,0.8571946620941162,
-2023-07-17 14:16:10,Extremely likely,,everything is good,5.0,neutral,0.9549600481987,positive,0.4012986421585083,Overall Patient Satisfaction
-2023-07-18 08:41:37,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-18 16:18:40,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-26 16:24:24,Extremely likely,doctors response,,5.0,neutral,0.9707455039024353,neutral,0.7996453046798706,
-2023-07-26 16:24:26,Extremely likely,the nurse was extremely friendly and attentive and professional,,5.0,admiration,0.8360222578048706,positive,0.9643811583518982,
-2023-07-26 16:24:42,Extremely likely,cheerful staff quick solution,,5.0,joy,0.5863556265830994,positive,0.8229828476905823,
-2023-07-26 16:24:46,Extremely likely,really friendly,,5.0,approval,0.2610604763031006,positive,0.8607954382896423,
-2023-07-26 16:25:35,Extremely likely,really friendly,,5.0,approval,0.2610604763031006,positive,0.8607954382896423,
+honestly my doctor nurses and receptionists are very good people i’m so happy to be registered there i am a doctor as well but in another country so i know what i’m talking about very good people very good specialists",more doctors in the surgery,46,5,5.0,admiration,0.7382869720458984,positive,0.9791942238807678,Staffing Levels
+2023-07-15 16:14:00,Extremely likely,i have been satisfied of my call to my gp practice on that day,,14,0,5.0,approval,0.591679036617279,positive,0.8571946620941162,
+2023-07-17 14:16:10,Extremely likely,,everything is good,0,3,5.0,neutral,0.9549600481987,positive,0.4012986421585083,Overall Patient Satisfaction
+2023-07-18 08:41:37,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-18 16:18:40,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-26 16:24:24,Extremely likely,doctors response,,2,0,5.0,neutral,0.9707455039024353,neutral,0.7996453046798706,
+2023-07-26 16:24:26,Extremely likely,the nurse was extremely friendly and attentive and professional,,9,0,5.0,admiration,0.8360222578048706,positive,0.9643811583518982,
+2023-07-26 16:24:42,Extremely likely,cheerful staff quick solution,,4,0,5.0,joy,0.5863556265830994,positive,0.8229828476905823,
+2023-07-26 16:24:46,Extremely likely,really friendly,,2,0,5.0,approval,0.2610604763031006,positive,0.8607954382896423,
+2023-07-26 16:25:35,Extremely likely,really friendly,,2,0,5.0,approval,0.2610604763031006,positive,0.8607954382896423,
 2023-07-26 16:26:50,Likely,they are very kind smile,"every body enjoying to work 
-i can feel it",4.0,admiration,0.9411271810531616,positive,0.9330422878265381,Overall Patient Satisfaction
-2023-07-26 16:27:04,Extremely likely,they provide many services on their premises,more face to face appointment with the doctors,5.0,neutral,0.928994357585907,positive,0.6757511496543884,Doctor Consultations
-2023-07-26 16:27:47,Extremely likely,very kind helpful,can’t think of anythink,5.0,admiration,0.7421895861625671,positive,0.8895449638366699,No Improvement Suggestion
-2023-07-26 16:28:23,Extremely likely,everything went great,,5.0,admiration,0.9402561187744141,positive,0.9647886753082275,
-2023-07-26 16:28:31,Extremely likely,everyone is helpful,doctor and all the staff,5.0,neutral,0.7890394330024719,positive,0.9283862113952637,Quality of Medical Advice
-2023-07-26 16:31:31,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-26 16:36:45,Extremely likely,friendly and always find a quick appointment for a highly vulnerable person with multiple issues due to ns,,5.0,approval,0.4683243930339813,neutral,0.6610332727432251,
-2023-07-26 16:37:58,Extremely likely,i have a very good doctor and the receptionists are very helpful,,5.0,admiration,0.7512266039848328,positive,0.9753339290618896,
-2023-07-26 16:40:45,Extremely likely,they are always very helpful and friendly,,5.0,admiration,0.470120906829834,positive,0.9625287055969238,
-2023-07-26 16:45:26,Extremely likely,ive never felt so taken care of and valued by a doctor in my life miss aleksandra florko has been incredibly thorough understanding and careful she is just perfect thank you so much,,5.0,gratitude,0.9784327745437622,positive,0.9749714136123657,
-2023-07-26 16:51:38,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-26 16:52:05,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-26 16:54:45,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-26 17:01:56,Likely,the doctors is too much friendly and give you time to talk … specially dr adieb,to change all the front desk staff,4.0,neutral,0.5849421620368958,neutral,0.6527643799781799,Staffing Levels
-2023-07-26 17:04:12,Extremely likely,with my experiences,,5.0,neutral,0.9558791518211365,neutral,0.7891072034835815,
-2023-07-26 17:07:44,Extremely likely, old brompton road surgery is extremely well organised  starting with the lovely welcoming ladies on reception  through to the very understanding doctor  and nurses,nothing at all it’s perfect thank you mw,5.0,admiration,0.5173485279083252,positive,0.9759328961372375,No Improvement Suggestion
-2023-07-26 17:14:26,Extremely likely,i have been going to ec for almost years and have always received hood care staff are helpful and competent and offer a wide range of support,possibly getting an appointment more quickly if required,5.0,caring,0.4748836159706116,positive,0.9585573077201843,Referral Process
-2023-07-26 17:18:03,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-26 17:26:58,Likely,receptionists and doctors helpful and give good services,,4.0,admiration,0.6621799468994141,positive,0.9060977697372437,
-2023-07-26 17:29:05,Extremely likely,because she is understanding,,5.0,neutral,0.8111257553100586,positive,0.7229066491127014,
-2023-07-26 17:32:09,Likely,short time with the doctors,longer time with the doctors if needed,4.0,neutral,0.9646392464637756,neutral,0.8425479531288147,Quality of Medical Advice
-2023-07-26 17:32:31,Extremely likely,i find the frs in surgery willing torsten,,5.0,neutral,0.9691804647445679,neutral,0.7764608860015869,
-2023-07-26 17:33:21,Extremely likely,very helpful and considerate,,5.0,admiration,0.83566814661026,positive,0.9168068170547485,
-2023-07-26 17:36:53,Extremely likely,excellent staff very understanding willing to help in all situations changing appointments to suit wonderful staff,,5.0,admiration,0.9158182740211487,positive,0.9670982360839844,
-2023-07-26 17:59:33,Extremely likely,great surgery,,5.0,admiration,0.9491472244262695,positive,0.9375976324081421,
-2023-07-26 18:12:09,Extremely likely,the staff and doctors are very attentive and friendly,i’m fully satisfied for their service and kind,5.0,admiration,0.800505518913269,positive,0.9652247428894043,Overall Patient Satisfaction
-2023-07-26 18:25:24,Extremely likely,the nurse was extremely skillful and had very soft ways  she took the swab for the smear test in an impeccable way in a difficult situation with me could not be better very rare to be so competent,absolutely not,5.0,admiration,0.7082042694091797,positive,0.9082240462303162,No Improvement Suggestion
-2023-07-26 18:29:04,Likely,i have receive great service,,4.0,admiration,0.9439945220947266,positive,0.967801034450531,
-2023-07-26 19:35:55,Extremely likely,when ever contacted i got good response,bee more professional,5.0,approval,0.534905195236206,positive,0.8578124642372131,Ambiance of Facility
-2023-07-26 21:36:03,Extremely likely,very competent and friendly,,5.0,admiration,0.931114912033081,positive,0.8960493803024292,
-2023-07-26 21:48:46,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-26 22:26:05,Extremely likely,everything was perfect and upper expectations,easy access to blood tests results,5.0,approval,0.34048745036125183,positive,0.9168263077735901,Test Results
-2023-07-26 23:01:43,Extremely likely,i am happy with that,,5.0,joy,0.8891525864601135,positive,0.9438965916633606,
-2023-07-27 04:17:58,Likely,the staff is very friendly with their customers,,4.0,neutral,0.39290955662727356,positive,0.9631913900375366,
-2023-07-27 08:41:14,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-07-27 12:16:01,Extremely likely,good service and good attention,no everything’s fine,5.0,admiration,0.943713903427124,positive,0.8666845560073853,Overall Patient Satisfaction
-2023-07-27 14:36:42,Likely,good doctors specially adeeb,i would like not to see the front desk staff,4.0,admiration,0.6449185609817505,positive,0.9027782082557678,Ambiance of Facility
-2023-07-27 14:43:27,Extremely likely,excellent service each time,cant think of any at this time,5.0,admiration,0.9360095262527466,positive,0.962465763092041,No Improvement Suggestion
-2023-07-27 18:09:39,Extremely likely,very efficient  easy  way to communicate  with my gp,nothing i can think of,5.0,admiration,0.571987509727478,positive,0.8554878234863281,No Improvement Suggestion
-2023-07-28 10:41:11,Extremely likely,i needed my gp to see the effects of taking a medication for two months and agree on future treatment  not only did he do this but he also asked about other aspects of my health,i dont think so,5.0,neutral,0.7654039263725281,neutral,0.782752275466919,No Improvement Suggestion
-2023-07-29 20:26:01,Extremely likely,very helpful reception staff and great doctors,,5.0,admiration,0.9191431999206543,positive,0.9687767624855042,
-2023-07-31 19:00:33,Extremely likely,the doctors the nurses and the other staff are professional and ordinary they deal with the patients kindly,my above comment answers the question,5.0,admiration,0.5481041669845581,positive,0.634260356426239,Referral Process
-2023-08-01 10:01:23,Extremely unlikely,the receptionist behave in an unfriendly way definitely not aligned with heart values of nhs very close to ignoring peoples queries and using loud voice intimidating,strict adherence to heart values and talk in polite manner rather than talking in a tone of entitlement,1.0,neutral,0.6472871899604797,negative,0.8969069123268127,Referral Process
-2023-08-03 09:34:27,Likely,the re eptio  and the gp  were kind efficient and professional,allow more face to face appointment s online ones are less  effective,4.0,admiration,0.7961242198944092,positive,0.8674052953720093,Appointment System Efficiency
-2023-08-03 18:40:45,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-04 21:20:30,Likely,the service is good the receptionist is very supportive and the doctor are very reliable,i dont know at the moment,4.0,admiration,0.7272788286209106,positive,0.966056227684021,Waiting Times
-2023-08-05 17:17:23,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-06 15:36:46,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-06 18:52:31,Likely,it went ok,don’t think so,4.0,approval,0.7697498798370361,positive,0.717346727848053,No Improvement Suggestion
-2023-08-09 13:23:36,Extremely likely,always good service,,5.0,admiration,0.9392275810241699,positive,0.87958163022995,
-2023-08-09 13:24:07,Extremely likely,friendly and efficient,,5.0,neutral,0.43425384163856506,positive,0.6802046895027161,
-2023-08-09 13:24:45,Extremely likely,good service and waiting time,not that i know of,5.0,admiration,0.9260811805725098,positive,0.861356258392334,No Improvement Suggestion
-2023-08-09 13:25:54,Extremely likely,have been to this surgery for long time,,5.0,neutral,0.5206645727157593,neutral,0.8347868919372559,
-2023-08-09 13:26:22,Likely,the doctors is nice and give time to patients and listen to them,if you change all the front desk staff,4.0,admiration,0.7442032098770142,positive,0.8434233069419861,Reception Staff
-2023-08-09 13:30:50,Extremely likely,i like my doctors used to them and how they listen to me,thank you if i can also book the “visit” appointments via the app it would be great as at the moment only the “telephone services” are available when i try to book via the app else i have to call to book a “visit” appointment thank you very much,5.0,love,0.7845316529273987,positive,0.7790390849113464,Telephone Service
-2023-08-09 13:31:04,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-09 13:33:03,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-09 13:34:24,Likely,quite good service,the doctor be more sympathetic,4.0,admiration,0.9461175203323364,positive,0.8534151315689087,Quality of Medical Advice
-2023-08-09 13:35:47,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-09 13:36:03,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-09 13:40:43,Extremely likely,poeple there they are very helpful,,5.0,approval,0.3801618814468384,positive,0.9558193683624268,
-2023-08-09 13:53:41,Extremely likely,great service quick appointments very skilled and attentive medical staff who make you feel comfortable and safe to ask questions friendly reception staff,nothing all very helpful from initiation to follow up to conclusion,5.0,admiration,0.9116518497467041,positive,0.963359534740448,No Improvement Suggestion
-2023-08-09 13:57:04,Extremely likely,treated properly,everythings there already excellent,5.0,approval,0.6934071779251099,neutral,0.5548209547996521,Overall Patient Satisfaction
-2023-08-09 13:57:30,Extremely likely,the doctors and staff are kind and attentive to all patients like me,as i’d experienced going to the clinics frequently i felt satisfied and comfortable,5.0,admiration,0.7293306589126587,positive,0.89285808801651,Quality of Medical Advice
-2023-08-09 14:36:17,Neither likely nor unlikely,good doctors but the front desk people needs all changes  ,,3.0,admiration,0.42147132754325867,positive,0.583473265171051,
-2023-08-09 14:38:10,Likely,good doctors   but front desk people needs all change,front desk staff need all changes,4.0,admiration,0.6005951166152954,positive,0.56330406665802,Staffing Levels
-2023-08-09 15:56:11,Extremely likely,fast and efficient the nurse who i saw was extremely friendly and helpful the whole team worked together to ensure i got my medication,an updated website,5.0,admiration,0.5168942213058472,positive,0.9441624879837036,Ambiance of Facility
-2023-08-09 16:23:21,Extremely likely,friendly team,,5.0,admiration,0.5508332848548889,positive,0.5767115354537964,
+i can feel it",5,9,4.0,admiration,0.9411271810531616,positive,0.9330422878265381,Overall Patient Satisfaction
+2023-07-26 16:27:04,Extremely likely,they provide many services on their premises,more face to face appointment with the doctors,7,8,5.0,neutral,0.928994357585907,positive,0.6757511496543884,Doctor Consultations
+2023-07-26 16:27:47,Extremely likely,very kind helpful,can’t think of anythink,3,4,5.0,admiration,0.7421895861625671,positive,0.8895449638366699,No Improvement Suggestion
+2023-07-26 16:28:23,Extremely likely,everything went great,,3,0,5.0,admiration,0.9402561187744141,positive,0.9647886753082275,
+2023-07-26 16:28:31,Extremely likely,everyone is helpful,doctor and all the staff,3,5,5.0,neutral,0.7890394330024719,positive,0.9283862113952637,Quality of Medical Advice
+2023-07-26 16:31:31,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-26 16:36:45,Extremely likely,friendly and always find a quick appointment for a highly vulnerable person with multiple issues due to ns,,18,0,5.0,approval,0.4683243930339813,neutral,0.6610332727432251,
+2023-07-26 16:37:58,Extremely likely,i have a very good doctor and the receptionists are very helpful,,12,0,5.0,admiration,0.7512266039848328,positive,0.9753339290618896,
+2023-07-26 16:40:45,Extremely likely,they are always very helpful and friendly,,7,0,5.0,admiration,0.470120906829834,positive,0.9625287055969238,
+2023-07-26 16:45:26,Extremely likely,ive never felt so taken care of and valued by a doctor in my life miss aleksandra florko has been incredibly thorough understanding and careful she is just perfect thank you so much,,33,0,5.0,gratitude,0.9784327745437622,positive,0.9749714136123657,
+2023-07-26 16:51:38,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-26 16:52:05,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-26 16:54:45,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-26 17:01:56,Likely,the doctors is too much friendly and give you time to talk … specially dr adieb,to change all the front desk staff,16,7,4.0,neutral,0.5849421620368958,neutral,0.6527643799781799,Staffing Levels
+2023-07-26 17:04:12,Extremely likely,with my experiences,,3,0,5.0,neutral,0.9558791518211365,neutral,0.7891072034835815,
+2023-07-26 17:07:44,Extremely likely, old brompton road surgery is extremely well organised  starting with the lovely welcoming ladies on reception  through to the very understanding doctor  and nurses,nothing at all it’s perfect thank you mw,24,8,5.0,admiration,0.5173485279083252,positive,0.9759328961372375,No Improvement Suggestion
+2023-07-26 17:14:26,Extremely likely,i have been going to ec for almost years and have always received hood care staff are helpful and competent and offer a wide range of support,possibly getting an appointment more quickly if required,27,8,5.0,caring,0.4748836159706116,positive,0.9585573077201843,Referral Process
+2023-07-26 17:18:03,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-26 17:26:58,Likely,receptionists and doctors helpful and give good services,,8,0,4.0,admiration,0.6621799468994141,positive,0.9060977697372437,
+2023-07-26 17:29:05,Extremely likely,because she is understanding,,4,0,5.0,neutral,0.8111257553100586,positive,0.7229066491127014,
+2023-07-26 17:32:09,Likely,short time with the doctors,longer time with the doctors if needed,5,7,4.0,neutral,0.9646392464637756,neutral,0.8425479531288147,Quality of Medical Advice
+2023-07-26 17:32:31,Extremely likely,i find the frs in surgery willing torsten,,8,0,5.0,neutral,0.9691804647445679,neutral,0.7764608860015869,
+2023-07-26 17:33:21,Extremely likely,very helpful and considerate,,4,0,5.0,admiration,0.83566814661026,positive,0.9168068170547485,
+2023-07-26 17:36:53,Extremely likely,excellent staff very understanding willing to help in all situations changing appointments to suit wonderful staff,,16,0,5.0,admiration,0.9158182740211487,positive,0.9670982360839844,
+2023-07-26 17:59:33,Extremely likely,great surgery,,2,0,5.0,admiration,0.9491472244262695,positive,0.9375976324081421,
+2023-07-26 18:12:09,Extremely likely,the staff and doctors are very attentive and friendly,i’m fully satisfied for their service and kind,9,8,5.0,admiration,0.800505518913269,positive,0.9652247428894043,Overall Patient Satisfaction
+2023-07-26 18:25:24,Extremely likely,the nurse was extremely skillful and had very soft ways  she took the swab for the smear test in an impeccable way in a difficult situation with me could not be better very rare to be so competent,absolutely not,38,2,5.0,admiration,0.7082042694091797,positive,0.9082240462303162,No Improvement Suggestion
+2023-07-26 18:29:04,Likely,i have receive great service,,5,0,4.0,admiration,0.9439945220947266,positive,0.967801034450531,
+2023-07-26 19:35:55,Extremely likely,when ever contacted i got good response,bee more professional,7,3,5.0,approval,0.534905195236206,positive,0.8578124642372131,Ambiance of Facility
+2023-07-26 21:36:03,Extremely likely,very competent and friendly,,4,0,5.0,admiration,0.931114912033081,positive,0.8960493803024292,
+2023-07-26 21:48:46,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-26 22:26:05,Extremely likely,everything was perfect and upper expectations,easy access to blood tests results,6,6,5.0,approval,0.34048745036125183,positive,0.9168263077735901,Test Results
+2023-07-26 23:01:43,Extremely likely,i am happy with that,,5,0,5.0,joy,0.8891525864601135,positive,0.9438965916633606,
+2023-07-27 04:17:58,Likely,the staff is very friendly with their customers,,8,0,4.0,neutral,0.39290955662727356,positive,0.9631913900375366,
+2023-07-27 08:41:14,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-07-27 12:16:01,Extremely likely,good service and good attention,no everything’s fine,5,3,5.0,admiration,0.943713903427124,positive,0.8666845560073853,Overall Patient Satisfaction
+2023-07-27 14:36:42,Likely,good doctors specially adeeb,i would like not to see the front desk staff,4,10,4.0,admiration,0.6449185609817505,positive,0.9027782082557678,Ambiance of Facility
+2023-07-27 14:43:27,Extremely likely,excellent service each time,cant think of any at this time,4,7,5.0,admiration,0.9360095262527466,positive,0.962465763092041,No Improvement Suggestion
+2023-07-27 18:09:39,Extremely likely,very efficient  easy  way to communicate  with my gp,nothing i can think of,9,5,5.0,admiration,0.571987509727478,positive,0.8554878234863281,No Improvement Suggestion
+2023-07-28 10:41:11,Extremely likely,i needed my gp to see the effects of taking a medication for two months and agree on future treatment  not only did he do this but he also asked about other aspects of my health,i dont think so,36,4,5.0,neutral,0.7654039263725281,neutral,0.782752275466919,No Improvement Suggestion
+2023-07-29 20:26:01,Extremely likely,very helpful reception staff and great doctors,,7,0,5.0,admiration,0.9191431999206543,positive,0.9687767624855042,
+2023-07-31 19:00:33,Extremely likely,the doctors the nurses and the other staff are professional and ordinary they deal with the patients kindly,my above comment answers the question,18,6,5.0,admiration,0.5481041669845581,positive,0.634260356426239,Referral Process
+2023-08-01 10:01:23,Extremely unlikely,the receptionist behave in an unfriendly way definitely not aligned with heart values of nhs very close to ignoring peoples queries and using loud voice intimidating,strict adherence to heart values and talk in polite manner rather than talking in a tone of entitlement,26,18,1.0,neutral,0.6472871899604797,negative,0.8969069123268127,Referral Process
+2023-08-03 09:34:27,Likely,the re eptio  and the gp  were kind efficient and professional,allow more face to face appointment s online ones are less  effective,11,12,4.0,admiration,0.7961242198944092,positive,0.8674052953720093,Appointment System Efficiency
+2023-08-03 18:40:45,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-04 21:20:30,Likely,the service is good the receptionist is very supportive and the doctor are very reliable,i dont know at the moment,15,6,4.0,admiration,0.7272788286209106,positive,0.966056227684021,Waiting Times
+2023-08-05 17:17:23,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-06 15:36:46,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-06 18:52:31,Likely,it went ok,don’t think so,3,3,4.0,approval,0.7697498798370361,positive,0.717346727848053,No Improvement Suggestion
+2023-08-09 13:23:36,Extremely likely,always good service,,3,0,5.0,admiration,0.9392275810241699,positive,0.87958163022995,
+2023-08-09 13:24:07,Extremely likely,friendly and efficient,,3,0,5.0,neutral,0.43425384163856506,positive,0.6802046895027161,
+2023-08-09 13:24:45,Extremely likely,good service and waiting time,not that i know of,5,5,5.0,admiration,0.9260811805725098,positive,0.861356258392334,No Improvement Suggestion
+2023-08-09 13:25:54,Extremely likely,have been to this surgery for long time,,8,0,5.0,neutral,0.5206645727157593,neutral,0.8347868919372559,
+2023-08-09 13:26:22,Likely,the doctors is nice and give time to patients and listen to them,if you change all the front desk staff,13,8,4.0,admiration,0.7442032098770142,positive,0.8434233069419861,Reception Staff
+2023-08-09 13:30:50,Extremely likely,i like my doctors used to them and how they listen to me,thank you if i can also book the “visit” appointments via the app it would be great as at the moment only the “telephone services” are available when i try to book via the app else i have to call to book a “visit” appointment thank you very much,13,49,5.0,love,0.7845316529273987,positive,0.7790390849113464,Telephone Service
+2023-08-09 13:31:04,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-09 13:33:03,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-09 13:34:24,Likely,quite good service,the doctor be more sympathetic,3,5,4.0,admiration,0.9461175203323364,positive,0.8534151315689087,Quality of Medical Advice
+2023-08-09 13:35:47,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-09 13:36:03,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-09 13:40:43,Extremely likely,poeple there they are very helpful,,6,0,5.0,approval,0.3801618814468384,positive,0.9558193683624268,
+2023-08-09 13:53:41,Extremely likely,great service quick appointments very skilled and attentive medical staff who make you feel comfortable and safe to ask questions friendly reception staff,nothing all very helpful from initiation to follow up to conclusion,23,11,5.0,admiration,0.9116518497467041,positive,0.963359534740448,No Improvement Suggestion
+2023-08-09 13:57:04,Extremely likely,treated properly,everythings there already excellent,2,4,5.0,approval,0.6934071779251099,neutral,0.5548209547996521,Overall Patient Satisfaction
+2023-08-09 13:57:30,Extremely likely,the doctors and staff are kind and attentive to all patients like me,as i’d experienced going to the clinics frequently i felt satisfied and comfortable,13,13,5.0,admiration,0.7293306589126587,positive,0.89285808801651,Quality of Medical Advice
+2023-08-09 14:36:17,Neither likely nor unlikely,good doctors but the front desk people needs all changes  ,,10,0,3.0,admiration,0.42147132754325867,positive,0.583473265171051,
+2023-08-09 14:38:10,Likely,good doctors   but front desk people needs all change,front desk staff need all changes,9,6,4.0,admiration,0.6005951166152954,positive,0.56330406665802,Staffing Levels
+2023-08-09 15:56:11,Extremely likely,fast and efficient the nurse who i saw was extremely friendly and helpful the whole team worked together to ensure i got my medication,an updated website,24,3,5.0,admiration,0.5168942213058472,positive,0.9441624879837036,Ambiance of Facility
+2023-08-09 16:23:21,Extremely likely,friendly team,,2,0,5.0,admiration,0.5508332848548889,positive,0.5767115354537964,
 2023-08-09 16:23:42,Extremely likely,"i have been going to this surgery since i was a child and i
-am satisfied with them",,5.0,approval,0.5102881789207458,positive,0.8883806467056274,
-2023-08-09 16:25:06,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-09 16:26:02,Extremely likely,been at this surgery all my life really looked after me and my family really well,not really everyone is really friendly,5.0,caring,0.3293690085411072,positive,0.9438557028770447,Ambiance of Facility
-2023-08-09 16:29:56,Extremely likely,i feel always welcome and i always get what i need,i am with this surgery for  years so its meant that i am very happy with their service,5.0,gratitude,0.3349176347255707,positive,0.9552240967750549,Quality of Medical Advice
-2023-08-09 16:34:39,Extremely likely,friendly and helpful doctors and receptionists,,5.0,neutral,0.6102967262268066,positive,0.8517282009124756,
-2023-08-09 17:02:31,Extremely likely,because long time i treatment since  … all staff  friendly and family ,,5.0,neutral,0.9302747845649719,positive,0.8425721526145935,
-2023-08-09 17:08:06,Extremely likely,very helpful and informative,very pleased with the appointment,5.0,admiration,0.6874363422393799,positive,0.954653263092041,Overall Patient Satisfaction
-2023-08-09 17:31:26,Extremely likely,always i get help from my gp practice when i need,the whole team of the gp practice are doing their best to help as much as they can,5.0,caring,0.39815250039100647,positive,0.5941779017448425,Doctor Consultations
-2023-08-09 18:12:11,Extremely unlikely,receptionist are rude and unhelpful,i understand their job is stressfulbut there is not need to be so rude and intimidating,1.0,annoyance,0.5320786237716675,negative,0.9029941558837891,Poor Communication
-2023-08-09 18:37:47,Extremely likely,everybody at rhe surgery is friendly dedicated  supportive,i dont  think so,5.0,caring,0.4075988531112671,positive,0.9251552820205688,No Improvement Suggestion
-2023-08-09 19:35:21,Extremely likely,friendly and professional service,,5.0,neutral,0.6627967953681946,positive,0.8066822290420532,
-2023-08-09 20:24:07,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-09 20:26:13,Likely,because im very happy to the service,i think work on saturday,4.0,joy,0.8956194519996643,positive,0.9734105467796326,Weekend Service Availability
-2023-08-09 20:48:01,Extremely unlikely,i have made this clear to other members of staff i feel dr e let me down and in fact was responsible for a gross dereliction of duty she was very slow to respond to my symptoms and in retrospect did not think she believed me she was irresponsible and failed in showing a duty of care towards me,dr e should have behaved as a responsible gp and sent me for further tests i had heart failure and she had diagnosed me with asthma i visited her  times in a space of a few months with symptoms that i now know were typical of heart failure but she  did nothing other than increase my cortisone it was only when i attended a  e that i was diagnosed with heart failure neither she or her colleague dr a have apologised  naturally i am taking the matter further,1.0,disappointment,0.4231113791465759,negative,0.8943809270858765,Quality of Medical Advice
-2023-08-09 21:58:21,Likely,the service is very good and staff are very friendly i came to the surgery with my son an old lady assaulted him call him names and nearly hit him with her working stick,i don’t feel safe after being with the same surgery for more than  years my son is still terrified about what happen to him,4.0,admiration,0.7463133931159973,positive,0.8062551021575928,Patient Safety
-2023-08-10 11:34:21,Extremely likely,good services,,5.0,admiration,0.9359197020530701,positive,0.7918797731399536,
-2023-08-10 16:04:44,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-10 17:52:00,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-10 19:10:06,Likely,they  are  entertaining  in proper,yes a bit better,4.0,amusement,0.6290972828865051,positive,0.8423446416854858,Overall Patient Satisfaction
-2023-08-10 22:28:33,Likely,good service experience all helpful and patient staff efficient and prompt dealing with my healthcare,everything in my recent experience was good,4.0,admiration,0.923957884311676,positive,0.9605593681335449,Overall Patient Satisfaction
-2023-08-11 19:44:48,Extremely likely,receptionists very friendly and the phone is answered very quickly,,5.0,neutral,0.48166829347610474,positive,0.969726026058197,
-2023-08-12 21:23:04,Extremely likely,excellent test speed and gp advice,,5.0,admiration,0.8882904052734375,positive,0.9261564016342163,
-2023-08-16 12:52:27,Extremely likely,great caring service,,5.0,admiration,0.9530264139175415,positive,0.908129870891571,
-2023-08-24 10:13:26,Extremely likely,very friendly and very good service,yes if you put face to face appointment available on nhs app,5.0,admiration,0.9391272068023682,positive,0.9443379640579224,Appointment System Efficiency
-2023-08-24 10:14:31,Extremely likely,it was a sensible thing to do and the procedure went well,,5.0,approval,0.7763041257858276,positive,0.8672163486480713,
-2023-08-24 10:16:02,Extremely likely,friendly and very caring doctors and nurse,,5.0,admiration,0.6053747534751892,positive,0.9396799802780151,
-2023-08-24 10:16:30,Extremely likely,way proactive communication,surgery looks a bit tired,5.0,neutral,0.9671211838722229,neutral,0.5982989072799683,Ambiance of Facility
-2023-08-24 10:20:41,Extremely likely,friendly  efficient reception staff  excellent doctors no problem getting face to face apr phone sppointments,,5.0,admiration,0.8536580801010132,positive,0.9452208280563354,
-2023-08-24 10:30:50,Likely,useful test for heart,,4.0,neutral,0.9221330285072327,negative,0.8098934888839722,
-2023-08-24 10:31:49,Neither likely nor unlikely,didnt get a reminder for my sppointment which ii made some weeks earlier and therefore had forgotten about it and didnt attend,,3.0,neutral,0.4801343083381653,negative,0.6937601566314697,
-2023-08-24 10:44:38,Likely,staff are good and friendly,,4.0,admiration,0.9335783123970032,positive,0.8934365510940552,
-2023-08-24 10:46:01,Likely,you manage to get someone in thats know what there doing for a change,yes not going down stairs,4.0,neutral,0.9018622636795044,neutral,0.5009878277778625,No Improvement Suggestion
-2023-08-24 10:56:48,Extremely likely,family like treatment from the staff,for me the experience was best no complain at all,5.0,neutral,0.9642615914344788,negative,0.667962908744812,Overall Patient Satisfaction
-2023-08-24 10:59:52,Extremely likely,very helpful doctors and friendly reception staff who always assist me and very polite,,5.0,admiration,0.6994128227233887,positive,0.974262535572052,
-2023-08-24 11:04:06,Extremely likely,always great service plus you see the same doctor everytime,,5.0,admiration,0.9307278990745544,positive,0.9700754284858704,
-2023-08-24 11:12:15,Extremely likely,i was made to feel very welcome and the health checks were carried out very efficiently,,5.0,gratitude,0.5305242538452148,positive,0.9549680352210999,
-2023-08-24 11:12:47,Extremely likely,doctorsnurses and staff are very professional and friendly,,5.0,admiration,0.7492076754570007,positive,0.9473623037338257,
-2023-08-24 11:13:45,Extremely likely,i was very satisfied,so far  is okay,5.0,approval,0.3536178171634674,positive,0.9497495889663696,Overall Patient Satisfaction
-2023-08-24 11:24:09,Likely,keeps my health under control,,4.0,caring,0.552139163017273,neutral,0.5139946937561035,
-2023-08-24 11:54:18,Extremely likely,very caring,,5.0,caring,0.8584524989128113,positive,0.7843449115753174,
-2023-08-24 12:07:59,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-24 13:14:09,Extremely likely,good service,,5.0,admiration,0.9451923966407776,positive,0.7508882284164429,
-2023-08-24 13:22:57,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-24 13:23:48,Likely,they have the most facilities so no need to go anywhere else,nothing i can reckon,4.0,admiration,0.6053193807601929,positive,0.7694604396820068,No Improvement Suggestion
-2023-08-24 13:26:34,Likely,i rate  positively my visit with the gp,i think more face to face contact with gp  is much better  than  off telephone conversations,4.0,approval,0.6774377226829529,positive,0.8886862397193909,Doctor Consultations
-2023-08-24 13:37:41,Extremely likely,receptionists very friendly and helpful,,5.0,admiration,0.5620523691177368,positive,0.962308406829834,
-2023-08-24 13:59:09,Extremely likely,medical expertise,,5.0,neutral,0.6429952383041382,neutral,0.6881136298179626,
-2023-08-24 13:59:26,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-24 14:08:50,Likely,all the stuff are very friendly,,4.0,approval,0.5154724717140198,positive,0.9418385028839111,
-2023-08-24 14:10:00,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+am satisfied with them",,18,0,5.0,approval,0.5102881789207458,positive,0.8883806467056274,
+2023-08-09 16:25:06,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-09 16:26:02,Extremely likely,been at this surgery all my life really looked after me and my family really well,not really everyone is really friendly,16,6,5.0,caring,0.3293690085411072,positive,0.9438557028770447,Ambiance of Facility
+2023-08-09 16:29:56,Extremely likely,i feel always welcome and i always get what i need,i am with this surgery for  years so its meant that i am very happy with their service,11,18,5.0,gratitude,0.3349176347255707,positive,0.9552240967750549,Quality of Medical Advice
+2023-08-09 16:34:39,Extremely likely,friendly and helpful doctors and receptionists,,6,0,5.0,neutral,0.6102967262268066,positive,0.8517282009124756,
+2023-08-09 17:02:31,Extremely likely,because long time i treatment since  … all staff  friendly and family ,,12,0,5.0,neutral,0.9302747845649719,positive,0.8425721526145935,
+2023-08-09 17:08:06,Extremely likely,very helpful and informative,very pleased with the appointment,4,5,5.0,admiration,0.6874363422393799,positive,0.954653263092041,Overall Patient Satisfaction
+2023-08-09 17:31:26,Extremely likely,always i get help from my gp practice when i need,the whole team of the gp practice are doing their best to help as much as they can,11,18,5.0,caring,0.39815250039100647,positive,0.5941779017448425,Doctor Consultations
+2023-08-09 18:12:11,Extremely unlikely,receptionist are rude and unhelpful,i understand their job is stressfulbut there is not need to be so rude and intimidating,5,16,1.0,annoyance,0.5320786237716675,negative,0.9029941558837891,Poor Communication
+2023-08-09 18:37:47,Extremely likely,everybody at rhe surgery is friendly dedicated  supportive,i dont  think so,8,4,5.0,caring,0.4075988531112671,positive,0.9251552820205688,No Improvement Suggestion
+2023-08-09 19:35:21,Extremely likely,friendly and professional service,,4,0,5.0,neutral,0.6627967953681946,positive,0.8066822290420532,
+2023-08-09 20:24:07,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-09 20:26:13,Likely,because im very happy to the service,i think work on saturday,7,5,4.0,joy,0.8956194519996643,positive,0.9734105467796326,Weekend Service Availability
+2023-08-09 20:48:01,Extremely unlikely,i have made this clear to other members of staff i feel dr e let me down and in fact was responsible for a gross dereliction of duty she was very slow to respond to my symptoms and in retrospect did not think she believed me she was irresponsible and failed in showing a duty of care towards me,dr e should have behaved as a responsible gp and sent me for further tests i had heart failure and she had diagnosed me with asthma i visited her  times in a space of a few months with symptoms that i now know were typical of heart failure but she  did nothing other than increase my cortisone it was only when i attended a  e that i was diagnosed with heart failure neither she or her colleague dr a have apologised  naturally i am taking the matter further,59,88,1.0,disappointment,0.4231113791465759,negative,0.8943809270858765,Quality of Medical Advice
+2023-08-09 21:58:21,Likely,the service is very good and staff are very friendly i came to the surgery with my son an old lady assaulted him call him names and nearly hit him with her working stick,i don’t feel safe after being with the same surgery for more than  years my son is still terrified about what happen to him,34,24,4.0,admiration,0.7463133931159973,positive,0.8062551021575928,Patient Safety
+2023-08-10 11:34:21,Extremely likely,good services,,2,0,5.0,admiration,0.9359197020530701,positive,0.7918797731399536,
+2023-08-10 16:04:44,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-10 17:52:00,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-10 19:10:06,Likely,they  are  entertaining  in proper,yes a bit better,5,4,4.0,amusement,0.6290972828865051,positive,0.8423446416854858,Overall Patient Satisfaction
+2023-08-10 22:28:33,Likely,good service experience all helpful and patient staff efficient and prompt dealing with my healthcare,everything in my recent experience was good,15,7,4.0,admiration,0.923957884311676,positive,0.9605593681335449,Overall Patient Satisfaction
+2023-08-11 19:44:48,Extremely likely,receptionists very friendly and the phone is answered very quickly,,10,0,5.0,neutral,0.48166829347610474,positive,0.969726026058197,
+2023-08-12 21:23:04,Extremely likely,excellent test speed and gp advice,,6,0,5.0,admiration,0.8882904052734375,positive,0.9261564016342163,
+2023-08-16 12:52:27,Extremely likely,great caring service,,3,0,5.0,admiration,0.9530264139175415,positive,0.908129870891571,
+2023-08-24 10:13:26,Extremely likely,very friendly and very good service,yes if you put face to face appointment available on nhs app,6,12,5.0,admiration,0.9391272068023682,positive,0.9443379640579224,Appointment System Efficiency
+2023-08-24 10:14:31,Extremely likely,it was a sensible thing to do and the procedure went well,,12,0,5.0,approval,0.7763041257858276,positive,0.8672163486480713,
+2023-08-24 10:16:02,Extremely likely,friendly and very caring doctors and nurse,,7,0,5.0,admiration,0.6053747534751892,positive,0.9396799802780151,
+2023-08-24 10:16:30,Extremely likely,way proactive communication,surgery looks a bit tired,3,5,5.0,neutral,0.9671211838722229,neutral,0.5982989072799683,Ambiance of Facility
+2023-08-24 10:20:41,Extremely likely,friendly  efficient reception staff  excellent doctors no problem getting face to face apr phone sppointments,,15,0,5.0,admiration,0.8536580801010132,positive,0.9452208280563354,
+2023-08-24 10:30:50,Likely,useful test for heart,,4,0,4.0,neutral,0.9221330285072327,negative,0.8098934888839722,
+2023-08-24 10:31:49,Neither likely nor unlikely,didnt get a reminder for my sppointment which ii made some weeks earlier and therefore had forgotten about it and didnt attend,,22,0,3.0,neutral,0.4801343083381653,negative,0.6937601566314697,
+2023-08-24 10:44:38,Likely,staff are good and friendly,,5,0,4.0,admiration,0.9335783123970032,positive,0.8934365510940552,
+2023-08-24 10:46:01,Likely,you manage to get someone in thats know what there doing for a change,yes not going down stairs,14,5,4.0,neutral,0.9018622636795044,neutral,0.5009878277778625,No Improvement Suggestion
+2023-08-24 10:56:48,Extremely likely,family like treatment from the staff,for me the experience was best no complain at all,6,10,5.0,neutral,0.9642615914344788,negative,0.667962908744812,Overall Patient Satisfaction
+2023-08-24 10:59:52,Extremely likely,very helpful doctors and friendly reception staff who always assist me and very polite,,14,0,5.0,admiration,0.6994128227233887,positive,0.974262535572052,
+2023-08-24 11:04:06,Extremely likely,always great service plus you see the same doctor everytime,,10,0,5.0,admiration,0.9307278990745544,positive,0.9700754284858704,
+2023-08-24 11:12:15,Extremely likely,i was made to feel very welcome and the health checks were carried out very efficiently,,16,0,5.0,gratitude,0.5305242538452148,positive,0.9549680352210999,
+2023-08-24 11:12:47,Extremely likely,doctorsnurses and staff are very professional and friendly,,8,0,5.0,admiration,0.7492076754570007,positive,0.9473623037338257,
+2023-08-24 11:13:45,Extremely likely,i was very satisfied,so far  is okay,4,4,5.0,approval,0.3536178171634674,positive,0.9497495889663696,Overall Patient Satisfaction
+2023-08-24 11:24:09,Likely,keeps my health under control,,5,0,4.0,caring,0.552139163017273,neutral,0.5139946937561035,
+2023-08-24 11:54:18,Extremely likely,very caring,,2,0,5.0,caring,0.8584524989128113,positive,0.7843449115753174,
+2023-08-24 12:07:59,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-24 13:14:09,Extremely likely,good service,,2,0,5.0,admiration,0.9451923966407776,positive,0.7508882284164429,
+2023-08-24 13:22:57,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-24 13:23:48,Likely,they have the most facilities so no need to go anywhere else,nothing i can reckon,12,4,4.0,admiration,0.6053193807601929,positive,0.7694604396820068,No Improvement Suggestion
+2023-08-24 13:26:34,Likely,i rate  positively my visit with the gp,i think more face to face contact with gp  is much better  than  off telephone conversations,8,16,4.0,approval,0.6774377226829529,positive,0.8886862397193909,Doctor Consultations
+2023-08-24 13:37:41,Extremely likely,receptionists very friendly and helpful,,5,0,5.0,admiration,0.5620523691177368,positive,0.962308406829834,
+2023-08-24 13:59:09,Extremely likely,medical expertise,,2,0,5.0,neutral,0.6429952383041382,neutral,0.6881136298179626,
+2023-08-24 13:59:26,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-24 14:08:50,Likely,all the stuff are very friendly,,6,0,4.0,approval,0.5154724717140198,positive,0.9418385028839111,
+2023-08-24 14:10:00,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
 2023-08-24 14:30:20,Extremely likely,"the very friendly receptionists
  the uptodate technology in the surgery
- the doctors’ understanding of the patients’ needs",nothing more as every thing there couldn’t be better,5.0,neutral,0.812136173248291,positive,0.7931378483772278,No Improvement Suggestion
-2023-08-24 15:03:28,Extremely likely,they are very good accomodating friendly and helpful,i am satisfied with the service experience,5.0,admiration,0.9315566420555115,positive,0.9678557515144348,Overall Patient Satisfaction
-2023-08-24 16:52:03,Extremely likely,dr a is my favourite medical provider he is always friendly thoughtful and he put our concerns first  can not speak more highly than him  the staff is always helpful very friendly and very professional  and my experience with other medical professionals in this office has always been above my level of standards,,5.0,admiration,0.8737266063690186,positive,0.9688930511474609,
-2023-08-24 18:21:02,Extremely likely,very professional and pleasant,,5.0,admiration,0.835485577583313,positive,0.9405211806297302,
-2023-08-24 20:11:30,Extremely likely,receptionists always efficient and helpfull doctors listen they are concerned thorough and give clear explantions,,5.0,caring,0.6388372182846069,positive,0.9144318103790283,
-2023-08-24 21:45:15,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-25 07:52:24,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-25 08:42:33,Extremely likely,professional helpful,i dont think there is anything to improve,5.0,neutral,0.5675635933876038,positive,0.7690631151199341,No Improvement Suggestion
-2023-08-25 12:04:19,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-25 13:58:41,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-25 14:49:45,Extremely likely,my gp e is extremely professional and helpful,,5.0,admiration,0.7942068576812744,positive,0.9692916870117188,
-2023-08-25 15:47:17,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-08-25 23:31:42,Extremely likely,staff are very helpful and supportive and it’s good to see the same gp with whom you have a developed relationship each time,,5.0,admiration,0.6077961325645447,positive,0.9690707921981812,
-2023-08-26 09:58:30,Extremely likely,i feel comfortable and happy with the service,,5.0,joy,0.856944739818573,positive,0.958433210849762,
-2023-08-26 13:32:58,Extremely likely,everything is good,,5.0,approval,0.40559688210487366,positive,0.9265815615653992,
-2023-08-26 13:33:51,Extremely likely,everything is good,,5.0,approval,0.40559688210487366,positive,0.9265815615653992,
-2023-08-26 17:30:56,Extremely unlikely,the surgery staff always think they know best talk over you dont actively listen and then go and do exactly the same  next  time and you have to go through same crap again,training for hca  training for reception on basics  how to talk to patients  how to a acknowledge they sre wring and not see as a personal attack on them  drs if not going to do some thing to contact the patient and discuss so your not wiating thinking some thing is been done and its not  freshen the surgery up its dull dull dull and sure this is what helps make all the staff dull plus the present non colour makes the place feel grubby  see patients on time instead of staying in rooms having non work conversations as  they can be heard in waiting room  room where o stored downstairs make the staircase downstairs more accessible so narrow nearly fallen a number of times,1.0,neutral,0.8496622443199158,negative,0.9042901992797852,Reception Staff
-2023-08-27 21:03:13,Extremely likely,friendly efficient and highly competent,,5.0,admiration,0.7841545939445496,positive,0.8446455001831055,
-2023-08-28 11:41:01,Extremely likely,very good service by all staff,,5.0,admiration,0.9455580711364746,positive,0.9622827172279358,
-2023-08-28 14:33:52,Likely,becous thr attention is good,yes to appointment face to face,4.0,admiration,0.7363758683204651,positive,0.8046339154243469,Ambiance of Facility
-2023-08-29 14:22:57,Extremely likely,even in these hard times the surgery is always available and knowledgeable,not this past visit in these hard times i have a lot to learn and it’s not always easy but the surgery is brilliant thank you,5.0,approval,0.406432569026947,positive,0.7533977627754211,Quality of Medical Advice
-2023-08-29 17:50:31,Extremely likely,all services available at one place,provide some physio exercises on the premises,5.0,neutral,0.9500481486320496,neutral,0.8328193426132202,Ambiance of Facility
-2023-08-29 23:58:14,Likely,good service,,4.0,admiration,0.9451923966407776,positive,0.7508882284164429,
-2023-08-30 14:47:31,Extremely likely,efficient and cordial service,water fountain,5.0,neutral,0.8931487202644348,positive,0.8449311256408691,Ambiance of Facility
-2023-09-05 18:36:37,Likely,efficient and polite,,4.0,neutral,0.6487279534339905,positive,0.623912513256073,
-2023-09-07 19:02:03,Extremely likely,everyone is always available extremely helpful and nice,,5.0,admiration,0.7243707776069641,positive,0.9767325520515442,
-2023-09-07 19:02:28,Extremely likely,receptionists very polite and efficient,,5.0,admiration,0.5393202900886536,positive,0.887493371963501,
+ the doctors’ understanding of the patients’ needs",nothing more as every thing there couldn’t be better,17,9,5.0,neutral,0.812136173248291,positive,0.7931378483772278,No Improvement Suggestion
+2023-08-24 15:03:28,Extremely likely,they are very good accomodating friendly and helpful,i am satisfied with the service experience,8,7,5.0,admiration,0.9315566420555115,positive,0.9678557515144348,Overall Patient Satisfaction
+2023-08-24 16:52:03,Extremely likely,dr a is my favourite medical provider he is always friendly thoughtful and he put our concerns first  can not speak more highly than him  the staff is always helpful very friendly and very professional  and my experience with other medical professionals in this office has always been above my level of standards,,53,0,5.0,admiration,0.8737266063690186,positive,0.9688930511474609,
+2023-08-24 18:21:02,Extremely likely,very professional and pleasant,,4,0,5.0,admiration,0.835485577583313,positive,0.9405211806297302,
+2023-08-24 20:11:30,Extremely likely,receptionists always efficient and helpfull doctors listen they are concerned thorough and give clear explantions,,15,0,5.0,caring,0.6388372182846069,positive,0.9144318103790283,
+2023-08-24 21:45:15,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-25 07:52:24,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-25 08:42:33,Extremely likely,professional helpful,i dont think there is anything to improve,2,8,5.0,neutral,0.5675635933876038,positive,0.7690631151199341,No Improvement Suggestion
+2023-08-25 12:04:19,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-25 13:58:41,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-25 14:49:45,Extremely likely,my gp e is extremely professional and helpful,,8,0,5.0,admiration,0.7942068576812744,positive,0.9692916870117188,
+2023-08-25 15:47:17,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-08-25 23:31:42,Extremely likely,staff are very helpful and supportive and it’s good to see the same gp with whom you have a developed relationship each time,,23,0,5.0,admiration,0.6077961325645447,positive,0.9690707921981812,
+2023-08-26 09:58:30,Extremely likely,i feel comfortable and happy with the service,,8,0,5.0,joy,0.856944739818573,positive,0.958433210849762,
+2023-08-26 13:32:58,Extremely likely,everything is good,,3,0,5.0,approval,0.40559688210487366,positive,0.9265815615653992,
+2023-08-26 13:33:51,Extremely likely,everything is good,,3,0,5.0,approval,0.40559688210487366,positive,0.9265815615653992,
+2023-08-26 17:30:56,Extremely unlikely,the surgery staff always think they know best talk over you dont actively listen and then go and do exactly the same  next  time and you have to go through same crap again,training for hca  training for reception on basics  how to talk to patients  how to a acknowledge they sre wring and not see as a personal attack on them  drs if not going to do some thing to contact the patient and discuss so your not wiating thinking some thing is been done and its not  freshen the surgery up its dull dull dull and sure this is what helps make all the staff dull plus the present non colour makes the place feel grubby  see patients on time instead of staying in rooms having non work conversations as  they can be heard in waiting room  room where o stored downstairs make the staircase downstairs more accessible so narrow nearly fallen a number of times,33,125,1.0,neutral,0.8496622443199158,negative,0.9042901992797852,Reception Staff
+2023-08-27 21:03:13,Extremely likely,friendly efficient and highly competent,,5,0,5.0,admiration,0.7841545939445496,positive,0.8446455001831055,
+2023-08-28 11:41:01,Extremely likely,very good service by all staff,,6,0,5.0,admiration,0.9455580711364746,positive,0.9622827172279358,
+2023-08-28 14:33:52,Likely,becous thr attention is good,yes to appointment face to face,5,6,4.0,admiration,0.7363758683204651,positive,0.8046339154243469,Ambiance of Facility
+2023-08-29 14:22:57,Extremely likely,even in these hard times the surgery is always available and knowledgeable,not this past visit in these hard times i have a lot to learn and it’s not always easy but the surgery is brilliant thank you,12,26,5.0,approval,0.406432569026947,positive,0.7533977627754211,Quality of Medical Advice
+2023-08-29 17:50:31,Extremely likely,all services available at one place,provide some physio exercises on the premises,6,7,5.0,neutral,0.9500481486320496,neutral,0.8328193426132202,Ambiance of Facility
+2023-08-29 23:58:14,Likely,good service,,2,0,4.0,admiration,0.9451923966407776,positive,0.7508882284164429,
+2023-08-30 14:47:31,Extremely likely,efficient and cordial service,water fountain,4,2,5.0,neutral,0.8931487202644348,positive,0.8449311256408691,Ambiance of Facility
+2023-09-05 18:36:37,Likely,efficient and polite,,3,0,4.0,neutral,0.6487279534339905,positive,0.623912513256073,
+2023-09-07 19:02:03,Extremely likely,everyone is always available extremely helpful and nice,,8,0,5.0,admiration,0.7243707776069641,positive,0.9767325520515442,
+2023-09-07 19:02:28,Extremely likely,receptionists very polite and efficient,,5,0,5.0,admiration,0.5393202900886536,positive,0.887493371963501,
 2023-09-07 19:02:41,Extremely likely,"friendly staff 
-good doctors",,5.0,admiration,0.8892882466316223,positive,0.88542240858078,
-2023-09-07 19:02:49,Extremely likely,because everyone is always ready to help,i cant think of anything,5.0,neutral,0.6959531307220459,positive,0.8947453498840332,No Improvement Suggestion
-2023-09-07 19:03:01,Extremely likely,good,everything is good,5.0,admiration,0.9067692160606384,positive,0.6512166857719421,Overall Patient Satisfaction
-2023-09-07 19:03:15,Extremely likely,i appreciate the concern and excellent care,,5.0,admiration,0.9438976049423218,positive,0.9380178451538086,
-2023-09-07 19:03:44,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-09-07 19:04:19,Extremely likely,beacause they are professional and so kind,,5.0,admiration,0.639836847782135,positive,0.9365213513374329,
-2023-09-07 19:04:25,Extremely likely,you attend to your patients with care and passion,not if i can think of,5.0,caring,0.6113524436950684,positive,0.8650201559066772,No Improvement Suggestion
-2023-09-07 19:05:10,Extremely likely,lovely friendly professional people,no fully satisfied,5.0,love,0.9206283688545227,positive,0.960502564907074,No Improvement Suggestion
-2023-09-07 19:05:26,Extremely likely,ive always recived the best treatment,,5.0,admiration,0.7095476984977722,positive,0.9357787370681763,
-2023-09-07 19:06:53,Extremely likely,always friendly helpful and efficient doctors and receptionists  never had a problem at this surgery,no everything was good,5.0,admiration,0.4569048285484314,positive,0.9708229303359985,Overall Patient Satisfaction
-2023-09-07 19:08:29,Extremely likely,everyone is always helpful friendly and welcoming,not at present,5.0,approval,0.3245004713535309,positive,0.9624736905097961,No Improvement Suggestion
-2023-09-07 19:09:57,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-09-07 19:10:10,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-09-07 19:10:58,Extremely unlikely,dr is a good doctor but zero customer service in reception,,1.0,admiration,0.7916291356086731,negative,0.7873907089233398,
-2023-09-07 19:19:40,Extremely likely,the staff and doctors are very attentive and kind,i’m very much satisfied and comfortable,5.0,admiration,0.8689552545547485,positive,0.9637425541877747,Overall Patient Satisfaction
-2023-09-07 19:20:04,Extremely likely,the nurse that came to do the blood test was very professional curties and skilled he’s taken blood samples very efficiently and quickly well mannered and polite,no perfectly satisfied,5.0,admiration,0.6738443374633789,positive,0.9316203594207764,No Improvement Suggestion
-2023-09-07 19:21:34,Extremely likely,the staff and doctors are very attentive and kind,i am very satisfied and comfortable,5.0,admiration,0.8689552545547485,positive,0.9637425541877747,Overall Patient Satisfaction
-2023-09-07 19:22:45,Extremely likely,i feel the surgery personnel both the clerical and medical are friendly and welcoming and make one feel at ease,,5.0,admiration,0.3574042320251465,positive,0.9298406839370728,
-2023-09-07 19:24:16,Extremely likely,everyone there are very friendly and helpful,,5.0,admiration,0.655134916305542,positive,0.9681945443153381,
-2023-09-07 19:24:55,Likely,staff are nice,,4.0,admiration,0.9259611368179321,positive,0.8334118723869324,
-2023-09-07 19:28:54,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-09-07 20:20:53,Neither likely nor unlikely,it’s just ok to crap to pure  shit,yes if the doctor had called me  for the telephone appointment as arranged,3.0,annoyance,0.44747212529182434,negative,0.8672674298286438,Telephone Service
-2023-09-07 21:15:52,Likely,good gps helpful receptionists,waiting room could be better with comfortable chairs n magazines,4.0,admiration,0.9085524082183838,positive,0.8471614718437195,Ambiance of Facility
-2023-09-07 21:42:54,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-09-07 23:16:45,Extremely likely,good appointment timing properly investigating illness feelings and professional caring,i would be happy if you carry on your efforts for better interest of your clients,5.0,admiration,0.7993939518928528,positive,0.7960634231567383,Overall Patient Satisfaction
-2023-09-08 00:20:31,Likely,,to be sent to gps closer to my address it’s difficult going far while sick,4.0,neutral,0.9549600481987,positive,0.4012986421585083,Patient Safety
-2023-09-08 07:11:27,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-09-08 11:12:23,Likely,some time it’s taking too long to waite for a doctor,yeah some time it’s very helpful,4.0,neutral,0.759804368019104,negative,0.7706980109214783,Overall Patient Satisfaction
-2023-09-08 13:38:53,Extremely likely,because the doctor was really good and nice and makes patient very good,the way in this gp very good in appointments and the receptionist  ,5.0,admiration,0.9416317343711853,positive,0.9745016694068909,Reception Staff
+good doctors",,4,0,5.0,admiration,0.8892882466316223,positive,0.88542240858078,
+2023-09-07 19:02:49,Extremely likely,because everyone is always ready to help,i cant think of anything,7,5,5.0,neutral,0.6959531307220459,positive,0.8947453498840332,No Improvement Suggestion
+2023-09-07 19:03:01,Extremely likely,good,everything is good,1,3,5.0,admiration,0.9067692160606384,positive,0.6512166857719421,Overall Patient Satisfaction
+2023-09-07 19:03:15,Extremely likely,i appreciate the concern and excellent care,,7,0,5.0,admiration,0.9438976049423218,positive,0.9380178451538086,
+2023-09-07 19:03:44,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-09-07 19:04:19,Extremely likely,beacause they are professional and so kind,,7,0,5.0,admiration,0.639836847782135,positive,0.9365213513374329,
+2023-09-07 19:04:25,Extremely likely,you attend to your patients with care and passion,not if i can think of,9,6,5.0,caring,0.6113524436950684,positive,0.8650201559066772,No Improvement Suggestion
+2023-09-07 19:05:10,Extremely likely,lovely friendly professional people,no fully satisfied,4,3,5.0,love,0.9206283688545227,positive,0.960502564907074,No Improvement Suggestion
+2023-09-07 19:05:26,Extremely likely,ive always recived the best treatment,,6,0,5.0,admiration,0.7095476984977722,positive,0.9357787370681763,
+2023-09-07 19:06:53,Extremely likely,always friendly helpful and efficient doctors and receptionists  never had a problem at this surgery,no everything was good,15,4,5.0,admiration,0.4569048285484314,positive,0.9708229303359985,Overall Patient Satisfaction
+2023-09-07 19:08:29,Extremely likely,everyone is always helpful friendly and welcoming,not at present,7,3,5.0,approval,0.3245004713535309,positive,0.9624736905097961,No Improvement Suggestion
+2023-09-07 19:09:57,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-09-07 19:10:10,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-09-07 19:10:58,Extremely unlikely,dr is a good doctor but zero customer service in reception,,11,0,1.0,admiration,0.7916291356086731,negative,0.7873907089233398,
+2023-09-07 19:19:40,Extremely likely,the staff and doctors are very attentive and kind,i’m very much satisfied and comfortable,9,6,5.0,admiration,0.8689552545547485,positive,0.9637425541877747,Overall Patient Satisfaction
+2023-09-07 19:20:04,Extremely likely,the nurse that came to do the blood test was very professional curties and skilled he’s taken blood samples very efficiently and quickly well mannered and polite,no perfectly satisfied,27,3,5.0,admiration,0.6738443374633789,positive,0.9316203594207764,No Improvement Suggestion
+2023-09-07 19:21:34,Extremely likely,the staff and doctors are very attentive and kind,i am very satisfied and comfortable,9,6,5.0,admiration,0.8689552545547485,positive,0.9637425541877747,Overall Patient Satisfaction
+2023-09-07 19:22:45,Extremely likely,i feel the surgery personnel both the clerical and medical are friendly and welcoming and make one feel at ease,,20,0,5.0,admiration,0.3574042320251465,positive,0.9298406839370728,
+2023-09-07 19:24:16,Extremely likely,everyone there are very friendly and helpful,,7,0,5.0,admiration,0.655134916305542,positive,0.9681945443153381,
+2023-09-07 19:24:55,Likely,staff are nice,,3,0,4.0,admiration,0.9259611368179321,positive,0.8334118723869324,
+2023-09-07 19:28:54,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-09-07 20:20:53,Neither likely nor unlikely,it’s just ok to crap to pure  shit,yes if the doctor had called me  for the telephone appointment as arranged,8,13,3.0,annoyance,0.44747212529182434,negative,0.8672674298286438,Telephone Service
+2023-09-07 21:15:52,Likely,good gps helpful receptionists,waiting room could be better with comfortable chairs n magazines,4,10,4.0,admiration,0.9085524082183838,positive,0.8471614718437195,Ambiance of Facility
+2023-09-07 21:42:54,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-09-07 23:16:45,Extremely likely,good appointment timing properly investigating illness feelings and professional caring,i would be happy if you carry on your efforts for better interest of your clients,10,16,5.0,admiration,0.7993939518928528,positive,0.7960634231567383,Overall Patient Satisfaction
+2023-09-08 00:20:31,Likely,,to be sent to gps closer to my address it’s difficult going far while sick,0,15,4.0,neutral,0.9549600481987,positive,0.4012986421585083,Patient Safety
+2023-09-08 07:11:27,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-09-08 11:12:23,Likely,some time it’s taking too long to waite for a doctor,yeah some time it’s very helpful,11,6,4.0,neutral,0.759804368019104,negative,0.7706980109214783,Overall Patient Satisfaction
+2023-09-08 13:38:53,Extremely likely,because the doctor was really good and nice and makes patient very good,the way in this gp very good in appointments and the receptionist  ,13,12,5.0,admiration,0.9416317343711853,positive,0.9745016694068909,Reception Staff
 2023-09-09 18:05:34,Extremely likely,"because i like how the personal tread me 
-that have a very good doctor’s",,5.0,admiration,0.5816859602928162,positive,0.8864882588386536,
-2023-09-09 22:38:05,Extremely likely,the nurse has been extremely kind and professional,not this time,5.0,admiration,0.9202863574028015,positive,0.9636533260345459,No Improvement Suggestion
-2023-09-10 03:11:26,Extremely likely,got what i need of medical treatments,,5.0,approval,0.5125523209571838,neutral,0.7818553447723389,
-2023-09-10 09:39:08,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-09-15 08:40:59,Extremely likely,doctors  nurse and receptionist are friendly and looking after us patients well,,5.0,neutral,0.5206965208053589,positive,0.9277774095535278,
-2023-09-19 21:13:34,Extremely likely,very good dervish,,5.0,admiration,0.9449324011802673,positive,0.9182488322257996,
-2023-09-20 13:17:58,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-09-22 21:29:21,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-09-22 21:30:07,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-09-25 19:03:30,Extremely likely,friendly reciptionstsvery nice and professional nursesthe experience is good,,5.0,admiration,0.8799073100090027,positive,0.970787525177002,
-2023-09-25 19:05:50,Likely,ive been with you a long time,cant think right now,4.0,neutral,0.5814205408096313,neutral,0.5924388766288757,No Improvement Suggestion
-2023-09-25 19:06:27,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-09-25 19:06:46,Likely,good and cooperative doctor,,4.0,admiration,0.927943766117096,positive,0.8209797739982605,
-2023-09-25 19:07:52,Extremely likely,very quick flu shot process,,5.0,neutral,0.8486157059669495,positive,0.5515967011451721,
-2023-09-25 19:09:23,Extremely likely,dr a is very expert and friendly,,5.0,admiration,0.8374009728431702,positive,0.9246010780334473,
-2023-09-25 19:09:28,Extremely unlikely,because i can’t make an appointment to see my gp he always is busy fir  weeks by then i am either dead or forced to go private,yes the gps should spend more time in surgery,1.0,neutral,0.7734487056732178,negative,0.8739458918571472,Quality of Medical Advice
-2023-09-25 19:10:15,Extremely likely,i’ve been w the ec for years the doctors  staff are knowledgeable  very helpful,no they were spot on much appreciated,5.0,admiration,0.5166070461273193,positive,0.97386234998703,Overall Patient Satisfaction
-2023-09-25 19:12:24,Extremely likely,my doctor nurse receptionists are all amazing they are always nice polite kind caring and they always help with ailments,,5.0,admiration,0.905948281288147,positive,0.9763677716255188,
-2023-09-25 19:12:35,Extremely likely,perfect,,5.0,admiration,0.6421998143196106,positive,0.7877165079116821,
-2023-09-25 19:12:56,Extremely likely,excellent concerned gp and practice who is involved accessible and actioned whatever needed to be done,,5.0,admiration,0.8819489479064941,positive,0.7311172485351562,
-2023-09-25 19:13:10,Extremely likely,everything is excellent,,5.0,admiration,0.9462818503379822,positive,0.9704619646072388,
-2023-09-25 19:13:18,Extremely likely,the staff and doctors are amazing,,5.0,admiration,0.9541626572608948,positive,0.9766355752944946,
-2023-09-25 19:14:14,Extremely likely,can always get an appointment when phone  doctor and receptionists always very friendly and helpful,no not really always satisfied,5.0,approval,0.41330865025520325,positive,0.9493588805198669,No Improvement Suggestion
-2023-09-25 19:14:45,Likely,most staff are friendly  dr a is a fantastic dr  he takes timetolisten which is a rarity these days ,,4.0,admiration,0.5273008942604065,positive,0.9742634296417236,
-2023-09-25 19:14:57,Extremely likely,i always receive a very good service,,5.0,admiration,0.8767211437225342,positive,0.9583170413970947,
-2023-09-25 19:18:32,Likely,very prompt service,the premises is poor quality but the care excellent,4.0,neutral,0.7152637243270874,positive,0.8339098691940308,Ambiance of Facility
-2023-09-25 19:20:37,Extremely likely,great surgery,,5.0,admiration,0.9491472244262695,positive,0.9375976324081421,
-2023-09-25 19:27:34,Likely,well organised and efficient,,4.0,admiration,0.658689558506012,positive,0.6000036001205444,
-2023-09-25 19:28:15,Extremely likely,they are very professional ,,5.0,admiration,0.7631327509880066,positive,0.9317991137504578,
-2023-09-25 19:32:23,Extremely likely,helpful staff and doctors understanding and patient reassuring polite,not at present,5.0,approval,0.3978172540664673,positive,0.912517786026001,No Improvement Suggestion
-2023-09-25 19:34:37,Extremely likely,all the staff and doctors are kind and helpful,,5.0,admiration,0.7865804433822632,positive,0.9646854996681213,
-2023-09-25 19:37:19,Extremely likely,because i am happy with you service,,5.0,joy,0.8766138553619385,positive,0.9303464293479919,
-2023-09-25 19:38:49,Likely,i feel okay about it,,4.0,approval,0.8452050685882568,positive,0.8454082608222961,
-2023-09-25 19:40:19,Likely,provide good services and doctors are available at request,,4.0,approval,0.4323176145553589,positive,0.535567581653595,
-2023-09-25 19:43:58,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-09-25 19:45:17,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-09-25 19:51:53,Likely,i feel im listened on my thoughts,for now it is ok,4.0,neutral,0.959496796131134,neutral,0.6020498275756836,Overall Patient Satisfaction
-2023-09-25 19:52:32,Extremely likely,im always listening to and feel comfortable with the doctor,a water fountain,5.0,approval,0.4341752529144287,positive,0.7648210525512695,Ambiance of Facility
-2023-09-25 20:08:07,Extremely likely,the hall team of staff from doctors and reception are helpful,,5.0,neutral,0.4435574412345886,positive,0.9186351895332336,
-2023-09-25 20:21:31,Extremely likely,very friendly,,5.0,admiration,0.28133440017700195,positive,0.8053377866744995,
-2023-09-25 20:23:05,Extremely likely,doctors  all the staff are very friendly,they are all excellent,5.0,admiration,0.4164556562900543,positive,0.9744028449058533,Overall Patient Satisfaction
-2023-09-25 20:52:29,Extremely likely,very helpful and professional not too long a wait for an appointment,have moved area but never my doctor,5.0,admiration,0.8809152245521545,positive,0.9607823491096497,Quality of Medical Advice
-2023-09-25 21:19:44,Extremely likely,they are always very helpful,keep up the great work been friendly helpful and the drs are also always ready to help,5.0,approval,0.4011724889278412,positive,0.9610331058502197,Quality of Medical Advice
-2023-09-25 21:51:32,Extremely likely,was seen on time and got all the answers to my questions after having a thorough check,not that i know of,5.0,neutral,0.6231945157051086,positive,0.6341825723648071,No Improvement Suggestion
-2023-09-25 22:10:50,Likely,the doctor was very understanding and was able to listen to my concerns,,4.0,approval,0.5971856713294983,positive,0.8958097696304321,
-2023-09-25 22:23:52,Extremely likely,the wonderful receptionists and the well organised system so impressive,i’m very happy with the service,5.0,admiration,0.9528541564941406,positive,0.9816799163818359,Overall Patient Satisfaction
-2023-09-25 22:27:12,Extremely likely,surgery and staff very good,,5.0,admiration,0.877941370010376,positive,0.9616663455963135,
-2023-09-25 22:54:19,Extremely likely,helpful friendly good service i feel i have a personal relationship with the surgery and my gp and i appreciate text invitations for example to come and get a flu jab makes me feel they are looking after me,,5.0,admiration,0.7893843054771423,positive,0.914640486240387,
-2023-09-25 23:05:05,Extremely likely,services are available at all times staff members are professional,,5.0,neutral,0.7442983388900757,positive,0.8245107531547546,
-2023-09-25 23:21:58,Likely,i did not need to wait for long and could sit down at the waiting room,better not queue outside of the building,4.0,neutral,0.8701274394989014,neutral,0.6299328804016113,Ambiance of Facility
-2023-09-25 23:41:30,Extremely likely,surgery ready to give flu vaccine,,5.0,neutral,0.93268221616745,neutral,0.8292248845100403,
-2023-09-26 00:44:39,Extremely likely,because of excellent service staff and doctors both very helpful,just the appointment,5.0,admiration,0.9198188185691833,positive,0.9768376350402832,Referral Process
-2023-09-26 01:01:10,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-09-26 01:01:28,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-09-26 04:50:45,Extremely likely,doctor very knowledgeable,,5.0,admiration,0.6975674033164978,positive,0.9250199198722839,
-2023-09-26 05:46:05,Extremely likely,always feel welcome and feel as if i’m with friends in whom i can confide,not really unles they were giving out elixir of youth,5.0,gratitude,0.436811238527298,positive,0.9655408263206482,Vaccinations
-2023-09-26 06:31:07,Likely,all the staff are friendly,,4.0,approval,0.5657266974449158,positive,0.9152936935424805,
-2023-09-26 08:28:02,Likely,,yes the dr could have reviewed results and arranged to give feedback,4.0,neutral,0.9549600481987,positive,0.4012986421585083,Doctor Consultations
-2023-09-26 08:37:02,Extremely likely,i am happy with the service offered to me in this last year,possibly more patience by the receptionists with patients over the phone,5.0,joy,0.8851156234741211,positive,0.9646391272544861,Reception Staff
-2023-09-26 08:37:49,Extremely unlikely,i gavent visited this surgery since may ,doctors have to update their knowledge because i don’t feel they have enough knowledge,1.0,neutral,0.9325417876243591,negative,0.5805345773696899,Quality of Medical Advice
-2023-09-26 08:41:48,Extremely likely,surgery improved very much and doctors take time and leasen,,5.0,approval,0.4575234353542328,positive,0.9049657583236694,
-2023-09-26 09:30:20,Likely,the doctors provide a really good service very friendly and approachable but the  receptionist are so unapproachable superior and initmating,yes the superior and ignorant approach from the receptionists,4.0,admiration,0.5414292812347412,positive,0.5575881600379944,Reception Staff
-2023-09-26 09:35:09,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-09-26 11:20:52,Extremely likely,the practitioner was friendly  and supportive,,5.0,approval,0.3984587490558624,positive,0.8971953392028809,
-2023-09-26 12:35:34,Likely,all the staff medical   administrative are  kind  helpful  and there no long waiting queues to see a doctor the surgery itself  needs a updating,not really as investment into physical infrastructure is no doubt a matter of  budgets,4.0,neutral,0.5885326862335205,positive,0.8669066429138184,No Improvement Suggestion
-2023-09-26 13:05:04,Extremely likely,such nice staff  doctors,,5.0,admiration,0.9395561218261719,positive,0.9746894240379333,
-2023-09-26 13:20:47,Extremely likely,efficient and polite staff,having a nurse on site during surgery hours,5.0,neutral,0.6187746524810791,positive,0.8341960310935974,After-Hours Service
-2023-09-26 13:33:16,Likely,easy to manage appointments,,4.0,neutral,0.5154021382331848,positive,0.5729219913482666,
-2023-09-26 13:59:19,Extremely likely,good for me,,5.0,approval,0.4318719506263733,positive,0.9457187056541443,
-2023-09-26 14:09:32,Extremely likely,excellent service by all the staff,,5.0,admiration,0.948126494884491,positive,0.9705693125724792,
-2023-09-26 15:29:43,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-09-26 16:16:45,Extremely likely,experience,,5.0,neutral,0.9344170093536377,neutral,0.7334192395210266,
-2023-09-26 18:33:54,Extremely likely,very good doctor and nice staff,,5.0,admiration,0.9442043304443359,positive,0.9627794623374939,
-2023-09-26 20:43:08,Extremely likely,extremely well run and handled by excellent receptionists and medical staff,nothing at all needs changing,5.0,admiration,0.9292019009590149,positive,0.9715949296951294,No Improvement Suggestion
-2023-09-27 08:02:11,Extremely likely,i feel home everytime i step into my gp clinic,,5.0,neutral,0.709158182144165,positive,0.927066445350647,
-2023-09-27 08:02:43,Extremely likely,i feel home everytime i step into my gp clinic,,5.0,neutral,0.709158182144165,positive,0.927066445350647,
-2023-09-28 20:42:07,Extremely likely,good service,,5.0,admiration,0.9451923966407776,positive,0.7508882284164429,
-2023-09-29 07:20:49,Extremely likely,everything was perfect,,5.0,admiration,0.611080527305603,positive,0.9014104604721069,
-2023-10-01 17:52:28,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-01 17:52:55,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-02 09:05:34,Neither likely nor unlikely,i do not appreciate being asked by reception as to why i need to see the doctor,yes not asking about personal health issues,3.0,disapproval,0.5071729421615601,negative,0.877605676651001,No Improvement Suggestion
-2023-10-04 11:15:53,Extremely likely,professional friendly,,5.0,neutral,0.9395501613616943,positive,0.5509753227233887,
-2023-10-06 08:58:29,Extremely likely,new people working days very professional,,5.0,neutral,0.8181256651878357,positive,0.7840738892555237,
-2023-10-06 22:02:22,Likely,your services are very good just minuts for one meeting  with the doctor  not enough,no you are can not do anything because nhs does not except,4.0,admiration,0.8738998770713806,positive,0.8344703316688538,No Improvement Suggestion
-2023-10-11 12:10:59,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-12 10:59:51,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-12 11:01:53,Likely,both the nurse that does the cervical screening and the one that does the blood work were fantastic,,4.0,admiration,0.8447837233543396,positive,0.9508320093154907,
-2023-10-12 11:01:54,Likely,the surgery gets things done,from time to time it’s difficult to understand doctors ie calls via loudspeaker accent when speaking fast questions not addressed…,4.0,neutral,0.9246025085449219,neutral,0.7539175748825073,Poor Communication
-2023-10-12 11:03:28,Likely,i have been at this practice for the past  years and am satisfied only change is less time face to face,as i said lack of face to face,4.0,approval,0.4423634111881256,positive,0.8331834077835083,Poor Communication
-2023-10-12 11:03:37,Extremely likely,staff are extremely encouraging and helpful,,5.0,admiration,0.8680624961853027,positive,0.9729841351509094,
-2023-10-12 11:03:40,Extremely likely,from my experience,,5.0,neutral,0.9569857716560364,neutral,0.7574610710144043,
-2023-10-12 11:03:59,Extremely likely,all staff is very hard for each time i call you are very efficient,there’s nothing to be improved as customer service is handling in a very professional way already,5.0,admiration,0.8276921510696411,negative,0.5726291537284851,No Improvement Suggestion
-2023-10-12 11:04:13,Extremely likely,always prompt service,i think it’s pretty good,5.0,neutral,0.9644078016281128,positive,0.739652156829834,Overall Patient Satisfaction
-2023-10-12 11:05:27,Extremely likely,very good thank you,,5.0,gratitude,0.99114590883255,positive,0.9808782339096069,
-2023-10-12 11:06:20,Extremely likely,helpful service friendly doctors,,5.0,neutral,0.8151940703392029,positive,0.8674958944320679,
-2023-10-12 11:06:33,Likely,efficient polite and reassuring,,4.0,neutral,0.8041478991508484,positive,0.7399463653564453,
+that have a very good doctor’s",,14,0,5.0,admiration,0.5816859602928162,positive,0.8864882588386536,
+2023-09-09 22:38:05,Extremely likely,the nurse has been extremely kind and professional,not this time,8,3,5.0,admiration,0.9202863574028015,positive,0.9636533260345459,No Improvement Suggestion
+2023-09-10 03:11:26,Extremely likely,got what i need of medical treatments,,7,0,5.0,approval,0.5125523209571838,neutral,0.7818553447723389,
+2023-09-10 09:39:08,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-09-15 08:40:59,Extremely likely,doctors  nurse and receptionist are friendly and looking after us patients well,,12,0,5.0,neutral,0.5206965208053589,positive,0.9277774095535278,
+2023-09-19 21:13:34,Extremely likely,very good dervish,,3,0,5.0,admiration,0.9449324011802673,positive,0.9182488322257996,
+2023-09-20 13:17:58,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-09-22 21:29:21,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-09-22 21:30:07,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-09-25 19:03:30,Extremely likely,friendly reciptionstsvery nice and professional nursesthe experience is good,,9,0,5.0,admiration,0.8799073100090027,positive,0.970787525177002,
+2023-09-25 19:05:50,Likely,ive been with you a long time,cant think right now,7,4,4.0,neutral,0.5814205408096313,neutral,0.5924388766288757,No Improvement Suggestion
+2023-09-25 19:06:27,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-09-25 19:06:46,Likely,good and cooperative doctor,,4,0,4.0,admiration,0.927943766117096,positive,0.8209797739982605,
+2023-09-25 19:07:52,Extremely likely,very quick flu shot process,,5,0,5.0,neutral,0.8486157059669495,positive,0.5515967011451721,
+2023-09-25 19:09:23,Extremely likely,dr a is very expert and friendly,,7,0,5.0,admiration,0.8374009728431702,positive,0.9246010780334473,
+2023-09-25 19:09:28,Extremely unlikely,because i can’t make an appointment to see my gp he always is busy fir  weeks by then i am either dead or forced to go private,yes the gps should spend more time in surgery,27,9,1.0,neutral,0.7734487056732178,negative,0.8739458918571472,Quality of Medical Advice
+2023-09-25 19:10:15,Extremely likely,i’ve been w the ec for years the doctors  staff are knowledgeable  very helpful,no they were spot on much appreciated,14,7,5.0,admiration,0.5166070461273193,positive,0.97386234998703,Overall Patient Satisfaction
+2023-09-25 19:12:24,Extremely likely,my doctor nurse receptionists are all amazing they are always nice polite kind caring and they always help with ailments,,20,0,5.0,admiration,0.905948281288147,positive,0.9763677716255188,
+2023-09-25 19:12:35,Extremely likely,perfect,,1,0,5.0,admiration,0.6421998143196106,positive,0.7877165079116821,
+2023-09-25 19:12:56,Extremely likely,excellent concerned gp and practice who is involved accessible and actioned whatever needed to be done,,16,0,5.0,admiration,0.8819489479064941,positive,0.7311172485351562,
+2023-09-25 19:13:10,Extremely likely,everything is excellent,,3,0,5.0,admiration,0.9462818503379822,positive,0.9704619646072388,
+2023-09-25 19:13:18,Extremely likely,the staff and doctors are amazing,,6,0,5.0,admiration,0.9541626572608948,positive,0.9766355752944946,
+2023-09-25 19:14:14,Extremely likely,can always get an appointment when phone  doctor and receptionists always very friendly and helpful,no not really always satisfied,15,5,5.0,approval,0.41330865025520325,positive,0.9493588805198669,No Improvement Suggestion
+2023-09-25 19:14:45,Likely,most staff are friendly  dr a is a fantastic dr  he takes timetolisten which is a rarity these days ,,19,0,4.0,admiration,0.5273008942604065,positive,0.9742634296417236,
+2023-09-25 19:14:57,Extremely likely,i always receive a very good service,,7,0,5.0,admiration,0.8767211437225342,positive,0.9583170413970947,
+2023-09-25 19:18:32,Likely,very prompt service,the premises is poor quality but the care excellent,3,9,4.0,neutral,0.7152637243270874,positive,0.8339098691940308,Ambiance of Facility
+2023-09-25 19:20:37,Extremely likely,great surgery,,2,0,5.0,admiration,0.9491472244262695,positive,0.9375976324081421,
+2023-09-25 19:27:34,Likely,well organised and efficient,,4,0,4.0,admiration,0.658689558506012,positive,0.6000036001205444,
+2023-09-25 19:28:15,Extremely likely,they are very professional ,,4,0,5.0,admiration,0.7631327509880066,positive,0.9317991137504578,
+2023-09-25 19:32:23,Extremely likely,helpful staff and doctors understanding and patient reassuring polite,not at present,9,3,5.0,approval,0.3978172540664673,positive,0.912517786026001,No Improvement Suggestion
+2023-09-25 19:34:37,Extremely likely,all the staff and doctors are kind and helpful,,9,0,5.0,admiration,0.7865804433822632,positive,0.9646854996681213,
+2023-09-25 19:37:19,Extremely likely,because i am happy with you service,,7,0,5.0,joy,0.8766138553619385,positive,0.9303464293479919,
+2023-09-25 19:38:49,Likely,i feel okay about it,,5,0,4.0,approval,0.8452050685882568,positive,0.8454082608222961,
+2023-09-25 19:40:19,Likely,provide good services and doctors are available at request,,9,0,4.0,approval,0.4323176145553589,positive,0.535567581653595,
+2023-09-25 19:43:58,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-09-25 19:45:17,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-09-25 19:51:53,Likely,i feel im listened on my thoughts,for now it is ok,7,5,4.0,neutral,0.959496796131134,neutral,0.6020498275756836,Overall Patient Satisfaction
+2023-09-25 19:52:32,Extremely likely,im always listening to and feel comfortable with the doctor,a water fountain,10,3,5.0,approval,0.4341752529144287,positive,0.7648210525512695,Ambiance of Facility
+2023-09-25 20:08:07,Extremely likely,the hall team of staff from doctors and reception are helpful,,11,0,5.0,neutral,0.4435574412345886,positive,0.9186351895332336,
+2023-09-25 20:21:31,Extremely likely,very friendly,,2,0,5.0,admiration,0.28133440017700195,positive,0.8053377866744995,
+2023-09-25 20:23:05,Extremely likely,doctors  all the staff are very friendly,they are all excellent,7,4,5.0,admiration,0.4164556562900543,positive,0.9744028449058533,Overall Patient Satisfaction
+2023-09-25 20:52:29,Extremely likely,very helpful and professional not too long a wait for an appointment,have moved area but never my doctor,12,7,5.0,admiration,0.8809152245521545,positive,0.9607823491096497,Quality of Medical Advice
+2023-09-25 21:19:44,Extremely likely,they are always very helpful,keep up the great work been friendly helpful and the drs are also always ready to help,5,17,5.0,approval,0.4011724889278412,positive,0.9610331058502197,Quality of Medical Advice
+2023-09-25 21:51:32,Extremely likely,was seen on time and got all the answers to my questions after having a thorough check,not that i know of,17,5,5.0,neutral,0.6231945157051086,positive,0.6341825723648071,No Improvement Suggestion
+2023-09-25 22:10:50,Likely,the doctor was very understanding and was able to listen to my concerns,,13,0,4.0,approval,0.5971856713294983,positive,0.8958097696304321,
+2023-09-25 22:23:52,Extremely likely,the wonderful receptionists and the well organised system so impressive,i’m very happy with the service,10,6,5.0,admiration,0.9528541564941406,positive,0.9816799163818359,Overall Patient Satisfaction
+2023-09-25 22:27:12,Extremely likely,surgery and staff very good,,5,0,5.0,admiration,0.877941370010376,positive,0.9616663455963135,
+2023-09-25 22:54:19,Extremely likely,helpful friendly good service i feel i have a personal relationship with the surgery and my gp and i appreciate text invitations for example to come and get a flu jab makes me feel they are looking after me,,39,0,5.0,admiration,0.7893843054771423,positive,0.914640486240387,
+2023-09-25 23:05:05,Extremely likely,services are available at all times staff members are professional,,10,0,5.0,neutral,0.7442983388900757,positive,0.8245107531547546,
+2023-09-25 23:21:58,Likely,i did not need to wait for long and could sit down at the waiting room,better not queue outside of the building,16,7,4.0,neutral,0.8701274394989014,neutral,0.6299328804016113,Ambiance of Facility
+2023-09-25 23:41:30,Extremely likely,surgery ready to give flu vaccine,,6,0,5.0,neutral,0.93268221616745,neutral,0.8292248845100403,
+2023-09-26 00:44:39,Extremely likely,because of excellent service staff and doctors both very helpful,just the appointment,10,3,5.0,admiration,0.9198188185691833,positive,0.9768376350402832,Referral Process
+2023-09-26 01:01:10,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-09-26 01:01:28,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-09-26 04:50:45,Extremely likely,doctor very knowledgeable,,3,0,5.0,admiration,0.6975674033164978,positive,0.9250199198722839,
+2023-09-26 05:46:05,Extremely likely,always feel welcome and feel as if i’m with friends in whom i can confide,not really unles they were giving out elixir of youth,15,10,5.0,gratitude,0.436811238527298,positive,0.9655408263206482,Vaccinations
+2023-09-26 06:31:07,Likely,all the staff are friendly,,5,0,4.0,approval,0.5657266974449158,positive,0.9152936935424805,
+2023-09-26 08:28:02,Likely,,yes the dr could have reviewed results and arranged to give feedback,0,12,4.0,neutral,0.9549600481987,positive,0.4012986421585083,Doctor Consultations
+2023-09-26 08:37:02,Extremely likely,i am happy with the service offered to me in this last year,possibly more patience by the receptionists with patients over the phone,13,11,5.0,joy,0.8851156234741211,positive,0.9646391272544861,Reception Staff
+2023-09-26 08:37:49,Extremely unlikely,i gavent visited this surgery since may ,doctors have to update their knowledge because i don’t feel they have enough knowledge,7,14,1.0,neutral,0.9325417876243591,negative,0.5805345773696899,Quality of Medical Advice
+2023-09-26 08:41:48,Extremely likely,surgery improved very much and doctors take time and leasen,,10,0,5.0,approval,0.4575234353542328,positive,0.9049657583236694,
+2023-09-26 09:30:20,Likely,the doctors provide a really good service very friendly and approachable but the  receptionist are so unapproachable superior and initmating,yes the superior and ignorant approach from the receptionists,20,9,4.0,admiration,0.5414292812347412,positive,0.5575881600379944,Reception Staff
+2023-09-26 09:35:09,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-09-26 11:20:52,Extremely likely,the practitioner was friendly  and supportive,,6,0,5.0,approval,0.3984587490558624,positive,0.8971953392028809,
+2023-09-26 12:35:34,Likely,all the staff medical   administrative are  kind  helpful  and there no long waiting queues to see a doctor the surgery itself  needs a updating,not really as investment into physical infrastructure is no doubt a matter of  budgets,24,14,4.0,neutral,0.5885326862335205,positive,0.8669066429138184,No Improvement Suggestion
+2023-09-26 13:05:04,Extremely likely,such nice staff  doctors,,4,0,5.0,admiration,0.9395561218261719,positive,0.9746894240379333,
+2023-09-26 13:20:47,Extremely likely,efficient and polite staff,having a nurse on site during surgery hours,4,8,5.0,neutral,0.6187746524810791,positive,0.8341960310935974,After-Hours Service
+2023-09-26 13:33:16,Likely,easy to manage appointments,,4,0,4.0,neutral,0.5154021382331848,positive,0.5729219913482666,
+2023-09-26 13:59:19,Extremely likely,good for me,,3,0,5.0,approval,0.4318719506263733,positive,0.9457187056541443,
+2023-09-26 14:09:32,Extremely likely,excellent service by all the staff,,6,0,5.0,admiration,0.948126494884491,positive,0.9705693125724792,
+2023-09-26 15:29:43,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-09-26 16:16:45,Extremely likely,experience,,1,0,5.0,neutral,0.9344170093536377,neutral,0.7334192395210266,
+2023-09-26 18:33:54,Extremely likely,very good doctor and nice staff,,6,0,5.0,admiration,0.9442043304443359,positive,0.9627794623374939,
+2023-09-26 20:43:08,Extremely likely,extremely well run and handled by excellent receptionists and medical staff,nothing at all needs changing,11,5,5.0,admiration,0.9292019009590149,positive,0.9715949296951294,No Improvement Suggestion
+2023-09-27 08:02:11,Extremely likely,i feel home everytime i step into my gp clinic,,10,0,5.0,neutral,0.709158182144165,positive,0.927066445350647,
+2023-09-27 08:02:43,Extremely likely,i feel home everytime i step into my gp clinic,,10,0,5.0,neutral,0.709158182144165,positive,0.927066445350647,
+2023-09-28 20:42:07,Extremely likely,good service,,2,0,5.0,admiration,0.9451923966407776,positive,0.7508882284164429,
+2023-09-29 07:20:49,Extremely likely,everything was perfect,,3,0,5.0,admiration,0.611080527305603,positive,0.9014104604721069,
+2023-10-01 17:52:28,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-01 17:52:55,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-02 09:05:34,Neither likely nor unlikely,i do not appreciate being asked by reception as to why i need to see the doctor,yes not asking about personal health issues,17,7,3.0,disapproval,0.5071729421615601,negative,0.877605676651001,No Improvement Suggestion
+2023-10-04 11:15:53,Extremely likely,professional friendly,,2,0,5.0,neutral,0.9395501613616943,positive,0.5509753227233887,
+2023-10-06 08:58:29,Extremely likely,new people working days very professional,,6,0,5.0,neutral,0.8181256651878357,positive,0.7840738892555237,
+2023-10-06 22:02:22,Likely,your services are very good just minuts for one meeting  with the doctor  not enough,no you are can not do anything because nhs does not except,15,12,4.0,admiration,0.8738998770713806,positive,0.8344703316688538,No Improvement Suggestion
+2023-10-11 12:10:59,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-12 10:59:51,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-12 11:01:53,Likely,both the nurse that does the cervical screening and the one that does the blood work were fantastic,,18,0,4.0,admiration,0.8447837233543396,positive,0.9508320093154907,
+2023-10-12 11:01:54,Likely,the surgery gets things done,from time to time it’s difficult to understand doctors ie calls via loudspeaker accent when speaking fast questions not addressed…,5,20,4.0,neutral,0.9246025085449219,neutral,0.7539175748825073,Poor Communication
+2023-10-12 11:03:28,Likely,i have been at this practice for the past  years and am satisfied only change is less time face to face,as i said lack of face to face,21,8,4.0,approval,0.4423634111881256,positive,0.8331834077835083,Poor Communication
+2023-10-12 11:03:37,Extremely likely,staff are extremely encouraging and helpful,,6,0,5.0,admiration,0.8680624961853027,positive,0.9729841351509094,
+2023-10-12 11:03:40,Extremely likely,from my experience,,3,0,5.0,neutral,0.9569857716560364,neutral,0.7574610710144043,
+2023-10-12 11:03:59,Extremely likely,all staff is very hard for each time i call you are very efficient,there’s nothing to be improved as customer service is handling in a very professional way already,14,16,5.0,admiration,0.8276921510696411,negative,0.5726291537284851,No Improvement Suggestion
+2023-10-12 11:04:13,Extremely likely,always prompt service,i think it’s pretty good,3,5,5.0,neutral,0.9644078016281128,positive,0.739652156829834,Overall Patient Satisfaction
+2023-10-12 11:05:27,Extremely likely,very good thank you,,4,0,5.0,gratitude,0.99114590883255,positive,0.9808782339096069,
+2023-10-12 11:06:20,Extremely likely,helpful service friendly doctors,,4,0,5.0,neutral,0.8151940703392029,positive,0.8674958944320679,
+2023-10-12 11:06:33,Likely,efficient polite and reassuring,,4,0,4.0,neutral,0.8041478991508484,positive,0.7399463653564453,
 2023-10-12 11:09:59,Extremely likely,"the staff are helpful to the patients the doctors are attentive to patients  complaints
-the nurse is very friendly",yes the attentiveness,5.0,admiration,0.4396423399448395,positive,0.9293084144592285,Overall Patient Satisfaction
-2023-10-12 11:09:59,Extremely likely,great care and efficient service,,5.0,admiration,0.9541371464729309,positive,0.9422808289527893,
-2023-10-12 11:13:14,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-12 11:21:28,Extremely likely,they are very nice,,5.0,admiration,0.9276739954948425,positive,0.9543476700782776,
-2023-10-12 11:22:09,Extremely likely,brilliant doctor  very helpful reception staff,,5.0,admiration,0.9380373358726501,positive,0.9777159094810486,
-2023-10-12 11:33:06,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-12 11:33:35,Likely,service is quick,,4.0,neutral,0.8411920070648193,positive,0.7214515805244446,
-2023-10-12 11:44:21,Neither likely nor unlikely,front desk staff must be totally changed,answer above …,3.0,neutral,0.8274412751197815,neutral,0.5888046622276306,Test Results
-2023-10-12 12:05:37,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-12 12:19:51,Extremely unlikely,because if cavalier attitude of one of the gp’s in prescribing incorrect medication to a member of my family which may have put his life in geopardy,,1.0,neutral,0.9114598631858826,negative,0.8340595960617065,
-2023-10-12 12:29:11,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-12 12:49:21,Likely,coz service  very  good,,4.0,admiration,0.926357090473175,positive,0.9561522603034973,
-2023-10-12 12:51:06,Likely,coz service  very good,,4.0,admiration,0.9311574101448059,positive,0.9614076018333435,
+the nurse is very friendly",yes the attentiveness,19,3,5.0,admiration,0.4396423399448395,positive,0.9293084144592285,Overall Patient Satisfaction
+2023-10-12 11:09:59,Extremely likely,great care and efficient service,,5,0,5.0,admiration,0.9541371464729309,positive,0.9422808289527893,
+2023-10-12 11:13:14,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-12 11:21:28,Extremely likely,they are very nice,,4,0,5.0,admiration,0.9276739954948425,positive,0.9543476700782776,
+2023-10-12 11:22:09,Extremely likely,brilliant doctor  very helpful reception staff,,6,0,5.0,admiration,0.9380373358726501,positive,0.9777159094810486,
+2023-10-12 11:33:06,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-12 11:33:35,Likely,service is quick,,3,0,4.0,neutral,0.8411920070648193,positive,0.7214515805244446,
+2023-10-12 11:44:21,Neither likely nor unlikely,front desk staff must be totally changed,answer above …,7,3,3.0,neutral,0.8274412751197815,neutral,0.5888046622276306,Test Results
+2023-10-12 12:05:37,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-12 12:19:51,Extremely unlikely,because if cavalier attitude of one of the gp’s in prescribing incorrect medication to a member of my family which may have put his life in geopardy,,27,0,1.0,neutral,0.9114598631858826,negative,0.8340595960617065,
+2023-10-12 12:29:11,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-12 12:49:21,Likely,coz service  very  good,,4,0,4.0,admiration,0.926357090473175,positive,0.9561522603034973,
+2023-10-12 12:51:06,Likely,coz service  very good,,4,0,4.0,admiration,0.9311574101448059,positive,0.9614076018333435,
 2023-10-12 12:53:07,Extremely likely,"i feel that you want to me better
-appreciate your service",,5.0,admiration,0.7986971139907837,positive,0.8953666687011719,
-2023-10-12 13:43:56,Likely,booking time was very fast,more diagnostic machines and x rays,4.0,neutral,0.43240639567375183,neutral,0.6805024743080139,Test Results
-2023-10-12 13:44:50,Likely,no que to book and same day booking service,,4.0,neutral,0.9553511738777161,neutral,0.8423411846160889,
-2023-10-12 14:03:47,Extremely likely,wonderful well informed and well run surgery,,5.0,admiration,0.9526075720787048,positive,0.9457534551620483,
-2023-10-12 14:05:19,Extremely likely,good stuff,,5.0,admiration,0.9283146858215332,positive,0.8558211326599121,
-2023-10-12 14:06:23,Extremely likely,i feel the drs are actually interested in what we patients have to say on the whole the staff are very welcoming especially wonderful lula,,5.0,admiration,0.8857484459877014,positive,0.9502040147781372,
+appreciate your service",,11,0,5.0,admiration,0.7986971139907837,positive,0.8953666687011719,
+2023-10-12 13:43:56,Likely,booking time was very fast,more diagnostic machines and x rays,5,6,4.0,neutral,0.43240639567375183,neutral,0.6805024743080139,Test Results
+2023-10-12 13:44:50,Likely,no que to book and same day booking service,,9,0,4.0,neutral,0.9553511738777161,neutral,0.8423411846160889,
+2023-10-12 14:03:47,Extremely likely,wonderful well informed and well run surgery,,7,0,5.0,admiration,0.9526075720787048,positive,0.9457534551620483,
+2023-10-12 14:05:19,Extremely likely,good stuff,,2,0,5.0,admiration,0.9283146858215332,positive,0.8558211326599121,
+2023-10-12 14:06:23,Extremely likely,i feel the drs are actually interested in what we patients have to say on the whole the staff are very welcoming especially wonderful lula,,25,0,5.0,admiration,0.8857484459877014,positive,0.9502040147781372,
 2023-10-12 14:34:08,Extremely likely,because  all staff are  very friendly  and  respectful and  do their jobs  very well,"just  i would like to  saywhy my medical  at after  hoursmust  be to  get  my  tablets
-at pharmacy  with  in  hours",5.0,admiration,0.8002325296401978,positive,0.9565545916557312,After-Hours Service
-2023-10-12 14:37:00,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-12 15:04:37,Likely,faster,,4.0,neutral,0.6157320141792297,positive,0.5150842666625977,
-2023-10-12 15:15:06,Extremely likely,all services is very good,,5.0,admiration,0.9310896992683411,positive,0.9611668586730957,
-2023-10-12 15:15:07,Likely,it is ok,,4.0,approval,0.8292772769927979,positive,0.5258129239082336,
-2023-10-12 15:16:07,Extremely likely,all service’s is very good,,5.0,admiration,0.9297434091567993,positive,0.9678657054901123,
-2023-10-12 15:16:17,Likely,it is ok,,4.0,approval,0.8292772769927979,positive,0.5258129239082336,
-2023-10-12 15:40:10,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-12 16:06:14,Extremely likely,because i was made to feel welcome by the friendly team in reception,,5.0,gratitude,0.2743344306945801,positive,0.8848230242729187,
-2023-10-12 16:16:22,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-12 16:43:00,Likely,it is easy to get an appointment and assistance,,4.0,neutral,0.5398925542831421,positive,0.497700572013855,
-2023-10-12 17:32:16,Extremely likely,nurse alex is professional and helpful,,5.0,admiration,0.5166047215461731,positive,0.9396902322769165,
-2023-10-12 18:25:43,Extremely likely,they are friendly and very helpful,,5.0,admiration,0.5211284160614014,positive,0.9509434700012207,
-2023-10-12 19:03:06,Likely,the staff was very professional,everything was okay,4.0,admiration,0.6799676418304443,positive,0.9410073161125183,Overall Patient Satisfaction
-2023-10-12 19:52:11,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-12 22:58:45,Extremely likely,kind and caring,,5.0,caring,0.7291467189788818,positive,0.7512568831443787,
-2023-10-13 06:30:04,Extremely likely,i always feel home there and looked after,not really  thank you,5.0,neutral,0.34706515073776245,positive,0.9497132301330566,No Improvement Suggestion
-2023-10-13 09:58:25,Extremely likely,thei improved the service at the reception,,5.0,neutral,0.6479318737983704,positive,0.599633514881134,
-2023-10-13 10:12:17,Extremely likely,you always respond well,,5.0,admiration,0.4970581531524658,positive,0.8987866044044495,
-2023-10-13 12:30:44,Extremely likely,they were quick and organised and doctor herself took care of it,can’t think of any,5.0,neutral,0.5852083563804626,positive,0.6710278391838074,No Improvement Suggestion
-2023-10-13 14:35:24,Extremely likely,because all staff are friendly and helpful and respectful,no i think every thing is going okay,5.0,admiration,0.733448326587677,positive,0.9447391033172607,Overall Patient Satisfaction
-2023-10-13 17:39:33,Extremely likely,all staff are very professional and very friendly online booking is very useful,,5.0,admiration,0.6897842288017273,positive,0.9771367907524109,
-2023-10-13 18:35:22,Likely,the appointment was on time,the surgery  is a bit old and  need some renovations,4.0,neutral,0.6524670124053955,positive,0.7698135375976562,Facility Modernization and Upgrades
-2023-10-13 20:36:20,Extremely likely,very helpful and efficient staff excellent,,5.0,admiration,0.9480522274971008,positive,0.9659855365753174,
-2023-10-14 12:22:15,Extremely likely,they are helpful,everything was good,5.0,approval,0.4535105526447296,positive,0.8840527534484863,Overall Patient Satisfaction
-2023-10-15 20:26:47,Extremely likely,nice and polite welcoming,,5.0,admiration,0.7594082951545715,positive,0.892371416091919,
-2023-10-19 17:18:47,Extremely likely,good,,5.0,admiration,0.9067692160606384,positive,0.6512166857719421,
-2023-10-19 21:44:38,Extremely likely,attentive,shorter appointment wait,5.0,neutral,0.963094174861908,neutral,0.7316112518310547,Waiting Times
-2023-10-23 08:30:53,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-23 08:31:05,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-23 10:03:17,Likely,everything is fine,,4.0,approval,0.5142738819122314,positive,0.6799522638320923,
-2023-10-23 10:03:33,Extremely likely,they’re doing good job,,5.0,admiration,0.9354286789894104,positive,0.93006831407547,
-2023-10-23 10:03:52,Likely,i like the professionals there,,4.0,love,0.8041990399360657,positive,0.8747941255569458,
-2023-10-23 10:05:29,Extremely likely,found the atmosphere nice and friendly from reception to doctor,,5.0,admiration,0.8470653295516968,positive,0.9490618705749512,
-2023-10-23 10:07:38,Extremely likely,they are so caring and helpful,not at all excellent team,5.0,admiration,0.6975098848342896,positive,0.951196551322937,No Improvement Suggestion
-2023-10-23 10:07:50,Extremely likely,very good,,5.0,admiration,0.945436954498291,positive,0.8884718418121338,
-2023-10-23 10:09:43,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-23 10:09:43,Extremely likely,staff are nice and good to listen,,5.0,admiration,0.9275143146514893,positive,0.9370033740997314,
-2023-10-23 10:12:42,Likely,i find that the service i receive is always very friendly and helpful,i was satisfied with the way i was treated,4.0,approval,0.44380852580070496,positive,0.9712134003639221,Overall Patient Satisfaction
-2023-10-23 10:16:40,Extremely likely,staff are very helpful,,5.0,admiration,0.4645572602748871,positive,0.9512966275215149,
-2023-10-23 10:20:39,Unlikely,the front desk staff need totally changed,doctor is very good … only the front desk staff is careless and rude … pretending they are busy … don’t give time to complete your enquiry …,2.0,neutral,0.7668716907501221,negative,0.8425944447517395,Reception Staff
-2023-10-23 10:59:00,Extremely likely,pleasent friendly staff,,5.0,neutral,0.7311964631080627,positive,0.6576187014579773,
-2023-10-23 11:10:29,Likely,generally great service but practice is probably to far for most of my friends and family love in another part of the uk,,4.0,admiration,0.9108524918556213,neutral,0.4256336987018585,
-2023-10-23 11:30:39,Unlikely,the staff at reception lacking communication skills,by changing staff at reception,2.0,neutral,0.6251428127288818,negative,0.8740612864494324,Reception Staff
-2023-10-23 11:50:26,Extremely likely,friendly reception good doctors,no what you do is great,5.0,admiration,0.43564751744270325,positive,0.8842900395393372,No Improvement Suggestion
-2023-10-23 11:55:17,Extremely likely,they are always very helpful,,5.0,approval,0.4011724889278412,positive,0.9610331058502197,
-2023-10-23 12:18:59,Likely,a good surgery,,4.0,admiration,0.9319035410881042,positive,0.8763083219528198,
-2023-10-23 12:22:55,Extremely likely,excellent treatment by doctors and staff,not that i know of,5.0,admiration,0.9343973994255066,positive,0.9647283554077148,No Improvement Suggestion
-2023-10-23 13:00:45,Extremely likely,its really helpful,,5.0,admiration,0.5901975035667419,positive,0.9378836750984192,
-2023-10-23 13:02:29,Extremely likely,the doctor and the whole team are so good and very helpful,,5.0,admiration,0.9077368974685669,positive,0.980645477771759,
-2023-10-23 13:08:15,Likely,great friendly service from the nurse,,4.0,admiration,0.9431491494178772,positive,0.9624390006065369,
-2023-10-23 14:20:48,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-23 14:22:15,Extremely likely,no thanks,,5.0,gratitude,0.9839128851890564,neutral,0.5303850173950195,
-2023-10-23 17:05:44,Likely,i have been at the surgery before it changed hands but i have no problems with anyone there,seeing face to face would have been better but it was adequate for my needs,4.0,approval,0.5088290572166443,neutral,0.6737411618232727,Quality of Medical Advice
-2023-10-23 20:13:29,Extremely likely,because is the best surgery,,5.0,admiration,0.9379380941390991,positive,0.9661861658096313,
-2023-10-23 21:59:36,Extremely likely,very good care and understanding,,5.0,admiration,0.9110598564147949,positive,0.9314626455307007,
-2023-10-23 23:38:29,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-24 07:19:07,Extremely likely,always helpful and caring,,5.0,caring,0.8669462203979492,positive,0.9149177074432373,
-2023-10-24 16:00:34,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-10-24 16:11:03,Extremely likely,very officiant professional and friendly staff,my experience was excellent,5.0,admiration,0.8198572993278503,positive,0.9317727088928223,Overall Patient Satisfaction
-2023-10-24 17:47:22,Likely,easy access,quick response,4.0,neutral,0.7875760793685913,neutral,0.5953304171562195,Referral Process
-2023-10-26 17:15:40,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-11-01 11:03:19,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-11-01 11:03:25,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-11-01 11:04:27,Likely,they do care about people health,,4.0,caring,0.8187292814254761,positive,0.48872238397598267,
-2023-11-01 11:05:24,Likely,friendly reception staff and good gps,,4.0,admiration,0.5750849843025208,positive,0.9136236310005188,
-2023-11-01 11:07:08,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-11-01 11:08:22,Extremely likely,i’ve been with surgery for many years they’ve always been excellent,no covid has been hard on all of us and they’ve done as well as they could in these difficult circumstances much appreciated,5.0,admiration,0.9286248087882996,positive,0.972749650478363,No Improvement Suggestion
-2023-11-01 11:08:54,Extremely likely,friendly reception staff confident with the health care i receive,,5.0,approval,0.44242191314697266,positive,0.8569561243057251,
-2023-11-01 11:10:48,Extremely likely,excellent doctor and great attention,,5.0,admiration,0.9493025541305542,positive,0.9725525379180908,
-2023-11-01 11:11:03,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-11-01 11:14:29,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-11-01 11:17:06,Extremely likely,i have a brilliant doctor doctor he is all ways caring about his patients and as a doctor i can say thanks for the nhs and for the stuff of the surgery for the professionalism in the job,,5.0,gratitude,0.9172970056533813,positive,0.9666901230812073,
-2023-11-01 11:17:30,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-11-01 11:18:41,Extremely likely,excellent doctor nurse and receptionists,,5.0,admiration,0.9479940533638,positive,0.943989634513855,
-2023-11-01 11:21:58,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-11-01 11:30:08,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-11-01 11:32:34,Extremely likely,service is very good,that’s all,5.0,admiration,0.9392822980880737,positive,0.9398131966590881,No Improvement Suggestion
-2023-11-01 12:10:03,Extremely unlikely,the doctors in surgery is very good only the front desk staff needs to be destroyed very rude,all the front desk staff needs to be changed,1.0,annoyance,0.3356626331806183,negative,0.6469135284423828,Staffing Levels
-2023-11-01 12:10:14,Extremely likely,very satisfied with my experience,,5.0,approval,0.3701145052909851,positive,0.9645012617111206,
-2023-11-01 12:16:29,Extremely likely,i have been a patient at this surgery for over  years and they always looked after me so well,i am very satisfied with all the services i’ve received from the whole team at the surgery throughout the last  years of being their patient,5.0,caring,0.6022775173187256,positive,0.9760478138923645,Overall Patient Satisfaction
-2023-11-01 12:21:50,Extremely likely,very good at getting a quick appointment also doctors and receptionists very helpful and friendly,,5.0,admiration,0.8736910223960876,positive,0.9718446135520935,
-2023-11-01 13:37:39,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-11-01 14:13:43,Extremely likely,they are very friendly and helpful,,5.0,admiration,0.6894406676292419,positive,0.9557753801345825,
-2023-11-01 14:16:22,Extremely likely,professional and kind,,5.0,neutral,0.9600537419319153,positive,0.7541146278381348,
-2023-11-01 14:48:09,Likely,,appointment time to see a doctor is to long,4.0,neutral,0.9549600481987,positive,0.4012986421585083,Waiting Times
-2023-11-01 14:50:25,Likely,dr helped,yes instead of call with dr would have been better face to face exam,4.0,neutral,0.7188158631324768,neutral,0.5143150091171265,Quality of Medical Advice
-2023-11-01 17:52:29,Likely,i think they genuinely care,,4.0,caring,0.7355452179908752,neutral,0.555993914604187,
-2023-11-01 19:53:03,Likely,because nurse was helpful and reassured me,,4.0,approval,0.31236082315444946,positive,0.9141635894775391,
-2023-11-02 07:29:16,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-11-02 07:32:09,Extremely likely,they’re look after patients,,5.0,neutral,0.9616372585296631,neutral,0.8418192863464355,
-2023-11-02 08:14:54,Likely,good service,,4.0,admiration,0.9451923966407776,positive,0.7508882284164429,
-2023-11-02 10:14:28,Extremely likely,i have been given prompt and urgent consultation and treatment for recent severe surgery conditions,,5.0,approval,0.44432759284973145,neutral,0.6179646253585815,
-2023-11-02 13:18:31,Extremely likely,always helpful staff,,5.0,admiration,0.7201068997383118,positive,0.9166269898414612,
-2023-11-02 15:03:43,Extremely likely,dr adeeb is a brilliant doctor great rapport and takes concerns seriously,,5.0,admiration,0.890923023223877,positive,0.9673601984977722,
-2023-11-02 18:45:02,Extremely likely,friendly staff and doctor,tea  coffee machine,5.0,neutral,0.8093567490577698,positive,0.7538169622421265,Ambiance of Facility
-2023-11-02 18:49:36,Extremely likely,my surgery is second to none wonderful receptionists nurse and doctor i really can’t ask for more excellent,nothing at all they are just outstanding,5.0,admiration,0.936464786529541,positive,0.9816678762435913,No Improvement Suggestion
-2023-11-03 17:11:13,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-11-03 21:25:03,Extremely likely,caring,if i can book an appointment face to face on the nhs app,5.0,caring,0.8209208846092224,neutral,0.556370198726654,Online Services & Digital Health
-2023-11-04 10:57:11,Extremely likely,everyone is always on time rarely have to wait very friendly staff always seamless care,nothing  everything was great,5.0,caring,0.7892652750015259,positive,0.9457314014434814,Overall Patient Satisfaction
-2023-11-06 15:35:26,Likely,organized,quicker response time,4.0,neutral,0.9303516745567322,neutral,0.6562938690185547,Referral Process
-2023-11-13 15:14:55,Extremely likely,the staff in reception are always helpful and friendly and enable me to keep in touch with my gp without problems or delay,,5.0,approval,0.3653203845024109,positive,0.9348809123039246,
-2023-11-26 13:10:02,Extremely likely,prompt and positive responses,,5.0,neutral,0.9644340872764587,positive,0.7477373480796814,
-2023-11-26 14:15:10,Extremely likely,the staff nurse  doctors were patient  understanding,,5.0,neutral,0.931330680847168,neutral,0.5104079246520996,
-2023-12-01 10:03:21,Extremely likely,friendly and efficient surgery dr e a great gp,,5.0,admiration,0.9257461428642273,positive,0.9617658257484436,
-2023-12-01 10:04:15,Extremely likely,friendly staff and seen very quickly,,5.0,approval,0.46810269355773926,positive,0.9320411682128906,
-2023-12-01 10:04:38,Extremely likely,all the staff are so nice and kind,,5.0,admiration,0.940180778503418,positive,0.9663127064704895,
-2023-12-01 10:04:46,Extremely likely,they are very good,,5.0,admiration,0.9367064237594604,positive,0.966858446598053,
-2023-12-01 10:05:19,Extremely likely,kind and friendly staff,continue doing the amazing job that you are already doing,5.0,admiration,0.6903676986694336,positive,0.8927659392356873,No Improvement Suggestion
-2023-12-01 10:05:43,Extremely likely,response is always helpful and knowledgeable,my visit was very straightforward and it went very well it could’ve been any better,5.0,approval,0.40085625648498535,positive,0.9283400774002075,Overall Patient Satisfaction
-2023-12-01 10:08:35,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-01 10:11:25,Likely,providing info about the name of the person visiting you and on the room location,,4.0,neutral,0.9642437100410461,neutral,0.9424232244491577,
-2023-12-01 10:14:17,Likely,did what i went in to do noone else there,,4.0,neutral,0.5140741467475891,neutral,0.8243889212608337,
-2023-12-01 10:17:35,Likely,i find dr e friendly and  willing to discuss any problem,,4.0,approval,0.5445491075515747,positive,0.7515289187431335,
-2023-12-01 10:21:01,Extremely likely,dr is kind and nice,not at this moment,5.0,admiration,0.9127177596092224,positive,0.9152029156684875,No Improvement Suggestion
-2023-12-01 10:22:40,Extremely likely,i was dealt with in a friendly and patient manner and was provided with the help i needed,,5.0,approval,0.5254567861557007,positive,0.7395390868186951,
-2023-12-01 10:24:51,Unlikely,the doctors is excellent in service… but the front desk staff needs to learn how dealing with people ,just change all the front desk staff,2.0,admiration,0.875825822353363,positive,0.45940855145454407,Staffing Levels
-2023-12-01 10:30:42,Extremely likely,i been treated fairly,quicker appointments,5.0,approval,0.5567509531974792,positive,0.7223780751228333,Appointment System Efficiency
-2023-12-01 10:33:43,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-01 10:51:48,Likely,i been going to this surgery for over years and always looks after me,if results can be texted or emailed,4.0,neutral,0.7224485278129578,positive,0.7632433772087097,Telephone Service
-2023-12-01 11:12:56,Likely,dr a is a skillful and friendly gp,,4.0,neutral,0.5890175104141235,positive,0.8196703791618347,
-2023-12-01 11:16:40,Extremely likely,doctors are very good and knowledgable,,5.0,admiration,0.930962085723877,positive,0.9353197813034058,
-2023-12-01 13:17:58,Extremely likely,close to c bus stop and tube station   trubador garden in summee for a coffee  prescriptions sent to chemist quickly after requests,i think stair rail not secure enough to downstairs and steep maybe instal a regular lift,5.0,neutral,0.9484356641769409,neutral,0.8750986456871033,Ambiance of Facility
-2023-12-01 13:19:00,Extremely likely,every time i have to go to the surgery i am always treated well and feel welcome,,5.0,gratitude,0.5214009284973145,positive,0.9363346695899963,
-2023-12-01 14:07:11,Extremely likely,friendly reception personnel and good doctors,friendly reception personnel and good doctors,5.0,neutral,0.590523898601532,positive,0.8829883933067322,Quality of Medical Advice
-2023-12-01 14:37:56,Extremely likely,very helpful and accommodating caring and supportive service,happy with my experience of the service,5.0,admiration,0.7086585164070129,positive,0.9516358375549316,Overall Patient Satisfaction
-2023-12-01 14:43:45,Extremely likely,the doctors the reception staff everyone at the surgery are helpful,more appointment slot if it’s possible,5.0,approval,0.34484776854515076,positive,0.9490816593170166,Waiting Times
-2023-12-01 14:45:27,Likely,staff are friendly and not too crowded,,4.0,approval,0.45722469687461853,positive,0.7921119332313538,
-2023-12-01 15:01:54,Extremely likely,they are all concerned in very friendly,,5.0,caring,0.40659669041633606,positive,0.6995004415512085,
-2023-12-01 15:03:23,Extremely likely,they are all concerned  very friendly,they are extremely excellent,5.0,caring,0.5779525637626648,positive,0.9281193614006042,Overall Patient Satisfaction
-2023-12-01 15:28:55,Extremely likely,staff courteous helpful and knowledgable,no everything was first class,5.0,admiration,0.5827550292015076,positive,0.8310628533363342,Ambiance of Facility
-2023-12-01 15:54:00,Extremely likely,coz they are very friendly and helpful and i’m very happy with them,,5.0,joy,0.8038026094436646,positive,0.984489917755127,
-2023-12-01 16:05:49,Extremely likely,prompt and caring staff,,5.0,neutral,0.6075661778450012,positive,0.5447470545768738,
-2023-12-01 16:11:57,Extremely likely,the reception staff are  welcoming well behavioured and friendly  the doctor  is professional and kind,,5.0,admiration,0.736255943775177,positive,0.9611481428146362,
-2023-12-01 16:37:36,Extremely likely,excellent doctor nurses reception,,5.0,admiration,0.9526556134223938,positive,0.9615630507469177,
-2023-12-01 16:41:17,Extremely likely,always kind  friendly  always find time to talk on the phone or make an in person consultation,no my experience was  very positive,5.0,neutral,0.4622841477394104,positive,0.8925069570541382,Overall Patient Satisfaction
-2023-12-01 16:55:47,Extremely likely,right answer  quick answer and good service…,no everything ok,5.0,admiration,0.6486095786094666,positive,0.8943080902099609,Overall Patient Satisfaction
-2023-12-01 17:12:00,Extremely likely,the staff are always very helpful and friendly,,5.0,admiration,0.7506760358810425,positive,0.9700186848640442,
-2023-12-01 18:12:43,Extremely likely,everyone is soo helpful,,5.0,admiration,0.43816274404525757,positive,0.9657270312309265,
-2023-12-01 19:42:32,Extremely likely,dr e is the best,she is very knowledgeable and gives important advice and what’s more helps to treat you,5.0,admiration,0.9139360785484314,positive,0.9791977405548096,Quality of Medical Advice
-2023-12-01 22:22:19,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-02 06:09:05,Extremely likely,very good service,,5.0,admiration,0.9484643936157227,positive,0.871953547000885,
-2023-12-02 07:17:59,Likely,in my case the stairs the monorail needs to go,because i have part broken leg and waiting for a new knee its hard to go down and up those stairs,4.0,neutral,0.9601942896842957,neutral,0.560558557510376,Waiting Times
-2023-12-02 16:27:48,Unlikely,not happy,,2.0,sadness,0.5331424474716187,negative,0.6825718283653259,
-2023-12-02 19:49:22,Extremely likely,always responding on time and no delay while waiting for response,everything is good,5.0,neutral,0.7612972259521484,positive,0.6405957937240601,Overall Patient Satisfaction
-2023-12-02 22:42:41,Extremely likely,she was so kind,nothing special,5.0,admiration,0.9269388914108276,positive,0.9001725316047668,No Improvement Suggestion
-2023-12-03 15:49:21,Extremely likely,very good and quick service,,5.0,admiration,0.9415720105171204,positive,0.9343292713165283,
-2023-12-04 12:41:52,Extremely likely,the nurse alex was amazing as usualthank you,reception  team needs to be more professional more helpful and less rude to patients,5.0,gratitude,0.951041042804718,positive,0.9840733408927917,Reception Staff
-2023-12-05 18:19:52,Extremely likely,i am happy with staff since  almost  years,,5.0,joy,0.8869733214378357,positive,0.9720224142074585,
-2023-12-07 12:58:40,Unlikely,because when i booked appointments by phone  my doctor havent contacted me,,2.0,neutral,0.610167384147644,negative,0.6456606984138489,
-2023-12-07 17:52:37,Unlikely,i feel totally let down by the surgery in failing to source a covid vaccination for me so i could have it other than in my arms where i have lymphoedema risk,yes  looked into obtaining a covid jab for me instead of just refusing to help which is a total lack of care,2.0,disappointment,0.5632384419441223,negative,0.9107747673988342,Vaccinations
-2023-12-07 19:26:41,Extremely likely,been with the surgery for  years always receive good care and a friendly smile when visiting,,5.0,caring,0.8328204154968262,positive,0.9122878313064575,
-2023-12-07 19:28:45,Extremely likely,love the practice would not change the worst thing would be to privatise the nhs who knows what the politicians will get up to after the next election,,5.0,love,0.6662837862968445,negative,0.8931231498718262,
+at pharmacy  with  in  hours",14,21,5.0,admiration,0.8002325296401978,positive,0.9565545916557312,After-Hours Service
+2023-10-12 14:37:00,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-12 15:04:37,Likely,faster,,1,0,4.0,neutral,0.6157320141792297,positive,0.5150842666625977,
+2023-10-12 15:15:06,Extremely likely,all services is very good,,5,0,5.0,admiration,0.9310896992683411,positive,0.9611668586730957,
+2023-10-12 15:15:07,Likely,it is ok,,3,0,4.0,approval,0.8292772769927979,positive,0.5258129239082336,
+2023-10-12 15:16:07,Extremely likely,all service’s is very good,,5,0,5.0,admiration,0.9297434091567993,positive,0.9678657054901123,
+2023-10-12 15:16:17,Likely,it is ok,,3,0,4.0,approval,0.8292772769927979,positive,0.5258129239082336,
+2023-10-12 15:40:10,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-12 16:06:14,Extremely likely,because i was made to feel welcome by the friendly team in reception,,13,0,5.0,gratitude,0.2743344306945801,positive,0.8848230242729187,
+2023-10-12 16:16:22,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-12 16:43:00,Likely,it is easy to get an appointment and assistance,,9,0,4.0,neutral,0.5398925542831421,positive,0.497700572013855,
+2023-10-12 17:32:16,Extremely likely,nurse alex is professional and helpful,,6,0,5.0,admiration,0.5166047215461731,positive,0.9396902322769165,
+2023-10-12 18:25:43,Extremely likely,they are friendly and very helpful,,6,0,5.0,admiration,0.5211284160614014,positive,0.9509434700012207,
+2023-10-12 19:03:06,Likely,the staff was very professional,everything was okay,5,3,4.0,admiration,0.6799676418304443,positive,0.9410073161125183,Overall Patient Satisfaction
+2023-10-12 19:52:11,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-12 22:58:45,Extremely likely,kind and caring,,3,0,5.0,caring,0.7291467189788818,positive,0.7512568831443787,
+2023-10-13 06:30:04,Extremely likely,i always feel home there and looked after,not really  thank you,8,4,5.0,neutral,0.34706515073776245,positive,0.9497132301330566,No Improvement Suggestion
+2023-10-13 09:58:25,Extremely likely,thei improved the service at the reception,,7,0,5.0,neutral,0.6479318737983704,positive,0.599633514881134,
+2023-10-13 10:12:17,Extremely likely,you always respond well,,4,0,5.0,admiration,0.4970581531524658,positive,0.8987866044044495,
+2023-10-13 12:30:44,Extremely likely,they were quick and organised and doctor herself took care of it,can’t think of any,12,4,5.0,neutral,0.5852083563804626,positive,0.6710278391838074,No Improvement Suggestion
+2023-10-13 14:35:24,Extremely likely,because all staff are friendly and helpful and respectful,no i think every thing is going okay,9,8,5.0,admiration,0.733448326587677,positive,0.9447391033172607,Overall Patient Satisfaction
+2023-10-13 17:39:33,Extremely likely,all staff are very professional and very friendly online booking is very useful,,13,0,5.0,admiration,0.6897842288017273,positive,0.9771367907524109,
+2023-10-13 18:35:22,Likely,the appointment was on time,the surgery  is a bit old and  need some renovations,5,10,4.0,neutral,0.6524670124053955,positive,0.7698135375976562,Facility Modernization and Upgrades
+2023-10-13 20:36:20,Extremely likely,very helpful and efficient staff excellent,,6,0,5.0,admiration,0.9480522274971008,positive,0.9659855365753174,
+2023-10-14 12:22:15,Extremely likely,they are helpful,everything was good,3,3,5.0,approval,0.4535105526447296,positive,0.8840527534484863,Overall Patient Satisfaction
+2023-10-15 20:26:47,Extremely likely,nice and polite welcoming,,4,0,5.0,admiration,0.7594082951545715,positive,0.892371416091919,
+2023-10-19 17:18:47,Extremely likely,good,,1,0,5.0,admiration,0.9067692160606384,positive,0.6512166857719421,
+2023-10-19 21:44:38,Extremely likely,attentive,shorter appointment wait,1,3,5.0,neutral,0.963094174861908,neutral,0.7316112518310547,Waiting Times
+2023-10-23 08:30:53,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-23 08:31:05,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-23 10:03:17,Likely,everything is fine,,3,0,4.0,approval,0.5142738819122314,positive,0.6799522638320923,
+2023-10-23 10:03:33,Extremely likely,they’re doing good job,,4,0,5.0,admiration,0.9354286789894104,positive,0.93006831407547,
+2023-10-23 10:03:52,Likely,i like the professionals there,,5,0,4.0,love,0.8041990399360657,positive,0.8747941255569458,
+2023-10-23 10:05:29,Extremely likely,found the atmosphere nice and friendly from reception to doctor,,10,0,5.0,admiration,0.8470653295516968,positive,0.9490618705749512,
+2023-10-23 10:07:38,Extremely likely,they are so caring and helpful,not at all excellent team,6,5,5.0,admiration,0.6975098848342896,positive,0.951196551322937,No Improvement Suggestion
+2023-10-23 10:07:50,Extremely likely,very good,,2,0,5.0,admiration,0.945436954498291,positive,0.8884718418121338,
+2023-10-23 10:09:43,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-23 10:09:43,Extremely likely,staff are nice and good to listen,,7,0,5.0,admiration,0.9275143146514893,positive,0.9370033740997314,
+2023-10-23 10:12:42,Likely,i find that the service i receive is always very friendly and helpful,i was satisfied with the way i was treated,13,9,4.0,approval,0.44380852580070496,positive,0.9712134003639221,Overall Patient Satisfaction
+2023-10-23 10:16:40,Extremely likely,staff are very helpful,,4,0,5.0,admiration,0.4645572602748871,positive,0.9512966275215149,
+2023-10-23 10:20:39,Unlikely,the front desk staff need totally changed,doctor is very good … only the front desk staff is careless and rude … pretending they are busy … don’t give time to complete your enquiry …,7,28,2.0,neutral,0.7668716907501221,negative,0.8425944447517395,Reception Staff
+2023-10-23 10:59:00,Extremely likely,pleasent friendly staff,,3,0,5.0,neutral,0.7311964631080627,positive,0.6576187014579773,
+2023-10-23 11:10:29,Likely,generally great service but practice is probably to far for most of my friends and family love in another part of the uk,,23,0,4.0,admiration,0.9108524918556213,neutral,0.4256336987018585,
+2023-10-23 11:30:39,Unlikely,the staff at reception lacking communication skills,by changing staff at reception,7,5,2.0,neutral,0.6251428127288818,negative,0.8740612864494324,Reception Staff
+2023-10-23 11:50:26,Extremely likely,friendly reception good doctors,no what you do is great,4,6,5.0,admiration,0.43564751744270325,positive,0.8842900395393372,No Improvement Suggestion
+2023-10-23 11:55:17,Extremely likely,they are always very helpful,,5,0,5.0,approval,0.4011724889278412,positive,0.9610331058502197,
+2023-10-23 12:18:59,Likely,a good surgery,,3,0,4.0,admiration,0.9319035410881042,positive,0.8763083219528198,
+2023-10-23 12:22:55,Extremely likely,excellent treatment by doctors and staff,not that i know of,6,5,5.0,admiration,0.9343973994255066,positive,0.9647283554077148,No Improvement Suggestion
+2023-10-23 13:00:45,Extremely likely,its really helpful,,3,0,5.0,admiration,0.5901975035667419,positive,0.9378836750984192,
+2023-10-23 13:02:29,Extremely likely,the doctor and the whole team are so good and very helpful,,12,0,5.0,admiration,0.9077368974685669,positive,0.980645477771759,
+2023-10-23 13:08:15,Likely,great friendly service from the nurse,,6,0,4.0,admiration,0.9431491494178772,positive,0.9624390006065369,
+2023-10-23 14:20:48,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-23 14:22:15,Extremely likely,no thanks,,2,0,5.0,gratitude,0.9839128851890564,neutral,0.5303850173950195,
+2023-10-23 17:05:44,Likely,i have been at the surgery before it changed hands but i have no problems with anyone there,seeing face to face would have been better but it was adequate for my needs,18,15,4.0,approval,0.5088290572166443,neutral,0.6737411618232727,Quality of Medical Advice
+2023-10-23 20:13:29,Extremely likely,because is the best surgery,,5,0,5.0,admiration,0.9379380941390991,positive,0.9661861658096313,
+2023-10-23 21:59:36,Extremely likely,very good care and understanding,,5,0,5.0,admiration,0.9110598564147949,positive,0.9314626455307007,
+2023-10-23 23:38:29,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-24 07:19:07,Extremely likely,always helpful and caring,,4,0,5.0,caring,0.8669462203979492,positive,0.9149177074432373,
+2023-10-24 16:00:34,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-10-24 16:11:03,Extremely likely,very officiant professional and friendly staff,my experience was excellent,6,4,5.0,admiration,0.8198572993278503,positive,0.9317727088928223,Overall Patient Satisfaction
+2023-10-24 17:47:22,Likely,easy access,quick response,2,2,4.0,neutral,0.7875760793685913,neutral,0.5953304171562195,Referral Process
+2023-10-26 17:15:40,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-11-01 11:03:19,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-11-01 11:03:25,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-11-01 11:04:27,Likely,they do care about people health,,6,0,4.0,caring,0.8187292814254761,positive,0.48872238397598267,
+2023-11-01 11:05:24,Likely,friendly reception staff and good gps,,6,0,4.0,admiration,0.5750849843025208,positive,0.9136236310005188,
+2023-11-01 11:07:08,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-11-01 11:08:22,Extremely likely,i’ve been with surgery for many years they’ve always been excellent,no covid has been hard on all of us and they’ve done as well as they could in these difficult circumstances much appreciated,11,23,5.0,admiration,0.9286248087882996,positive,0.972749650478363,No Improvement Suggestion
+2023-11-01 11:08:54,Extremely likely,friendly reception staff confident with the health care i receive,,10,0,5.0,approval,0.44242191314697266,positive,0.8569561243057251,
+2023-11-01 11:10:48,Extremely likely,excellent doctor and great attention,,5,0,5.0,admiration,0.9493025541305542,positive,0.9725525379180908,
+2023-11-01 11:11:03,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-11-01 11:14:29,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-11-01 11:17:06,Extremely likely,i have a brilliant doctor doctor he is all ways caring about his patients and as a doctor i can say thanks for the nhs and for the stuff of the surgery for the professionalism in the job,,38,0,5.0,gratitude,0.9172970056533813,positive,0.9666901230812073,
+2023-11-01 11:17:30,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-11-01 11:18:41,Extremely likely,excellent doctor nurse and receptionists,,5,0,5.0,admiration,0.9479940533638,positive,0.943989634513855,
+2023-11-01 11:21:58,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-11-01 11:30:08,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-11-01 11:32:34,Extremely likely,service is very good,that’s all,4,2,5.0,admiration,0.9392822980880737,positive,0.9398131966590881,No Improvement Suggestion
+2023-11-01 12:10:03,Extremely unlikely,the doctors in surgery is very good only the front desk staff needs to be destroyed very rude,all the front desk staff needs to be changed,18,9,1.0,annoyance,0.3356626331806183,negative,0.6469135284423828,Staffing Levels
+2023-11-01 12:10:14,Extremely likely,very satisfied with my experience,,5,0,5.0,approval,0.3701145052909851,positive,0.9645012617111206,
+2023-11-01 12:16:29,Extremely likely,i have been a patient at this surgery for over  years and they always looked after me so well,i am very satisfied with all the services i’ve received from the whole team at the surgery throughout the last  years of being their patient,19,25,5.0,caring,0.6022775173187256,positive,0.9760478138923645,Overall Patient Satisfaction
+2023-11-01 12:21:50,Extremely likely,very good at getting a quick appointment also doctors and receptionists very helpful and friendly,,15,0,5.0,admiration,0.8736910223960876,positive,0.9718446135520935,
+2023-11-01 13:37:39,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-11-01 14:13:43,Extremely likely,they are very friendly and helpful,,6,0,5.0,admiration,0.6894406676292419,positive,0.9557753801345825,
+2023-11-01 14:16:22,Extremely likely,professional and kind,,3,0,5.0,neutral,0.9600537419319153,positive,0.7541146278381348,
+2023-11-01 14:48:09,Likely,,appointment time to see a doctor is to long,0,9,4.0,neutral,0.9549600481987,positive,0.4012986421585083,Waiting Times
+2023-11-01 14:50:25,Likely,dr helped,yes instead of call with dr would have been better face to face exam,2,14,4.0,neutral,0.7188158631324768,neutral,0.5143150091171265,Quality of Medical Advice
+2023-11-01 17:52:29,Likely,i think they genuinely care,,5,0,4.0,caring,0.7355452179908752,neutral,0.555993914604187,
+2023-11-01 19:53:03,Likely,because nurse was helpful and reassured me,,7,0,4.0,approval,0.31236082315444946,positive,0.9141635894775391,
+2023-11-02 07:29:16,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-11-02 07:32:09,Extremely likely,they’re look after patients,,4,0,5.0,neutral,0.9616372585296631,neutral,0.8418192863464355,
+2023-11-02 08:14:54,Likely,good service,,2,0,4.0,admiration,0.9451923966407776,positive,0.7508882284164429,
+2023-11-02 10:14:28,Extremely likely,i have been given prompt and urgent consultation and treatment for recent severe surgery conditions,,15,0,5.0,approval,0.44432759284973145,neutral,0.6179646253585815,
+2023-11-02 13:18:31,Extremely likely,always helpful staff,,3,0,5.0,admiration,0.7201068997383118,positive,0.9166269898414612,
+2023-11-02 15:03:43,Extremely likely,dr adeeb is a brilliant doctor great rapport and takes concerns seriously,,12,0,5.0,admiration,0.890923023223877,positive,0.9673601984977722,
+2023-11-02 18:45:02,Extremely likely,friendly staff and doctor,tea  coffee machine,4,3,5.0,neutral,0.8093567490577698,positive,0.7538169622421265,Ambiance of Facility
+2023-11-02 18:49:36,Extremely likely,my surgery is second to none wonderful receptionists nurse and doctor i really can’t ask for more excellent,nothing at all they are just outstanding,18,7,5.0,admiration,0.936464786529541,positive,0.9816678762435913,No Improvement Suggestion
+2023-11-03 17:11:13,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-11-03 21:25:03,Extremely likely,caring,if i can book an appointment face to face on the nhs app,1,13,5.0,caring,0.8209208846092224,neutral,0.556370198726654,Online Services & Digital Health
+2023-11-04 10:57:11,Extremely likely,everyone is always on time rarely have to wait very friendly staff always seamless care,nothing  everything was great,15,4,5.0,caring,0.7892652750015259,positive,0.9457314014434814,Overall Patient Satisfaction
+2023-11-06 15:35:26,Likely,organized,quicker response time,1,3,4.0,neutral,0.9303516745567322,neutral,0.6562938690185547,Referral Process
+2023-11-13 15:14:55,Extremely likely,the staff in reception are always helpful and friendly and enable me to keep in touch with my gp without problems or delay,,23,0,5.0,approval,0.3653203845024109,positive,0.9348809123039246,
+2023-11-26 13:10:02,Extremely likely,prompt and positive responses,,4,0,5.0,neutral,0.9644340872764587,positive,0.7477373480796814,
+2023-11-26 14:15:10,Extremely likely,the staff nurse  doctors were patient  understanding,,7,0,5.0,neutral,0.931330680847168,neutral,0.5104079246520996,
+2023-12-01 10:03:21,Extremely likely,friendly and efficient surgery dr e a great gp,,9,0,5.0,admiration,0.9257461428642273,positive,0.9617658257484436,
+2023-12-01 10:04:15,Extremely likely,friendly staff and seen very quickly,,6,0,5.0,approval,0.46810269355773926,positive,0.9320411682128906,
+2023-12-01 10:04:38,Extremely likely,all the staff are so nice and kind,,8,0,5.0,admiration,0.940180778503418,positive,0.9663127064704895,
+2023-12-01 10:04:46,Extremely likely,they are very good,,4,0,5.0,admiration,0.9367064237594604,positive,0.966858446598053,
+2023-12-01 10:05:19,Extremely likely,kind and friendly staff,continue doing the amazing job that you are already doing,4,10,5.0,admiration,0.6903676986694336,positive,0.8927659392356873,No Improvement Suggestion
+2023-12-01 10:05:43,Extremely likely,response is always helpful and knowledgeable,my visit was very straightforward and it went very well it could’ve been any better,6,15,5.0,approval,0.40085625648498535,positive,0.9283400774002075,Overall Patient Satisfaction
+2023-12-01 10:08:35,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-01 10:11:25,Likely,providing info about the name of the person visiting you and on the room location,,15,0,4.0,neutral,0.9642437100410461,neutral,0.9424232244491577,
+2023-12-01 10:14:17,Likely,did what i went in to do noone else there,,10,0,4.0,neutral,0.5140741467475891,neutral,0.8243889212608337,
+2023-12-01 10:17:35,Likely,i find dr e friendly and  willing to discuss any problem,,11,0,4.0,approval,0.5445491075515747,positive,0.7515289187431335,
+2023-12-01 10:21:01,Extremely likely,dr is kind and nice,not at this moment,5,4,5.0,admiration,0.9127177596092224,positive,0.9152029156684875,No Improvement Suggestion
+2023-12-01 10:22:40,Extremely likely,i was dealt with in a friendly and patient manner and was provided with the help i needed,,18,0,5.0,approval,0.5254567861557007,positive,0.7395390868186951,
+2023-12-01 10:24:51,Unlikely,the doctors is excellent in service… but the front desk staff needs to learn how dealing with people ,just change all the front desk staff,18,7,2.0,admiration,0.875825822353363,positive,0.45940855145454407,Staffing Levels
+2023-12-01 10:30:42,Extremely likely,i been treated fairly,quicker appointments,4,2,5.0,approval,0.5567509531974792,positive,0.7223780751228333,Appointment System Efficiency
+2023-12-01 10:33:43,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-01 10:51:48,Likely,i been going to this surgery for over years and always looks after me,if results can be texted or emailed,14,7,4.0,neutral,0.7224485278129578,positive,0.7632433772087097,Telephone Service
+2023-12-01 11:12:56,Likely,dr a is a skillful and friendly gp,,8,0,4.0,neutral,0.5890175104141235,positive,0.8196703791618347,
+2023-12-01 11:16:40,Extremely likely,doctors are very good and knowledgable,,6,0,5.0,admiration,0.930962085723877,positive,0.9353197813034058,
+2023-12-01 13:17:58,Extremely likely,close to c bus stop and tube station   trubador garden in summee for a coffee  prescriptions sent to chemist quickly after requests,i think stair rail not secure enough to downstairs and steep maybe instal a regular lift,22,16,5.0,neutral,0.9484356641769409,neutral,0.8750986456871033,Ambiance of Facility
+2023-12-01 13:19:00,Extremely likely,every time i have to go to the surgery i am always treated well and feel welcome,,17,0,5.0,gratitude,0.5214009284973145,positive,0.9363346695899963,
+2023-12-01 14:07:11,Extremely likely,friendly reception personnel and good doctors,friendly reception personnel and good doctors,6,6,5.0,neutral,0.590523898601532,positive,0.8829883933067322,Quality of Medical Advice
+2023-12-01 14:37:56,Extremely likely,very helpful and accommodating caring and supportive service,happy with my experience of the service,8,7,5.0,admiration,0.7086585164070129,positive,0.9516358375549316,Overall Patient Satisfaction
+2023-12-01 14:43:45,Extremely likely,the doctors the reception staff everyone at the surgery are helpful,more appointment slot if it’s possible,11,6,5.0,approval,0.34484776854515076,positive,0.9490816593170166,Waiting Times
+2023-12-01 14:45:27,Likely,staff are friendly and not too crowded,,7,0,4.0,approval,0.45722469687461853,positive,0.7921119332313538,
+2023-12-01 15:01:54,Extremely likely,they are all concerned in very friendly,,7,0,5.0,caring,0.40659669041633606,positive,0.6995004415512085,
+2023-12-01 15:03:23,Extremely likely,they are all concerned  very friendly,they are extremely excellent,6,4,5.0,caring,0.5779525637626648,positive,0.9281193614006042,Overall Patient Satisfaction
+2023-12-01 15:28:55,Extremely likely,staff courteous helpful and knowledgable,no everything was first class,5,5,5.0,admiration,0.5827550292015076,positive,0.8310628533363342,Ambiance of Facility
+2023-12-01 15:54:00,Extremely likely,coz they are very friendly and helpful and i’m very happy with them,,13,0,5.0,joy,0.8038026094436646,positive,0.984489917755127,
+2023-12-01 16:05:49,Extremely likely,prompt and caring staff,,4,0,5.0,neutral,0.6075661778450012,positive,0.5447470545768738,
+2023-12-01 16:11:57,Extremely likely,the reception staff are  welcoming well behavioured and friendly  the doctor  is professional and kind,,15,0,5.0,admiration,0.736255943775177,positive,0.9611481428146362,
+2023-12-01 16:37:36,Extremely likely,excellent doctor nurses reception,,4,0,5.0,admiration,0.9526556134223938,positive,0.9615630507469177,
+2023-12-01 16:41:17,Extremely likely,always kind  friendly  always find time to talk on the phone or make an in person consultation,no my experience was  very positive,17,6,5.0,neutral,0.4622841477394104,positive,0.8925069570541382,Overall Patient Satisfaction
+2023-12-01 16:55:47,Extremely likely,right answer  quick answer and good service…,no everything ok,7,3,5.0,admiration,0.6486095786094666,positive,0.8943080902099609,Overall Patient Satisfaction
+2023-12-01 17:12:00,Extremely likely,the staff are always very helpful and friendly,,8,0,5.0,admiration,0.7506760358810425,positive,0.9700186848640442,
+2023-12-01 18:12:43,Extremely likely,everyone is soo helpful,,4,0,5.0,admiration,0.43816274404525757,positive,0.9657270312309265,
+2023-12-01 19:42:32,Extremely likely,dr e is the best,she is very knowledgeable and gives important advice and what’s more helps to treat you,5,15,5.0,admiration,0.9139360785484314,positive,0.9791977405548096,Quality of Medical Advice
+2023-12-01 22:22:19,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-02 06:09:05,Extremely likely,very good service,,3,0,5.0,admiration,0.9484643936157227,positive,0.871953547000885,
+2023-12-02 07:17:59,Likely,in my case the stairs the monorail needs to go,because i have part broken leg and waiting for a new knee its hard to go down and up those stairs,10,21,4.0,neutral,0.9601942896842957,neutral,0.560558557510376,Waiting Times
+2023-12-02 16:27:48,Unlikely,not happy,,2,0,2.0,sadness,0.5331424474716187,negative,0.6825718283653259,
+2023-12-02 19:49:22,Extremely likely,always responding on time and no delay while waiting for response,everything is good,11,3,5.0,neutral,0.7612972259521484,positive,0.6405957937240601,Overall Patient Satisfaction
+2023-12-02 22:42:41,Extremely likely,she was so kind,nothing special,4,2,5.0,admiration,0.9269388914108276,positive,0.9001725316047668,No Improvement Suggestion
+2023-12-03 15:49:21,Extremely likely,very good and quick service,,5,0,5.0,admiration,0.9415720105171204,positive,0.9343292713165283,
+2023-12-04 12:41:52,Extremely likely,the nurse alex was amazing as usualthank you,reception  team needs to be more professional more helpful and less rude to patients,8,14,5.0,gratitude,0.951041042804718,positive,0.9840733408927917,Reception Staff
+2023-12-05 18:19:52,Extremely likely,i am happy with staff since  almost  years,,8,0,5.0,joy,0.8869733214378357,positive,0.9720224142074585,
+2023-12-07 12:58:40,Unlikely,because when i booked appointments by phone  my doctor havent contacted me,,12,0,2.0,neutral,0.610167384147644,negative,0.6456606984138489,
+2023-12-07 17:52:37,Unlikely,i feel totally let down by the surgery in failing to source a covid vaccination for me so i could have it other than in my arms where i have lymphoedema risk,yes  looked into obtaining a covid jab for me instead of just refusing to help which is a total lack of care,32,22,2.0,disappointment,0.5632384419441223,negative,0.9107747673988342,Vaccinations
+2023-12-07 19:26:41,Extremely likely,been with the surgery for  years always receive good care and a friendly smile when visiting,,16,0,5.0,caring,0.8328204154968262,positive,0.9122878313064575,
+2023-12-07 19:28:45,Extremely likely,love the practice would not change the worst thing would be to privatise the nhs who knows what the politicians will get up to after the next election,,28,0,5.0,love,0.6662837862968445,negative,0.8931231498718262,
 2023-12-09 01:19:47,Extremely likely,"i recently had the pleasure of visiting the gp surgery in west london and i must say the experience exceeded my expectations from the moment i stepped in i was greeted by a warm and welcoming environment which immediately put me at ease
 
 the reception staff were incredibly helpful and efficient ensuring a smooth and hasslefree checkin process their professionalism and kindness set a positive tone for the rest of my visit
@@ -520,62 +520,67 @@ the waiting area was clean and comfortable creating a calm atmosphere despite th
 
 my consultation with the gp was exceptionally good the doctor was not only knowledgeable and thorough but also genuinely caring and attentive they took the time to listen to my concerns answer my questions and explain my treatment options in a way that was easy to understand its rare to find a gp who combines such high levels of expertise with a truly compassionate approach
 
-i was also impressed by the surgerys use of technology they have a userfriendly system for booking appointments and managing prescriptions making it convenient to handle healthcare needs this modern approach is a testament to their commitment to patient care and satisfaction",dedicated mental health professionals having mental health specialists such as psychologists or counsellors available onsite or via telehealth appointments would provide patients with easier access to mental health care this could be particularly helpful for those who might feel overwhelmed by the prospect of seeking help outside the gp surgery,5.0,admiration,0.8076570630073547,positive,0.9772721529006958,Mental Health Services
-2023-12-09 14:04:56,Extremely likely,very happy with my general practitioner thank you,would like to see normal blood results sent via sms or the nhs app if possible hopefully if it is not available now it will be in future could you please keep us updated,5.0,gratitude,0.9007888436317444,positive,0.982707679271698,Test Results
-2023-12-09 14:06:11,Extremely likely,my experience at the gp practice is always ok,reception area not in the best manner could be brighter to uplift the spirit when visiting,5.0,approval,0.7932757139205933,positive,0.8363864421844482,Ambiance of Facility
-2023-12-09 14:47:02,Extremely likely,i do not like going to the doctor by all my experiences at the practice has been positive,would like to see information about the ppg  patient participation group in reception,5.0,disapproval,0.7484170794487,negative,0.8558806777000427,Patient Participation Group
-2023-12-09 16:03:19,Neither likely nor unlikely,very disappointment i am y pain and only can get an appointment for  days after,better service quick appointment solve the problem  when you want to see the doctor is because you are not well,3.0,disappointment,0.8548900485038757,negative,0.9283828139305115,Quality of Medical Advice
-2023-12-11 10:03:58,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-11 10:03:59,Extremely likely,all went to plan,,5.0,approval,0.5496329069137573,positive,0.8738687634468079,
-2023-12-11 10:04:11,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-11 10:05:24,Likely,good,,4.0,admiration,0.9067692160606384,positive,0.6512166857719421,
-2023-12-11 10:05:36,Extremely likely,very happy with the service consultation i had at the surgery,the information displayed in reception is very useful thank you for sharing,5.0,joy,0.889244794845581,positive,0.9740995168685913,Reception Staff
-2023-12-11 10:05:38,Extremely likely,pleasant and helpful doctor,,5.0,admiration,0.8709826469421387,positive,0.9160131812095642,
-2023-12-11 10:06:23,Extremely likely,this has to be the best run and well operated surgery in the country,,5.0,admiration,0.9164478182792664,positive,0.9560210704803467,
-2023-12-11 10:09:11,Extremely unlikely,in trying to get a covid jab somewhere other than in my arms because i have lymphoedema risk in both arms in london that’s not possible as it seems in all pharmacies which are administering the covid jabs they have not been trained to do so and hospitals don’t have the vaccine  so my only option was the gp surgery and they refused to take steps to obtain a covid jab for me,the surgery actually looking into obtaining a covid jab for me instead of just refusing to help,1.0,disapproval,0.4928087294101715,negative,0.7148280143737793,Vaccinations
-2023-12-11 10:09:58,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-11 10:13:56,Extremely likely,excellent treatment,,5.0,admiration,0.9493474960327148,positive,0.9059766530990601,
-2023-12-11 10:16:16,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-11 10:21:40,Extremely likely,efficient  friendly   great surgery,,5.0,admiration,0.9422013759613037,positive,0.9541939496994019,
-2023-12-11 10:27:17,Don't know,,,,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-11 10:31:38,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-11 10:48:04,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-11 10:50:05,Extremely likely,great  service  so helpful,,5.0,admiration,0.9453745484352112,positive,0.9797846078872681,
-2023-12-11 10:51:43,Extremely likely,professional and caring,,5.0,neutral,0.5005962252616882,positive,0.7133669853210449,
+i was also impressed by the surgerys use of technology they have a userfriendly system for booking appointments and managing prescriptions making it convenient to handle healthcare needs this modern approach is a testament to their commitment to patient care and satisfaction",dedicated mental health professionals having mental health specialists such as psychologists or counsellors available onsite or via telehealth appointments would provide patients with easier access to mental health care this could be particularly helpful for those who might feel overwhelmed by the prospect of seeking help outside the gp surgery,218,50,5.0,admiration,0.8076570630073547,positive,0.9772721529006958,Mental Health Services
+2023-12-09 14:04:56,Extremely likely,very happy with my general practitioner thank you,would like to see normal blood results sent via sms or the nhs app if possible hopefully if it is not available now it will be in future could you please keep us updated,8,34,5.0,gratitude,0.9007888436317444,positive,0.982707679271698,Test Results
+2023-12-09 14:06:11,Extremely likely,my experience at the gp practice is always ok,reception area not in the best manner could be brighter to uplift the spirit when visiting,9,16,5.0,approval,0.7932757139205933,positive,0.8363864421844482,Ambiance of Facility
+2023-12-09 14:47:02,Extremely likely,i do not like going to the doctor by all my experiences at the practice has been positive,would like to see information about the ppg  patient participation group in reception,18,13,5.0,disapproval,0.7484170794487,negative,0.8558806777000427,Patient Participation Group
+2023-12-09 16:03:19,Neither likely nor unlikely,very disappointment i am y pain and only can get an appointment for  days after,better service quick appointment solve the problem  when you want to see the doctor is because you are not well,15,20,3.0,disappointment,0.8548900485038757,negative,0.9283828139305115,Quality of Medical Advice
+2023-12-11 10:03:58,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-11 10:03:59,Extremely likely,all went to plan,,4,0,5.0,approval,0.5496329069137573,positive,0.8738687634468079,
+2023-12-11 10:04:11,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-11 10:05:24,Likely,good,,1,0,4.0,admiration,0.9067692160606384,positive,0.6512166857719421,
+2023-12-11 10:05:36,Extremely likely,very happy with the service consultation i had at the surgery,the information displayed in reception is very useful thank you for sharing,11,12,5.0,joy,0.889244794845581,positive,0.9740995168685913,Reception Staff
+2023-12-11 10:05:38,Extremely likely,pleasant and helpful doctor,,4,0,5.0,admiration,0.8709826469421387,positive,0.9160131812095642,
+2023-12-11 10:06:23,Extremely likely,this has to be the best run and well operated surgery in the country,,14,0,5.0,admiration,0.9164478182792664,positive,0.9560210704803467,
+2023-12-11 10:09:11,Extremely unlikely,in trying to get a covid jab somewhere other than in my arms because i have lymphoedema risk in both arms in london that’s not possible as it seems in all pharmacies which are administering the covid jabs they have not been trained to do so and hospitals don’t have the vaccine  so my only option was the gp surgery and they refused to take steps to obtain a covid jab for me,the surgery actually looking into obtaining a covid jab for me instead of just refusing to help,73,17,1.0,disapproval,0.4928087294101715,negative,0.7148280143737793,Vaccinations
+2023-12-11 10:09:58,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-11 10:13:56,Extremely likely,excellent treatment,,2,0,5.0,admiration,0.9493474960327148,positive,0.9059766530990601,
+2023-12-11 10:16:16,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-11 10:21:40,Extremely likely,efficient  friendly   great surgery,,4,0,5.0,admiration,0.9422013759613037,positive,0.9541939496994019,
+2023-12-11 10:27:17,Don't know,,,0,0,,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-11 10:31:38,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-11 10:48:04,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-11 10:50:05,Extremely likely,great  service  so helpful,,4,0,5.0,admiration,0.9453745484352112,positive,0.9797846078872681,
+2023-12-11 10:51:43,Extremely likely,professional and caring,,3,0,5.0,neutral,0.5005962252616882,positive,0.7133669853210449,
 2023-12-11 11:00:30,Extremely likely,i personally appreciate that my gp is bilingual so if i cannot find the right words in english  i know she will understand me,"no not that i can think
-of",5.0,admiration,0.8056612610816956,positive,0.8496074676513672,No Improvement Suggestion
-2023-12-11 11:06:26,Unlikely,,,2.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-11 11:24:03,Extremely likely,it was easy to book and the doctor answered my query during a phone consultation,,5.0,neutral,0.7404299378395081,positive,0.8020914793014526,
-2023-12-11 12:11:35,Extremely likely,good its  okey,,5.0,admiration,0.9349900484085083,positive,0.8639477491378784,
-2023-12-11 12:16:16,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-11 13:05:11,Extremely likely,very proficient and helpful,,5.0,admiration,0.9136380553245544,positive,0.9256346821784973,
-2023-12-11 13:15:46,Likely,i like that it is good,the following,4.0,admiration,0.6806154847145081,positive,0.9602482914924622,Referral Process
-2023-12-11 13:27:29,Likely,the appointment was quick and efficient,clear indications before and once at the surgery would have been welcomed,4.0,approval,0.399259477853775,positive,0.948319137096405,Quality of Medical Advice
-2023-12-11 13:34:18,Extremely likely,the practice as a whole are very  welcoming friendly and helpful,quite happy with what exists,5.0,admiration,0.6047418117523193,positive,0.9775765538215637,No Improvement Suggestion
-2023-12-11 14:17:00,Extremely likely,,,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-11 14:23:15,Likely,efficient and friendly staff services are provided at a short notice,needs spring cleaning,4.0,neutral,0.8844141364097595,positive,0.8748916387557983,Ambiance of Facility
-2023-12-11 14:26:16,Extremely likely,all very good,,5.0,admiration,0.9108405113220215,positive,0.9497760534286499,
-2023-12-11 14:27:42,Don't know,,,,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-11 14:27:47,Don't know,,,,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-11 14:27:52,Don't know,,,,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-11 14:27:58,Don't know,,,,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-11 14:28:33,Neither likely nor unlikely,not sure how i feel about my gp surgery,more digital services via nhs app,3.0,confusion,0.9113523364067078,negative,0.6464024782180786,Online Services & Digital Health
-2023-12-11 14:36:33,Extremely likely,my doctor very concerned about my my health,,5.0,caring,0.9052310585975647,negative,0.5472525358200073,
-2023-12-11 15:04:30,Extremely likely,friendly staff,,5.0,neutral,0.7604859471321106,positive,0.7113203406333923,
-2023-12-11 15:05:47,Extremely likely,well attended to patient needs,,5.0,caring,0.6871969699859619,neutral,0.5342642068862915,
-2023-12-11 15:12:22,Extremely likely, years i didn’t have any problem…,,5.0,neutral,0.4749964773654938,neutral,0.565764844417572,
-2023-12-11 15:33:58,Likely,,,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-11 18:03:02,Extremely likely,friendly atmosphere and helpful,,5.0,admiration,0.6830265522003174,positive,0.9032265543937683,
-2023-12-12 17:02:32,Likely,very good,okay thanks,4.0,admiration,0.945436954498291,positive,0.8884718418121338,Overall Patient Satisfaction
-2023-12-13 00:02:00,Likely,gp has very good services and nurses too,the clinic need improve services of medicion,4.0,admiration,0.9240243434906006,positive,0.9611015915870667,Quality of Medical Advice
-2023-12-13 00:31:51,Don't know,,,,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-13 00:31:56,Don't know,,,,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-13 00:32:02,Don't know,,,,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-13 00:32:08,Neither likely nor unlikely,,,3.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-13 00:32:15,Neither likely nor unlikely,,,3.0,neutral,0.9549600481987,positive,0.4012986421585083,
-2023-12-13 07:54:05,Extremely likely,good service,no thanks,5.0,admiration,0.9451923966407776,positive,0.7508882284164429,No Improvement Suggestion
-2023-12-13 07:56:06,Extremely likely,good service,no thanks,5.0,admiration,0.9451923966407776,positive,0.7508882284164429,No Improvement Suggestion
-2023-12-13 11:38:58,Extremely likely,because they are kinds and professionals,,5.0,neutral,0.9583357572555542,neutral,0.5328916311264038,
-2023-12-13 16:51:04,Neither likely nor unlikely,i am very satisfied with my gp practice and would not change it for anything,i do not have any improvement suggestion at the moment,3.0,approval,0.5326001644134521,positive,0.9805394411087036,No Improvement Suggestion
-2023-12-13 18:28:01,Extremely likely,love the surgery have been there for  years happy with my gps and the nursing staff,staff at reception can be unfriendly and not very helpful at times,5.0,love,0.950878918170929,positive,0.9808524250984192,Reception Staff
-2023-12-13 18:52:06,Extremely likely,kindness and professionality,,5.0,neutral,0.9569834470748901,positive,0.5976924896240234,
+of",24,7,5.0,admiration,0.8056612610816956,positive,0.8496074676513672,No Improvement Suggestion
+2023-12-11 11:06:26,Unlikely,,,0,0,2.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-11 11:24:03,Extremely likely,it was easy to book and the doctor answered my query during a phone consultation,,15,0,5.0,neutral,0.7404299378395081,positive,0.8020914793014526,
+2023-12-11 12:11:35,Extremely likely,good its  okey,,3,0,5.0,admiration,0.9349900484085083,positive,0.8639477491378784,
+2023-12-11 12:16:16,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-11 13:05:11,Extremely likely,very proficient and helpful,,4,0,5.0,admiration,0.9136380553245544,positive,0.9256346821784973,
+2023-12-11 13:15:46,Likely,i like that it is good,the following,6,2,4.0,admiration,0.6806154847145081,positive,0.9602482914924622,Referral Process
+2023-12-11 13:27:29,Likely,the appointment was quick and efficient,clear indications before and once at the surgery would have been welcomed,6,12,4.0,approval,0.399259477853775,positive,0.948319137096405,Quality of Medical Advice
+2023-12-11 13:34:18,Extremely likely,the practice as a whole are very  welcoming friendly and helpful,quite happy with what exists,11,5,5.0,admiration,0.6047418117523193,positive,0.9775765538215637,No Improvement Suggestion
+2023-12-11 14:17:00,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-11 14:23:15,Likely,efficient and friendly staff services are provided at a short notice,needs spring cleaning,11,3,4.0,neutral,0.8844141364097595,positive,0.8748916387557983,Ambiance of Facility
+2023-12-11 14:26:16,Extremely likely,all very good,,3,0,5.0,admiration,0.9108405113220215,positive,0.9497760534286499,
+2023-12-11 14:27:42,Don't know,,,0,0,,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-11 14:27:47,Don't know,,,0,0,,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-11 14:27:52,Don't know,,,0,0,,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-11 14:27:58,Don't know,,,0,0,,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-11 14:28:33,Neither likely nor unlikely,not sure how i feel about my gp surgery,more digital services via nhs app,9,6,3.0,confusion,0.9113523364067078,negative,0.6464024782180786,Online Services & Digital Health
+2023-12-11 14:36:33,Extremely likely,my doctor very concerned about my my health,,8,0,5.0,caring,0.9052310585975647,negative,0.5472525358200073,
+2023-12-11 15:04:30,Extremely likely,friendly staff,,2,0,5.0,neutral,0.7604859471321106,positive,0.7113203406333923,
+2023-12-11 15:05:47,Extremely likely,well attended to patient needs,,5,0,5.0,caring,0.6871969699859619,neutral,0.5342642068862915,
+2023-12-11 15:12:22,Extremely likely, years i didn’t have any problem…,,6,0,5.0,neutral,0.4749964773654938,neutral,0.565764844417572,
+2023-12-11 15:33:58,Likely,,,0,0,4.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-11 18:03:02,Extremely likely,friendly atmosphere and helpful,,4,0,5.0,admiration,0.6830265522003174,positive,0.9032265543937683,
+2023-12-12 17:02:32,Likely,very good,okay thanks,2,2,4.0,admiration,0.945436954498291,positive,0.8884718418121338,Overall Patient Satisfaction
+2023-12-13 00:02:00,Likely,gp has very good services and nurses too,the clinic need improve services of medicion,8,7,4.0,admiration,0.9240243434906006,positive,0.9611015915870667,Quality of Medical Advice
+2023-12-13 00:31:51,Don't know,,,0,0,,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-13 00:31:56,Don't know,,,0,0,,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-13 00:32:02,Don't know,,,0,0,,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-13 00:32:08,Neither likely nor unlikely,,,0,0,3.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-13 00:32:15,Neither likely nor unlikely,,,0,0,3.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-13 07:54:05,Extremely likely,good service,no thanks,2,2,5.0,admiration,0.9451923966407776,positive,0.7508882284164429,No Improvement Suggestion
+2023-12-13 07:56:06,Extremely likely,good service,no thanks,2,2,5.0,admiration,0.9451923966407776,positive,0.7508882284164429,No Improvement Suggestion
+2023-12-13 11:38:58,Extremely likely,because they are kinds and professionals,,6,0,5.0,neutral,0.9583357572555542,neutral,0.5328916311264038,
+2023-12-13 16:51:04,Neither likely nor unlikely,i am very satisfied with my gp practice and would not change it for anything,i do not have any improvement suggestion at the moment,15,10,3.0,approval,0.5326001644134521,positive,0.9805394411087036,No Improvement Suggestion
+2023-12-13 18:28:01,Extremely likely,love the surgery have been there for  years happy with my gps and the nursing staff,staff at reception can be unfriendly and not very helpful at times,16,12,5.0,love,0.950878918170929,positive,0.9808524250984192,Reception Staff
+2023-12-13 18:52:06,Extremely likely,kindness and professionality,,3,0,5.0,neutral,0.9569834470748901,positive,0.5976924896240234,
+2023-12-13 20:28:10,Extremely likely,like the surgery a lot,more opportunity for screening like the new atrial fibrillation screen being done by reception,5,14,5.0,love,0.6954445242881775,neutral,0.5916904807090759,Reception Staff
+2023-12-13 22:11:32,Extremely likely,,,0,0,5.0,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-13 22:12:54,Extremely likely,very friendly surgery the doctors are great and helpful,,9,0,5.0,admiration,0.9481415152549744,positive,0.9717769622802734,
+2023-12-13 22:31:43,Don't know,,,0,0,,neutral,0.9549600481987,positive,0.4012986421585083,
+2023-12-13 22:33:34,Don't know,,,0,0,,neutral,0.9549600481987,positive,0.4012986421585083,
