@@ -2,14 +2,12 @@ import os
 import pandas as pd
 import gspread
 from google.oauth2 import service_account
-import datetime
 from dotenv import load_dotenv
 
 # Load the .env file
 load_dotenv()
 
 secret_path = os.getenv("SECRET_PATH")
-
 
 class SheetHelper:
     def __init__(self, sheet_url=None, sheet_id=0, secret_file_path=secret_path):

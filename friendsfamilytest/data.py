@@ -17,7 +17,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 init(autoreset=True)
 warnings.filterwarnings("ignore")
 secret_path = os.getenv("SECRET_PATH")
-
+from sheethelper import *
 
 @time_it
 def load_google_sheet():
