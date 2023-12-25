@@ -89,7 +89,7 @@ def clean_and_replace(text):
 def time_it(func):
     def wrapper(*args, **kwargs):
         start_time = time.time()
-        print(f"{Fore.YELLOW}[F] FUCTION: {func.__name__}()")
+        print(f"{Fore.YELLOW}[🏁] FUCTION: {func.__name__}()")
         result = func(*args, **kwargs)
         print(
             f"{Fore.GREEN}{Style.DIM}[✔️] Completed: {func.__name__}() - Time taken: {time.time() - start_time:.2f} seconds"
