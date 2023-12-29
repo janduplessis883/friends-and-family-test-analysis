@@ -45,7 +45,7 @@ page = st.sidebar.selectbox(
         "Feedback Classification",
         "Improvement Suggestions",
         "Rating & Sentiment Analysis Correlation",
-        "Generate ChatGPT Summaries",
+        "GPT-4 Feedback Summary",
         "Word Cloud",
         "View Dataframe",
         "About",
@@ -598,8 +598,13 @@ Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-fa
             width=200,
         )
         st.markdown(
-            "**Text Classification** and **Sentiment Analysis** by Huggingface.co"
+            "**Text Classification**,  **Sentiment Analysis** and **Zero-Shot Classification** by Huggingface.co"
         )
+        st.image(
+            "https://raw.githubusercontent.com/janduplessis883/friends-and-family-test-analysis/2f41ce13bfe98f24c8a75a875280c4c051e1dd5e/images/powered-by-openai-badge-filled-on-light.svg",
+            width=200,
+        )
+        st.markdown("**GPT-4 Feedback Summary** by OpenAI")
 
 
 # == Improvement Suggestions ==========================================================
@@ -680,7 +685,7 @@ The length of each bar signifies the count of feedback entries that fall into th
                 st.write("- " + str(text))
 
 # == Generate ChatGPT Summaries ==========================================================
-elif page == "Generate ChatGPT Summaries":
+elif page == "GPT-4 Feedback Summary":
     st.subheader("Generate ChatGPT Summaries")
     toggle = st.checkbox("Explain this page?")
     if toggle:
@@ -717,7 +722,7 @@ elif page == "Generate ChatGPT Summaries":
     user_input = text
 
     # Button to trigger summarization
-    if st.button("Summarize with ChatGPT"):
+    if st.button("Summarize with GPT-4"):
         if user_input:
             # Call the function to interact with ChatGPT API
             st.markdown("### Input Text")
@@ -737,8 +742,8 @@ elif page == "Generate ChatGPT Summaries":
             # Hide the progress bar after completion
             my_bar.empty()
             st.markdown("---")
-            st.markdown("### ChatGPT Feedback Summary")
-            st.markdown("`Copy ChatGPT Output into your report`")
+            st.markdown("### GPT-4 Feedback Summary")
+            st.markdown("`Copy GPPT-4 Report as required.`")
             st.write(summary)
         else:
             st.write(text)
