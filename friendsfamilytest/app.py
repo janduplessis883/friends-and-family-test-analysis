@@ -736,7 +736,7 @@ elif page == "Generate ChatGPT Summaries":
 
             # Hide the progress bar after completion
             my_bar.empty()
-
+            st.markdown("---")
             st.markdown("### ChatGPT Feedback Summary")
             st.markdown("`Copy ChatGPT Output into your report`")
             st.write(summary)
