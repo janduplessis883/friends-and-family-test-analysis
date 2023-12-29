@@ -7,7 +7,7 @@ import seaborn as sns
 from datetime import datetime
 from datetime import date
 from matplotlib.patches import Patch
-import requests
+import time  # Importing time for simulating a time-consuming process
 from openai import OpenAI
 
 client = OpenAI()
@@ -717,33 +717,29 @@ elif page == "Generate ChatGPT Summaries":
     user_input = text
 
     # Button to trigger summarization
-import streamlit as st
-import time  # Importing time for simulating a time-consuming process
+    if st.button("Summarize with ChatGPT"):
+        if user_input:
+            # Call the function to interact with ChatGPT API
+            st.markdown("### Input Text")
+            code = text
+            st.info(f"{code}")
 
-# Button to trigger summarization
-if st.button("Summarize with ChatGPT"):
-    if user_input:
-        # Call the function to interact with ChatGPT API
-        st.markdown("### Input Text")
-        code = text
-        st.info(f"{code}")
+            # Initiate progress bar
+            my_bar = st.progress(0)
 
-        # Initiate progress bar
-        my_bar = st.progress(0)
+            # Simulate a loading process
+            for percent_complete in range(100):
+                time.sleep(0.1)
+                my_bar.progress(percent_complete + 1)
 
-        # Simulate a loading process
-        for percent_complete in range(100):
-            time.sleep(0.1)
-            my_bar.progress(percent_complete + 1)
+            summary = call_chatgpt_api(user_input)
 
-        summary = call_chatgpt_api(user_input)
+            # Hide the progress bar after completion
+            my_bar.empty()
 
-        # Hide the progress bar after completion
-        my_bar.empty()
-
-        st.markdown("### ChatGPT Feedback Summary")
-        st.markdown("`Copy ChatGPT Output into your report`")
-        st.write(summary)
-    else:
-        st.write(text)
-        st.warning("Model Error: Not able to summarize feedback.")
+            st.markdown("### ChatGPT Feedback Summary")
+            st.markdown("`Copy ChatGPT Output into your report`")
+            st.write(summary)
+        else:
+            st.write(text)
+            st.warning("Model Error: Not able to summarize feedback.")
