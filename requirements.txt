@@ -63,5 +63,3 @@ torch
 torchvision
 torchaudio
 sentencepiece
-openai
-requests
