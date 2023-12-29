@@ -7,6 +7,10 @@ import seaborn as sns
 from datetime import datetime
 from datetime import date
 from matplotlib.patches import Patch
+import requests
+from openai import OpenAI
+
+client = OpenAI()
 
 
 # Load the dataframe
@@ -43,6 +47,7 @@ page = st.sidebar.selectbox(
         "Rating & Sentiment Analysis Correlation",
         "Word Cloud",
         "View Dataframe",
+        "Generate ChatGPT Summaries",
         "About",
     ],
 )
@@ -673,3 +678,72 @@ The length of each bar signifies the count of feedback entries that fall into th
                 "do_better"
             ]:  # Assuming 'free_text' is the column with the text you want to display
                 st.write("- " + str(text))
+
+# == Generate ChatGPT Summaries ==========================================================
+elif page == "Generate ChatGPT Summaries":
+    st.subheader("Generate ChatGPT Summaries")
+    toggle = st.checkbox("Explain this page?")
+    if toggle:
+        st.markdown("""soon...""")
+    filtered_data = data[
+        (data["time"].dt.date >= selected_date_range[0])
+        & (data["time"].dt.date <= selected_date_range[1])
+    ]
+    filtered_data["prompt"] = filtered_data["free_text"].str.cat(
+        filtered_data["do_better"], sep=" "
+    )
+    series = pd.Series(filtered_data["prompt"])
+    series.dropna(inplace=True)
+    word_series = series.to_list()
+    text = " ".join(word_series)
+
+    def call_chatgpt_api(text):
+        # Example OpenAI Python library request
+        completion = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a helpful assistant. and expert at summarixing friends and family Test Feedback for a GP Surgery",
+                },
+                {"role": "user", "content": f"Summarize the follwing text\n\n{text}"},
+            ],
+        )
+
+        output = completion.choices[0].message.content
+        return output
+
+    # Text input
+    user_input = text
+
+    # Button to trigger summarization
+import streamlit as st
+import time  # Importing time for simulating a time-consuming process
+
+# Button to trigger summarization
+if st.button("Summarize with ChatGPT"):
+    if user_input:
+        # Call the function to interact with ChatGPT API
+        st.markdown("### Input Text")
+        code = text
+        st.info(f"{code}")
+
+        # Initiate progress bar
+        my_bar = st.progress(0)
+
+        # Simulate a loading process
+        for percent_complete in range(100):
+            time.sleep(0.1)
+            my_bar.progress(percent_complete + 1)
+
+        summary = call_chatgpt_api(user_input)
+
+        # Hide the progress bar after completion
+        my_bar.empty()
+
+        st.markdown("### ChatGPT Feedback Summary")
+        st.markdown("`Copy ChatGPT Output into your report`")
+        st.write(summary)
+    else:
+        st.write(text)
+        st.warning("Model Error: Not able to summarize feedback.")

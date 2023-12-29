@@ -9,6 +9,7 @@ load_dotenv()
 
 secret_path = os.getenv("SECRET_PATH")
 
+
 class SheetHelper:
     def __init__(self, sheet_url=None, sheet_id=0, secret_file_path=secret_path):
         self.sheet_instance = self.authenticate(sheet_url, sheet_id, secret_file_path)
