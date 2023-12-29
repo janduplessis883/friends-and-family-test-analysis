@@ -45,9 +45,9 @@ page = st.sidebar.selectbox(
         "Feedback Classification",
         "Improvement Suggestions",
         "Rating & Sentiment Analysis Correlation",
+        "Generate ChatGPT Summaries",
         "Word Cloud",
         "View Dataframe",
-        "Generate ChatGPT Summaries",
         "About",
     ],
 )
