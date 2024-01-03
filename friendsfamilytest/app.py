@@ -37,6 +37,21 @@ monthly_avg = data_time["rating_score"].resample("M").mean()
 monthly_avg_df = monthly_avg.reset_index()
 monthly_avg_df.columns = ["Month", "Average Rating"]
 
+html = """
+<style>
+.gradient-text {
+    background: linear-gradient(45deg, #e16d33, #5090a6, #579cc4, #9a578a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 3em;
+    font-weight: bold;
+}
+</style>
+<div class="gradient-text">Feedback Fusion</div>
+"""
+# Render the HTML in the Streamlit app
+st.markdown(html, unsafe_allow_html=True)
 st.sidebar.title("Menu")
 page = st.sidebar.selectbox(
     "Choose an option",
@@ -75,7 +90,6 @@ filtered_data = data[
 # == DASHBOARD ================================================================
 if page == "Monthly Rating & Count":
     st.subheader("Friends & Family Test (FFT) Dashboard")
-
     toggle = st.checkbox("Explain this page?")
     # React to the toggle's state
 
