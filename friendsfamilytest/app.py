@@ -10,7 +10,7 @@ from matplotlib.patches import Patch
 import time  # Importing time for simulating a time-consuming process
 from openai import OpenAI
 
-client = OpenAI()
+client = OpenAI(api_key=st.secrets["OPENAI_API"])
 
 
 # Load the dataframe
@@ -821,6 +821,7 @@ elif page == "GPT-4 Feedback Summary":
             st.markdown("### GPT-4 Feedback Summary")
             st.markdown("`Copy GPPT-4 Report as required.`")
             st.write(summary)
+
         else:
             st.write(text)
             st.warning("Model Error: Not able to summarize feedback.")
