@@ -261,7 +261,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
         y="neu",
         color="#4c9cb9",
         label="Neutral",
-        linewidth=0.8,
+        linewidth=1.5,
     )
     sns.lineplot(
         data=weekly_sent_df,
@@ -281,7 +281,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     ax.spines["left"].set_visible(False)
 
     # Set title to the right
-    ax_title = ax.set_title("Weekly Sentiment Analysis", loc="right")
+    ax_title = ax.set_title("Mean Weekly Sentiment Analysis", loc="right")
     ax_title.set_position((1.02, 1))  # Adjust title position
 
     # Redraw the figure to ensure the formatter is applied
@@ -289,7 +289,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
 
     # Remove xlabel as it's redundant with the dates
     plt.xlabel("Weeks")
-    plt.ylabel("Mean Sentiment Analaysis")
+    plt.ylabel("Mean Sentiment")
     # Apply tight layout and display plot
     plt.tight_layout()
     st.pyplot(fig)
