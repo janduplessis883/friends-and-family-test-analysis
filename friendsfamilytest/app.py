@@ -229,6 +229,42 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     plt.ylabel("Rating")
     plt.tight_layout()
     st.pyplot(plt)
+    
+    # Create Sentiment Analaysis Plot 
+    # Resample and count the entries per month from filtered data
+    weekly_sent = filtered_data.resample("W", on="time")["neg", "pos", "neu", "compound"].mean()
+    weekly_sent_df = weekly_sent.reset_index()
+    weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
+    weekly_sent_df["Week"] = pd.to_datetime(
+        weekly_sent_df["Week"]
+    )
+    fig, ax = plt.subplots(figsize=(12, 3))
+    sns.lineplot(data=weekly_sent_df, x="Week", y="pos", color="#749857", label="Positive", linewidth=2)
+    sns.lineplot(data=weekly_sent_df, x="Week", y="neg", color="#ae4f4d", label="Negative", linewidth=2)
+    sns.lineplot(data=weekly_sent_df, x="Week", y="neu", color="#4c9cb9", label="Neutral", linewidth=0.8)
+    sns.lineplot(data=weekly_sent_df, x="Week", y="compound", color="#d7ab42", label="Compound", linewidth=0.8)
+    
+    # Set grid, spines and annotations as before
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.xaxis.grid(False)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+    
+    # Set title to the right
+    ax_title = ax.set_title("Weekly Sentiment Analysis", loc="right")
+    ax_title.set_position((1.02, 1))  # Adjust title position
+
+    # Redraw the figure to ensure the formatter is applied
+    fig.canvas.draw()
+
+    # Remove xlabel as it's redundant with the dates
+    plt.xlabel("Weeks")
+    plt.ylabel("Mean Sentiment Analaysis")
+    # Apply tight layout and display plot
+    plt.tight_layout()
+    st.pyplot(fig)   
 
     # Plotting the line plot
     fig, ax = plt.subplots(figsize=(12, 3))
@@ -297,10 +333,12 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Apply tight layout and display plot
     plt.tight_layout()
     st.pyplot(fig)
-    # Create two columns
-    col1, col2 = st.columns(2)
+    
 
-
+    
+    
+    
+    
 # == Rating & Sentiment Analysis Correlation ===============================================
 elif page == "Rating & Sentiment Analysis Correlation":
     st.subheader("Rating & Sentiment Analysis Correlation")

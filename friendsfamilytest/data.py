@@ -11,6 +11,7 @@ import pandas as pd
 from textblob import TextBlob
 from nltk.sentiment import SentimentIntensityAnalyzer
 
+
 from friendsfamilytest.params import *
 from friendsfamilytest.utils import *
 from friendsfamilytest.auto_git.git_merge import *
@@ -98,45 +99,50 @@ def sentiment_analysis(data):
 
     return data
 
-
 @time_it
 def textblob_sentiment(data):
-    # Convert all non-string entries in 'free_text' to empty strings
-    data["free_text"] = data["free_text"].fillna("").astype(str)
+    # Ensure 'free_text' is a string and fill NaN with empty strings
+    data['free_text'] = data['free_text'].fillna('').astype(str)
 
-    # Using vectorization for TextBlob sentiment
-    data[["polarity", "subjectivity"]] = data["free_text"].apply(
-        lambda text: pd.Series(TextBlob(text).sentiment) if text else pd.Series([0, 0])
+    # Apply TextBlob sentiment analysis and expand the results into a DataFrame
+    sentiments = data['free_text'].apply(
+        lambda text: pd.Series(TextBlob(text).sentiment) if text else (0, 0)
     )
+    sentiments.columns = ['polarity', 'subjectivity']
+    
+    # Check if the number of rows matches
+    if len(sentiments) != len(data):
+        raise ValueError("Mismatched row count between original data and sentiments")
+    
+    # Assign the sentiment values to the main DataFrame
+    data = pd.concat([data, sentiments], axis=1)
 
     # Initialize SentimentIntensityAnalyzer
     sia = SentimentIntensityAnalyzer()
 
-    # Using a vectorized approach for NLTK sentiment analysis
+    # Define the function to be applied to each row
     def get_sentiment(row):
-        if row["free_text"]:
-            score = sia.polarity_scores(row["free_text"])
-        else:
-            score = {"neg": 0, "neu": 0, "pos": 0, "compound": 0}
+        # Analyze sentiment using SentimentIntensityAnalyzer
+        score = sia.polarity_scores(row['free_text'])
+        
+        # Assign the scores to the row
+        for key in ['neg', 'neu', 'pos', 'compound']:
+            row[key] = score[key]
 
-        row["neg"] = score["neg"]
-        row["neu"] = score["neu"]
-        row["pos"] = score["pos"]
-        row["compound"] = score["compound"]
-
-        # Determine sentiment
-        if score["neg"] > score["pos"]:
-            row["sentiment"] = "negative"
-        elif score["pos"] > score["neg"]:
-            row["sentiment"] = "positive"
-        else:
-            row["sentiment"] = "neutral"
+        # Determine the overall sentiment based on the scores
+        row['sentiment'] = 'neutral'  # Default to neutral
+        if score['neg'] > score['pos']:
+            row['sentiment'] = 'negative'
+        elif score['pos'] > score['neg']:
+            row['sentiment'] = 'positive'
 
         return row
 
-    # Apply the function
+    # Apply the function to each row
     data = data.apply(get_sentiment, axis=1)
+
     return data
+    
 
 
 # Zer0-shot classification - do_better column
@@ -344,16 +350,19 @@ if __name__ == "__main__":
 
     # Return new data for processing
     data = raw_data[~raw_data.index.isin(processed_data.index)]
+    
     print(f"{Fore.BLUE}[*] New rows to process: {data.shape[0]}")
-
-    data = clean_text(data)  # clean text
-    data = word_count(data)  # word count
-    data = add_rating_score(data)
-    data = text_classification(data)
-    data = sentiment_analysis(data)
-    data = improvement_classification(
-        data, batch_size=16
-    )  # data = gpt3_improvement_classification(data)
-    data = textblob_sentiment(data)
-    concat_save_final_df(processed_data, data)
-    do_git_merge()  # Push everything to GitHub
+    if data.shape[0] != 0:
+        data = clean_text(data)  # clean text
+        data = word_count(data)  # word count
+        data = add_rating_score(data)
+        data = text_classification(data)
+        data = sentiment_analysis(data)
+        data = improvement_classification(
+            data, batch_size=16
+        )  # data = gpt3_improvement_classification(data)
+        data = textblob_sentiment(data)
+        concat_save_final_df(processed_data, data)
+        do_git_merge()  # Push everything to GitHub
+    else:
+        print(f"{Fore.RED}[*] No New rows to add - terminated.")
