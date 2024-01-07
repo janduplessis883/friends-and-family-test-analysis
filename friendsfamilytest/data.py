@@ -98,44 +98,45 @@ def sentiment_analysis(data):
 
     return data
 
+
 @time_it
 def textblob_sentiment(data):
     # Convert all non-string entries in 'free_text' to empty strings
-    data['free_text'] = data['free_text'].fillna('').astype(str)
+    data["free_text"] = data["free_text"].fillna("").astype(str)
 
     # Using vectorization for TextBlob sentiment
-    data[['polarity', 'subjectivity']] = data['free_text'].apply(
-        lambda text: pd.Series(TextBlob(text).sentiment) if text else pd.Series([0, 0]))
+    data[["polarity", "subjectivity"]] = data["free_text"].apply(
+        lambda text: pd.Series(TextBlob(text).sentiment) if text else pd.Series([0, 0])
+    )
 
     # Initialize SentimentIntensityAnalyzer
     sia = SentimentIntensityAnalyzer()
 
     # Using a vectorized approach for NLTK sentiment analysis
     def get_sentiment(row):
-        if row['free_text']:
-            score = sia.polarity_scores(row['free_text'])
+        if row["free_text"]:
+            score = sia.polarity_scores(row["free_text"])
         else:
-            score = {'neg': 0, 'neu': 0, 'pos': 0, 'compound': 0}
+            score = {"neg": 0, "neu": 0, "pos": 0, "compound": 0}
 
-        row['neg'] = score['neg']
-        row['neu'] = score['neu']
-        row['pos'] = score['pos']
-        row['compound'] = score['compound']
+        row["neg"] = score["neg"]
+        row["neu"] = score["neu"]
+        row["pos"] = score["pos"]
+        row["compound"] = score["compound"]
 
         # Determine sentiment
-        if score['neg'] > score['pos']:
-            row['sentiment'] = 'negative'
-        elif score['pos'] > score['neg']:
-            row['sentiment'] = 'positive'
+        if score["neg"] > score["pos"]:
+            row["sentiment"] = "negative"
+        elif score["pos"] > score["neg"]:
+            row["sentiment"] = "positive"
         else:
-            row['sentiment'] = 'neutral'
-        
+            row["sentiment"] = "neutral"
+
         return row
 
     # Apply the function
     data = data.apply(get_sentiment, axis=1)
     return data
-    
 
 
 # Zer0-shot classification - do_better column
