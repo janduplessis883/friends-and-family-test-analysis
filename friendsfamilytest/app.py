@@ -10,7 +10,7 @@ from matplotlib.patches import Patch
 import time  # Importing time for simulating a time-consuming process
 from openai import OpenAI
 
-client = OpenAI(api_key=st.secrets["OPENAI_API"])
+client = OpenAI()
 
 
 # Load the dataframe
