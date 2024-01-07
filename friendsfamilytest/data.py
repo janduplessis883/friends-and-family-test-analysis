@@ -8,6 +8,8 @@ from colorama import init, Fore, Back, Style
 import warnings
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, pipeline
 import pandas as pd
+from textblob import TextBlob
+from nltk.sentiment import SentimentIntensityAnalyzer
 
 from friendsfamilytest.params import *
 from friendsfamilytest.utils import *
@@ -96,35 +98,44 @@ def sentiment_analysis(data):
 
     return data
 
+@time_it
+def textblob_sentiment(data):
+    # Convert all non-string entries in 'free_text' to empty strings
+    data['free_text'] = data['free_text'].fillna('').astype(str)
 
-def summarization(data):
-    summ = pipeline("summarization", model="Falconsai/text_summarization")
+    # Using vectorization for TextBlob sentiment
+    data[['polarity', 'subjectivity']] = data['free_text'].apply(
+        lambda text: pd.Series(TextBlob(text).sentiment) if text else pd.Series([0, 0]))
 
-    # Initialize lists to store labels and scores
-    summ_list = []
+    # Initialize SentimentIntensityAnalyzer
+    sia = SentimentIntensityAnalyzer()
 
-    # Iterate over DataFrame rows and classify text
-    for _, row in data.iterrows():
-        sentence = row["free_text"]
-        if sentence != "":
-            sentence_length = len(sentence.split())
-            if sentence_length > 10:
-                model_outputs = summ(
-                    sentence,
-                    max_length=int(sentence_length - (sentence_length / 3)),
-                    min_length=1,
-                    do_sample=False,
-                )
-                summ_list.append(model_outputs[0]["summary_text"])
-                print(f"{Fore.RED}{sentence}")
-                print(model_outputs[0]["summary_text"])
-            else:
-                summ_list.append("")
+    # Using a vectorized approach for NLTK sentiment analysis
+    def get_sentiment(row):
+        if row['free_text']:
+            score = sia.polarity_scores(row['free_text'])
         else:
-            summ_list.append("")
-    data["free_text_summary"] = summ_list
+            score = {'neg': 0, 'neu': 0, 'pos': 0, 'compound': 0}
 
+        row['neg'] = score['neg']
+        row['neu'] = score['neu']
+        row['pos'] = score['pos']
+        row['compound'] = score['compound']
+
+        # Determine sentiment
+        if score['neg'] > score['pos']:
+            row['sentiment'] = 'negative'
+        elif score['pos'] > score['neg']:
+            row['sentiment'] = 'positive'
+        else:
+            row['sentiment'] = 'neutral'
+        
+        return row
+
+    # Apply the function
+    data = data.apply(get_sentiment, axis=1)
     return data
+    
 
 
 # Zer0-shot classification - do_better column
@@ -342,5 +353,6 @@ if __name__ == "__main__":
     data = improvement_classification(
         data, batch_size=16
     )  # data = gpt3_improvement_classification(data)
+    data = textblob_sentiment(data)
     concat_save_final_df(processed_data, data)
     do_git_merge()  # Push everything to GitHub

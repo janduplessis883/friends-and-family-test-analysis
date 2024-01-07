@@ -63,3 +63,5 @@ torch
 torchvision
 torchaudio
 sentencepiece
+textblob
+nltk
