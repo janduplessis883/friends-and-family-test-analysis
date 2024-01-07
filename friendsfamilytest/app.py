@@ -261,7 +261,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
         y="neu",
         color="#4c9cb9",
         label="Neutral",
-        linewidth=1.5,
+        linewidth=1,
     )
     sns.lineplot(
         data=weekly_sent_df,
