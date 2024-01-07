@@ -99,21 +99,22 @@ def sentiment_analysis(data):
 
     return data
 
+
 @time_it
 def textblob_sentiment(data):
     # Ensure 'free_text' is a string and fill NaN with empty strings
-    data['free_text'] = data['free_text'].fillna('').astype(str)
+    data["free_text"] = data["free_text"].fillna("").astype(str)
 
     # Apply TextBlob sentiment analysis and expand the results into a DataFrame
-    sentiments = data['free_text'].apply(
+    sentiments = data["free_text"].apply(
         lambda text: pd.Series(TextBlob(text).sentiment) if text else (0, 0)
     )
-    sentiments.columns = ['polarity', 'subjectivity']
-    
+    sentiments.columns = ["polarity", "subjectivity"]
+
     # Check if the number of rows matches
     if len(sentiments) != len(data):
         raise ValueError("Mismatched row count between original data and sentiments")
-    
+
     # Assign the sentiment values to the main DataFrame
     data = pd.concat([data, sentiments], axis=1)
 
@@ -123,18 +124,18 @@ def textblob_sentiment(data):
     # Define the function to be applied to each row
     def get_sentiment(row):
         # Analyze sentiment using SentimentIntensityAnalyzer
-        score = sia.polarity_scores(row['free_text'])
-        
+        score = sia.polarity_scores(row["free_text"])
+
         # Assign the scores to the row
-        for key in ['neg', 'neu', 'pos', 'compound']:
+        for key in ["neg", "neu", "pos", "compound"]:
             row[key] = score[key]
 
         # Determine the overall sentiment based on the scores
-        row['sentiment'] = 'neutral'  # Default to neutral
-        if score['neg'] > score['pos']:
-            row['sentiment'] = 'negative'
-        elif score['pos'] > score['neg']:
-            row['sentiment'] = 'positive'
+        row["sentiment"] = "neutral"  # Default to neutral
+        if score["neg"] > score["pos"]:
+            row["sentiment"] = "negative"
+        elif score["pos"] > score["neg"]:
+            row["sentiment"] = "positive"
 
         return row
 
@@ -142,7 +143,6 @@ def textblob_sentiment(data):
     data = data.apply(get_sentiment, axis=1)
 
     return data
-    
 
 
 # Zer0-shot classification - do_better column
@@ -350,7 +350,7 @@ if __name__ == "__main__":
 
     # Return new data for processing
     data = raw_data[~raw_data.index.isin(processed_data.index)]
-    
+
     print(f"{Fore.BLUE}[*] New rows to process: {data.shape[0]}")
     if data.shape[0] != 0:
         data = clean_text(data)  # clean text
