@@ -56,7 +56,7 @@ st.sidebar.title("Menu")
 page = st.sidebar.selectbox(
     "Choose an option",
     [
-        "Monthly Rating & Count",
+        "Dashboard",
         "Feedback Classification",
         "Improvement Suggestions",
         "Rating & Sentiment Analysis Correlation",
@@ -88,7 +88,7 @@ filtered_data = data[
 
 
 # == DASHBOARD ================================================================
-if page == "Monthly Rating & Count":
+if page == "Dashboard":
     st.subheader("Friends & Family Test (FFT) Dashboard")
     toggle = st.checkbox("Explain this page?")
     # React to the toggle's state
