@@ -378,7 +378,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Plotting the line plot
     fig, ax = plt.subplots(figsize=(12, 3))
     sns.lineplot(
-        data=daily_count_df, x="Date", y="Daily Count", color="#70afb9", linewidth=2
+        data=daily_count_df, x="Date", y="Daily Count", color="#4294c2", linewidth=2
     )
 
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
@@ -408,7 +408,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Create the figure and the bar plot
     fig, ax = plt.subplots(figsize=(12, 3))
     sns.barplot(
-        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#70afb9"
+        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#4294c2"
     )
 
     # Set grid, spines and annotations as before
