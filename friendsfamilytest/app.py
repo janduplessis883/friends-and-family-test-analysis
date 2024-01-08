@@ -293,6 +293,86 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Apply tight layout and display plot
     plt.tight_layout()
     st.pyplot(fig)
+    
+    filtered_data['date'] = pd.to_datetime(filtered_data['time']).dt.date
+    pos_list = []
+    neg_list = []
+    neu_list = []
+    date_list = []
+    for i in filtered_data["date"].unique():
+        temp = filtered_data[filtered_data["date"] == i]
+        positive_temp = temp[temp["sentiment"] == "positive"]
+        negative_temp = temp[temp["sentiment"] == "negative"]
+        neutral_temp = temp[temp["sentiment"] == "neutral"]
+        pos_list.append((positive_temp.shape[0]/temp.shape[0])*100)
+        neg_list.append((negative_temp.shape[0]/temp.shape[0])*100)
+        neu_list.append((neutral_temp.shape[0]/temp.shape[0])*100)
+        date_list.append(str(i))
+
+    dict = {
+        "date": date_list,
+        "pos": pos_list,
+        "neg": neg_list,
+        "neu": neu_list
+    }
+    new = pd.DataFrame(dict)
+    
+    new['date'] = pd.to_datetime(new['date'])
+
+    # Normalize the sentiment columns so that they sum up to 1 (or 100%)
+    new['total'] = new[['neg', 'pos', 'neu']].sum(axis=1)
+    new['neg'] /= new['total']
+    new['pos'] /= new['total']
+    new['neu'] /= new['total']
+
+    # Convert 'date' to string for plotting purposes
+    new['date'] = new['date'].dt.strftime('%Y-%m-%d')
+
+    # Sort by date if not already
+    new = new.sort_values('date')
+
+    # Get the date_list for x-axis ticks
+    date_list = new['date']
+
+    # Create the bottom parameters for stacking
+    bottom_pos = new['neg']
+    bottom_neu = new['neg'] + new['pos']
+
+    # Create a stacked bar plot
+    fig, ax = plt.subplots(figsize=(12, 4))
+
+    # Plot each sentiment as a layer in the stacked bar
+    ax.bar(new['date'], new['neg'], label='Negative', color="#ae4f4d", alpha=1)
+    ax.bar(new['date'], new['pos'], bottom=bottom_pos, label='Positive', color="#437e97", alpha=0.9)
+    ax.bar(new['date'], new['neu'], bottom=bottom_neu, label='Neutral', color="#f0e8d2", alpha=0.6)
+
+    # Set grid, spines and annotations as before
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.xaxis.grid(False)
+
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+    # Rotate the x-axis dates for better readability
+    plt.xticks(rotation=90, fontsize=8)  # Set x-tick font size
+
+    # Add legend
+    plt.legend()
+    # Redraw the figure to ensure the formatter is applied
+    # Set title to the right
+    ax_title = ax.set_title("Daily Sentiment", loc="right")
+    ax_title.set_position((1.02, 1))  # Adjust title position
+    fig.canvas.draw()
+
+    # Remove xlabel as it's redundant with the dates
+    plt.xlabel("Unique Days")
+    plt.ylabel("Sentiment Analysis")
+    # Apply tight layout and display plot
+    plt.tight_layout()
+
+    # Show the plot
+    st.pyplot(fig)
+    
 
     # Plotting the line plot
     fig, ax = plt.subplots(figsize=(12, 3))
