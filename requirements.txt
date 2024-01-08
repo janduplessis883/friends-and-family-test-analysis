@@ -56,8 +56,7 @@ openai
 wordcloud
 streamlit
 python-dotenv
-streamlit==1.22
-pandasql  # this is for example/st_app.py only
+
 
 sentencepiece
 textblob
