@@ -13,7 +13,7 @@ from streamlit_extras.buy_me_a_coffee import button
 
 client = OpenAI()
 
-from friendsfamilytest.utils import *
+from utils import *
 
 
 # Load the dataframe
