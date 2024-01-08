@@ -101,6 +101,25 @@ def sentiment_analysis(data):
 
 
 @time_it
+def anonymize(df):
+    # List of surnames to look for
+    surnames_to_find = ['burhan', 'adib', 'emiliani', 'alex', 'florko', 'florka', 'lula', 'joyce', 'christine', 'jan', 'orietta']
+
+    # Function to replace surnames in text
+    def replace_surname(text):
+        for surname in surnames_to_find:
+            # Create a regular expression pattern for the surname
+            pattern = r'\b' + re.escape(surname) + r'\b'
+            # Replace the surname with its first letter and a period
+            text = re.sub(pattern, surname[0], text)
+        return text
+
+    # Apply the function to the 'free_text' column
+    df['free_text'] = df['free_text'].apply(replace_surname)
+    df['do_better'] = df['do_better'].apply(replace_surname)
+    return df
+
+@time_it
 def textblob_sentiment(data):
     # Ensure 'free_text' is a string and fill NaN with empty strings
     data["free_text"] = data["free_text"].fillna("").astype(str)
@@ -356,6 +375,7 @@ if __name__ == "__main__":
         data = clean_text(data)  # clean text
         data = word_count(data)  # word count
         data = add_rating_score(data)
+        data = anonymize(data)
         data = text_classification(data)
         data = sentiment_analysis(data)
         data = improvement_classification(
