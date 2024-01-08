@@ -48,7 +48,7 @@ html = """
     font-weight: bold;
 }
 </style>
-<div class="gradient-text">AI MedReview</div>
+<div class="gradient-text">Healthcare Quality Insights: FFT</div>
 """
 # Render the HTML in the Streamlit app
 st.markdown(html, unsafe_allow_html=True)
