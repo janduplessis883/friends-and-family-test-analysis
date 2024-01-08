@@ -242,8 +242,17 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     sns.lineplot(
         data=weekly_sent_df,
         x="Week",
+        y="neu",
+        color="#f0e8d2",
+        label="Neutral",
+        linewidth=2,
+    )
+
+    sns.lineplot(
+        data=weekly_sent_df,
+        x="Week",
         y="pos",
-        color="#749857",
+        color="#4c91b0",
         label="Positive",
         linewidth=2,
     )
@@ -254,22 +263,6 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
         color="#ae4f4d",
         label="Negative",
         linewidth=2,
-    )
-    sns.lineplot(
-        data=weekly_sent_df,
-        x="Week",
-        y="neu",
-        color="#4c9cb9",
-        label="Neutral",
-        linewidth=1,
-    )
-    sns.lineplot(
-        data=weekly_sent_df,
-        x="Week",
-        y="compound",
-        color="#d7ab42",
-        label="Compound",
-        linewidth=0.8,
     )
 
     # Set grid, spines and annotations as before
@@ -385,7 +378,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Plotting the line plot
     fig, ax = plt.subplots(figsize=(12, 3))
     sns.lineplot(
-        data=daily_count_df, x="Date", y="Daily Count", color="#168aad", linewidth=2
+        data=daily_count_df, x="Date", y="Daily Count", color="#70afb9", linewidth=2
     )
 
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
@@ -415,7 +408,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Create the figure and the bar plot
     fig, ax = plt.subplots(figsize=(12, 3))
     sns.barplot(
-        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#168aad"
+        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#70afb9"
     )
 
     # Set grid, spines and annotations as before
@@ -468,13 +461,68 @@ Similar to the negative sentiment histogram, this one represents the distributio
 4. **View Patient Feedback (Multi-Select Input)**:
 Select Patient feedback to review, this page only displays feedback that on Sentiment Analysis scored **NEGATIVE > Selected Value (using slider)**, indicating negative feedback despite rating given by the patient. It is very important to review feedback with a high NEG sentiment analysis. In this section both feedback and Improvement Suggestions are displayed to review them in context, together with the automated category assigned by our machine learning model."""
         )
+    # Resample and count the entries per month from filtered data
+    weekly_sent = filtered_data.resample("W", on="time")[
+        "neg", "pos", "neu", "compound"
+    ].mean()
+    weekly_sent_df = weekly_sent.reset_index()
+    weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
+    weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
+    fig, ax = plt.subplots(figsize=(12, 4))
+    sns.lineplot(
+        data=weekly_sent_df,
+        x="Week",
+        y="neu",
+        color="#f0e8d2",
+        label="Neutral",
+        linewidth=2,
+    )
+
+    sns.lineplot(
+        data=weekly_sent_df,
+        x="Week",
+        y="pos",
+        color="#4c91b0",
+        label="Positive",
+        linewidth=2,
+    )
+    sns.lineplot(
+        data=weekly_sent_df,
+        x="Week",
+        y="neg",
+        color="#ae4f4d",
+        label="Negative",
+        linewidth=2,
+    )
+
+    # Set grid, spines and annotations as before
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.xaxis.grid(False)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+
+    # Set title to the right
+    ax_title = ax.set_title("Mean Weekly Sentiment Analysis", loc="right")
+    ax_title.set_position((1.02, 1))  # Adjust title position
+
+    # Redraw the figure to ensure the formatter is applied
+    fig.canvas.draw()
+
+    # Remove xlabel as it's redundant with the dates
+    plt.xlabel("Weeks")
+    plt.ylabel("Mean Sentiment")
+    # Apply tight layout and display plot
+    plt.tight_layout()
+    st.pyplot(fig)
 
     palette_colors = {
         "positive": "#4187aa",
         "neutral": "#d8ae46",
         "negative": "#be6933",
     }
-    plt.figure(figsize=(10, 4))  # You can adjust the figure size as needed
+    plt.figure(figsize=(12, 4))  # You can adjust the figure size as needed
     scatter_plot = sns.scatterplot(
         data=filtered_data,
         y="rating_score",
@@ -503,7 +551,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     with col1:
         # Negative sentiment plot
         neg_sentiment = filtered_data[filtered_data["sentiment"] == "negative"]
-        slider_start_point = neg_sentiment["sentiment_score"].min()
+        slider_start_point = neg_sentiment["sentiment_score"].min() - 0.02
         if slider_start_point == 0:
             slider_start = 0.5
         else:
@@ -547,7 +595,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
             min_value=slider_start,
             max_value=1.0,
             value=0.9,  # Set initial value to the max value
-            step=0.05,
+            step=0.02,
         )
     except Exception as e:
         # This will catch any exceptions and display an info message
