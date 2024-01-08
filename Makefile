@@ -18,6 +18,9 @@ test:
 app:
 	@streamlit run friendsfamilytest/app.py
 
+app3:
+	@streamlit run friendsfamilytest/app_test.py
+
 app_wide:
 	@streamlit run friendsfamilytest/app_wide.py
 

@@ -59,9 +59,7 @@ python-dotenv
 streamlit==1.22
 pandasql  # this is for example/st_app.py only
 
-torch 
-torchvision
-torchaudio
 sentencepiece
 textblob
 nltk
+streamlit-extras

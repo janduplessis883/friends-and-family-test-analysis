@@ -9,6 +9,7 @@ from datetime import date
 from matplotlib.patches import Patch
 import time  # Importing time for simulating a time-consuming process
 from openai import OpenAI
+from streamlit_extras.buy_me_a_coffee import button
 
 client = OpenAI()
 
@@ -232,6 +233,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     plt.tight_layout()
     st.pyplot(plt)
 
+    st.markdown("**Sentiment Analysis**")
     # Create Sentiment Analaysis Plot
     # Resample and count the entries per month from filtered data
     weekly_sent = filtered_data.resample("W", on="time")[
@@ -377,6 +379,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Show the plot
     st.pyplot(fig)
 
+    st.markdown("**Response Count**")
     # Plotting the line plot
     fig, ax = plt.subplots(figsize=(12, 3))
     sns.lineplot(
@@ -822,6 +825,10 @@ Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-fa
     st.markdown(
         "![Static Badge](https://img.shields.io/badge/GitHub-janduplessis883-%23aabd3b)  ![Static Badge](https://img.shields.io/badge/Python-3.10.6-%23ae4f4d) ![Static Badge](https://img.shields.io/badge/Telegram-%40jdp145-%2354a7e5?logo=telegram)"
     )
+
+    def buy_coffee():
+        button(username="janduplessis883", floating=False, width=221)
+
     col1, col2 = st.columns(2)
 
     # Use 'col1' to display content in the first column
@@ -830,7 +837,7 @@ Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-fa
             "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/about.png?raw=true",
             width=250,
         )
-
+        buy_coffee()
     # Use 'col2' to display content in the second column
     with col2:
         st.image(
