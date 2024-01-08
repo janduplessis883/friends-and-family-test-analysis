@@ -1,56 +1,44 @@
-import streamlit as st
-import time
-import pandas as pd
+import cv2
 import numpy as np
-from streamlit_extras.grid import grid
+import streamlit as st
+from camera_input_live import camera_input_live
 from streamlit_extras.app_logo import add_logo
-from streamlit_extras.mention import mention
-from streamlit_extras.buy_me_a_coffee import button
+from streamlit_card import card
 
+"# Streamlit camera input live Demo"
+"## Try holding a qr code in front of your webcam"
 
-def example2():
-    if st.checkbox("Use url", value=True):
-        add_logo("http://placekitten.com/120/120")
-    else:
-        add_logo("gallery/kitty.jpeg", height=300)
-    st.write("👈 Check out the cat in the nav-bar!")
+image = camera_input_live()
 
+if image is not None:
+    st.image(image)
+    bytes_data = image.getvalue()
+    cv2_img = cv2.imdecode(np.frombuffer(bytes_data, np.uint8), cv2.IMREAD_COLOR)
 
-example2()
+    detector = cv2.QRCodeDetector()
 
+    data, bbox, straight_qrcode = detector.detectAndDecode(cv2_img)
 
-def example():
-    random_df = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
+    if data:
+        st.write("# Found QR code")
+        st.write(data)
+        with st.expander("Show details"):
+            st.write("BBox:", bbox)
+            st.write("Straight QR code:", straight_qrcode)
 
-    my_grid = grid(2, [2, 4, 1], 1, 4, vertical_align="bottom")
-
-    # Row 1:
-    my_grid.dataframe(random_df, use_container_width=True)
-    my_grid.line_chart(random_df, use_container_width=True)
-    # Row 2:
-    my_grid.selectbox("Select Country", ["Germany", "Italy", "Japan", "USA"])
-    my_grid.text_input("Your name")
-    my_grid.button("Send", use_container_width=True)
-    # Row 3:
-    my_grid.text_area("Your message", height=40)
-    # Row 4:
-    my_grid.button("Example 1", use_container_width=True)
-    my_grid.button("Example 2", use_container_width=True)
-    my_grid.button("Example 3", use_container_width=True)
-    my_grid.button("Example 4", use_container_width=True)
-    # Row 5 (uses the spec from row 1):
-    with my_grid.expander("Show Filters", expanded=True):
-        st.slider("Filter by Age", 0, 100, 50)
-        st.slider("Filter by Height", 0.0, 2.0, 1.0)
-        st.slider("Filter by Weight", 0.0, 100.0, 50.0)
-    my_grid.dataframe(random_df, use_container_width=True)
-
-
-example()
-
-
-def example4():
-    button(username="janduplessis883", floating=False, width=221)
-
-
-example4()
+res = card(
+    title="Streamlit Card",
+    text="This is a test card",
+    image="/../images/card1.png",
+    styles={
+        "card": {
+            "width": "250px",
+            "height": "100px",
+            "border-radius": "30px",
+            "box-shadow": "0 0 2px rgba(0,0,0,0.5)",
+        },
+        "filter": {
+            "background-color": "rgba(0, 0, 0, 0)"  # <- make the image not dimmed anymore
+        },
+    },
+)

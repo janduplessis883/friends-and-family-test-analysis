@@ -62,3 +62,4 @@ sentencepiece
 textblob
 nltk
 streamlit-extras
+streamlit-card
