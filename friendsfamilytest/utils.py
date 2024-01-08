@@ -4,6 +4,7 @@ import numpy as np
 import time
 from colorama import Fore, Back, Style, init
 import functools
+import streamlit as st
 
 init(autoreset=True)
 
@@ -81,6 +82,18 @@ def clean_and_replace(text):
         return ""
     else:
         return cleaned_text
+
+
+def sentiment_totals(data):
+    total_pos = len(data.loc[data["sentiment"] == "positive"])
+    total_neg = len(data.loc[data["sentiment"] == "negative"])
+    total_neu = len(data.loc[data["sentiment"] == "neutral"])
+    total_data = len(data)
+    return [
+        round(total_pos / total_data, 2),
+        round(total_neu / total_data, 2),
+        round(total_neg / total_data, 2),
+    ]
 
 
 # = Decorators =================================================================

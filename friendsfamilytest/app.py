@@ -12,6 +12,8 @@ from openai import OpenAI
 
 client = OpenAI()
 
+from friendsfamilytest.utils import *
+
 
 # Load the dataframe
 def load_data():
@@ -378,7 +380,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Plotting the line plot
     fig, ax = plt.subplots(figsize=(12, 3))
     sns.lineplot(
-        data=daily_count_df, x="Date", y="Daily Count", color="#4294c2", linewidth=2
+        data=daily_count_df, x="Date", y="Daily Count", color="#489fb5", linewidth=2
     )
 
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
@@ -408,7 +410,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Create the figure and the bar plot
     fig, ax = plt.subplots(figsize=(12, 3))
     sns.barplot(
-        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#4294c2"
+        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#489fb5"
     )
 
     # Set grid, spines and annotations as before
@@ -461,6 +463,32 @@ Similar to the negative sentiment histogram, this one represents the distributio
 4. **View Patient Feedback (Multi-Select Input)**:
 Select Patient feedback to review, this page only displays feedback that on Sentiment Analysis scored **NEGATIVE > Selected Value (using slider)**, indicating negative feedback despite rating given by the patient. It is very important to review feedback with a high NEG sentiment analysis. In this section both feedback and Improvement Suggestions are displayed to review them in context, together with the automated category assigned by our machine learning model."""
         )
+
+    # Data for plotting
+    labels = "Positive", "Neutral", "Negative"
+    sizes = sentiment_totals(filtered_data)
+    colors = ["#5385a6", "#f0e8d2", "#ae4f4d"]
+    explode = (0, 0, 0)  # 'explode' the 1st slice (Positive)
+
+    # Plot
+    fig, ax = plt.subplots(figsize=(12, 5))
+    ax.pie(
+        sizes,
+        explode=explode,
+        labels=labels,
+        colors=colors,
+        autopct="%1.1f%%",
+        startangle=140,
+    )
+    ax.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+    # Draw a circle at the center of pie to make it look like a donut
+    centre_circle = plt.Circle((0, 0), 0.50, fc="white")
+    fig.gca().add_artist(centre_circle)
+
+    plt.title("Patient Feedback Sentiment Distribution")
+    st.pyplot(fig)
+
     # Resample and count the entries per month from filtered data
     weekly_sent = filtered_data.resample("W", on="time")[
         "neg", "pos", "neu", "compound"
