@@ -96,6 +96,31 @@ def sentiment_totals(data):
     ]
 
 
+surnames_to_find = [
+    "burhan",
+    "adib",
+    "emiliani",
+    "alex",
+    "florko",
+    "florka",
+    "lula",
+    "joyce",
+    "christine",
+    "jan",
+    "orietta",
+]
+
+
+# Function to replace surnames in text
+def replace_surname(text):
+    for surname in surnames_to_find:
+        # Create a regular expression pattern for the surname
+        pattern = r"\b" + re.escape(surname) + r"\b"
+        # Replace the surname with its first letter and a period
+        text = re.sub(pattern, surname[0], text)
+    return text
+
+
 # = Decorators =================================================================
 
 

@@ -10,10 +10,13 @@ from matplotlib.patches import Patch
 import time  # Importing time for simulating a time-consuming process
 from openai import OpenAI
 from streamlit_extras.buy_me_a_coffee import button
+from markdownlit import mdlit
 
 client = OpenAI()
 
 from utils import *
+
+st.set_page_config(page_title="Healthcare Quality Insights: FFT", page_icon="😷")
 
 
 # Load the dataframe
@@ -43,7 +46,7 @@ monthly_avg_df.columns = ["Month", "Average Rating"]
 html = """
 <style>
 .gradient-text {
-    background: linear-gradient(45deg, #e16d33, #579cc4, #284d74, #4775a7);
+    background: linear-gradient(45deg, #ae4f4d, #bf4278, #284d74, #4775a7);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -92,7 +95,6 @@ filtered_data = data[
 
 # == DASHBOARD ================================================================
 if page == "Dashboard":
-    st.subheader("Friends & Family Test (FFT) Dashboard")
     toggle = st.checkbox("Explain this page?")
     # React to the toggle's state
 
@@ -379,7 +381,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Show the plot
     st.pyplot(fig)
 
-    st.markdown("**Response Count**")
+    st.markdown("**Response Rate** [Daily | Monthly]")
     # Plotting the line plot
     fig, ax = plt.subplots(figsize=(12, 3))
     sns.lineplot(
@@ -948,6 +950,7 @@ elif page == "GPT-4 Feedback Summary":
     series.dropna(inplace=True)
     word_series = series.to_list()
     text = " ".join(word_series)
+    text = replace_surname(text)
 
     def call_chatgpt_api(text):
         # Example OpenAI Python library request
@@ -992,6 +995,7 @@ elif page == "GPT-4 Feedback Summary":
             st.markdown("### GPT-4 Feedback Summary")
             st.markdown("`Copy GPPT-4 Report as required.`")
             st.write(summary)
+            st.download_button("Download GPT-4 Output", summary)
 
         else:
             st.write(text)
