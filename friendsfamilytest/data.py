@@ -365,9 +365,17 @@ def concat_save_final_df(processed_df, new_df):
     print(processed_df)
     print("❌❌")
     print(new_df)
+    pre = processed_df.columns
+    new = new_df.columns
+    for n in new:
+        print(n)
+    for p in pre:
+        print(p)
     # combined_data = pd.concat([processed_df, new_df], ignore_index=True)
     # combined_data.to_csv(f"{DATA_PATH}/data.csv", index=False)
     # print(f"💾 data.csv saved to: {DATA_PATH}")
+    
+    return [processed_df, new_df]
 
 
 @time_it
