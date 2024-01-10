@@ -150,9 +150,6 @@ def textblob_sentiment(data):
     if len(sentiments) != len(data):
         raise ValueError("Mismatched row count between original data and sentiments")
 
-    # Assign the sentiment values to the main DataFrame
-    data = pd.concat([data, sentiments], axis=1)
-
     # Initialize SentimentIntensityAnalyzer
     sia = SentimentIntensityAnalyzer()
 
