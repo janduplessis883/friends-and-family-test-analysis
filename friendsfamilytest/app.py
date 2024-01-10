@@ -16,7 +16,7 @@ client = OpenAI()
 
 from utils import *
 
-st.set_page_config(page_title="Healthcare Quality Insights: FFT", page_icon="😷")
+st.set_page_config(page_title="Healthcare Quality Insights: FFT")
 
 
 # Load the dataframe
