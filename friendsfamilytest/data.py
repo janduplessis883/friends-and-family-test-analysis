@@ -371,6 +371,8 @@ def concat_save_final_df(processed_df, new_df):
         print(n)
     for p in pre:
         print(p)
+    processed_df.to_csv(f"{DATA_PATH}/processed.csv", index=False)
+    new_df.to_csv(f"{DATA_PATH}/new.csv", index=False)
     # combined_data = pd.concat([processed_df, new_df], ignore_index=True)
     # combined_data.to_csv(f"{DATA_PATH}/data.csv", index=False)
     # print(f"💾 data.csv saved to: {DATA_PATH}")
