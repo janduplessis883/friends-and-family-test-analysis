@@ -139,7 +139,10 @@ def textblob_sentiment(data):
     def analyze_sentiment(text):
         if text:
             sentiment = TextBlob(text).sentiment
-            return pd.Series([sentiment.polarity, sentiment.subjectivity], index=["polarity", "subjectivity"])
+            return pd.Series(
+                [sentiment.polarity, sentiment.subjectivity],
+                index=["polarity", "subjectivity"],
+            )
         else:
             return pd.Series([0, 0], index=["polarity", "subjectivity"])
 
@@ -359,7 +362,6 @@ def add_rating_score(data):
 
 @time_it
 def concat_save_final_df(processed_df, new_df):
-    
     combined_data = pd.concat([processed_df, new_df], ignore_index=True)
     combined_data.to_csv(f"{DATA_PATH}/data.csv", index=False)
     print(f"💾 data.csv saved to: {DATA_PATH}")
