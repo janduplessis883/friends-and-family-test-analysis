@@ -46,7 +46,7 @@ monthly_avg_df.columns = ["Month", "Average Rating"]
 html = """
 <style>
 .gradient-text {
-    background: linear-gradient(45deg, #ae4f4d, #bf4278, #284d74, #4775a7);
+    background: linear-gradient(45deg, #284d74, #d8ad45, #b2d9db, #e16d33);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -54,7 +54,7 @@ html = """
     font-weight: bold;
 }
 </style>
-<div class="gradient-text">Healthcare Quality Insights: FFT</div>
+<div class="gradient-text">AI MedReview: FFT</div>
 """
 # Render the HTML in the Streamlit app
 st.markdown(html, unsafe_allow_html=True)

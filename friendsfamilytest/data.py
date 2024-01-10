@@ -134,14 +134,17 @@ def anonymize(df):
 
 @time_it
 def textblob_sentiment(data):
-    # Ensure 'free_text' is a string and fill NaN with empty strings
     data["free_text"] = data["free_text"].fillna("").astype(str)
 
-    # Apply TextBlob sentiment analysis and expand the results into a DataFrame
-    sentiments = data["free_text"].apply(
-        lambda text: pd.Series(TextBlob(text).sentiment) if text else (0, 0)
-    )
-    sentiments.columns = ["polarity", "subjectivity"]
+    def analyze_sentiment(text):
+        if text:
+            sentiment = TextBlob(text).sentiment
+            return pd.Series([sentiment.polarity, sentiment.subjectivity], index=["polarity", "subjectivity"])
+        else:
+            return pd.Series([0, 0], index=["polarity", "subjectivity"])
+
+    sentiments = data["free_text"].apply(analyze_sentiment)
+    data = pd.concat([data, sentiments], axis=1)
 
     # Check if the number of rows matches
     if len(sentiments) != len(data):
@@ -359,9 +362,12 @@ def add_rating_score(data):
 
 @time_it
 def concat_save_final_df(processed_df, new_df):
-    combined_data = pd.concat([processed_df, new_df], ignore_index=True)
-    combined_data.to_csv(f"{DATA_PATH}/data.csv", index=False)
-    print(f"💾 data.csv saved to: {DATA_PATH}")
+    print(processed_df)
+    print("❌❌")
+    print(new_df)
+    # combined_data = pd.concat([processed_df, new_df], ignore_index=True)
+    # combined_data.to_csv(f"{DATA_PATH}/data.csv", index=False)
+    # print(f"💾 data.csv saved to: {DATA_PATH}")
 
 
 @time_it
