@@ -16,7 +16,7 @@ client = OpenAI()
 
 from utils import *
 
-st.set_page_config(page_title="Healthcare Quality Insights: FFT")
+st.set_page_config(page_title="AI MedReview: FFT")
 
 
 # Load the dataframe
@@ -235,7 +235,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     plt.tight_layout()
     st.pyplot(plt)
 
-    st.markdown("**Sentiment Analysis**")
+    st.markdown("**Sentiment Analysis** [Weekly | Per Response day]")
     # Create Sentiment Analaysis Plot
     # Resample and count the entries per month from filtered data
     weekly_sent = filtered_data.resample("W", on="time")[
@@ -333,7 +333,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     bottom_neu = new["neg"] + new["pos"]
 
     # Create a stacked bar plot
-    fig, ax = plt.subplots(figsize=(12, 4))
+    fig, ax = plt.subplots(figsize=(16, 5))
 
     # Plot each sentiment as a layer in the stacked bar
     ax.bar(new["date"], new["neg"], label="Negative", color="#ae4f4d", alpha=1)
