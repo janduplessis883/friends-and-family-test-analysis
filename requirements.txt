@@ -64,3 +64,4 @@ nltk
 streamlit-extras
 streamlit-card
 markdownlit
+requests
