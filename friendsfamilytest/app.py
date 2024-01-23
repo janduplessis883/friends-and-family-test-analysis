@@ -22,7 +22,7 @@ st.set_page_config(page_title="AI MedReview: FFT")
 # Load the dataframe
 def load_data():
     df = pd.read_csv("friendsfamilytest/data/data.csv")
-    df["time"] = pd.to_datetime(df["time"], format='%d/%m/%Y %H:%M')
+    df["time"] = pd.to_datetime(df["time"], dayfirst=True)
     return df
 
 
@@ -31,7 +31,7 @@ data = load_data()
 
 def load_timedata():
     df = pd.read_csv("friendsfamilytest/data/data.csv")
-    df["time"] = pd.to_datetime(df["time"], format='%d/%m/%Y %H:%M')
+    df["time"] = pd.to_datetime(df["time"], dayfirst=True)
     df.set_index("time", inplace=True)
     return df
 
@@ -73,13 +73,13 @@ page = st.sidebar.selectbox(
     ],
 )
 
-col1, col2 = st.columns([2,1])
+col1, col2 = st.columns([2, 1])
 with col2:
-    surgery_list = data['surgery'].unique()
-    surgery = st.selectbox('', surgery_list)
-    surgery_data = data[(data['surgery'] == surgery)]
+    surgery_list = data["surgery"].unique()
+    surgery = st.selectbox("", surgery_list)
+    surgery_data = data[(data["surgery"] == surgery)]
 
-    start_date = surgery_data['time'].dt.date.min()
+    start_date = surgery_data["time"].dt.date.min()
     current_date = date.today()
 with col1:
     # Create a date range slider
