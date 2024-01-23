@@ -30,7 +30,7 @@ def load_google_sheet():
         sheet_id=0,
     )
     data = sh.gsheet_to_df()
-    data.columns = ["time", "rating", "free_text", "do_better"]
+    data.columns = ["time", "rating", "free_text", "do_better", "surgery"]
     data["time"] = pd.to_datetime(data["time"], format="%d/%m/%Y %H:%M:%S")
 
     return data

@@ -22,7 +22,7 @@ st.set_page_config(page_title="AI MedReview: FFT")
 # Load the dataframe
 def load_data():
     df = pd.read_csv("friendsfamilytest/data/data.csv")
-    df["time"] = pd.to_datetime(df["time"])
+    df["time"] = pd.to_datetime(df["time"], format='%d/%m/%Y %H:%M')
     return df
 
 
@@ -31,7 +31,7 @@ data = load_data()
 
 def load_timedata():
     df = pd.read_csv("friendsfamilytest/data/data.csv")
-    df["time"] = pd.to_datetime(df["time"])
+    df["time"] = pd.to_datetime(df["time"], format='%d/%m/%Y %H:%M')
     df.set_index("time", inplace=True)
     return df
 
@@ -73,23 +73,27 @@ page = st.sidebar.selectbox(
     ],
 )
 
-# Define start date and current date
-start_date = date(2023, 7, 13)
-current_date = date.today()
+col1, col2 = st.columns([2,1])
+with col2:
+    surgery_list = data['surgery'].unique()
+    surgery = st.selectbox('', surgery_list)
+    surgery_data = data[(data['surgery'] == surgery)]
 
-
-# Create a date range slider
-selected_date_range = st.slider(
-    "Select a date range",
-    min_value=start_date,
-    max_value=current_date,
-    value=(start_date, current_date),  # Set default range
-)
+    start_date = surgery_data['time'].dt.date.min()
+    current_date = date.today()
+with col1:
+    # Create a date range slider
+    selected_date_range = st.slider(
+        "",
+        min_value=start_date,
+        max_value=current_date,
+        value=(start_date, current_date),  # Set default range
+    )
 
 # Filter the DataFrame based on the selected date range
-filtered_data = data[
-    (data["time"].dt.date >= selected_date_range[0])
-    & (data["time"].dt.date <= selected_date_range[1])
+filtered_data = surgery_data[
+    (surgery_data["time"].dt.date >= selected_date_range[0])
+    & (surgery_data["time"].dt.date <= selected_date_range[1])
 ]
 
 
