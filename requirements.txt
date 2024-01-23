@@ -41,7 +41,6 @@ notebook_shim==0.2.3
 ipython
 tpot
 imblearn
-black
 wandb
 torch
 ipywidgets
@@ -65,3 +64,4 @@ streamlit-extras
 streamlit-card
 markdownlit
 requests
+black
