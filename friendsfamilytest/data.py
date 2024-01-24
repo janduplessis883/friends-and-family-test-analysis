@@ -193,7 +193,148 @@ def batch_generator(data, column_name, batch_size):
 # trl-internal-testing/tiny-random-BartForConditionalGeneration ❌
 # ybelkada/tiny-random-T5ForConditionalGeneration-calibrated
 # MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli
+@time_it
+def improvement_classification(data, batch_size=16):
+    # Load model and tokenizer
+    model = AutoModelForSequenceClassification.from_pretrained(
+        "facebook/bart-large-mnli"
+    ).to("cpu")
+    tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-mnli")
 
+    # Create classifier pipeline
+    classifier = pipeline("zero-shot-classification", model=model, tokenizer=tokenizer)
+
+    # Labels
+    improvement_labels_list = [
+        "Reception Staff",
+        "Ambiance of Facility",
+        "Facility Modernization and Upgrades",
+        "Nursing Quality",
+        "Waiting Times",
+        "Referral Process",
+        "Staffing Levels",
+        "Facility Accessibility",
+        "Poor Communication",
+        "Online Services & Digital Health",
+        "Patient Safety",
+        "Weekend Service Availability",
+        "Telephone Service",
+        "After-Hours Service",
+        "Staff Training and Development",
+        "Prescription Process",
+        "Quality of Medical Advice",
+        "Overall Patient Satisfaction",
+        "Appointment System Efficiency",
+        "Blood Test Results & Imaging",
+        "Patient Participation Group",
+        "Mental Health Services",
+        "Social Prescribing Services",
+        "Chronic Disease Management",
+        "No Improvement Suggestion",
+        "Doctor Consultations",
+        "Home Visits",
+        "Cancer Screening",
+        "Vaccinations",
+        "Test Results",
+        "Clinical Pharmacist",
+    ]
+
+    # Initialize the list to store labels
+    improvement_labels = [""] * len(data)  # Pre-fill with empty strings
+
+    # Iterate over batches
+    for batch, start_index in batch_generator(data, "do_better", batch_size):
+        # Filter out empty or whitespace-only sentences
+        valid_sentences = [
+            (sentence, idx)
+            for idx, sentence in enumerate(batch)
+            if sentence and not sentence.isspace()
+        ]
+        sentences, valid_indices = (
+            zip(*valid_sentences) if valid_sentences else ([], [])
+        )
+
+        # Classify the batch
+        if sentences:
+            model_outputs = classifier(
+                list(sentences), improvement_labels_list, device="cpu"
+            )
+            # Assign labels to corresponding indices
+            for output, idx in zip(model_outputs, valid_indices):
+                improvement_labels[start_index + idx] = output["labels"][0]
+                print(
+                    f"{Fore.GREEN}Batch processed: {start_index + idx + 1}/{len(data)}"
+                )
+
+    # Add labels as a new column
+    data["improvement_labels"] = improvement_labels
+    return data
+
+@time_it
+def feedback_classification(data, batch_size=16):
+    # Load model and tokenizer
+    model = AutoModelForSequenceClassification.from_pretrained(
+        "facebook/bart-large-mnli"
+    ).to("cpu")
+    tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-mnli")
+
+    # Create classifier pipeline
+    classifier = pipeline("zero-shot-classification", model=model, tokenizer=tokenizer)
+
+    # Labels
+    categories = [
+    "Appointment Accessibility",
+    "Reception Staff Interaction",
+    "Medical Staff Competence",
+    "Patient-Doctor Communication",
+    "Follow-Up and Continuity of Care",
+    "Facilities and Cleanliness",
+    "Prescription and Medication Management",
+    "Referral Efficiency",
+    "Billing and Administration",
+    "Emergency Handling",
+    "Patient Privacy and Confidentiality",
+    "Telehealth Services",
+    "Patient Education and Resources",
+    "Waiting Room Comfort",
+    "Patient Empowerment and Support",
+    "Health Outcome Satisfaction",  # New Category
+    "Cultural Sensitivity",  # New Category
+    "Accessibility for Disabled Patients",  # New Category
+    "Mental Health Support",  # New Category
+    "Nutritional and Lifestyle Advice"  # New Category
+]
+
+    # Initialize the list to store labels
+    feedback_labels = [""] * len(data)  # Pre-fill with empty strings
+
+    # Iterate over batches
+    for batch, start_index in batch_generator(data, "free_text", batch_size):
+        # Filter out empty or whitespace-only sentences
+        valid_sentences = [
+            (sentence, idx)
+            for idx, sentence in enumerate(batch)
+            if sentence and not sentence.isspace()
+        ]
+        sentences, valid_indices = (
+            zip(*valid_sentences) if valid_sentences else ([], [])
+        )
+
+        # Classify the batch
+        if sentences:
+            model_outputs = classifier(
+                list(sentences), categories, device="cpu"
+            )
+            # Assign labels to corresponding indices
+            for output, idx in zip(model_outputs, valid_indices):
+                feedback_labels[start_index + idx] = output["labels"][0]
+                print(
+                    f"{Fore.GREEN}Batch processed: {start_index + idx + 1}/{len(data)}"
+                )
+
+    # Add labels as a new column
+    data["feedback_labels"] = feedback_labels
+    return data
 
 @time_it
 def improvement_classification(data, batch_size=16):
@@ -392,7 +533,7 @@ if __name__ == "__main__":
         data = word_count(data)  # word count
         data = add_rating_score(data)
         data = anonymize(data)
-        data = text_classification(data)
+        data = feedback_classification(data, batch_size=16)
         data = sentiment_analysis(data)
         data = improvement_classification(
             data, batch_size=16
