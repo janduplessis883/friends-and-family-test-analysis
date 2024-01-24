@@ -178,7 +178,6 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
 
     with col2:
         st.text("")
-        st.text("")
         st.metric("Total Responses", filtered_data.shape[0])
 
     order = [
@@ -223,10 +222,12 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     )
 
     # Iterate through the rectangles (bars) of the plot for width annotations
+    # Iterate through the rectangles (bars) of the plot for width annotations
     for p in ax.patches:
         width = p.get_width()
-        y = p.get_y() + p.get_height() / 2
-        ax.text(width + 1, y, f"{int(width)}", va="center", fontsize=10)
+        if not np.isnan(width):
+            y = p.get_y() + p.get_height() / 2
+            ax.text(width + 1, y, f"{int(width)}", va="center", fontsize=10)
 
     # Adjust plot appearance
     ax.spines["top"].set_visible(False)
