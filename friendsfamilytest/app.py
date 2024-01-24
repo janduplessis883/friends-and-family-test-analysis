@@ -703,7 +703,7 @@ Below the chart is a multi-select field where you can choose to filter and revie
         )
 
     # Calculate value counts
-    label_counts = filtered_data["classif"].value_counts(
+    label_counts = filtered_data["feedback_labels"].value_counts(
         ascending=False
     )  # Use ascending=True to match the order in your image
 
@@ -738,17 +738,17 @@ Below the chart is a multi-select field where you can choose to filter and revie
 
     # View Patient Feedback
     st.subheader("View Patient Feedback")
-    class_list = list(filtered_data["classif"].unique())
+    class_list = list(filtered_data["feedback_labels"].unique())
     selected_ratings = st.multiselect("Select Feedback Categories:", class_list)
 
     # Filter the data based on the selected classifications
-    filtered_classes = filtered_data[filtered_data["classif"].isin(selected_ratings)]
+    filtered_classes = filtered_data[filtered_data["feedback_labels"].isin(selected_ratings)]
 
     if not selected_ratings:
         st.warning("Please select at least one classification.")
     else:
         for rating in selected_ratings:
-            specific_class = filtered_classes[filtered_classes["classif"] == rating]
+            specific_class = filtered_classes[filtered_classes["feedback_labels"] == rating]
             st.subheader(f"{rating.capitalize()} ({str(specific_class.shape[0])})")
             for text in specific_class[
                 "free_text"
