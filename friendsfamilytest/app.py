@@ -943,9 +943,9 @@ elif page == "GPT-4 Feedback Summary":
     toggle = st.checkbox("Explain this page?")
     if toggle:
         st.markdown("""soon...""")
-    filtered_data = data[
-        (data["time"].dt.date >= selected_date_range[0])
-        & (data["time"].dt.date <= selected_date_range[1])
+    filtered_data = surgery_data[
+        (surgery_data["time"].dt.date >= selected_date_range[0])
+        & (surgery_data["time"].dt.date <= selected_date_range[1])
     ]
     filtered_data["prompt"] = filtered_data["free_text"].str.cat(
         filtered_data["do_better"], sep=" "
