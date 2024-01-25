@@ -270,6 +270,7 @@ def improvement_classification(data, batch_size=16):
     data["improvement_labels"] = improvement_labels
     return data
 
+
 @time_it
 def feedback_classification(data, batch_size=16):
     # Load model and tokenizer
@@ -283,50 +284,50 @@ def feedback_classification(data, batch_size=16):
 
     # Labels
     categories = [
-    "Appointment Accessibility",
-    "Reception Staff Interaction",
-    "Medical Staff Competence",
-    "Patient-Doctor Communication",
-    "Follow-Up and Continuity of Care",
-    "Facilities and Cleanliness",
-    "Prescription and Medication Management",
-    "Referral Efficiency",
-    "Billing and Administration",
-    "Emergency Handling",
-    "Patient Privacy and Confidentiality",
-    "Telehealth Services",
-    "Patient Education and Resources",
-    "Waiting Room Comfort",
-    "Patient Empowerment and Support",
-    "Health Outcome Satisfaction",
-    "Cultural Sensitivity",
-    "Accessibility for Disabled Patients",
-    "Mental Health Support",
-    "Nutritional and Lifestyle Advice",
-    "Ambiance of Facility",
-    "Facility Modernization and Upgrades",
-    "Nursing Quality",
-    "Staffing Levels",
-    "Online Services & Digital Health",
-    "Patient Safety",
-    "Weekend Service Availability",
-    "Telephone Service",
-    "After-Hours Service",
-    "Staff Training and Development",
-    "Quality of Medical Advice",
-    "Overall Patient Satisfaction",
-    "Blood Test Results & Imaging",
-    "Patient Participation Group",
-    "Mental Health Services",
-    "Social Prescribing Services",
-    "Chronic Disease Management",
-    "Doctor Consultations",
-    "Home Visits",
-    "Cancer Screening",
-    "Vaccinations",
-    "Test Results",
-    "Clinical Pharmacist"
-]
+        "Appointment Accessibility",
+        "Reception Staff Interaction",
+        "Medical Staff Competence",
+        "Patient-Doctor Communication",
+        "Follow-Up and Continuity of Care",
+        "Facilities and Cleanliness",
+        "Prescription and Medication Management",
+        "Referral Efficiency",
+        "Billing and Administration",
+        "Emergency Handling",
+        "Patient Privacy and Confidentiality",
+        "Telehealth Services",
+        "Patient Education and Resources",
+        "Waiting Room Comfort",
+        "Patient Empowerment and Support",
+        "Health Outcome Satisfaction",
+        "Cultural Sensitivity",
+        "Accessibility for Disabled Patients",
+        "Mental Health Support",
+        "Nutritional and Lifestyle Advice",
+        "Ambiance of Facility",
+        "Facility Modernization and Upgrades",
+        "Nursing Quality",
+        "Staffing Levels",
+        "Online Services & Digital Health",
+        "Patient Safety",
+        "Weekend Service Availability",
+        "Telephone Service",
+        "After-Hours Service",
+        "Staff Training and Development",
+        "Quality of Medical Advice",
+        "Overall Patient Satisfaction",
+        "Blood Test Results & Imaging",
+        "Patient Participation Group",
+        "Mental Health Services",
+        "Social Prescribing Services",
+        "Chronic Disease Management",
+        "Doctor Consultations",
+        "Home Visits",
+        "Cancer Screening",
+        "Vaccinations",
+        "Test Results",
+        "Clinical Pharmacist",
+    ]
 
     # Initialize the list to store labels
     feedback_labels = [""] * len(data)  # Pre-fill with empty strings
@@ -345,9 +346,7 @@ def feedback_classification(data, batch_size=16):
 
         # Classify the batch
         if sentences:
-            model_outputs = classifier(
-                list(sentences), categories, device="cpu"
-            )
+            model_outputs = classifier(list(sentences), categories, device="cpu")
             # Assign labels to corresponding indices
             for output, idx in zip(model_outputs, valid_indices):
                 feedback_labels[start_index + idx] = output["labels"][0]
@@ -358,6 +357,7 @@ def feedback_classification(data, batch_size=16):
     # Add labels as a new column
     data["feedback_labels"] = feedback_labels
     return data
+
 
 @time_it
 def improvement_classification(data, batch_size=16):

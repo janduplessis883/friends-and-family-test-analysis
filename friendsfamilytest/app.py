@@ -55,9 +55,11 @@ html = """
 }
 </style>
 <div class="gradient-text">AI MedReview: FFT</div>
+
 """
 # Render the HTML in the Streamlit app
 st.markdown(html, unsafe_allow_html=True)
+
 st.sidebar.title("Menu")
 page = st.sidebar.selectbox(
     "Choose an option",
@@ -226,13 +228,11 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     for p in ax.patches:
         width = p.get_width()
         try:
-            y = p.get_y() + p.get_height() / 2  
+            y = p.get_y() + p.get_height() / 2
             ax.text(width + 1, y, f"{int(width)}", va="center", fontsize=10)
         except ValueError:
             pass
-         
 
-            
     # Adjust plot appearance
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
@@ -742,13 +742,17 @@ Below the chart is a multi-select field where you can choose to filter and revie
     selected_ratings = st.multiselect("Select Feedback Categories:", class_list)
 
     # Filter the data based on the selected classifications
-    filtered_classes = filtered_data[filtered_data["feedback_labels"].isin(selected_ratings)]
+    filtered_classes = filtered_data[
+        filtered_data["feedback_labels"].isin(selected_ratings)
+    ]
 
     if not selected_ratings:
         st.warning("Please select at least one classification.")
     else:
         for rating in selected_ratings:
-            specific_class = filtered_classes[filtered_classes["feedback_labels"] == rating]
+            specific_class = filtered_classes[
+                filtered_classes["feedback_labels"] == rating
+            ]
             st.subheader(f"{rating.capitalize()} ({str(specific_class.shape[0])})")
             for text in specific_class[
                 "free_text"
@@ -906,8 +910,8 @@ The length of each bar signifies the count of feedback entries that fall into th
     ax = sns.barplot(
         x="Counts", y="Improvement Labels", data=label_counts_df, palette=palette
     )
-    ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-    ax.yaxis.grid(False)
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.xaxis.grid(False)
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["left"].set_visible(True)
