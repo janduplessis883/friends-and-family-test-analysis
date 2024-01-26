@@ -7,7 +7,7 @@ base = "light"
 primaryColor = "#184e77"
 
 # Background color for your app
-backgroundColor = "#faf9f9"
+backgroundColor = "#ffffff"
 
 # Secondary background color for your app
 secondaryBackgroundColor = "#e9eaea"
