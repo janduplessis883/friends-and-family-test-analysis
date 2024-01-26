@@ -813,7 +813,7 @@ Rows are labeled with an Index, which you can think of as the address of the dat
 # == About ==========================================================
 elif page == "About":
     st.image(
-        "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftest2.png?raw=true",
+        "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftestabout.png?raw=true",
         use_column_width=True,
     )
     st.subheader("Friends & Family Test (FFT) Dashboard v 2.5")
