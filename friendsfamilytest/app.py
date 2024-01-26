@@ -137,7 +137,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
                 y="rating_score",
                 data=monthly_avg_df,
                 ax=ax,
-                linewidth=4,
+                linewidth=3,
                 color="#e85d04",
             )
 
@@ -182,6 +182,8 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
         st.text("")
         st.metric("Total Responses", filtered_data.shape[0])
 
+    st.write("")
+    
     order = [
         "Extremely likely",
         "Likely",
@@ -201,7 +203,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     }
 
     # Set the figure size (width, height) in inches
-    plt.figure(figsize=(12, 3))
+    plt.figure(figsize=(12, 4))
 
     # Create the countplot
     sns.countplot(data=filtered_data, y="rating", order=order, palette=palette)
@@ -222,8 +224,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
         bbox_to_anchor=(1, 1),
         loc="best",
     )
-
-    # Iterate through the rectangles (bars) of the plot for width annotations
+    
     # Iterate through the rectangles (bars) of the plot for width annotations
     for p in ax.patches:
         width = p.get_width()
@@ -243,8 +244,8 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     plt.ylabel("Rating")
     plt.tight_layout()
     st.pyplot(plt)
+    st.write("")
 
-    st.markdown("**Sentiment Analysis** [Weekly | Per Response day]")
     # Create Sentiment Analaysis Plot
     # Resample and count the entries per month from filtered data
     weekly_sent = filtered_data.resample("W", on="time")[
@@ -253,7 +254,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     weekly_sent_df = weekly_sent.reset_index()
     weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
     weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
-    fig, ax = plt.subplots(figsize=(12, 4))
+    fig, ax = plt.subplots(figsize=(12, 3.5))
     sns.lineplot(
         data=weekly_sent_df,
         x="Week",
@@ -302,97 +303,9 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     plt.tight_layout()
     st.pyplot(fig)
 
-    filtered_data["date"] = pd.to_datetime(filtered_data["time"]).dt.date
-    pos_list = []
-    neg_list = []
-    neu_list = []
-    date_list = []
-    for i in filtered_data["date"].unique():
-        temp = filtered_data[filtered_data["date"] == i]
-        positive_temp = temp[temp["sentiment"] == "positive"]
-        negative_temp = temp[temp["sentiment"] == "negative"]
-        neutral_temp = temp[temp["sentiment"] == "neutral"]
-        pos_list.append((positive_temp.shape[0] / temp.shape[0]) * 100)
-        neg_list.append((negative_temp.shape[0] / temp.shape[0]) * 100)
-        neu_list.append((neutral_temp.shape[0] / temp.shape[0]) * 100)
-        date_list.append(str(i))
-
-    dict = {"date": date_list, "pos": pos_list, "neg": neg_list, "neu": neu_list}
-    new = pd.DataFrame(dict)
-
-    new["date"] = pd.to_datetime(new["date"])
-
-    # Normalize the sentiment columns so that they sum up to 1 (or 100%)
-    new["total"] = new[["neg", "pos", "neu"]].sum(axis=1)
-    new["neg"] /= new["total"]
-    new["pos"] /= new["total"]
-    new["neu"] /= new["total"]
-
-    # Convert 'date' to string for plotting purposes
-    new["date"] = new["date"].dt.strftime("%Y-%m-%d")
-
-    # Sort by date if not already
-    new = new.sort_values("date")
-
-    # Get the date_list for x-axis ticks
-    date_list = new["date"]
-
-    # Create the bottom parameters for stacking
-    bottom_pos = new["neg"]
-    bottom_neu = new["neg"] + new["pos"]
-
-    # Create a stacked bar plot
-    fig, ax = plt.subplots(figsize=(16, 5))
-
-    # Plot each sentiment as a layer in the stacked bar
-    ax.bar(new["date"], new["neg"], label="Negative", color="#ae4f4d", alpha=1)
-    ax.bar(
-        new["date"],
-        new["pos"],
-        bottom=bottom_pos,
-        label="Positive",
-        color="#437e97",
-        alpha=0.9,
-    )
-    ax.bar(
-        new["date"],
-        new["neu"],
-        bottom=bottom_neu,
-        label="Neutral",
-        color="#f0e8d2",
-        alpha=0.6,
-    )
-
-    # Set grid, spines and annotations as before
-    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-    ax.xaxis.grid(False)
-
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-    ax.spines["left"].set_visible(False)
-    # Rotate the x-axis dates for better readability
-    plt.xticks(rotation=90, fontsize=8)  # Set x-tick font size
-
-    # Add legend
-    plt.legend()
-    # Redraw the figure to ensure the formatter is applied
-    # Set title to the right
-    ax_title = ax.set_title("Daily Sentiment", loc="right")
-    ax_title.set_position((1.02, 1))  # Adjust title position
-    fig.canvas.draw()
-
-    # Remove xlabel as it's redundant with the dates
-    plt.xlabel("Unique Days")
-    plt.ylabel("Sentiment Analysis")
-    # Apply tight layout and display plot
-    plt.tight_layout()
-
-    # Show the plot
-    st.pyplot(fig)
-
-    st.markdown("**Response Rate** [Daily | Monthly]")
+    st.write("")
     # Plotting the line plot
-    fig, ax = plt.subplots(figsize=(12, 3))
+    fig, ax = plt.subplots(figsize=(12, 3.5))
     sns.lineplot(
         data=daily_count_df, x="Date", y="Daily Count", color="#489fb5", linewidth=2
     )
@@ -413,7 +326,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     plt.xlabel("")
     plt.tight_layout()
     st.pyplot(fig)
-
+    st.write("")
     # Resample and count the entries per month from filtered data
     monthly_count_filtered = filtered_data.resample("M", on="time").size()
     monthly_count_filtered_df = monthly_count_filtered.reset_index()
@@ -422,7 +335,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
         monthly_count_filtered_df["Month"]
     )
     # Create the figure and the bar plot
-    fig, ax = plt.subplots(figsize=(12, 3))
+    fig, ax = plt.subplots(figsize=(12, 3.5))
     sns.barplot(
         data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#489fb5"
     )
@@ -558,7 +471,97 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     # Apply tight layout and display plot
     plt.tight_layout()
     st.pyplot(fig)
+    
+    filtered_data["date"] = pd.to_datetime(filtered_data["time"]).dt.date
+    pos_list = []
+    neg_list = []
+    neu_list = []
+    date_list = []
+    for i in filtered_data["date"].unique():
+        temp = filtered_data[filtered_data["date"] == i]
+        positive_temp = temp[temp["sentiment"] == "positive"]
+        negative_temp = temp[temp["sentiment"] == "negative"]
+        neutral_temp = temp[temp["sentiment"] == "neutral"]
+        pos_list.append((positive_temp.shape[0] / temp.shape[0]) * 100)
+        neg_list.append((negative_temp.shape[0] / temp.shape[0]) * 100)
+        neu_list.append((neutral_temp.shape[0] / temp.shape[0]) * 100)
+        date_list.append(str(i))
 
+    dict = {"date": date_list, "pos": pos_list, "neg": neg_list, "neu": neu_list}
+    new = pd.DataFrame(dict)
+
+    new["date"] = pd.to_datetime(new["date"])
+
+    # Normalize the sentiment columns so that they sum up to 1 (or 100%)
+    new["total"] = new[["neg", "pos", "neu"]].sum(axis=1)
+    new["neg"] /= new["total"]
+    new["pos"] /= new["total"]
+    new["neu"] /= new["total"]
+
+    # Convert 'date' to string for plotting purposes
+    new["date"] = new["date"].dt.strftime("%Y-%m-%d")
+
+    # Sort by date if not already
+    new = new.sort_values("date")
+
+    # Get the date_list for x-axis ticks
+    date_list = new["date"]
+
+    # Create the bottom parameters for stacking
+    bottom_pos = new["neg"]
+    bottom_neu = new["neg"] + new["pos"]
+
+    # Create a stacked bar plot
+    fig, ax = plt.subplots(figsize=(16, 5))
+
+    # Plot each sentiment as a layer in the stacked bar
+    ax.bar(new["date"], new["neg"], label="Negative", color="#ae4f4d", alpha=1)
+    ax.bar(
+        new["date"],
+        new["pos"],
+        bottom=bottom_pos,
+        label="Positive",
+        color="#437e97",
+        alpha=0.9,
+    )
+    ax.bar(
+        new["date"],
+        new["neu"],
+        bottom=bottom_neu,
+        label="Neutral",
+        color="#f0e8d2",
+        alpha=0.6,
+    )
+
+    # Set grid, spines and annotations as before
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.xaxis.grid(False)
+
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+    # Rotate the x-axis dates for better readability
+    plt.xticks(rotation=90, fontsize=8)  # Set x-tick font size
+
+    # Add legend
+    plt.legend()
+    # Redraw the figure to ensure the formatter is applied
+    # Set title to the right
+    ax_title = ax.set_title("Daily Sentiment", loc="right")
+    ax_title.set_position((1.02, 1))  # Adjust title position
+    fig.canvas.draw()
+
+    # Remove xlabel as it's redundant with the dates
+    plt.xlabel("Unique Days")
+    plt.ylabel("Sentiment Analysis")
+    # Apply tight layout and display plot
+    plt.tight_layout()
+
+    # Show the plot
+    st.pyplot(fig)
+
+    st.markdown("---")
+    
     palette_colors = {
         "positive": "#4187aa",
         "neutral": "#d8ae46",
@@ -650,14 +653,19 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         (filtered_data["sentiment"] == "negative")
         & (filtered_data["sentiment_score"] >= slider_value)
     ].sort_values(by="sentiment_score", ascending=False)
-
+    
+    st.write(selected_feedback)
+    
+    
     class_list = list(selected_feedback["classif"].unique())
+    cleaned_class_list = [x for x in class_list if not pd.isna(x)]
     selected_ratings = st.multiselect(
         f"Viewing Feedback with Sentiment Analysis *NEG > {slider_value}:",
-        class_list,
-        default=class_list,
+        cleaned_class_list,
+        default=cleaned_class_list,
     )
-
+    st.write(class_list)
+    st.write(cleaned_class_list)
     # Filter the data based on the selected classifications
     filtered_classes = selected_feedback[
         selected_feedback["classif"].isin(selected_ratings)
@@ -739,7 +747,8 @@ Below the chart is a multi-select field where you can choose to filter and revie
     # View Patient Feedback
     st.subheader("View Patient Feedback")
     class_list = list(filtered_data["feedback_labels"].unique())
-    selected_ratings = st.multiselect("Select Feedback Categories:", class_list)
+    cleaned_class_list = [x for x in class_list if not pd.isna(x)]
+    selected_ratings = st.multiselect("Select Feedback Categories:", cleaned_class_list)
 
     # Filter the data based on the selected classifications
     filtered_classes = filtered_data[
