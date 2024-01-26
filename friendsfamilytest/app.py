@@ -812,11 +812,12 @@ Rows are labeled with an Index, which you can think of as the address of the dat
 
 # == About ==========================================================
 elif page == "About":
+    st.subheader("Friends & Family Test (FFT) Dashboard v 1.0.6")
     st.image(
         "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftestabout.png?raw=true",
         use_column_width=True,
     )
-    st.subheader("Friends & Family Test (FFT) Dashboard v 2.5")
+    
     st.markdown(
         """Welcome to our new dashboard, aimed at enhancing how healthcare providers understand and use patient feedback. This tool focuses on the Friends and Family Test (FFT), which is essential for collecting patients' views on healthcare services. Our approach uses advanced text classification and sentiment analysis to organize and interpret this feedback more effectively.
 
@@ -835,22 +836,18 @@ We employ several machine learning techniques for analysis:
 Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-family-test-analysis)
 """
     )
+    def buy_coffee():
+        button(username="janduplessis883", floating=False, width=220)
 
     st.markdown("---")
-    st.markdown(
-        "![Static Badge](https://img.shields.io/badge/GitHub-janduplessis883-%23aabd3b)  ![Static Badge](https://img.shields.io/badge/Python-3.10.6-%23ae4f4d) ![Static Badge](https://img.shields.io/badge/Telegram-%40jdp145-%2354a7e5?logo=telegram)"
-    )
 
-    def buy_coffee():
-        button(username="janduplessis883", floating=False, width=221)
-
-    col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns(3)
 
     # Use 'col1' to display content in the first column
     with col1:
         st.image(
             "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/about.png?raw=true",
-            width=250,
+            width=200,
         )
         buy_coffee()
     # Use 'col2' to display content in the second column
@@ -859,14 +856,12 @@ Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-fa
             "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/hf-logo-with-title.png?raw=true",
             width=200,
         )
-        st.markdown(
-            "**Text Classification**,  **Sentiment Analysis** and **Zero-Shot Classification** by Huggingface.co"
-        )
+    with col3:
         st.image(
             "https://raw.githubusercontent.com/janduplessis883/friends-and-family-test-analysis/2f41ce13bfe98f24c8a75a875280c4c051e1dd5e/images/powered-by-openai-badge-filled-on-light.svg",
             width=200,
         )
-        st.markdown("**GPT-4 Feedback Summary** by OpenAI")
+
 
 
 # == Improvement Suggestions ==========================================================
