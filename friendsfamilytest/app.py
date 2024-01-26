@@ -831,16 +831,22 @@ We employ several machine learning techniques for analysis:
 
 1. **Sentiment Analysis:** Using Huggingface's 'cardiffnlp/twitter-roberta-base-sentiment-latest' model, we determine the emotional tone of the feedback.
 2. **Text Classification** of Patient Feedback: To categorize feedback into different emotional themes, we use the 'SamLowe/roberta-base-go_emotions' model from Huggingface.
-3. **Zero-shot Classification** of Patient Improvement Suggestions: The 'facebook/bart-large-mnli' model helps us identify and classify suggestions for improving patient care, even when the model hasn’t been specifically trained on healthcare data.
+3. **Zero-shot Classification** of Patient Improvement Suggestions: The 'facebook/bart-large-mnli' model helps us identify and classify suggestions for improving patient care, even when the model hasn’t been specifically trained on healthcare data.""")
 
-Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-family-test-analysis)
-"""
-    )
-    def buy_coffee():
-        button(username="janduplessis883", floating=False, width=220)
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.write()
+        st.markdown("Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-family-test-analysis)")
+    with col2:
+        def buy_coffee():
+            button(username="janduplessis883", floating=False, width=220)
+            <a href="https://www.buymeacoffee.com/janduplessis883" target="_blank">
+        buy_coffee()
+        st.markdown("""<a href="https://www.buymeacoffee.com/janduplessis883" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>""")
 
     st.markdown("---")
-
+   
     col1, col2, col3 = st.columns(3)
 
     # Use 'col1' to display content in the first column
@@ -849,7 +855,7 @@ Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-fa
             "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/about.png?raw=true",
             width=200,
         )
-        buy_coffee()
+        
     # Use 'col2' to display content in the second column
     with col2:
         st.image(
@@ -858,7 +864,7 @@ Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-fa
         )
     with col3:
         st.image(
-            "https://raw.githubusercontent.com/janduplessis883/friends-and-family-test-analysis/2f41ce13bfe98f24c8a75a875280c4c051e1dd5e/images/powered-by-openai-badge-filled-on-light.svg",
+            "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/openai.png?raw=true",
             width=200,
         )
 
