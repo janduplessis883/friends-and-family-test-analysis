@@ -65,3 +65,4 @@ streamlit-card
 markdownlit
 requests
 black
+setfit

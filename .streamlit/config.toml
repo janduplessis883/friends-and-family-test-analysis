@@ -7,13 +7,13 @@ base = "light"
 primaryColor = "#184e77"
 
 # Background color for your app
-backgroundColor = "#FFFFFF"
+backgroundColor = "#faf9f9"
 
 # Secondary background color for your app
-secondaryBackgroundColor = "#F0F2F6"
+secondaryBackgroundColor = "#e9eaea"
 
 # Text color for your app
-textColor = "#262730"
+textColor = "#546163"
 
 # Font for your app, choose between "sans serif", "serif", and "monospace"
 font = "sans serif"
