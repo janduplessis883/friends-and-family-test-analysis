@@ -1,4 +1,4 @@
-![Image](images/fftest2.png)
+![Image](https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftestabout.png?raw=true)
 
 ## Friends & Family Test Dashboard for Primary Care
 Welcome to my new dashboard, aimed at enhancing how healthcare providers understand and use patient feedback. This tool focuses on the Friends and Family Test (FFT), which is essential for collecting patients' views on healthcare services. Our approach uses advanced text classification and sentiment analysis to organize and interpret this feedback more effectively.
