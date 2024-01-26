@@ -713,7 +713,7 @@ Below the chart is a multi-select field where you can choose to filter and revie
 
     # Define the palette conditionally based on the category names
     palette = [
-        "#90e0ef" if (label == "neutral") else "#0096c7"
+        "#90e0ef" if (label == "Overall Patient Satisfaction") else "#62899f"
         for label in label_counts_df["Feedback Classification"]
     ]
 
