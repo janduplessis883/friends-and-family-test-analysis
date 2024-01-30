@@ -7,41 +7,15 @@ import seaborn as sns
 from datetime import datetime
 from datetime import date
 from matplotlib.patches import Patch
-import time  # Importing time for simulating a time-consuming process
+import time  
 from openai import OpenAI
 from streamlit_extras.buy_me_a_coffee import button
-from markdownlit import mdlit
 
 client = OpenAI()
 
 from utils import *
 
-st.set_page_config(page_title="AI MedReview: FFT")
-
-
-# Load the dataframe
-def load_data():
-    df = pd.read_csv("friendsfamilytest/data/data.csv")
-    df["time"] = pd.to_datetime(df["time"], dayfirst=True)
-    return df
-
-
-data = load_data()
-
-
-def load_timedata():
-    df = pd.read_csv("friendsfamilytest/data/data.csv")
-    df["time"] = pd.to_datetime(df["time"], dayfirst=True)
-    df.set_index("time", inplace=True)
-    return df
-
-
-# Calculate monthly averages
-data_time = load_timedata()
-
-monthly_avg = data_time["rating_score"].resample("M").mean()
-monthly_avg_df = monthly_avg.reset_index()
-monthly_avg_df.columns = ["Month", "Average Rating"]
+st.set_page_config(page_title="AI MedReview: FFT", layout="wide")
 
 html = """
 <style>
@@ -60,6 +34,28 @@ html = """
 # Render the HTML in the Streamlit app
 st.markdown(html, unsafe_allow_html=True)
 
+def load_data():
+    df = pd.read_csv("friendsfamilytest/data/data.csv")
+    df["time"] = pd.to_datetime(df["time"], dayfirst=True)
+    return df
+
+data = load_data()
+
+def load_timedata():
+    df = pd.read_csv("friendsfamilytest/data/data.csv")
+    df["time"] = pd.to_datetime(df["time"], dayfirst=True)
+    df.set_index("time", inplace=True)
+    return df
+
+# Calculate monthly averages
+data_time = load_timedata()
+
+monthly_avg = data_time["rating_score"].resample("M").mean()
+monthly_avg_df = monthly_avg.reset_index()
+monthly_avg_df.columns = ["Month", "Average Rating"]
+
+
+
 st.sidebar.title("Menu")
 page = st.sidebar.selectbox(
     "Choose an option",
@@ -74,6 +70,7 @@ page = st.sidebar.selectbox(
         "About",
     ],
 )
+
 
 col1, col2 = st.columns([2, 1])
 with col2:
