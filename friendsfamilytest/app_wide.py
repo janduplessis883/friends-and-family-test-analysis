@@ -24,7 +24,7 @@ html = """
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    font-size: 3em;
+    font-size: 2em;
     font-weight: bold;
 }
 
@@ -48,6 +48,29 @@ def load_timedata():
     df.set_index("time", inplace=True)
     return df
 
+col1, col2 = st.columns([2, 1])
+with col2:
+    surgery_list = data["surgery"].unique()
+    surgery = st.selectbox("", surgery_list)
+    surgery_data = data[(data["surgery"] == surgery)]
+
+    start_date = surgery_data["time"].dt.date.min()
+    current_date = date.today()
+with col1:
+    # Create a date range slider
+    selected_date_range = st.slider(
+        "",
+        min_value=start_date,
+        max_value=current_date,
+        value=(start_date, current_date),  # Set default range
+    )
+
+# Filter the DataFrame based on the selected date range
+filtered_data = surgery_data[
+    (surgery_data["time"].dt.date >= selected_date_range[0])
+    & (surgery_data["time"].dt.date <= selected_date_range[1])
+]
+
 # Calculate monthly averages
 data_time = load_timedata()
 
@@ -58,51 +81,293 @@ monthly_avg_df.columns = ["Month", "Average Rating"]
 tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs(["Dashboard", "Feedback Classification", "Improvement Suggestions", "Rating & Sentiment Analysis", "GPT-4 Feedback Summary", "Word Cloud", "Dataframe", "About"])
 
 with tab1:
-   st.subheader("Dashboard")
 
-col1, col2 = st.columns(2)
+    col1, col2, col3 = st.columns([1,3,1])
 
-with col1.container(height=1000):
-    temperature = "-10"
-    st.markdown(":rainbow[**Feedback**]")
-    st.write("blue, green, orange, red, violet, gray/grey, and rainbow")
-    st.write(f"temprature: :red[{temperature}]")
-    st.markdown(
-        """:blue[**Feedback**] in bold textThis command forces pip to reinstall the package, which can sometimes resolve path issues.
-:orange[Improvement Suggestion:] Ensure that the Python interpreter you're using to run your script is the one where hand883 is installed. Sometimes, especially in systems where multiple Python environments are present, it's easy to install a package in one interpreter and inadvertently use a different interpreter to run your script.
-Importing Submodules: If your package has submodules, make sure you're importing them correctly. For instance, if hand883 has a submodule named submodule, you might need to import it explicitly:This is a new heading** in bold textThis command forces pip to reinstall the package, which can sometimes resolve path issues.
-Python Path: Ensure that the Python interpreter you're using to run your script is the one where hand883 is installed. Sometimes, especially in systems where multiple Python environments are present, it's easy to install a package in one interpreter and inadvertently use a different interpreter to run your script.
-Importing Submodules: If your package has submodules, make sure you're importing them correctly. For instance, if hand883 has a submodule named submodule, you might need to import it explicitly:"""
+with col1:
+    st.markdown("**Dashboard**")
+       # Data for plotting
+    labels = "Positive", "Neutral", "Negative"
+    sizes = sentiment_totals(filtered_data)
+    colors = ["#5385a6", "#f0e8d2", "#ae4f4d"]
+    explode = (0, 0, 0)  # 'explode' the 1st slice (Positive)
+
+    # Plot
+    fig, ax = plt.subplots(figsize=(12, 5))
+    ax.pie(
+        sizes,
+        explode=explode,
+        labels=labels,
+        colors=colors,
+        autopct="%1.1f%%",
+        startangle=140,
+    )
+    ax.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+    # Draw a circle at the center of pie to make it look like a donut
+    centre_circle = plt.Circle((0, 0), 0.50, fc="white")
+    fig.gca().add_artist(centre_circle)
+
+    plt.title("Patient Feedback Sentiment Distribution")
+    st.pyplot(fig)
+   
+with col2:
+    
+    monthly_avg = data_time["rating_score"].resample("M").mean()
+    monthly_avg_df = monthly_avg.reset_index()
+    monthly_avg_df.columns = ["Month", "Average Rating"]
+
+    # Add more content to col2 as needed
+    daily_count = filtered_data.resample("D", on="time").size()
+    daily_count_df = daily_count.reset_index()
+    daily_count_df.columns = ["Date", "Daily Count"]
+    try:
+        # Resample to get monthly average rating
+        monthly_avg = filtered_data.resample("M", on="time")["rating_score"].mean()
+
+        # Reset index to make 'time' a column again
+        monthly_avg_df = monthly_avg.reset_index()
+
+        # Create a line plot
+        fig, ax = plt.subplots(figsize=(16, 3))
+        sns.lineplot(
+            x="time",
+            y="rating_score",
+            data=monthly_avg_df,
+            ax=ax,
+            linewidth=3,
+            color="#e85d04",
+        )
+
+        ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        ax.xaxis.grid(False)
+        ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
+        # Customize the plot - remove the top, right, and left spines
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.spines["left"].set_visible(False)
+
+        # Rotate x-axis labels
+        # plt.setp(ax.get_xticklabels(), rotation=45, ha="right")
+
+        # Annotate the line graph
+        for index, row in monthly_avg_df.iterrows():
+            ax.annotate(
+                f'{row["rating_score"]:.2f}',
+                (row["time"], row["rating_score"]),
+                textcoords="offset points",
+                xytext=(0, 10),
+                ha="center",
+                fontsize=12,  # Adjust this value as needed
+            )
+
+        # Add labels and title
+        plt.xlabel("")
+        plt.ylabel("Average Rating")
+        plt.tight_layout()
+        ax_title = ax.set_title(
+            "Average Monthly Rating", loc="right"
+        )  # loc parameter aligns the title
+        ax_title.set_position(
+            (1, 1)
+        )  # Adjust these values to align your title as needed
+        # Display the plot in Streamlit
+        st.pyplot(fig)
+    except:
+        st.warning("No rating available for this date range.")
+        
+    st.write("")
+    
+    order = [
+        "Extremely likely",
+        "Likely",
+        "Neither likely nor unlikely",
+        "Unlikely",
+        "Extremely unlikely",
+        "Don't know",
+    ]
+
+    palette = {
+        "Extremely likely": "#6a994e",
+        "Likely": "#A7C957",
+        "Neither likely nor unlikely": "#219ebc",
+        "Unlikely": "#ffb700",
+        "Extremely unlikely": "#bc4749",
+        "Don't know": "#F2E8CF",
+    }
+
+    # Set the figure size (width, height) in inches
+    plt.figure(figsize=(16, 3))
+
+    # Create the countplot
+    sns.countplot(data=filtered_data, y="rating", order=order, palette=palette)
+    ax = plt.gca()
+
+    # Remove y-axis labels
+    ax.set_yticklabels([])
+
+    # Create a custom legend
+    from matplotlib.patches import Patch
+
+    legend_patches = [
+        Patch(color=color, label=label) for label, color in palette.items()
+    ]
+    plt.legend(
+        handles=legend_patches,
+        title="Rating Categories",
+        bbox_to_anchor=(1, 1),
+        loc="best",
+    )
+    
+    # Iterate through the rectangles (bars) of the plot for width annotations
+    for p in ax.patches:
+        width = p.get_width()
+        try:
+            y = p.get_y() + p.get_height() / 2
+            ax.text(width + 1, y, f"{int(width)}", va="center", fontsize=10)
+        except ValueError:
+            pass
+
+    # Adjust plot appearance
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["bottom"].set_visible(False)
+    ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.yaxis.grid(False)
+    plt.xlabel("Count")
+    plt.ylabel("Rating")
+    plt.tight_layout()
+    st.pyplot(plt)
+    st.write("")
+
+    # Create Sentiment Analaysis Plot
+    # Resample and count the entries per month from filtered data
+    weekly_sent = filtered_data.resample("W", on="time")[
+        "neg", "pos", "neu", "compound"
+    ].mean()
+    weekly_sent_df = weekly_sent.reset_index()
+    weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
+    weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
+    fig, ax = plt.subplots(figsize=(16, 3))
+    sns.lineplot(
+        data=weekly_sent_df,
+        x="Week",
+        y="neu",
+        color="#f0e8d2",
+        label="Neutral",
+        linewidth=2,
     )
 
-with col2.container(height=300):
-    st.write("Column 2")
-    import numpy as np
-    import matplotlib.pyplot as plt
+    sns.lineplot(
+        data=weekly_sent_df,
+        x="Week",
+        y="pos",
+        color="#4c91b0",
+        label="Positive",
+        linewidth=2,
+    )
+    sns.lineplot(
+        data=weekly_sent_df,
+        x="Week",
+        y="neg",
+        color="#ae4f4d",
+        label="Negative",
+        linewidth=2,
+    )
 
-    # Create a series of x values
-    x = np.linspace(0, 10, 100)
+    # Set grid, spines and annotations as before
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.xaxis.grid(False)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
 
-    # Generate corresponding y values with some added noise
-    y = np.sin(x) + np.random.normal(0, 0.1, 100)  # sin(x) function with noise
+    # Set title to the right
+    ax_title = ax.set_title("Mean Weekly Sentiment Analysis", loc="right")
+    ax_title.set_position((1.02, 1))  # Adjust title position
 
-    # Create the plot
-    plt.figure(figsize=(10, 6))
-    plt.plot(x, y, label="Bumpy Line", color="blue")
+    # Redraw the figure to ensure the formatter is applied
+    fig.canvas.draw()
 
-    # Adding title and labels
-    plt.title("Bumpy Line Plot")
-    plt.xlabel("X axis")
-    plt.ylabel("Y axis")
+    # Remove xlabel as it's redundant with the dates
+    plt.xlabel("Weeks")
+    plt.ylabel("Mean Sentiment")
+    # Apply tight layout and display plot
+    plt.tight_layout()
+    st.pyplot(fig)
 
-    # Show legend
-    plt.legend()
+    st.write("")
+    # Plotting the line plot
+    fig, ax = plt.subplots(figsize=(16, 3))
+    sns.lineplot(
+        data=daily_count_df, x="Date", y="Daily Count", color="#489fb5", linewidth=2
+    )
 
-    # Display the plot
-    st.pyplot(plt)
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.xaxis.grid(False)
 
+    # Customizing the x-axis labels for better readability
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
 
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+    ax_title = ax.set_title(
+        "Daily FFT Responses", loc="right"
+    )  # loc parameter aligns the title
+    ax_title.set_position((1, 1))  # Adjust these values to align your title as needed
+    plt.xlabel("")
+    plt.tight_layout()
+    st.pyplot(fig)
+    st.write("")
+    # Resample and count the entries per month from filtered data
+    monthly_count_filtered = filtered_data.resample("M", on="time").size()
+    monthly_count_filtered_df = monthly_count_filtered.reset_index()
+    monthly_count_filtered_df.columns = ["Month", "Monthly Count"]
+    monthly_count_filtered_df["Month"] = pd.to_datetime(
+        monthly_count_filtered_df["Month"]
+    )
+    # Create the figure and the bar plot
+    fig, ax = plt.subplots(figsize=(16, 3))
+    sns.barplot(
+        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#489fb5"
+    )
 
+    # Set grid, spines and annotations as before
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.xaxis.grid(False)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+
+    # Annotate bars with the height (monthly count)
+    for p in ax.patches:
+        ax.annotate(
+            f"{int(p.get_height())}",
+            (p.get_x() + p.get_width() / 2.0, p.get_height()),
+            ha="center",
+            va="center",
+            xytext=(0, 10),
+            textcoords="offset points",
+        )
+
+    # Set title to the right
+    ax_title = ax.set_title("Monthly FFT Responses", loc="right")
+    ax_title.set_position((1.02, 1))  # Adjust title position
+
+    # Redraw the figure to ensure the formatter is applied
+    fig.canvas.draw()
+
+    # Remove xlabel as it's redundant with the dates
+    plt.xlabel("")
+
+    # Apply tight layout and display plot
+    plt.tight_layout()
+    st.pyplot(fig)
+
+with col3:
+    st.write('Here')
 
 
 

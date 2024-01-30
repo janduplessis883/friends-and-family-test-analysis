@@ -15,7 +15,7 @@ client = OpenAI()
 
 from utils import *
 
-st.set_page_config(page_title="AI MedReview: FFT", layout="wide")
+st.set_page_config(page_title="AI MedReview: FFT")
 
 html = """
 <style>
