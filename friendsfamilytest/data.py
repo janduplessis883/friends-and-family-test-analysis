@@ -115,6 +115,7 @@ def anonymize(df):
         "christine",
         "jan",
         "orietta",
+        "param",
     ]
 
     # Function to replace surnames in text

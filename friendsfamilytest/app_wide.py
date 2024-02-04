@@ -82,14 +82,14 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs(["Dashboard", "Feedback
 
 with tab1:
 
-    col1, col2, col3 = st.columns([1,3,1])
+    col1, col2, col3 = st.columns([1.5,3,1])
 
 with col1:
     st.markdown("**Dashboard**")
        # Data for plotting
     labels = "Positive", "Neutral", "Negative"
     sizes = sentiment_totals(filtered_data)
-    colors = ["#5385a6", "#f0e8d2", "#ae4f4d"]
+    colors = ["#344e65", "#f0e8d2", "#ae4f4d"]
     explode = (0, 0, 0)  # 'explode' the 1st slice (Positive)
 
     # Plot
@@ -188,12 +188,12 @@ with col2:
     ]
 
     palette = {
-        "Extremely likely": "#6a994e",
-        "Likely": "#A7C957",
-        "Neither likely nor unlikely": "#219ebc",
-        "Unlikely": "#ffb700",
-        "Extremely unlikely": "#bc4749",
-        "Don't know": "#F2E8CF",
+        "Extremely likely": "#003f5c",
+        "Likely": "#58508d",
+        "Neither likely nor unlikely": "#bc5090",
+        "Unlikely": "#dd5182",
+        "Extremely unlikely": "#ff6e54",
+        "Don't know": "#ffa600",
     }
 
     # Set the figure size (width, height) in inches
