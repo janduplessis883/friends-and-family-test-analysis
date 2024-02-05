@@ -420,7 +420,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     weekly_sent_df = weekly_sent.reset_index()
     weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
     weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
-    fig, ax = plt.subplots(figsize=(12, 4))
+    fig, ax = plt.subplots(figsize=(16, 6))
     sns.lineplot(
         data=weekly_sent_df,
         x="Week",
@@ -586,22 +586,41 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     plt.tight_layout()
     st.pyplot(plt)
 
+    # Negative sentiment plot
+    neg_sentiment = filtered_data[filtered_data["sentiment"] == "negative"]
+    slider_start_point = neg_sentiment["sentiment_score"].min() - 0.02
+    if slider_start_point == 0:
+        slider_start = 0.5
+    else:
+        slider_start = slider_start_point
+
+    try:
+        # The value parameter is set to slider_end, which is the maximum value
+        slider_value = st.slider(
+            label="Select Negative Sentiment Analysis threshold:",
+            min_value=slider_start,
+            max_value=1.0,
+            value=0.9,  # Set initial value to the max value
+            step=0.02,
+        )
+    except Exception as e:
+        # This will catch any exceptions and display an info message
+        st.info("No value to select. Please check the slider configuration.")
+        # Optionally, you can also display the exception message
+        st.error(f"An error occurred: {e}")
     # Create two columns
     col1, col2 = st.columns(2)
 
+    
     # Content for the first column
     with col1:
-        # Negative sentiment plot
-        neg_sentiment = filtered_data[filtered_data["sentiment"] == "negative"]
-        slider_start_point = neg_sentiment["sentiment_score"].min() - 0.02
-        if slider_start_point == 0:
-            slider_start = 0.5
-        else:
-            slider_start = slider_start_point
+
 
         fig, ax = plt.subplots(figsize=(5, 2))
         sns.histplot(data=neg_sentiment, x="sentiment_score", color="#be6933", kde=True)
         # Set grid, spines and annotations as before
+        # Add a vertical red line at sentiment score of 0.90
+        plt.axvline(x=slider_value, color='#ae4f4d', linestyle='-', linewidth=4)
         ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
         ax.xaxis.grid(False)
         ax.spines["top"].set_visible(False)
@@ -630,66 +649,49 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     st.subheader("View Patient Feedback")
 
     # Create the slider
-    try:
-        # The value parameter is set to slider_end, which is the maximum value
-        slider_value = st.slider(
-            label="Select Negative Sentiment Analysis threshold:",
-            min_value=slider_start,
-            max_value=1.0,
-            value=0.9,  # Set initial value to the max value
-            step=0.02,
-        )
-    except Exception as e:
-        # This will catch any exceptions and display an info message
-        st.info("No value to select. Please check the slider configuration.")
-        # Optionally, you can also display the exception message
-        st.error(f"An error occurred: {e}")
+
 
     # View SELECTED Patient Feedback with Sentiment Analaysis NEG >= 0.5
     selected_feedback = filtered_data[
         (filtered_data["sentiment"] == "negative")
         & (filtered_data["sentiment_score"] >= slider_value)
     ].sort_values(by="sentiment_score", ascending=False)
+
     
-    st.write(selected_feedback)
     
-    
-    class_list = list(selected_feedback["classif"].unique())
+    class_list = list(selected_feedback["feedback_labels"].unique())
     cleaned_class_list = [x for x in class_list if not pd.isna(x)]
     selected_ratings = st.multiselect(
         f"Viewing Feedback with Sentiment Analysis *NEG > {slider_value}:",
         cleaned_class_list,
         default=cleaned_class_list,
     )
-    st.write(class_list)
-    st.write(cleaned_class_list)
+
     # Filter the data based on the selected classifications
     filtered_classes = selected_feedback[
-        selected_feedback["classif"].isin(selected_ratings)
+        selected_feedback["feedback_labels"].isin(selected_ratings)
     ]
 
     if not selected_ratings:
         st.warning("Please select at least one classification.")
     else:
         for rating in selected_ratings:
-            specific_class = filtered_classes[filtered_classes["classif"] == rating]
+            specific_class = filtered_classes[filtered_classes["feedback_labels"] == rating]
             st.subheader(f"{rating.capitalize()} ({str(specific_class.shape[0])})")
             for _, row in specific_class.iterrows():
                 text = row["free_text"]
                 do_better = row["do_better"]
-                improvement_labels = row["improvement_labels"]
+                sentiment_score = row["sentiment_score"]
 
                 # Check if the text is valid and not neutral or nan
-                if str(text).lower() not in ["nan", "neutral", "admiration"]:
+                if str(text).lower() not in ["nan"]:
                     st.markdown("🗣️ " + str(text))
-                    if str(do_better).lower() not in ["nan", "neutrall", "admiration"]:
+                    if str(do_better).lower() not in ["nan"]:
                         st.markdown("🔧 " + str(do_better))
-                    if str(improvement_labels).lower() not in [
+                    if str(sentiment_score).lower() not in [
                         "nan",
-                        "neutral",
-                        "admiration",
                     ]:
-                        st.markdown("- `" + str(improvement_labels) + "`")
+                        st.markdown("`Neg: " + str(sentiment_score) + "`")
 
 
 # == Feedback Classification ==========================================================
