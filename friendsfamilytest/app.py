@@ -908,8 +908,10 @@ The length of each bar signifies the count of feedback entries that fall into th
     ax = sns.barplot(
         x="Counts", y="Improvement Labels", data=label_counts_df, palette=palette
     )
+    
     ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
     ax.yaxis.grid(False)
+    
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["left"].set_visible(True)
