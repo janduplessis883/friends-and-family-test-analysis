@@ -136,7 +136,7 @@ with col2:
             data=monthly_avg_df,
             ax=ax,
             linewidth=3,
-            color="#e85d04",
+            color="#4c667d",
         )
 
         ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
@@ -301,7 +301,7 @@ with col2:
     # Plotting the line plot
     fig, ax = plt.subplots(figsize=(16, 3))
     sns.lineplot(
-        data=daily_count_df, x="Date", y="Daily Count", color="#489fb5", linewidth=2
+        data=daily_count_df, x="Date", y="Daily Count", color="#4c667d", linewidth=2
     )
 
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
