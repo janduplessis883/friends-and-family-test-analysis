@@ -66,3 +66,5 @@ markdownlit
 requests
 black
 setfit
+ollama
+skimpy
