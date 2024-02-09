@@ -9,7 +9,7 @@ from datetime import date
 from matplotlib.patches import Patch
 import time  
 from openai import OpenAI
-from streamlit_extras.buy_me_a_coffee import button
+
 
 client = OpenAI()
 
@@ -603,11 +603,12 @@ Select Patient feedback to review, this page only displays feedback that on Sent
             value=0.9,  # Set initial value to the max value
             step=0.02,
         )
-    except Exception as e:
-        # This will catch any exceptions and display an info message
-        st.info("No value to select. Please check the slider configuration.")
-        # Optionally, you can also display the exception message
-        st.error(f"An error occurred: {e}")
+    except RangeError as e:
+        # Display an info message if there's an error with slider configuration
+        st.info("Please ensure that the minimum value is less than the maximum value for the slider.")
+        # Optionally, you can also display the exception message for debugging purposes
+        
+    
     # Create two columns
     col1, col2 = st.columns(2)
 
