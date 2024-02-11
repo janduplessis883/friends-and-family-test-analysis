@@ -55,8 +55,9 @@ monthly_avg_df = monthly_avg.reset_index()
 monthly_avg_df.columns = ["Month", "Average Rating"]
 
 
+# ==== SIDEBAR ====================================================================
+st.sidebar.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/transparent2.png?raw=true')
 
-st.sidebar.title("Menu")
 page = st.sidebar.selectbox(
     "Choose an option",
     [
@@ -70,6 +71,12 @@ page = st.sidebar.selectbox(
         "About",
     ],
 )
+st.sidebar.write('')
+st.sidebar.write('')
+st.sidebar.markdown("""
+**Contact Us**  
+Submit any requests or report issues on [GitHub Issues](https://github.com/janduplessis883/friends-and-family-test-analysis/issues). For more information about this project see our About page.
+""")
 
 
 col1, col2 = st.columns([2, 1])
