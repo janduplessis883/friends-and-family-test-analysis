@@ -600,7 +600,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         label="Select Negative Sentiment Analysis threshold:",
         min_value=slider_start,
         max_value=1.0,
-        value=slider_start,  # Set initial value to the max value
+        value=0.5,  # Set initial value to the max value
         step=0.05,
     )
 
