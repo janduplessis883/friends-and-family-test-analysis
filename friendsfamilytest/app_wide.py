@@ -71,7 +71,7 @@ page = st.sidebar.selectbox(
     ],
 )
 st.sidebar.markdown("""
-## :grey[Welcome to Our App
+## Welcome to Our App
 
 This app provides insightful data analytics. Navigate through various sections using the menu above.
 
@@ -79,8 +79,11 @@ This app provides insightful data analytics. Navigate through various sections u
 
 ### Contact Us
 
-For inquiries, email us at [info@yourapp.com](mailto:info@yourapp.com).]
+Submit any issues or requests on <a href="https://github.com/janduplessis883/friends-and-family-test-analysis/issues">GitHub Issues</a>
 """)
+st.sidebar.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/transparent.png?raw=true', caption='AI MedReview')
+
+
 
 col1, col2 = st.columns([2, 1])
 with col2:
