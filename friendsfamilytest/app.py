@@ -562,7 +562,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     palette_colors = {
         "positive": "#4187aa",
         "neutral": "#d8ae46",
-        "negative": "#be6933",
+        "negative": "#ae4f4d",
     }
     plt.figure(figsize=(12, 4))  # You can adjust the figure size as needed
     scatter_plot = sns.scatterplot(
@@ -600,7 +600,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         label="Select Negative Sentiment Analysis threshold:",
         min_value=slider_start,
         max_value=1.0,
-        value=0.2,  # Set initial value to the max value
+        value=0.4,  # Set initial value to the max value
         step=0.05,
     )
 
