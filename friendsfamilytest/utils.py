@@ -31,9 +31,9 @@ def clean_and_replace(text):
     cleaned_text = str(text).lower().strip()
 
     # Remove punctuation and digits
-    cleaned_text = cleaned_text.translate(
-        str.maketrans("", "", string.punctuation + string.digits)
-    )
+    # cleaned_text = cleaned_text.translate(
+    #     str.maketrans("", "", string.punctuation + string.digits)
+    # )
 
     remove_list = [
         "no",
