@@ -594,21 +594,16 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     else:
         slider_start = slider_start_point
 
-    try:
-        # The value parameter is set to slider_end, which is the maximum value
-        slider_value = st.slider(
-            label="Select Negative Sentiment Analysis threshold:",
-            min_value=slider_start,
-            max_value=1.0,
-            value=slider_start,  # Set initial value to the max value
-            step=0.05,
-        )
-    except RangeError as e:
-        # Display an info message if there's an error with slider configuration
-        st.info("Please ensure that the minimum value is less than the maximum value for the slider.")
-        # Optionally, you can also display the exception message for debugging purposes
-        
-    
+
+    # The value parameter is set to slider_end, which is the maximum value
+    slider_value = st.slider(
+        label="Select Negative Sentiment Analysis threshold:",
+        min_value=slider_start,
+        max_value=1.0,
+        value=slider_start,  # Set initial value to the max value
+        step=0.05,
+    )
+
     # Create two columns
     col1, col2 = st.columns(2)
 
