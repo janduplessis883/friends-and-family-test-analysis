@@ -63,3 +63,4 @@ black
 setfit
 ollama
 skimpy
+streamlit-shadcn-ui  

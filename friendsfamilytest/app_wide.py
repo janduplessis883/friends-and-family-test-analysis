@@ -9,6 +9,7 @@ from datetime import date
 from matplotlib.patches import Patch
 import time  
 from openai import OpenAI
+import streamlit_shadcn_ui as ui
 
 
 client = OpenAI()
@@ -88,6 +89,8 @@ with col2:
     current_date = date.today()
 with col1:
     # Create a date range slider
+   
+    
     selected_date_range = st.slider(
         "",
         min_value=start_date,
@@ -104,7 +107,7 @@ filtered_data = surgery_data[
 
 # == DASHBOARD ================================================================
 if page == "Dashboard":
-    toggle = st.checkbox("Explain this page?")
+    toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
     # React to the toggle's state
 
     if toggle:
