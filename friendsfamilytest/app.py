@@ -117,7 +117,8 @@ selected_date_range = st.slider(
     "Select Date Range",
     min_value=start_date,
     max_value=current_date,
-    value=(start_date, current_date),  # Set default range
+    value=(start_date, current_date),
+    help="Use the slider to specify a date range"# Set default range
 )
 
 # Filter the DataFrame based on the selected date range
@@ -349,7 +350,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
 # == Rating & Sentiment Analysis Correlation ======================================================================
 elif page == "Sentiment Analysis":
     st.subheader("Rating & Sentiment Analysis Correlation")
-    toggle = st.checkbox("Explain this page?")
+    toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
 
     # React to the toggle's state
     if toggle:
@@ -670,7 +671,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 elif page == "Feedback Classification":
     st.subheader("Feedback Classification")
 
-    toggle = st.checkbox("Explain this page?")
+    toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
     if toggle:
         st.markdown(
             """1. **Bar Chart**:
@@ -744,7 +745,7 @@ Below the chart is a multi-select field where you can choose to filter and revie
 elif page == "Word Cloud":
     try:
         st.subheader("Feedback Word Cloud")
-        toggle = st.checkbox("Explain this page?")
+        toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
         if toggle:
             st.markdown(
                 """1. The **Feedback Word Cloud**:
@@ -775,7 +776,7 @@ elif page == "Word Cloud":
 # == Dataframe ==========================================================
 elif page == "View Dataframe":
     st.subheader("Dataframe")
-    toggle = st.checkbox("Explain this page?")
+    toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
     if toggle:
         st.markdown(
             """**Dataframe**:
@@ -844,7 +845,7 @@ We employ several machine learning techniques for analysis:
 # == Improvement Suggestions ==========================================================
 elif page == "Improvement Suggestions":
     st.subheader("Improvement Suggestions")
-    toggle = st.checkbox("Explain this page?")
+    toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
     if toggle:
         st.markdown(
             """1. This **horizontal bar chart** provides an analysis of patient feedback addressing areas for potential improvement in healthcare services. Each bar represents a unique category of improvement suggestion derived from patient feedback using zero-shot classification with the `facebook/bart-large-mnli` model. Prior to classification, one-word responses are filtered out to ensure meaningful data is processed.
@@ -923,7 +924,7 @@ The length of each bar signifies the count of feedback entries that fall into th
 # == Generate ChatGPT Summaries ==========================================================
 elif page == "GPT-4 Feedback Summary":
     st.subheader("Generate ChatGPT Summaries")
-    toggle = st.checkbox("Explain this page?")
+    toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
     if toggle:
         st.markdown("""soon...""")
     filtered_data = surgery_data[
