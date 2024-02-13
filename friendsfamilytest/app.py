@@ -58,6 +58,7 @@ monthly_avg_df = monthly_avg.reset_index()
 monthly_avg_df.columns = ["Month", "Average Rating"]
 
 st.sidebar.markdown(html, unsafe_allow_html=True)
+st.sidebar.image("https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/transparent2.png?raw=true")
 
 @st.cache_data  # This decorator enables caching for this function
 def get_surgery_data(data, selected_surgery):
@@ -89,7 +90,7 @@ page = st.sidebar.radio("Choose a Page", [
 )
 st.sidebar.container(height=200, border=0)
 
-st.sidebar.image("https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/transparent2.png?raw=true")
+
 st.sidebar.write("")
 
 centered_html = """
@@ -243,8 +244,8 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     ]
 
     palette = {
-        "Extremely likely": "#42566e",
-        "Likely": "#598dac",
+        "Extremely likely": "#598dac",
+        "Likely": "#42566e",
         "Neither likely nor unlikely": "#aec867",
         "Unlikely": "#ecbf73",
         "Extremely unlikely": "#e48e46",
@@ -858,10 +859,10 @@ Rows are labeled with an Index, which you can think of as the address of the dat
 # == About ==========================================================
 elif page == "About":
     st.subheader("About (FFT Dashboard)")
-    st.image(
-        "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftestabout.png?raw=true",
-        use_column_width=True,
-    )
+    # st.image(
+    #     "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftestabout.png?raw=true",
+    #     use_column_width=True,
+    # )
     
     st.markdown(
         """Welcome to our new dashboard, aimed at enhancing how healthcare providers understand and use patient feedback. This tool focuses on the Friends and Family Test (FFT), which is essential for collecting patients' views on healthcare services. Our approach uses advanced text classification and sentiment analysis to organize and interpret this feedback more effectively.
