@@ -25,22 +25,24 @@ html = """
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    font-size: 3em;
+    font-size: 2em;
     font-weight: bold;
 }
 </style>
 <div class="gradient-text">AI MedReview: FFT</div>
 
 """
-# Render the HTML in the Streamlit app
-st.markdown(html, unsafe_allow_html=True)
 
+
+@st.cache_data
 def load_data():
     df = pd.read_csv("friendsfamilytest/data/data.csv")
     df["time"] = pd.to_datetime(df["time"], dayfirst=True)
     return df
 
 data = load_data()
+
+
 
 def load_timedata():
     df = pd.read_csv("friendsfamilytest/data/data.csv")
@@ -55,48 +57,68 @@ monthly_avg = data_time["rating_score"].resample("M").mean()
 monthly_avg_df = monthly_avg.reset_index()
 monthly_avg_df.columns = ["Month", "Average Rating"]
 
+st.sidebar.markdown(html, unsafe_allow_html=True)
 
-st.sidebar.image('https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/transparent2.png?raw=true')
+@st.cache_data  # This decorator enables caching for this function
+def get_surgery_data(data, selected_surgery):
+    # Extracting unique surgery types
+    surgery_list = data["surgery"].unique()
 
-page = st.sidebar.selectbox(
-    "Choose an option",
-    [
+    # Filtering the dataset based on the selected surgery type
+    surgery_data = data[data["surgery"] == selected_surgery]
+    return surgery_data
+
+surgery_list = data["surgery"].unique()
+selected_surgery = st.sidebar.selectbox("Select Surgery", surgery_list)
+
+# Call the function with the selected surgery
+surgery_data = get_surgery_data(data, selected_surgery)
+
+st.sidebar.container(height=5, border=0)
+
+page = st.sidebar.radio("Choose a Page", [
         "Dashboard",
         "Feedback Classification",
         "Improvement Suggestions",
-        "Rating & Sentiment Analysis Correlation",
+        "Sentiment Analysis",
         "GPT-4 Feedback Summary",
         "Word Cloud",
         "View Dataframe",
         "About",
-    ],
+    ]
 )
-st.sidebar.write('')
-st.sidebar.write('')
-st.sidebar.markdown("""
-**Contact Us**  
-Submit any requests or report issues on [GitHub Issues](https://github.com/janduplessis883/friends-and-family-test-analysis/issues). For more information about this project see our About page.
-""")
+st.sidebar.container(height=200, border=0)
+
+st.sidebar.image("https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/transparent2.png?raw=true")
+st.sidebar.write("")
+
+centered_html = """
+    <style>
+    .centered {
+        text-align: center;
+    }
+    </style>
+    <div class='centered'>
+    <img alt="Static Badge" src="https://img.shields.io/badge/github-janduplessis883-%23d0ae57?logo=github&color=%23d0ae57&link=https%3A%2F%2Fgithub.com%2Fjanduplessis883%2Ffriends-and-family-test-analysis">
+    </div>
+"""
 
 
-col1, col2 = st.columns([2, 1])
-with col2:
-    surgery_list = data["surgery"].unique()
-    surgery = st.selectbox("", surgery_list)
-    surgery_data = data[(data["surgery"] == surgery)]
+# Using the markdown function with HTML to center the text
+st.sidebar.markdown(centered_html, unsafe_allow_html=True)
 
-    start_date = surgery_data["time"].dt.date.min()
-    current_date = date.today()
-with col1:
-    # Create a date range slider
-   
     
-    selected_date_range = st.slider(
-        "",
-        min_value=start_date,
-        max_value=current_date,
-        value=(start_date, current_date),  # Set default range
-    )
+
+# Create a date range slider
+start_date = surgery_data["time"].dt.date.min()
+current_date = date.today()
+
+selected_date_range = st.slider(
+    "",
+    min_value=start_date,
+    max_value=current_date,
+    value=(start_date, current_date),  # Set default range
+)
 
 # Filter the DataFrame based on the selected date range
 filtered_data = surgery_data[
@@ -105,7 +127,7 @@ filtered_data = surgery_data[
 ]
 
 
-# == DASHBOARD ================================================================
+# == DASHBOARD ==========================================================================================================
 if page == "Dashboard":
     toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
     # React to the toggle's state
@@ -121,7 +143,7 @@ This time series plot displays the daily count of FFT responses over the same pe
 4. **Monthly FFT Responses (Bar Chart)**:
 The final plot is a vertical bar chart showing the total count of FFT responses collected each month. The y-axis represents the count of responses, and the x-axis indicates the month. Each bar's height represents the total number of responses for that month, providing a clear comparison of month-to-month variation in the volume of feedback."""
         )
-    col1, col2 = st.columns([5, 1])
+    col1, col2 = st.columns([5, 2])
 
     # Use the columns
     with col1:
@@ -143,8 +165,8 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
                 y="rating_score",
                 data=monthly_avg_df,
                 ax=ax,
-                linewidth=3,
-                color="#d8ad45",
+                linewidth=4,
+                color="#e5c17e",
             )
 
             ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
@@ -185,8 +207,8 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
             st.warning("No rating available for this date range.")
 
     with col2:
-        st.text("")
-        st.metric("Total Responses", filtered_data.shape[0])
+        ui.metric_card(title="Total Responses", content=f"{filtered_data.shape[0]}", description=f"since {start_date}", key="card1")
+       
 
     st.write("")
     
@@ -200,12 +222,12 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     ]
 
     palette = {
-        "Extremely likely": "#2b4459",
-        "Likely": "#516675",
-        "Neither likely nor unlikely": "#788992",
-        "Unlikely": "#9eacaf",
-        "Extremely unlikely": "#c5cfcc",
-        "Don't know": "#ecf2e9",
+        "Extremely likely": "#42566e",
+        "Likely": "#598dac",
+        "Neither likely nor unlikely": "#aec867",
+        "Unlikely": "#ecbf73",
+        "Extremely unlikely": "#e48e46",
+        "Don't know": "#ae4f4d",
     }
 
     # Set the figure size (width, height) in inches
@@ -252,68 +274,13 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     st.pyplot(plt)
     st.write("")
 
-    # Create Sentiment Analaysis Plot
-    # Resample and count the entries per month from filtered data
-    weekly_sent = filtered_data.resample("W", on="time")[
-        "neg", "pos", "neu", "compound"
-    ].mean()
-    weekly_sent_df = weekly_sent.reset_index()
-    weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
-    weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
-    fig, ax = plt.subplots(figsize=(12, 3.5))
-    sns.lineplot(
-        data=weekly_sent_df,
-        x="Week",
-        y="neu",
-        color="#f0e8d2",
-        label="Neutral",
-        linewidth=2,
-    )
 
-    sns.lineplot(
-        data=weekly_sent_df,
-        x="Week",
-        y="pos",
-        color="#4c91b0",
-        label="Positive",
-        linewidth=2,
-    )
-    sns.lineplot(
-        data=weekly_sent_df,
-        x="Week",
-        y="neg",
-        color="#ae4f4d",
-        label="Negative",
-        linewidth=2,
-    )
-
-    # Set grid, spines and annotations as before
-    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-    ax.xaxis.grid(False)
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-    ax.spines["left"].set_visible(False)
-
-    # Set title to the right
-    ax_title = ax.set_title("Mean Weekly Sentiment Analysis", loc="right")
-    ax_title.set_position((1.02, 1))  # Adjust title position
-
-    # Redraw the figure to ensure the formatter is applied
-    fig.canvas.draw()
-
-    # Remove xlabel as it's redundant with the dates
-    plt.xlabel("Weeks")
-    plt.ylabel("Mean Sentiment")
-    # Apply tight layout and display plot
-    plt.tight_layout()
-    st.pyplot(fig)
 
     st.write("")
     # Plotting the line plot
     fig, ax = plt.subplots(figsize=(12, 3.5))
     sns.lineplot(
-        data=daily_count_df, x="Date", y="Daily Count", color="#8e8357", linewidth=2
+        data=daily_count_df, x="Date", y="Daily Count", color="#6b899f", linewidth=2
     )
 
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
@@ -343,7 +310,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Create the figure and the bar plot
     fig, ax = plt.subplots(figsize=(12, 3.5))
     sns.barplot(
-        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#8e8357"
+        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#6b899f"
     )
 
     # Set grid, spines and annotations as before
@@ -379,8 +346,8 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     st.pyplot(fig)
 
 
-# == Rating & Sentiment Analysis Correlation ===============================================
-elif page == "Rating & Sentiment Analysis Correlation":
+# == Rating & Sentiment Analysis Correlation ======================================================================
+elif page == "Sentiment Analysis":
     st.subheader("Rating & Sentiment Analysis Correlation")
     toggle = st.checkbox("Explain this page?")
 
@@ -400,7 +367,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     # Data for plotting
     labels = "Positive", "Neutral", "Negative"
     sizes = sentiment_totals(filtered_data)
-    colors = ["#5385a6", "#f0e8d2", "#ae4f4d"]
+    colors = ["#6b899f", "#f0e8d2", "#ae4f4d"]
     explode = (0, 0, 0)  # 'explode' the 1st slice (Positive)
 
     # Plot
@@ -699,7 +666,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
                         st.markdown("`Neg: " + str(sentiment_score) + "`")
 
 
-# == Feedback Classification ==========================================================
+# == Feedback Classification ========================================================================================
 elif page == "Feedback Classification":
     st.subheader("Feedback Classification")
 
@@ -821,7 +788,7 @@ Rows are labeled with an Index, which you can think of as the address of the dat
     st.write("The data below is filtered based on the date range selected above.")
 
     # Display the filtered DataFrame
-    st.write(filtered_data)
+    st.dataframe(filtered_data)
 
 # == About ==========================================================
 elif page == "About":
@@ -901,12 +868,12 @@ The length of each bar signifies the count of feedback entries that fall into th
 
     # Define the palette conditionally based on the category names
     palette = [
-        "#ffba08"
+        "#d7bc89"
         if (
             label == "Overall Patient Satisfaction"
             or label == "No Improvement Suggestion"
         )
-        else "#e85d04"
+        else "#c69363"
         for label in label_counts_df["Improvement Labels"]
     ]
 
