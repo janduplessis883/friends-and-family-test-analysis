@@ -114,7 +114,7 @@ start_date = surgery_data["time"].dt.date.min()
 current_date = date.today()
 
 selected_date_range = st.slider(
-    "",
+    "Select Date Range",
     min_value=start_date,
     max_value=current_date,
     value=(start_date, current_date),  # Set default range
