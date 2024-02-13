@@ -81,7 +81,7 @@ page = st.sidebar.radio("Choose a Page", [
         "Feedback Classification",
         "Improvement Suggestions",
         "Sentiment Analysis",
-        "GPT-4 Feedback Summary",
+        "GPT4 Summary",
         "Word Cloud",
         "View Dataframe",
         "About",
@@ -121,11 +121,31 @@ selected_date_range = st.slider(
     help="Use the slider to specify a date range"# Set default range
 )
 
-# Filter the DataFrame based on the selected date range
-filtered_data = surgery_data[
-    (surgery_data["time"].dt.date >= selected_date_range[0])
-    & (surgery_data["time"].dt.date <= selected_date_range[1])
-]
+@st.cache_data  # This decorator caches the output of this function
+def filter_data_by_date_range(data, date_range):
+    """
+    Filter the provided DataFrame based on a date range.
+
+    Parameters:
+    data (DataFrame): The DataFrame to filter.
+    date_range (tuple): A tuple of two dates (start_date, end_date).
+
+    Returns:
+    DataFrame: Filtered DataFrame.
+    """
+    # Ensure that the 'time' column is a datetime type
+    data['time'] = pd.to_datetime(data['time'], dayfirst=True)
+    
+    # Apply the date range filter
+    filtered_d = data[
+        (data["time"].dt.date >= date_range[0])
+        & (data["time"].dt.date <= date_range[1])
+    ]
+    return filtered_d
+
+# Example usage in your Streamlit app
+# surgery_data and selected_date_range should be defined earlier in your app
+filtered_data = filter_data_by_date_range(surgery_data, selected_date_range)
 
 
 # == DASHBOARD ==========================================================================================================
@@ -205,7 +225,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
             # Display the plot in Streamlit
             st.pyplot(fig)
         except:
-            st.warning("No rating available for this date range.")
+            st.info("No rating available for this date range.")
 
     with col2:
         ui.metric_card(title="Total Responses", content=f"{filtered_data.shape[0]}", description=f"since {start_date}", key="card1")
@@ -311,7 +331,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Create the figure and the bar plot
     fig, ax = plt.subplots(figsize=(12, 3.5))
     sns.barplot(
-        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#6b899f"
+        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#aec867"
     )
 
     # Set grid, spines and annotations as before
@@ -349,7 +369,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
 
 # == Rating & Sentiment Analysis Correlation ======================================================================
 elif page == "Sentiment Analysis":
-    st.subheader("Rating & Sentiment Analysis Correlation")
+    st.subheader("Sentiment Analysis")
     toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
 
     # React to the toggle's state
@@ -397,9 +417,35 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     weekly_sent_df = weekly_sent.reset_index()
     weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
     weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
+    
+    @st.cache_data  # This decorator caches the output of this function
+    def calculate_weekly_sentiment(data):
+        """
+        Calculate the weekly sentiment averages from the given DataFrame.
+
+        Parameters:
+        data (DataFrame): The DataFrame containing sentiment scores and time data.
+
+        Returns:
+        DataFrame: A DataFrame with weekly averages of sentiment scores.
+        """
+        # Resample the data to a weekly frequency and calculate the mean of sentiment scores
+        weekly_sent = data.resample("W", on="time")["neg", "pos", "neu", "compound"].mean()
+        
+        # Reset the index to turn the 'time' index into a column and rename columns
+        weekly_sent_df = weekly_sent.reset_index()
+        weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
+        
+        # Convert the 'Week' column to datetime format
+        weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
+
+        return weekly_sent_df
+
+    weekly_sentiment = calculate_weekly_sentiment(filtered_data)
+    
     fig, ax = plt.subplots(figsize=(16, 6))
     sns.lineplot(
-        data=weekly_sent_df,
+        data=weekly_sentiment,
         x="Week",
         y="neu",
         color="#f0e8d2",
@@ -408,7 +454,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     )
 
     sns.lineplot(
-        data=weekly_sent_df,
+        data=weekly_sentiment,
         x="Week",
         y="pos",
         color="#4c91b0",
@@ -416,7 +462,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         linewidth=2,
     )
     sns.lineplot(
-        data=weekly_sent_df,
+        data=weekly_sentiment,
         x="Week",
         y="neg",
         color="#ae4f4d",
@@ -446,37 +492,54 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     plt.tight_layout()
     st.pyplot(fig)
     
-    filtered_data["date"] = pd.to_datetime(filtered_data["time"]).dt.date
-    pos_list = []
-    neg_list = []
-    neu_list = []
-    date_list = []
-    for i in filtered_data["date"].unique():
-        temp = filtered_data[filtered_data["date"] == i]
-        positive_temp = temp[temp["sentiment"] == "positive"]
-        negative_temp = temp[temp["sentiment"] == "negative"]
-        neutral_temp = temp[temp["sentiment"] == "neutral"]
-        pos_list.append((positive_temp.shape[0] / temp.shape[0]) * 100)
-        neg_list.append((negative_temp.shape[0] / temp.shape[0]) * 100)
-        neu_list.append((neutral_temp.shape[0] / temp.shape[0]) * 100)
-        date_list.append(str(i))
+    @st.cache_data  # This decorator caches the output of this function
+    def process_sentiment_data(data):
+        """
+        Process the sentiment data to calculate the percentage of positive, negative, 
+        and neutral sentiments for each date.
 
-    dict = {"date": date_list, "pos": pos_list, "neg": neg_list, "neu": neu_list}
-    new = pd.DataFrame(dict)
+        Parameters:
+        data (DataFrame): The DataFrame containing sentiment data and time.
 
-    new["date"] = pd.to_datetime(new["date"])
+        Returns:
+        DataFrame: A DataFrame with the processed sentiment data.
+        """
+        # Ensure 'time' column is in datetime format and create a 'date' column
+        data["date"] = pd.to_datetime(data["time"]).dt.date
 
-    # Normalize the sentiment columns so that they sum up to 1 (or 100%)
-    new["total"] = new[["neg", "pos", "neu"]].sum(axis=1)
-    new["neg"] /= new["total"]
-    new["pos"] /= new["total"]
-    new["neu"] /= new["total"]
+        pos_list, neg_list, neu_list, date_list = [], [], [], []
 
-    # Convert 'date' to string for plotting purposes
-    new["date"] = new["date"].dt.strftime("%Y-%m-%d")
+        # Calculate the sentiment percentages
+        for i in data["date"].unique():
+            temp = data[data["date"] == i]
+            positive_temp = temp[temp["sentiment"] == "positive"]
+            negative_temp = temp[temp["sentiment"] == "negative"]
+            neutral_temp = temp[temp["sentiment"] == "neutral"]
 
-    # Sort by date if not already
-    new = new.sort_values("date")
+            pos_list.append((positive_temp.shape[0] / temp.shape[0]) * 100)
+            neg_list.append((negative_temp.shape[0] / temp.shape[0]) * 100)
+            neu_list.append((neutral_temp.shape[0] / temp.shape[0]) * 100)
+            date_list.append(str(i))
+
+        # Create a new DataFrame with the calculated data
+        new_data = pd.DataFrame({"date": date_list, "pos": pos_list, "neg": neg_list, "neu": neu_list})
+
+        # Convert 'date' to datetime and normalize the sentiment columns
+        new_data["date"] = pd.to_datetime(new_data["date"])
+        new_data["total"] = new_data[["neg", "pos", "neu"]].sum(axis=1)
+        new_data["neg"] /= new_data["total"]
+        new_data["pos"] /= new_data["total"]
+        new_data["neu"] /= new_data["total"]
+
+        # Convert 'date' back to string for plotting and sort the DataFrame
+        new_data["date"] = new_data["date"].dt.strftime("%Y-%m-%d")
+        new_data = new_data.sort_values("date")
+
+        return new_data
+
+    # Example usage in your Streamlit app
+    # Assume filtered_data is defined earlier in your app
+    new = process_sentiment_data(filtered_data)
 
     # Get the date_list for x-axis ticks
     date_list = new["date"]
@@ -646,7 +709,8 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     ]
 
     if not selected_ratings:
-        st.warning("Please select at least one classification.")
+        ui.badges(badge_list=[("Please select at least one classification.", "outline")], class_name="flex gap-2", key="badges10")
+       
     else:
         for rating in selected_ratings:
             specific_class = filtered_classes[filtered_classes["feedback_labels"] == rating]
@@ -693,7 +757,7 @@ Below the chart is a multi-select field where you can choose to filter and revie
 
     # Define the palette conditionally based on the category names
     palette = [
-        "#90e0ef" if (label == "Overall Patient Satisfaction") else "#62899f"
+        "#aec867" if (label == "Overall Patient Satisfaction") else "#62899f"
         for label in label_counts_df["Feedback Classification"]
     ]
 
@@ -728,7 +792,7 @@ Below the chart is a multi-select field where you can choose to filter and revie
     ]
 
     if not selected_ratings:
-        st.warning("Please select at least one classification.")
+        ui.badges(badge_list=[("Please select at least one classification.", "outline")], class_name="flex gap-2", key="badges10")
     else:
         for rating in selected_ratings:
             specific_class = filtered_classes[
@@ -744,7 +808,7 @@ Below the chart is a multi-select field where you can choose to filter and revie
 # == Word Cloud ==========================================================
 elif page == "Word Cloud":
     try:
-        st.subheader("Feedback Word Cloud")
+        st.header("Word Cloud")
         toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
         if toggle:
             st.markdown(
@@ -754,13 +818,14 @@ elif page == "Word Cloud":
     In the context of patient feedback, a word cloud can be especially useful to quickly identify the key themes or subjects that are most talked about by patients. For example, if many patients mention terms like "waiting times" or "friendly staff," these words will stand out in the word cloud, indicating areas that are notably good or need improvement.  
 2. The **Improvement Suggestions Word Cloud** is a creative and intuitive representation of the feedback collected from patients through the Friends and Family Test (FFT). When patients are asked, "Is there anything that would have made your experience better?" their responses provide invaluable insights into how healthcare services can be enhanced."""
             )
+        st.subheader("Feedback Word Cloud")
         text = " ".join(filtered_data["free_text"].dropna())
         wordcloud = WordCloud(background_color="white", colormap="Blues").generate(text)
         plt.imshow(wordcloud, interpolation="bilinear")
         plt.axis("off")
         st.pyplot(plt)
     except:
-        st.warning("No feedback available for this date range.")
+        ui.badges(badge_list=[("No Feedback available for this date range.", "outline")], class_name="flex gap-2", key="badges10")
     try:
         st.subheader("Improvement Suggestions Word Cloud")
 
@@ -770,7 +835,7 @@ elif page == "Word Cloud":
         plt.axis("off")
         st.pyplot(plt)
     except:
-        st.warning("No improvement suggestions available for this date range.")
+        ui.badges(badge_list=[("No improvement suggestions available for this date range.", "outline")], class_name="flex gap-2", key="badges10")
 
 # == Dataframe ==========================================================
 elif page == "View Dataframe":
@@ -868,12 +933,12 @@ The length of each bar signifies the count of feedback entries that fall into th
 
     # Define the palette conditionally based on the category names
     palette = [
-        "#d7bc89"
+        "#d89254"
         if (
             label == "Overall Patient Satisfaction"
             or label == "No Improvement Suggestion"
         )
-        else "#c69363"
+        else "#ae4f4d"
         for label in label_counts_df["Improvement Labels"]
     ]
 
@@ -908,7 +973,7 @@ The length of each bar signifies the count of feedback entries that fall into th
     ]
 
     if not selected_ratings:
-        st.warning("Please select at least one classification.")
+        ui.badges(badge_list=[("Please select at least one classification.", "outline")], class_name="flex gap-2", key="badges10")
     else:
         for rating in selected_ratings:
             specific_class = filtered_classes[
@@ -921,11 +986,22 @@ The length of each bar signifies the count of feedback entries that fall into th
                 st.write("- " + str(text))
 
 # == Generate ChatGPT Summaries ==========================================================
-elif page == "GPT-4 Feedback Summary":
-    st.subheader("Generate ChatGPT Summaries")
+elif page == "GPT4 Summary":
+    st.subheader("GPT4 Summary")
     toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
     if toggle:
-        st.markdown("""soon...""")
+        st.markdown("""**What This Page Offers:**
+
+**Automated Summaries**: Leveraging OpenAI's cutting-edge ChatGPT-4, we transform the Friends & Family Test feedback and improvement suggestions into concise, actionable insights.  
+**Time-Specific Insights**: Select the period that matters to you. Whether it's a week, a month, or a custom range, our tool distills feedback relevant to your chosen timeframe.  
+**Efficient Meeting Preparations**: Prepare for meetings with ease. Our summaries provide a clear overview of patient feedback, enabling you to log actions and decisions swiftly and accurately.  
+
+**How It Works**:
+
+1. **Select Your Time Period**: Choose the dates that you want to analyze.  
+2. **AI-Powered Summarization**: ChatGPT-4 reads through the feedback and suggestions, understanding the nuances and key points.  
+3. **Receive Your Summary**: Get a well-structured, comprehensive summary that highlights the core sentiments and suggestions from your patients.""")
+    
     filtered_data = surgery_data[
         (surgery_data["time"].dt.date >= selected_date_range[0])
         & (surgery_data["time"].dt.date <= selected_date_range[1])
@@ -959,7 +1035,7 @@ elif page == "GPT-4 Feedback Summary":
     user_input = text
 
     # Button to trigger summarization
-    if st.button("Summarize with GPT-4"):
+    if st.button("Summarize with GPT-4", help="Click to start generating a summary."):
         if user_input:
             # Call the function to interact with ChatGPT API
             st.markdown("### Input Text")
@@ -979,11 +1055,11 @@ elif page == "GPT-4 Feedback Summary":
             # Hide the progress bar after completion
             my_bar.empty()
             st.markdown("---")
-            st.markdown("### GPT-4 Feedback Summary")
-            st.markdown("`Copy GPPT-4 Report as required.`")
+            st.markdown("### GPT4 Feedback Summary")
+            st.markdown("`Copy GPPT4 Summary as required.`")
             st.write(summary)
-            st.download_button("Download GPT-4 Output", summary)
+            st.download_button("Download GPT-4 Output", summary, help="Download summary as a TXT file.")
 
         else:
             st.write(text)
-            st.warning("Model Error: Not able to summarize feedback.")
+            ui.badges(badge_list=[("Not able to summarise text.", "destructive")], class_name="flex gap-2", key="badges10")
