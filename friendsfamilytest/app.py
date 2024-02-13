@@ -159,7 +159,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
             monthly_avg_df = monthly_avg.reset_index()
 
             # Create a line plot
-            fig, ax = plt.subplots(figsize=(10, 3))
+            fig, ax = plt.subplots(figsize=(10, 4))
             sns.lineplot(
                 x="time",
                 y="rating_score",
