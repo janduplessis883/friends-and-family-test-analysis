@@ -1036,7 +1036,7 @@ elif page == "GPT4 Summary":
     user_input = text
 
     # Button to trigger summarization
-    if st.button("Summarize with GPT-4", help="Click to start generating a summary."):
+    if st.button("Summarize with GPT4", help="Click to start generating a summary."):
         if user_input:
             # Call the function to interact with ChatGPT API
             st.markdown("### Input Text")
@@ -1048,7 +1048,7 @@ elif page == "GPT4 Summary":
 
             # Simulate a loading process
             for percent_complete in range(100):
-                time.sleep(0.1)
+                time.sleep(0.2)
                 my_bar.progress(percent_complete + 1)
 
             summary = call_chatgpt_api(user_input)
@@ -1064,3 +1064,5 @@ elif page == "GPT4 Summary":
         else:
             st.write(text)
             ui.badges(badge_list=[("Not able to summarise text.", "destructive")], class_name="flex gap-2", key="badges10")
+    else:
+        st.image("https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/unnamed.jpg?raw=true")
