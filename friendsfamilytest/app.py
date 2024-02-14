@@ -34,7 +34,7 @@ html = """
 """
 
 
-@st.cache_data
+@st.cache_data(ttl=900)
 def load_data():
     df = pd.read_csv("friendsfamilytest/data/data.csv")
     df["time"] = pd.to_datetime(df["time"], dayfirst=True)
@@ -60,7 +60,7 @@ monthly_avg_df.columns = ["Month", "Average Rating"]
 st.sidebar.markdown(html, unsafe_allow_html=True)
 st.sidebar.image("https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/transparent2.png?raw=true")
 
-@st.cache_data  # This decorator enables caching for this function
+@st.cache_data(ttl=900)  # This decorator enables caching for this function
 def get_surgery_data(data, selected_surgery):
     # Extracting unique surgery types
     surgery_list = data["surgery"].unique()
