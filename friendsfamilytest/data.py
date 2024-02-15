@@ -78,9 +78,9 @@ def text_classification(data):
 
 @time_it
 def sentiment_analysis(data):
-    sentiment_task = pipeline(
-        "sentiment-analysis", model="cardiffnlp/twitter-roberta-base-sentiment-latest"
-    )
+    # sentiment_task = pipeline(
+    #     "sentiment-analysis", model="cardiffnlp/twitter-roberta-base-sentiment-latest"
+    # )
 
     # Initialize lists to store labels and scores
     sentiment = []
@@ -88,10 +88,10 @@ def sentiment_analysis(data):
 
     # Iterate over DataFrame rows and classify text
     for _, row in data.iterrows():
-        sentence = row["free_text"]
-        model_outputs = sentiment_task(sentence)
-        sentiment.append(model_outputs[0]["label"])
-        sentiment_score.append(model_outputs[0]["score"])
+        # sentence = row["free_text"]
+        # model_outputs = sentiment_task(sentence)
+        sentiment.append('')
+        sentiment_score.append(0)
 
     # Add labels and scores as new columns
     data["sentiment"] = sentiment
@@ -118,6 +118,8 @@ def anonymize(df):
         "param",
         "brodie",
         "scudder",
+        "tim",
+        "rees"
     ]
 
     # Function to replace surnames in text
