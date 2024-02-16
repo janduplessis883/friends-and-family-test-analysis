@@ -198,6 +198,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
             ax.spines["top"].set_visible(False)
             ax.spines["right"].set_visible(False)
             ax.spines["left"].set_visible(False)
+            
 
             # Rotate x-axis labels
             # plt.setp(ax.get_xticklabels(), rotation=45, ha="right")
@@ -271,7 +272,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     plt.legend(
         handles=legend_patches,
         title="Rating Categories",
-        bbox_to_anchor=(1, 1),
+        bbox_to_anchor=(1.05, 1),
         loc="best",
     )
     
@@ -280,7 +281,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
         width = p.get_width()
         try:
             y = p.get_y() + p.get_height() / 2
-            ax.text(width + 1, y, f"{int(width)}", va="center", fontsize=10)
+            ax.text(width + 1, y, f"{int(width)} / {round((int(width)/filtered_data.shape[0])*100, 1)}%", va="center", fontsize=10)
         except ValueError:
             pass
 
@@ -295,7 +296,6 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     plt.tight_layout()
     st.pyplot(plt)
     st.write("")
-
 
 
     st.write("")
