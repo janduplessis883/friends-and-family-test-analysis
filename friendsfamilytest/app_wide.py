@@ -7,7 +7,7 @@ import seaborn as sns
 from datetime import datetime
 from datetime import date
 from matplotlib.patches import Patch
-import time  
+import time
 from openai import OpenAI
 import streamlit_shadcn_ui as ui
 
@@ -40,8 +40,8 @@ def load_data():
     df["time"] = pd.to_datetime(df["time"], dayfirst=True)
     return df
 
-data = load_data()
 
+data = load_data()
 
 
 def load_timedata():
@@ -49,6 +49,7 @@ def load_timedata():
     df["time"] = pd.to_datetime(df["time"], dayfirst=True)
     df.set_index("time", inplace=True)
     return df
+
 
 # Calculate monthly averages
 data_time = load_timedata()
@@ -59,6 +60,7 @@ monthly_avg_df.columns = ["Month", "Average Rating"]
 
 st.sidebar.markdown(html, unsafe_allow_html=True)
 
+
 @st.cache_data  # This decorator enables caching for this function
 def get_surgery_data(data, selected_surgery):
     # Extracting unique surgery types
@@ -68,6 +70,7 @@ def get_surgery_data(data, selected_surgery):
     surgery_data = data[data["surgery"] == selected_surgery]
     return surgery_data
 
+
 surgery_list = data["surgery"].unique()
 selected_surgery = st.sidebar.selectbox("Select Surgery", surgery_list)
 
@@ -76,7 +79,9 @@ surgery_data = get_surgery_data(data, selected_surgery)
 
 st.sidebar.container(height=5, border=0)
 
-page = st.sidebar.radio("Choose a Page", [
+page = st.sidebar.radio(
+    "Choose a Page",
+    [
         "Dashboard",
         "Feedback Classification",
         "Improvement Suggestions",
@@ -85,11 +90,13 @@ page = st.sidebar.radio("Choose a Page", [
         "Word Cloud",
         "View Dataframe",
         "About",
-    ]
+    ],
 )
 st.sidebar.container(height=200, border=0)
 
-st.sidebar.image("https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/transparent2.png?raw=true")
+st.sidebar.image(
+    "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/transparent2.png?raw=true"
+)
 st.sidebar.write("")
 
 centered_html = """
@@ -107,7 +114,6 @@ centered_html = """
 # Using the markdown function with HTML to center the text
 st.sidebar.markdown(centered_html, unsafe_allow_html=True)
 
-    
 
 # Create a date range slider
 start_date = surgery_data["time"].dt.date.min()
@@ -129,7 +135,9 @@ filtered_data = surgery_data[
 
 # == DASHBOARD ==========================================================================================================
 if page == "Dashboard":
-    toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
+    toggle = ui.switch(
+        default_checked=False, label="Explain this page.", key="switch_dash"
+    )
     # React to the toggle's state
 
     if toggle:
@@ -207,11 +215,15 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
             st.warning("No rating available for this date range.")
 
     with col2:
-        ui.metric_card(title="Total Responses", content=f"{filtered_data.shape[0]}", description=f"since {start_date}", key="card1")
-       
+        ui.metric_card(
+            title="Total Responses",
+            content=f"{filtered_data.shape[0]}",
+            description=f"since {start_date}",
+            key="card1",
+        )
 
     st.write("")
-    
+
     order = [
         "Extremely likely",
         "Likely",
@@ -252,7 +264,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
         bbox_to_anchor=(1, 1),
         loc="best",
     )
-    
+
     # Iterate through the rectangles (bars) of the plot for width annotations
     for p in ax.patches:
         width = p.get_width()
@@ -273,8 +285,6 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     plt.tight_layout()
     st.pyplot(plt)
     st.write("")
-
-
 
     st.write("")
     # Plotting the line plot
@@ -444,7 +454,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     # Apply tight layout and display plot
     plt.tight_layout()
     st.pyplot(fig)
-    
+
     filtered_data["date"] = pd.to_datetime(filtered_data["time"]).dt.date
     pos_list = []
     neg_list = []
@@ -534,7 +544,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     st.pyplot(fig)
 
     st.markdown("---")
-    
+
     palette_colors = {
         "positive": "#4187aa",
         "neutral": "#d8ae46",
@@ -570,7 +580,6 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     else:
         slider_start = slider_start_point
 
-
     # The value parameter is set to slider_end, which is the maximum value
     slider_value = st.slider(
         label="Select Negative Sentiment Analysis threshold:",
@@ -583,16 +592,14 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     # Create two columns
     col1, col2 = st.columns(2)
 
-    
     # Content for the first column
     with col1:
-
 
         fig, ax = plt.subplots(figsize=(5, 2))
         sns.histplot(data=neg_sentiment, x="sentiment_score", color="#be6933", kde=True)
         # Set grid, spines and annotations as before
         # Add a vertical red line at sentiment score of 0.90
-        plt.axvline(x=slider_value, color='#ae4f4d', linestyle='-', linewidth=4)
+        plt.axvline(x=slider_value, color="#ae4f4d", linestyle="-", linewidth=4)
         ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
         ax.xaxis.grid(False)
         ax.spines["top"].set_visible(False)
@@ -622,15 +629,12 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 
     # Create the slider
 
-
     # View SELECTED Patient Feedback with Sentiment Analaysis NEG >= 0.5
     selected_feedback = filtered_data[
         (filtered_data["sentiment"] == "negative")
         & (filtered_data["sentiment_score"] >= slider_value)
     ].sort_values(by="sentiment_score", ascending=False)
 
-    
-    
     class_list = list(selected_feedback["feedback_labels"].unique())
     cleaned_class_list = [x for x in class_list if not pd.isna(x)]
     selected_ratings = st.multiselect(
@@ -648,7 +652,9 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         st.warning("Please select at least one classification.")
     else:
         for rating in selected_ratings:
-            specific_class = filtered_classes[filtered_classes["feedback_labels"] == rating]
+            specific_class = filtered_classes[
+                filtered_classes["feedback_labels"] == rating
+            ]
             st.subheader(f"{rating.capitalize()} ({str(specific_class.shape[0])})")
             for _, row in specific_class.iterrows():
                 text = row["free_text"]
@@ -797,7 +803,7 @@ elif page == "About":
         "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftestabout.png?raw=true",
         use_column_width=True,
     )
-    
+
     st.markdown(
         """Welcome to our new dashboard, aimed at enhancing how healthcare providers understand and use patient feedback. This tool focuses on the Friends and Family Test (FFT), which is essential for collecting patients' views on healthcare services. Our approach uses advanced text classification and sentiment analysis to organize and interpret this feedback more effectively.
 
@@ -813,11 +819,11 @@ We employ several machine learning techniques for analysis:
 2. **Text Classification** of Patient Feedback: To categorize feedback into different emotional themes, we use the 'SamLowe/roberta-base-go_emotions' model from Huggingface.
 3. **Zero-shot Classification** of Patient Improvement Suggestions: The 'facebook/bart-large-mnli' model helps us identify and classify suggestions for improving patient care, even when the model hasn’t been specifically trained on healthcare data.
 4. **Fine-tuned Zero-shot Calssification with FitSet** Classification of GP Reviews achieved with SetFit Algorithm. SetFit first fine-tunes a Sentence Transformer model on a small number of labeled examples (8 per class). This is followed by training a classifier head on the embeddings generated from the fine-tuned Sentence Transformer. https://huggingface.co/blog/setfit
-5. Visit [**AI MedReview**](https://github.com/janduplessis883/friends-and-family-test-analysis) on GitHub, collaboration welcomed.""")
+5. Visit [**AI MedReview**](https://github.com/janduplessis883/friends-and-family-test-analysis) on GitHub, collaboration welcomed."""
+    )
 
-    
     st.markdown("---")
-   
+
     col1, col2, col3 = st.columns(3)
 
     # Use 'col1' to display content in the first column
@@ -826,7 +832,7 @@ We employ several machine learning techniques for analysis:
             "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/about.png?raw=true",
             width=200,
         )
-        
+
     # Use 'col2' to display content in the second column
     with col2:
         st.image(
@@ -838,7 +844,6 @@ We employ several machine learning techniques for analysis:
             "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/openai.png?raw=true",
             width=200,
         )
-
 
 
 # == Improvement Suggestions ==========================================================
@@ -868,12 +873,14 @@ The length of each bar signifies the count of feedback entries that fall into th
 
     # Define the palette conditionally based on the category names
     palette = [
-        "#d7bc89"
-        if (
-            label == "Overall Patient Satisfaction"
-            or label == "No Improvement Suggestion"
+        (
+            "#d7bc89"
+            if (
+                label == "Overall Patient Satisfaction"
+                or label == "No Improvement Suggestion"
+            )
+            else "#c69363"
         )
-        else "#c69363"
         for label in label_counts_df["Improvement Labels"]
     ]
 
@@ -882,10 +889,10 @@ The length of each bar signifies the count of feedback entries that fall into th
     ax = sns.barplot(
         x="Counts", y="Improvement Labels", data=label_counts_df, palette=palette
     )
-    
+
     ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
     ax.yaxis.grid(False)
-    
+
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["left"].set_visible(True)

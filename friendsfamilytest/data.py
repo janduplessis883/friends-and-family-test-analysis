@@ -90,7 +90,7 @@ def sentiment_analysis(data):
     for _, row in data.iterrows():
         # sentence = row["free_text"]
         # model_outputs = sentiment_task(sentence)
-        sentiment.append('')
+        sentiment.append("")
         sentiment_score.append(0)
 
     # Add labels and scores as new columns
@@ -119,7 +119,7 @@ def anonymize(df):
         "brodie",
         "scudder",
         "tim",
-        "rees"
+        "rees",
     ]
 
     # Function to replace surnames in text
@@ -366,21 +366,39 @@ def improvement_classification(data, batch_size=16):
     classifier = pipeline("zero-shot-classification", model=model, tokenizer=tokenizer)
 
     # Labels
-    improvement_labels_list = ['Appointment Accessibility', 'Reception Staff Interaction',
-       'Medical Staff Competence', 'Patient-Doctor Communication',
-       'Follow-Up and Continuity of Care', 'Facilities and Cleanliness',
-       'Prescription and Medication Management', 'Referral Efficiency',
-       'Emergency Handling', 'Patient Privacy and Confidentiality',
-       'Telehealth Services', 'Patient Education and Resources',
-       'Waiting Room Comfort', 'Patient Empowerment and Support',
-       'Health Outcome Satisfaction', 'Cultural Sensitivity',
-       'Mental Health Support', 'Accessibility for Disabled Patients',
-       'Ambiance of Facility', 'Online Services & Digital Health',
-       'Patient Safety', 'Weekend Service Availability',
-       'Telephone Service', 'Overall Patient Satisfaction',
-       'Blood Test Results & Imaging', 'Patient Participation Group',
-       'Doctor Consultations', 'Home Visits', 'Cancer Screening',
-       'Vaccinations', 'Test Results']
+    improvement_labels_list = [
+        "Appointment Accessibility",
+        "Reception Staff Interaction",
+        "Medical Staff Competence",
+        "Patient-Doctor Communication",
+        "Follow-Up and Continuity of Care",
+        "Facilities and Cleanliness",
+        "Prescription and Medication Management",
+        "Referral Efficiency",
+        "Emergency Handling",
+        "Patient Privacy and Confidentiality",
+        "Telehealth Services",
+        "Patient Education and Resources",
+        "Waiting Room Comfort",
+        "Patient Empowerment and Support",
+        "Health Outcome Satisfaction",
+        "Cultural Sensitivity",
+        "Mental Health Support",
+        "Accessibility for Disabled Patients",
+        "Ambiance of Facility",
+        "Online Services & Digital Health",
+        "Patient Safety",
+        "Weekend Service Availability",
+        "Telephone Service",
+        "Overall Patient Satisfaction",
+        "Blood Test Results & Imaging",
+        "Patient Participation Group",
+        "Doctor Consultations",
+        "Home Visits",
+        "Cancer Screening",
+        "Vaccinations",
+        "Test Results",
+    ]
 
     # Initialize the list to store labels
     improvement_labels = [""] * len(data)  # Pre-fill with empty strings

@@ -7,7 +7,7 @@ import seaborn as sns
 from datetime import datetime
 from datetime import date
 from matplotlib.patches import Patch
-import time  
+import time
 from openai import OpenAI
 import streamlit_shadcn_ui as ui
 
@@ -40,8 +40,8 @@ def load_data():
     df["time"] = pd.to_datetime(df["time"], dayfirst=True)
     return df
 
-data = load_data()
 
+data = load_data()
 
 
 def load_timedata():
@@ -49,6 +49,7 @@ def load_timedata():
     df["time"] = pd.to_datetime(df["time"], dayfirst=True)
     df.set_index("time", inplace=True)
     return df
+
 
 # Calculate monthly averages
 data_time = load_timedata()
@@ -58,7 +59,10 @@ monthly_avg_df = monthly_avg.reset_index()
 monthly_avg_df.columns = ["Month", "Average Rating"]
 
 st.sidebar.markdown(html, unsafe_allow_html=True)
-st.sidebar.image("https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/transparent2.png?raw=true")
+st.sidebar.image(
+    "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/transparent2.png?raw=true"
+)
+
 
 @st.cache_data(ttl=900)  # This decorator enables caching for this function
 def get_surgery_data(data, selected_surgery):
@@ -69,6 +73,7 @@ def get_surgery_data(data, selected_surgery):
     surgery_data = data[data["surgery"] == selected_surgery]
     return surgery_data
 
+
 surgery_list = data["surgery"].unique()
 selected_surgery = st.sidebar.selectbox("Select Surgery", surgery_list)
 
@@ -77,7 +82,9 @@ surgery_data = get_surgery_data(data, selected_surgery)
 
 st.sidebar.container(height=5, border=0)
 
-page = st.sidebar.radio("Choose a Page", [
+page = st.sidebar.radio(
+    "Choose a Page",
+    [
         "Dashboard",
         "Feedback Classification",
         "Improvement Suggestions",
@@ -86,7 +93,7 @@ page = st.sidebar.radio("Choose a Page", [
         "Word Cloud",
         "View Dataframe",
         "About",
-    ]
+    ],
 )
 st.sidebar.container(height=200, border=0)
 
@@ -108,7 +115,6 @@ centered_html = """
 # Using the markdown function with HTML to center the text
 st.sidebar.markdown(centered_html, unsafe_allow_html=True)
 
-    
 
 # Create a date range slider
 start_date = surgery_data["time"].dt.date.min()
@@ -119,8 +125,9 @@ selected_date_range = st.slider(
     min_value=start_date,
     max_value=current_date,
     value=(start_date, current_date),
-    help="Use the slider to specify a date range"# Set default range
+    help="Use the slider to specify a date range",  # Set default range
 )
+
 
 @st.cache_data  # This decorator caches the output of this function
 def filter_data_by_date_range(data, date_range):
@@ -135,14 +142,15 @@ def filter_data_by_date_range(data, date_range):
     DataFrame: Filtered DataFrame.
     """
     # Ensure that the 'time' column is a datetime type
-    data['time'] = pd.to_datetime(data['time'], dayfirst=True)
-    
+    data["time"] = pd.to_datetime(data["time"], dayfirst=True)
+
     # Apply the date range filter
     filtered_d = data[
         (data["time"].dt.date >= date_range[0])
         & (data["time"].dt.date <= date_range[1])
     ]
     return filtered_d
+
 
 # Example usage in your Streamlit app
 # surgery_data and selected_date_range should be defined earlier in your app
@@ -151,7 +159,9 @@ filtered_data = filter_data_by_date_range(surgery_data, selected_date_range)
 
 # == DASHBOARD ==========================================================================================================
 if page == "Dashboard":
-    toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
+    toggle = ui.switch(
+        default_checked=False, label="Explain this page.", key="switch_dash"
+    )
     # React to the toggle's state
 
     if toggle:
@@ -198,7 +208,6 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
             ax.spines["top"].set_visible(False)
             ax.spines["right"].set_visible(False)
             ax.spines["left"].set_visible(False)
-            
 
             # Rotate x-axis labels
             # plt.setp(ax.get_xticklabels(), rotation=45, ha="right")
@@ -230,11 +239,15 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
             st.info("No rating available for this date range.")
 
     with col2:
-        ui.metric_card(title="Total Responses", content=f"{filtered_data.shape[0]}", description=f"since {start_date}", key="card1")
-       
+        ui.metric_card(
+            title="Total Responses",
+            content=f"{filtered_data.shape[0]}",
+            description=f"since {start_date}",
+            key="card1",
+        )
 
     st.write("")
-    
+
     order = [
         "Extremely likely",
         "Likely",
@@ -275,13 +288,19 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
         bbox_to_anchor=(1.05, 1),
         loc="best",
     )
-    
+
     # Iterate through the rectangles (bars) of the plot for width annotations
     for p in ax.patches:
         width = p.get_width()
         try:
             y = p.get_y() + p.get_height() / 2
-            ax.text(width + 1, y, f"{int(width)} / {round((int(width)/filtered_data.shape[0])*100, 1)}%", va="center", fontsize=10)
+            ax.text(
+                width + 1,
+                y,
+                f"{int(width)} / {round((int(width)/filtered_data.shape[0])*100, 1)}%",
+                va="center",
+                fontsize=10,
+            )
         except ValueError:
             pass
 
@@ -296,7 +315,6 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     plt.tight_layout()
     st.pyplot(plt)
     st.write("")
-
 
     st.write("")
     # Plotting the line plot
@@ -371,7 +389,9 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
 # == Rating & Sentiment Analysis Correlation ======================================================================
 elif page == "Sentiment Analysis":
     st.subheader("Sentiment Analysis")
-    toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
+    toggle = ui.switch(
+        default_checked=False, label="Explain this page.", key="switch_dash"
+    )
 
     # React to the toggle's state
     if toggle:
@@ -418,7 +438,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     weekly_sent_df = weekly_sent.reset_index()
     weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
     weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
-    
+
     @st.cache_data  # This decorator caches the output of this function
     def calculate_weekly_sentiment(data):
         """
@@ -431,19 +451,21 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         DataFrame: A DataFrame with weekly averages of sentiment scores.
         """
         # Resample the data to a weekly frequency and calculate the mean of sentiment scores
-        weekly_sent = data.resample("W", on="time")["neg", "pos", "neu", "compound"].mean()
-        
+        weekly_sent = data.resample("W", on="time")[
+            "neg", "pos", "neu", "compound"
+        ].mean()
+
         # Reset the index to turn the 'time' index into a column and rename columns
         weekly_sent_df = weekly_sent.reset_index()
         weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
-        
+
         # Convert the 'Week' column to datetime format
         weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
 
         return weekly_sent_df
 
     weekly_sentiment = calculate_weekly_sentiment(filtered_data)
-    
+
     fig, ax = plt.subplots(figsize=(16, 6))
     sns.lineplot(
         data=weekly_sentiment,
@@ -492,11 +514,11 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     # Apply tight layout and display plot
     plt.tight_layout()
     st.pyplot(fig)
-    
+
     @st.cache_data  # This decorator caches the output of this function
     def process_sentiment_data(data):
         """
-        Process the sentiment data to calculate the percentage of positive, negative, 
+        Process the sentiment data to calculate the percentage of positive, negative,
         and neutral sentiments for each date.
 
         Parameters:
@@ -523,7 +545,9 @@ Select Patient feedback to review, this page only displays feedback that on Sent
             date_list.append(str(i))
 
         # Create a new DataFrame with the calculated data
-        new_data = pd.DataFrame({"date": date_list, "pos": pos_list, "neg": neg_list, "neu": neu_list})
+        new_data = pd.DataFrame(
+            {"date": date_list, "pos": pos_list, "neg": neg_list, "neu": neu_list}
+        )
 
         # Convert 'date' to datetime and normalize the sentiment columns
         new_data["date"] = pd.to_datetime(new_data["date"])
@@ -599,7 +623,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     st.pyplot(fig)
 
     st.markdown("---")
-    
+
     palette_colors = {
         "positive": "#4187aa",
         "neutral": "#d8ae46",
@@ -635,7 +659,6 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     else:
         slider_start = slider_start_point
 
-
     # The value parameter is set to slider_end, which is the maximum value
     slider_value = st.slider(
         label="Select Negative Sentiment Analysis threshold:",
@@ -648,16 +671,14 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     # Create two columns
     col1, col2 = st.columns(2)
 
-    
     # Content for the first column
     with col1:
-
 
         fig, ax = plt.subplots(figsize=(5, 2))
         sns.histplot(data=neg_sentiment, x="sentiment_score", color="#be6933", kde=True)
         # Set grid, spines and annotations as before
         # Add a vertical red line at sentiment score of 0.90
-        plt.axvline(x=slider_value, color='#ae4f4d', linestyle='-', linewidth=4)
+        plt.axvline(x=slider_value, color="#ae4f4d", linestyle="-", linewidth=4)
         ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
         ax.xaxis.grid(False)
         ax.spines["top"].set_visible(False)
@@ -687,15 +708,12 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 
     # Create the slider
 
-
     # View SELECTED Patient Feedback with Sentiment Analaysis NEG >= 0.5
     selected_feedback = filtered_data[
         (filtered_data["sentiment"] == "negative")
         & (filtered_data["sentiment_score"] >= slider_value)
     ].sort_values(by="sentiment_score", ascending=False)
 
-    
-    
     class_list = list(selected_feedback["feedback_labels"].unique())
     cleaned_class_list = [x for x in class_list if not pd.isna(x)]
     selected_ratings = st.multiselect(
@@ -710,11 +728,17 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     ]
 
     if not selected_ratings:
-        ui.badges(badge_list=[("Please select at least one classification.", "outline")], class_name="flex gap-2", key="badges10")
-       
+        ui.badges(
+            badge_list=[("Please select at least one classification.", "outline")],
+            class_name="flex gap-2",
+            key="badges10",
+        )
+
     else:
         for rating in selected_ratings:
-            specific_class = filtered_classes[filtered_classes["feedback_labels"] == rating]
+            specific_class = filtered_classes[
+                filtered_classes["feedback_labels"] == rating
+            ]
             st.subheader(f"{rating.capitalize()} ({str(specific_class.shape[0])})")
             for _, row in specific_class.iterrows():
                 text = row["free_text"]
@@ -736,7 +760,9 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 elif page == "Feedback Classification":
     st.subheader("Feedback Classification")
 
-    toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
+    toggle = ui.switch(
+        default_checked=False, label="Explain this page.", key="switch_dash"
+    )
     if toggle:
         st.markdown(
             """1. **Bar Chart**:
@@ -793,7 +819,11 @@ Below the chart is a multi-select field where you can choose to filter and revie
     ]
 
     if not selected_ratings:
-        ui.badges(badge_list=[("Please select at least one classification.", "outline")], class_name="flex gap-2", key="badges10")
+        ui.badges(
+            badge_list=[("Please select at least one classification.", "outline")],
+            class_name="flex gap-2",
+            key="badges10",
+        )
     else:
         for rating in selected_ratings:
             specific_class = filtered_classes[
@@ -810,7 +840,9 @@ Below the chart is a multi-select field where you can choose to filter and revie
 elif page == "Word Cloud":
     try:
         st.header("Word Cloud")
-        toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
+        toggle = ui.switch(
+            default_checked=False, label="Explain this page.", key="switch_dash"
+        )
         if toggle:
             st.markdown(
                 """1. The **Feedback Word Cloud**:
@@ -826,7 +858,11 @@ elif page == "Word Cloud":
         plt.axis("off")
         st.pyplot(plt)
     except:
-        ui.badges(badge_list=[("No Feedback available for this date range.", "outline")], class_name="flex gap-2", key="badges10")
+        ui.badges(
+            badge_list=[("No Feedback available for this date range.", "outline")],
+            class_name="flex gap-2",
+            key="badges10",
+        )
     try:
         st.subheader("Improvement Suggestions Word Cloud")
 
@@ -836,12 +872,20 @@ elif page == "Word Cloud":
         plt.axis("off")
         st.pyplot(plt)
     except:
-        ui.badges(badge_list=[("No improvement suggestions available for this date range.", "outline")], class_name="flex gap-2", key="badges10")
+        ui.badges(
+            badge_list=[
+                ("No improvement suggestions available for this date range.", "outline")
+            ],
+            class_name="flex gap-2",
+            key="badges10",
+        )
 
 # == Dataframe ==========================================================
 elif page == "View Dataframe":
     st.subheader("Dataframe")
-    toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
+    toggle = ui.switch(
+        default_checked=False, label="Explain this page.", key="switch_dash"
+    )
     if toggle:
         st.markdown(
             """**Dataframe**:
@@ -863,7 +907,7 @@ elif page == "About":
     #     "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftestabout.png?raw=true",
     #     use_column_width=True,
     # )
-    
+
     st.markdown(
         """Welcome to our new dashboard, aimed at enhancing how healthcare providers understand and use patient feedback. This tool focuses on the Friends and Family Test (FFT), which is essential for collecting patients' views on healthcare services. Our approach uses advanced text classification and sentiment analysis to organize and interpret this feedback more effectively.
 
@@ -879,11 +923,11 @@ We employ several machine learning techniques for analysis:
 2. **Text Classification** of Patient Feedback: To categorize feedback into different emotional themes, we use the 'SamLowe/roberta-base-go_emotions' model from Huggingface.
 3. **Zero-shot Classification** of Patient Improvement Suggestions: The 'facebook/bart-large-mnli' model helps us identify and classify suggestions for improving patient care, even when the model hasn’t been specifically trained on healthcare data.
 4. **Fine-tuned Zero-shot Calssification with FitSet** Classification of GP Reviews achieved with SetFit Algorithm. SetFit first fine-tunes a Sentence Transformer model on a small number of labeled examples (8 per class). This is followed by training a classifier head on the embeddings generated from the fine-tuned Sentence Transformer. https://huggingface.co/blog/setfit
-5. Visit [**AI MedReview**](https://github.com/janduplessis883/friends-and-family-test-analysis) on GitHub, collaboration welcomed.""")
+5. Visit [**AI MedReview**](https://github.com/janduplessis883/friends-and-family-test-analysis) on GitHub, collaboration welcomed."""
+    )
 
-    
     st.markdown("---")
-   
+
     col1, col2, col3 = st.columns(3)
 
     # Use 'col1' to display content in the first column
@@ -892,7 +936,7 @@ We employ several machine learning techniques for analysis:
             "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/about.png?raw=true",
             width=200,
         )
-        
+
     # Use 'col2' to display content in the second column
     with col2:
         st.image(
@@ -906,11 +950,12 @@ We employ several machine learning techniques for analysis:
         )
 
 
-
 # == Improvement Suggestions ==========================================================
 elif page == "Improvement Suggestions":
     st.subheader("Improvement Suggestions")
-    toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
+    toggle = ui.switch(
+        default_checked=False, label="Explain this page.", key="switch_dash"
+    )
     if toggle:
         st.markdown(
             """1. This **horizontal bar chart** provides an analysis of patient feedback addressing areas for potential improvement in healthcare services. Each bar represents a unique category of improvement suggestion derived from patient feedback using zero-shot classification with the `facebook/bart-large-mnli` model. Prior to classification, one-word responses are filtered out to ensure meaningful data is processed.
@@ -934,12 +979,14 @@ The length of each bar signifies the count of feedback entries that fall into th
 
     # Define the palette conditionally based on the category names
     palette = [
-        "#d89254"
-        if (
-            label == "Overall Patient Satisfaction"
-            or label == "No Improvement Suggestion"
+        (
+            "#d89254"
+            if (
+                label == "Overall Patient Satisfaction"
+                or label == "No Improvement Suggestion"
+            )
+            else "#ae4f4d"
         )
-        else "#ae4f4d"
         for label in label_counts_df["Improvement Labels"]
     ]
 
@@ -948,10 +995,10 @@ The length of each bar signifies the count of feedback entries that fall into th
     ax = sns.barplot(
         x="Counts", y="Improvement Labels", data=label_counts_df, palette=palette
     )
-    
+
     ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
     ax.yaxis.grid(False)
-    
+
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["left"].set_visible(True)
@@ -974,7 +1021,11 @@ The length of each bar signifies the count of feedback entries that fall into th
     ]
 
     if not selected_ratings:
-        ui.badges(badge_list=[("Please select at least one classification.", "outline")], class_name="flex gap-2", key="badges10")
+        ui.badges(
+            badge_list=[("Please select at least one classification.", "outline")],
+            class_name="flex gap-2",
+            key="badges10",
+        )
     else:
         for rating in selected_ratings:
             specific_class = filtered_classes[
@@ -989,9 +1040,12 @@ The length of each bar signifies the count of feedback entries that fall into th
 # == Generate ChatGPT Summaries ==========================================================
 elif page == "GPT4 Summary":
     st.subheader("GPT4 Summary")
-    toggle = ui.switch(default_checked=False, label="Explain this page.", key="switch_dash")
+    toggle = ui.switch(
+        default_checked=False, label="Explain this page.", key="switch_dash"
+    )
     if toggle:
-        st.markdown("""**What This Page Offers:**
+        st.markdown(
+            """**What This Page Offers:**
 
 **Automated Summaries**: Leveraging OpenAI's cutting-edge ChatGPT-4, we transform the Friends & Family Test feedback and improvement suggestions into concise, actionable insights.  
 **Time-Specific Insights**: Select the period that matters to you. Whether it's a week, a month, or a custom range, our tool distills feedback relevant to your chosen timeframe.  
@@ -1001,8 +1055,9 @@ elif page == "GPT4 Summary":
 
 1. **Select Your Time Period**: Choose the dates that you want to analyze.  
 2. **AI-Powered Summarization**: ChatGPT-4 reads through the feedback and suggestions, understanding the nuances and key points.  
-3. **Receive Your Summary**: Get a well-structured, comprehensive summary that highlights the core sentiments and suggestions from your patients.""")
-    
+3. **Receive Your Summary**: Get a well-structured, comprehensive summary that highlights the core sentiments and suggestions from your patients."""
+        )
+
     filtered_data = surgery_data[
         (surgery_data["time"].dt.date >= selected_date_range[0])
         & (surgery_data["time"].dt.date <= selected_date_range[1])
@@ -1059,10 +1114,18 @@ elif page == "GPT4 Summary":
             st.markdown("### GPT4 Feedback Summary")
             st.markdown("`Copy GPPT4 Summary as required.`")
             st.write(summary)
-            st.download_button("Download GPT-4 Output", summary, help="Download summary as a TXT file.")
+            st.download_button(
+                "Download GPT-4 Output", summary, help="Download summary as a TXT file."
+            )
 
         else:
             st.write(text)
-            ui.badges(badge_list=[("Not able to summarise text.", "destructive")], class_name="flex gap-2", key="badges10")
+            ui.badges(
+                badge_list=[("Not able to summarise text.", "destructive")],
+                class_name="flex gap-2",
+                key="badges10",
+            )
     else:
-        st.image("https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/unnamed.jpg?raw=true")
+        st.image(
+            "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/unnamed.jpg?raw=true"
+        )
