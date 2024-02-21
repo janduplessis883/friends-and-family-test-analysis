@@ -64,7 +64,7 @@ st.sidebar.image(
 )
 
 
-@st.cache_data(ttl=900)  # This decorator enables caching for this function
+@st.cache_data(ttl=100)  # This decorator enables caching for this function
 def get_surgery_data(data, selected_surgery):
     # Extracting unique surgery types
     surgery_list = data["surgery"].unique()
@@ -129,7 +129,7 @@ selected_date_range = st.slider(
 )
 
 
-@st.cache_data  # This decorator caches the output of this function
+@st.cache_data(ttl=100)  # This decorator caches the output of this function
 def filter_data_by_date_range(data, date_range):
     """
     Filter the provided DataFrame based on a date range.
