@@ -33,7 +33,7 @@ httpx
 pytest-asyncio
 
 # jupiter notebook
-notebook==6.5.5
+notebook==7
 notebook_shim==0.2.3
 ipython
 tpot
