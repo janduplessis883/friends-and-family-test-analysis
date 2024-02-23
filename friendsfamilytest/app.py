@@ -75,6 +75,7 @@ def get_surgery_data(data, selected_surgery):
 
 
 surgery_list = data["surgery"].unique()
+surgery_list.sort()
 selected_surgery = st.sidebar.selectbox("Select Surgery", surgery_list)
 
 # Call the function with the selected surgery
