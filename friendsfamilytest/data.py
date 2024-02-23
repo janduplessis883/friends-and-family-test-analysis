@@ -99,109 +99,23 @@ def sentiment_analysis(data):
 
     return data
 
+ner_pipeline = pipeline("ner", model="dbmdz/bert-large-cased-finetuned-conll03-english", aggregation_strategy="simple")
 
+# Function to anonymize names in text
 @time_it
-def anonymize(df):
-    # List of surnames to look for
-    surnames_to_find = [
-            'burhan',
-            'adib',
-            'emiliani',
-            'alex',
-            'florko',
-            'florka',
-            'lula',
-            'joyce',
-            'christine',
-            'jan',
-            'orietta',
-            'Mark',
-            'Sweeney',
-            'Katherine',
-            'Brunton',
-            'Bi',
-            'Sapuay',
-            'Rebecca',
-            'Goldschmidt',
-            'Azhar',
-            'Janmohamed',
-            'Rebecca',
-            'Hayes',
-            'Shafia',
-            'Hakeem',
-            'Joshua',
-            'Martin',
-            'Aman',
-            'Hargandewal',
-            'Zein',
-            'Toukan',
-            'Huw',
-            "D'Costa",
-            'Elizabeth',
-            "O'Connor",
-            'Mary',
-            'McMahon',
-            'Moriam',
-            'Rahaman',
-            'Tim',
-            'Rees',
-            'Fiona',
-            'Butler',
-            'Shabeena',
-            'Aziz',
-            'Harriet',
-            'Wright',
-            'Anna',
-            'Grimstone',
-            'Nina',
-            'Brunker',
-            'Naila',
-            'Aslam',
-            'Rachel',
-            'Wilson',
-            'Eleanor',
-            'Titley',
-            'Khushhal',
-            'Safi',
-            'Rowena',
-            'Caballero',
-            'Rubeena',
-            'Ismail',
-            'Charlette',
-            'Lok',
-            'Anastasia',
-            'Baker',
-            'Kimiko',
-            'Hoban',
-            'Debbie',
-            'Gallon',
-            'Ahmed',
-            'Rizk',
-            'Maria',
-            'Pankhurst',
-            'Caroline',
-            'Stott',
-            'Emily',
-            'Baker',
-            'Rosanna',
-            'Younger',
-            'Imogen',
-            'Yates',
-    ]
+def anonymize_names_with_transformers(text):
+    # Run the NER pipeline on the input text
+    entities = ner_pipeline(text)
+    anonymized_text = text
+    # Iterate over detected entities
+    for entity in entities:
+        # Check if the entity is a person
+        if entity['entity_group'] == 'PER':
+            # Replace the detected name with [PERSON]
+            anonymized_text = anonymized_text.replace(entity['word'], '[PERSON]')
+    return anonymized_text
 
-    # Function to replace surnames in text
-    def replace_surname(text):
-        for surname in surnames_to_find:
-            # Create a regular expression pattern for the surname
-            pattern = r"\b" + re.escape(surname) + r"\b"
-            # Replace the surname with its first letter and a period
-            text = re.sub(pattern, surname[0], text)
-        return text
 
-    # Apply the function to the 'free_text' column
-    df["free_text"] = df["free_text"].apply(replace_surname)
-    df["do_better"] = df["do_better"].apply(replace_surname)
-    return df
 
 
 @time_it
@@ -599,7 +513,8 @@ if __name__ == "__main__":
         data = clean_text(data)  # clean text
         data = word_count(data)  # word count
         data = add_rating_score(data)
-        data = anonymize(data)
+        data["free_text"] = data["free_text"].apply(anonymize_names_with_transformers)
+        data["do_better"] = data["do_better"].apply(anonymize_names_with_transformers)
         data = feedback_classification(data, batch_size=16)
         data = sentiment_analysis(data)
         data = improvement_classification(

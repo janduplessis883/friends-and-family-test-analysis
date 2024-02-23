@@ -9,26 +9,12 @@ import streamlit as st
 init(autoreset=True)
 
 
-# Function to remove emojis
-def remove_emojis(text):
-    emoji_pattern = re.compile(
-        "["
-        "\U0001F600-\U0001F64F"  # emoticons
-        "\U0001F300-\U0001F5FF"  # symbols & pictographs
-        "\U0001F680-\U0001F6FF"  # transport & map symbols
-        "\U0001F1E0-\U0001F1FF"  # flags (iOS)
-        "\U00002702-\U000027B0"
-        "\U000024C2-\U0001F251"
-        "]+",
-        flags=re.UNICODE,
-    )
-    return emoji_pattern.sub(r"", text)
+
 
 
 def clean_and_replace(text):
-    text = remove_emojis(str(text))
     # Convert to lowercase and strip whitespace
-    cleaned_text = str(text).lower().strip()
+    cleaned_text = str(text).strip()
 
     # Remove punctuation and digits
     # cleaned_text = cleaned_text.translate(
@@ -96,101 +82,7 @@ def sentiment_totals(data):
     ]
 
 
-surnames_to_find = [
-    'burhan',
-    'adib',
-    'emiliani',
-    'alex',
-    'florko',
-    'florka',
-    'lula',
-    'joyce',
-    'christine',
-    'jan',
-    'orietta',
-    'Mark',
-    'Sweeney',
-    'Katherine',
-    'Brunton',
-    'Bi',
-    'Sapuay',
-    'Rebecca',
-    'Goldschmidt',
-    'Azhar',
-    'Janmohamed',
-    'Rebecca',
-    'Hayes',
-    'Shafia',
-    'Hakeem',
-    'Joshua',
-    'Martin',
-    'Aman',
-    'Hargandewal',
-    'Zein',
-    'Toukan',
-    'Huw',
-    "D'Costa",
-    'Elizabeth',
-    "O'Connor",
-    'Mary',
-    'McMahon',
-    'Moriam',
-    'Rahaman',
-    'Tim',
-    'Rees',
-    'Fiona',
-    'Butler',
-    'Shabeena',
-    'Aziz',
-    'Harriet',
-    'Wright',
-    'Anna',
-    'Grimstone',
-    'Nina',
-    'Brunker',
-    'Naila',
-    'Aslam',
-    'Rachel',
-    'Wilson',
-    'Eleanor',
-    'Titley',
-    'Khushhal',
-    'Safi',
-    'Rowena',
-    'Caballero',
-    'Rubeena',
-    'Ismail',
-    'Charlette',
-    'Lok',
-    'Anastasia',
-    'Baker',
-    'Kimiko',
-    'Hoban',
-    'Debbie',
-    'Gallon',
-    'Ahmed',
-    'Rizk',
-    'Maria',
-    'Pankhurst',
-    'Caroline',
-    'Stott',
-    'Emily',
-    'Baker',
-    'Rosanna',
-    'Younger',
-    'Imogen',
-    'Yates',
-]
 
-
-# Function to replace surnames in text
-def replace_surname(text):
-    for surname in surnames_to_find:
-        # Create a regular expression pattern for the surname
-        pattern = r"\b" + re.escape(surname) + r"\b"
-        # Replace the surname with its first letter and a period
-        text = re.sub(pattern, surname[0], text)
-    return text
 
 
 # = Decorators =================================================================
