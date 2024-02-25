@@ -926,7 +926,17 @@ We employ several machine learning techniques for analysis:
 3. **Zero-shot Classification** of Patient Improvement Suggestions: The 'facebook/bart-large-mnli' model helps us identify and classify suggestions for improving patient care, even when the model hasn’t been specifically trained on healthcare data.
 4. Visit [**AI MedReview**](https://github.com/janduplessis883/friends-and-family-test-analysis) on GitHub, collaboration welcomed."""
     )
-
+    fig, ax = plt.subplots(figsize=(10, 4))
+    sns.countplot(y='surgery', data=data, color='#536570')
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["bottom"].set_visible(False)
+    ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.yaxis.grid(False)
+    plt.xlabel("Count")
+    plt.ylabel("")
+    plt.tight_layout()
+    st.pyplot(plt)
     st.markdown("---")
 
     col1, col2, col3 = st.columns(3)
