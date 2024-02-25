@@ -160,6 +160,7 @@ filtered_data = filter_data_by_date_range(surgery_data, selected_date_range)
 
 # == DASHBOARD ==========================================================================================================
 if page == "Dashboard":
+    st.subheader(f"{selected_surgery}")
     toggle = ui.switch(
         default_checked=False, label="Explain this page.", key="switch_dash"
     )
