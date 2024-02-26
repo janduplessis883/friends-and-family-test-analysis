@@ -92,6 +92,7 @@ page = st.sidebar.radio(
         "Sentiment Analysis",
         "GPT4 Summary",
         "Word Cloud",
+        "Full Responses",
         "View Dataframe",
         "About",
     ],
@@ -748,9 +749,9 @@ Select Patient feedback to review, this page only displays feedback that on Sent
                 sentiment_score = row["sentiment_score"]
 
                 # Check if the text is valid and not neutral or nan
-                if str(text).lower() not in ["nan"]:
+                if str(text) not in ["nan"]:
                     st.markdown("🗣️ " + str(text))
-                    if str(do_better).lower() not in ["nan"]:
+                    if str(do_better) not in ["nan"]:
                         st.markdown("🔧 " + str(do_better))
                     if str(sentiment_score).lower() not in [
                         "nan",
@@ -928,6 +929,19 @@ We employ several machine learning techniques for analysis:
     )
     fig, ax = plt.subplots(figsize=(10, 4))
     sns.countplot(y='surgery', data=data, color='#536570')
+    for p in ax.patches:
+        width = p.get_width()
+        try:
+            y = p.get_y() + p.get_height() / 2
+            ax.text(
+                width + 1,
+                y,
+                f"{int(width)}",
+                va="center",
+                fontsize=8,
+            )
+        except ValueError:
+            pass
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["bottom"].set_visible(False)
@@ -1140,3 +1154,21 @@ elif page == "GPT4 Summary":
         st.image(
             "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/unnamed.jpg?raw=true"
         )
+
+# == Generate ChatGPT Summaries ==========================================================
+elif page == "Full Responses":
+    st.subheader("Friends & Family Test - Full Responses")
+    st.markdown(f"Showing **{filtered_data.shape[0]}** FFT Responses")
+    
+    for _, row in filtered_data.iterrows():
+        free_text = row["free_text"]
+        do_better = row["do_better"]
+        time = row["time"]
+        rating = row["rating"]
+
+        with st.chat_message("user"):
+            st.markdown(f"**{rating}** `{time}`")
+            if str(free_text) not in ["nan"]:
+                st.markdown("🗣️ " + str(free_text))
+                if str(do_better) not in ["nan"]:
+                    st.markdown("💡 " + str(do_better))
