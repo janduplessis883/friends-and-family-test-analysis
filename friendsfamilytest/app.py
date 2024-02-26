@@ -1153,7 +1153,7 @@ elif page == "GPT4 Summary":
             )
     else:
         st.image(
-            "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/unnamed.jpg?raw=true"
+            "images/openailogo.png"
         )
 
 # == Generate ChatGPT Summaries ==========================================================
