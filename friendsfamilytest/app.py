@@ -1164,7 +1164,7 @@ elif page == "Full Responses":
     daily_count = filtered_data.resample("D", on="time").size()
     daily_count_df = daily_count.reset_index()
     daily_count_df.columns = ["Date", "Daily Count"]
-    fig, ax = plt.subplots(figsize=(12, 2.5))
+    fig, ax = plt.subplots(figsize=(12, 2))
     sns.lineplot(
         data=daily_count_df, x="Date", y="Daily Count", color="#6b899f", linewidth=2
     )
@@ -1188,7 +1188,7 @@ elif page == "Full Responses":
     
     st.markdown(f"Showing **{filtered_data.shape[0]}** FFT Responses")
     
-    with st.container(height=600, border=True):
+    with st.container(height=500, border=True):
         for _, row in filtered_data.iterrows():
             free_text = row["free_text"]
             do_better = row["do_better"]
