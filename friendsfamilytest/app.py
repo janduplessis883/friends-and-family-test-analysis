@@ -60,7 +60,7 @@ monthly_avg_df.columns = ["Month", "Average Rating"]
 
 st.sidebar.markdown(html, unsafe_allow_html=True)
 st.sidebar.image(
-    "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/transparent2.png?raw=true"
+    "images/transparent2.png"
 )
 
 
@@ -959,19 +959,19 @@ We employ several machine learning techniques for analysis:
     # Use 'col1' to display content in the first column
     with col1:
         st.image(
-            "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/about.png?raw=true",
+            "images/about.png",
             width=200,
         )
 
     # Use 'col2' to display content in the second column
     with col2:
         st.image(
-            "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/hf-logo-with-title.png?raw=true",
+            "images/hf-logo-with-title.png",
             width=200,
         )
     with col3:
         st.image(
-            "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/openai.png?raw=true",
+            "images/openai.png",
             width=200,
         )
 
