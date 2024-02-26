@@ -1159,17 +1159,45 @@ elif page == "GPT4 Summary":
 # == Generate ChatGPT Summaries ==========================================================
 elif page == "Full Responses":
     st.subheader("Friends & Family Test - Full Responses")
+    
+    
+    daily_count = filtered_data.resample("D", on="time").size()
+    daily_count_df = daily_count.reset_index()
+    daily_count_df.columns = ["Date", "Daily Count"]
+    fig, ax = plt.subplots(figsize=(12, 2.5))
+    sns.lineplot(
+        data=daily_count_df, x="Date", y="Daily Count", color="#6b899f", linewidth=2
+    )
+
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.xaxis.grid(False)
+
+    # Customizing the x-axis labels for better readability
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
+
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+    ax_title = ax.set_title(
+        "Daily FFT Responses", loc="right"
+    )  # loc parameter aligns the title
+    ax_title.set_position((1, 1))  # Adjust these values to align your title as needed
+    plt.xlabel("")
+    plt.tight_layout()
+    st.pyplot(fig)
+    
     st.markdown(f"Showing **{filtered_data.shape[0]}** FFT Responses")
     
-    for _, row in filtered_data.iterrows():
-        free_text = row["free_text"]
-        do_better = row["do_better"]
-        time = row["time"]
-        rating = row["rating"]
+    with st.container(height=600, border=True):
+        for _, row in filtered_data.iterrows():
+            free_text = row["free_text"]
+            do_better = row["do_better"]
+            time = row["time"]
+            rating = row["rating"]
 
-        with st.chat_message("user"):
-            st.markdown(f"**{rating}** `{time}`")
-            if str(free_text) not in ["nan"]:
-                st.markdown("🗣️ " + str(free_text))
-                if str(do_better) not in ["nan"]:
-                    st.markdown("💡 " + str(do_better))
+            with st.chat_message("user"):
+                st.markdown(f"**{rating}** `{time}`")
+                if str(free_text) not in ["nan"]:
+                    st.markdown("🗣️ " + str(free_text))
+                    if str(do_better) not in ["nan"]:
+                        st.markdown("💡 " + str(do_better))
