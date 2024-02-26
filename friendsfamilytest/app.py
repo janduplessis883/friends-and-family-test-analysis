@@ -91,9 +91,9 @@ page = st.sidebar.radio(
         "Improvement Suggestions",
         "Full Responses",
         "Sentiment Analysis",
-        "GPT4 Summary",
         "Word Cloud",
-        "View Dataframe",
+        "GPT4 Summary",
+        "Dataframe",
         "About",
     ],
 )
@@ -295,10 +295,11 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Iterate through the rectangles (bars) of the plot for width annotations
     for p in ax.patches:
         width = p.get_width()
+        offset = width * 0.02
         try:
             y = p.get_y() + p.get_height() / 2
             ax.text(
-                width + 1,
+                width + offset,
                 y,
                 f"{int(width)} / {round((int(width)/filtered_data.shape[0])*100, 1)}%",
                 va="center",
@@ -884,7 +885,7 @@ elif page == "Word Cloud":
         )
 
 # == Dataframe ==========================================================
-elif page == "View Dataframe":
+elif page == "Dataframe":
     st.subheader("Dataframe")
     toggle = ui.switch(
         default_checked=False, label="Explain this page.", key="switch_dash"
