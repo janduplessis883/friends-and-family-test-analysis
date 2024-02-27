@@ -10,9 +10,6 @@ from matplotlib.patches import Patch
 import time
 from openai import OpenAI
 import streamlit_shadcn_ui as ui
-from io import BytesIO
-from PIL import Image
-import os
 
 
 client = OpenAI()
@@ -1190,18 +1187,7 @@ elif page == "Full Responses":
     st.pyplot(fig)
     
     st.markdown(f"Showing **{filtered_data.shape[0]}** FFT Responses")
-
-    # Assuming there's an image named "example.jpg" in the same directory as your script
-    image_path = 'friendsfamilytest/images/icons8-chat-bubble-48.png'
-
-    # Open the image
-    image = Image.open(image_path)
-
-    # Convert the image to a BytesIO object
-    img_byte_arr = BytesIO()
-    image.save(img_byte_arr, format='PNG')  # You can change 'JPEG' to the correct format of your image if it's not JPEG.
-    img_byte_arr = img_byte_arr.getvalue()  # Get the byte value of the image
-    st.write(os.getcwd())
+    
     with st.container(height=500, border=True):
         for _, row in filtered_data.iterrows():
             free_text = row["free_text"]
@@ -1209,12 +1195,9 @@ elif page == "Full Responses":
             time = row["time"]
             rating = row["rating"]
 
-            with st.chat_message("user", avatar=img_byte_arr):
+            with st.chat_message("user"):
                 st.markdown(f"**{rating}** `{time}`")
                 if str(free_text) not in ["nan"]:
                     st.markdown("🗣️ " + str(free_text))
                     if str(do_better) not in ["nan"]:
                         st.markdown("💡 " + str(do_better))
-                        
-    
-
