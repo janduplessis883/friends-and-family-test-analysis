@@ -24,8 +24,9 @@ from sheethelper import *
 import cronitor
 cronitor.api_key = os.getenv("CRONITOR_API_KEY")
 from loguru import logger
-logger.add("my_project.log", rotation="1 week")
+logger.add("debug.log", rotation="100 KB")
 logger.info("FFT Streamlit App Started - Data Processing")
+logger.info("This is a test log message")
 
 @time_it
 def load_google_sheet():
