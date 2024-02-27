@@ -23,7 +23,6 @@ secret_path = os.getenv("SECRET_PATH")
 from sheethelper import *
 import cronitor
 cronitor.api_key = os.getenv("CRONITOR_API_KEY")
-monitor = cronitor.Monitor('friends-family-test-make-data')
 
 
 @time_it
@@ -501,7 +500,6 @@ def load_local_data():
 
 if __name__ == "__main__":
     print(f"{Fore.WHITE}{Back.BLACK}[+] Friends & Family Test Analysis - MAKE DATA")
-    monitor.ping(message="FFT Alive!")
     monitor = cronitor.Monitor('UFDCXf')
     monitor.ping(state='run')
 
@@ -515,7 +513,7 @@ if __name__ == "__main__":
     data = raw_data[~raw_data.index.isin(processed_data.index)]
 
     print(f"{Fore.BLUE}[*] New rows to process: {data.shape[0]}")
-    monitor.ping(metrics={'count': int(data.shape[0]), 'error_count': 0})
+
     if data.shape[0] != 0:
         data = clean_text(data)  # clean text
         data = word_count(data)  # word count
