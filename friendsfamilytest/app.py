@@ -881,7 +881,7 @@ elif page == "Word Cloud":
                 ("No improvement suggestions available for this date range.", "outline")
             ],
             class_name="flex gap-2",
-            key="badges10",
+            key="badges11",
         )
 
 # == Dataframe ==========================================================
