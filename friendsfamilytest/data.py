@@ -24,7 +24,7 @@ from sheethelper import *
 import cronitor
 cronitor.api_key = os.getenv("CRONITOR_API_KEY")
 from loguru import logger
-logger.add("log/debug.log", rotation="100 KB")
+logger.add("log/debug.log", rotation="500 KB")
 
 
 @time_it
