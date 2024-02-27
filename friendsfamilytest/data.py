@@ -23,7 +23,9 @@ secret_path = os.getenv("SECRET_PATH")
 from sheethelper import *
 import cronitor
 cronitor.api_key = os.getenv("CRONITOR_API_KEY")
-
+from loguru import logger
+logger.add("my_project.log", rotation="1 week")
+logger.info("FFT Streamlit App Started - Data Processing")
 
 @time_it
 def load_google_sheet():
@@ -502,18 +504,21 @@ if __name__ == "__main__":
     print(f"{Fore.WHITE}{Back.BLACK}[+] Friends & Family Test Analysis - MAKE DATA")
     monitor = cronitor.Monitor('UFDCXf')
     monitor.ping(state='run')
-
+    logger.info("Friends & Family Test Analysis - MAKE DATA - Started")
+    
     # Load new data from Google Sheet
     raw_data = load_google_sheet()
-
+    logger.info("Google Sheet Data Loaded")
+    
     # Load local data.csv to dataframe
     processed_data = load_local_data()
-
+    logger.info("Data.csv Loadded")
+    
     # Return new data for processing
     data = raw_data[~raw_data.index.isin(processed_data.index)]
 
     print(f"{Fore.BLUE}[*] New rows to process: {data.shape[0]}")
-
+    logger.info(f"New rows to process: {data.shape[0]}")
     if data.shape[0] != 0:
         data = clean_text(data)  # clean text
         data = word_count(data)  # word count
@@ -532,3 +537,4 @@ if __name__ == "__main__":
     else:
         monitor.ping(state='complete')
         print(f"{Fore.RED}[*] No New rows to add - terminated.")
+        logger.info("Make Data terminated - No now rows")

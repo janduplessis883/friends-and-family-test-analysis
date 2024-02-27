@@ -65,3 +65,4 @@ ollama
 skimpy
 streamlit-shadcn-ui  
 cronitor
+loguru
