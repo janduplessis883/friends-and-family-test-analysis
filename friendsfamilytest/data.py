@@ -24,7 +24,7 @@ from sheethelper import *
 import cronitor
 cronitor.api_key = os.getenv("CRONITOR_API_KEY")
 from loguru import logger
-logger.add("debug.log", rotation="100 KB")
+logger.add("log/debug.log", rotation="100 KB")
 
 
 @time_it
@@ -504,7 +504,7 @@ if __name__ == "__main__":
     print(f"{Fore.WHITE}{Back.BLACK}[+] Friends & Family Test Analysis - MAKE DATA")
     monitor = cronitor.Monitor('UFDCXf')
     monitor.ping(state='run')
-    logger.info("Friends & Family Test Analysis - MAKE DATA - Started")
+    logger.info("▶️ Friends & Family Test Analysis - MAKE DATA - Started")
     
     # Load new data from Google Sheet
     raw_data = load_google_sheet()
@@ -518,7 +518,7 @@ if __name__ == "__main__":
     data = raw_data[~raw_data.index.isin(processed_data.index)]
 
     print(f"{Fore.BLUE}[*] New rows to process: {data.shape[0]}")
-    logger.info(f"New rows to process: {data.shape[0]}")
+    logger.info(f"🆕 New rows to process: {data.shape[0]}")
     
     if data.shape[0] != 0:
         data = clean_text(data)  # clean text
@@ -540,8 +540,8 @@ if __name__ == "__main__":
         do_git_merge()  # Push everything to GitHub
         logger.info("Pushed to GitHub - Master Branch")
         monitor.ping(state='complete')
-        logger.info("Successful Run completed")
+        logger.info("✅ Successful Run completed")
     else:
         monitor.ping(state='complete')
         print(f"{Fore.RED}[*] No New rows to add - terminated.")
-        logger.info("Make Data terminated - No now rows")
+        logger.info("❌ Make Data terminated - No now rows")
