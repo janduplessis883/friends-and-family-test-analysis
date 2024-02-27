@@ -30,6 +30,9 @@ gsheet:
 data:
 	@python friendsfamilytest/data.py
 
+repeat:
+	@python friendsfamilytest/scheduler.py
+
 git_merge:
 	$(MAKE) clean
 	@python friendsfamilytest/auto_git/git_merge.py
