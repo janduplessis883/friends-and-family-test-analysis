@@ -25,8 +25,7 @@ import cronitor
 cronitor.api_key = os.getenv("CRONITOR_API_KEY")
 from loguru import logger
 logger.add("debug.log", rotation="100 KB")
-logger.info("FFT Streamlit App Started - Data Processing")
-logger.info("This is a test log message")
+
 
 @time_it
 def load_google_sheet():
@@ -520,6 +519,7 @@ if __name__ == "__main__":
 
     print(f"{Fore.BLUE}[*] New rows to process: {data.shape[0]}")
     logger.info(f"New rows to process: {data.shape[0]}")
+    
     if data.shape[0] != 0:
         data = clean_text(data)  # clean text
         data = word_count(data)  # word count
@@ -532,9 +532,15 @@ if __name__ == "__main__":
             data, batch_size=16
         )  # data = gpt3_improvement_classification(data)
         data = textblob_sentiment(data)
+        logger.info("Data pre-processing completed")
+        
         concat_save_final_df(processed_data, data)
+        logger.info("💾 Concat Dataframes to data.csv successfully")
+        
         do_git_merge()  # Push everything to GitHub
+        logger.info("Pushed to GitHub - Master Branch")
         monitor.ping(state='complete')
+        logger.info("Successful Run completed")
     else:
         monitor.ping(state='complete')
         print(f"{Fore.RED}[*] No New rows to add - terminated.")
