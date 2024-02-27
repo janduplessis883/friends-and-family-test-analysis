@@ -127,7 +127,7 @@ selected_date_range = st.slider(
     min_value=start_date,
     max_value=current_date,
     value=(start_date, current_date),
-    help="Use the slider to specify a date range",  # Set default range
+    help="Select a start and end date",  # Set default range
 )
 
 
