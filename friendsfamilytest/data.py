@@ -21,6 +21,9 @@ init(autoreset=True)
 warnings.filterwarnings("ignore")
 secret_path = os.getenv("SECRET_PATH")
 from sheethelper import *
+import cronitor
+cronitor.api_key = os.getenv("CRONITOR_API_KEY")
+monitor = cronitor.Monitor('friends-family-test-make-data')
 
 
 @time_it
@@ -498,6 +501,9 @@ def load_local_data():
 
 if __name__ == "__main__":
     print(f"{Fore.WHITE}{Back.BLACK}[+] Friends & Family Test Analysis - MAKE DATA")
+    monitor.ping(message="FFT Alive!")
+    monitor = cronitor.Monitor('UFDCXf')
+    monitor.ping(state='run')
 
     # Load new data from Google Sheet
     raw_data = load_google_sheet()
@@ -509,6 +515,7 @@ if __name__ == "__main__":
     data = raw_data[~raw_data.index.isin(processed_data.index)]
 
     print(f"{Fore.BLUE}[*] New rows to process: {data.shape[0]}")
+    monitor.ping(metrics={'count': int(data.shape[0]), 'error_count': 0})
     if data.shape[0] != 0:
         data = clean_text(data)  # clean text
         data = word_count(data)  # word count
@@ -523,5 +530,7 @@ if __name__ == "__main__":
         data = textblob_sentiment(data)
         concat_save_final_df(processed_data, data)
         do_git_merge()  # Push everything to GitHub
+        monitor.ping(state='complete')
     else:
+        monitor.ping(state='complete')
         print(f"{Fore.RED}[*] No New rows to add - terminated.")
