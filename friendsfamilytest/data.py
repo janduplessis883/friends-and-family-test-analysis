@@ -501,7 +501,7 @@ def load_local_data():
 
 
 if __name__ == "__main__":
-    print(f"{Fore.WHITE}{Back.BLACK}[+] Friends & Family Test Analysis - MAKE DATA")
+
     monitor = cronitor.Monitor('UFDCXf')
     monitor.ping(state='run')
     logger.info("▶️ Friends & Family Test Analysis - MAKE DATA - Started")
@@ -516,8 +516,6 @@ if __name__ == "__main__":
     
     # Return new data for processing
     data = raw_data[~raw_data.index.isin(processed_data.index)]
-
-    print(f"{Fore.BLUE}[*] New rows to process: {data.shape[0]}")
     logger.info(f"🆕 New rows to process: {data.shape[0]}")
     
     if data.shape[0] != 0:
@@ -544,4 +542,4 @@ if __name__ == "__main__":
     else:
         monitor.ping(state='complete')
         print(f"{Fore.RED}[*] No New rows to add - terminated.")
-        logger.info("❌ Make Data terminated - No now rows")
+        logger.error("❌ Make Data terminated - No now rows")

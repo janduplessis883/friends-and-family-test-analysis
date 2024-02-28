@@ -261,12 +261,12 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     ]
 
     palette = {
-        "Extremely likely": "#598dac",
-        "Likely": "#42566e",
-        "Neither likely nor unlikely": "#aec867",
-        "Unlikely": "#ecbf73",
-        "Extremely unlikely": "#e48e46",
-        "Don't know": "#ae4f4d",
+        "Extremely likely": "#749c6f",
+        "Likely": "#a66685",
+        "Neither likely nor unlikely": "#558387",
+        "Unlikely": "#ce9c3e",
+        "Extremely unlikely": "#989736",
+        "Don't know": "#bc362a",
     }
 
     # Set the figure size (width, height) in inches
@@ -324,7 +324,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Plotting the line plot
     fig, ax = plt.subplots(figsize=(12, 3.5))
     sns.lineplot(
-        data=daily_count_df, x="Date", y="Daily Count", color="#6b899f", linewidth=2
+        data=daily_count_df, x="Date", y="Daily Count", color="#558387", linewidth=2
     )
 
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
@@ -354,7 +354,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Create the figure and the bar plot
     fig, ax = plt.subplots(figsize=(12, 3.5))
     sns.barplot(
-        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#aec867"
+        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#5f8186"
     )
 
     # Set grid, spines and annotations as before
@@ -413,7 +413,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     # Data for plotting
     labels = "Positive", "Neutral", "Negative"
     sizes = sentiment_totals(filtered_data)
-    colors = ["#6b899f", "#f0e8d2", "#ae4f4d"]
+    colors = ["#558387", "#d2c5a5", "#bc362a"]
     explode = (0, 0, 0)  # 'explode' the 1st slice (Positive)
 
     # Plot
@@ -475,7 +475,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         data=weekly_sentiment,
         x="Week",
         y="neu",
-        color="#f0e8d2",
+        color="#d2c5a5",
         label="Neutral",
         linewidth=2,
     )
@@ -484,7 +484,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         data=weekly_sentiment,
         x="Week",
         y="pos",
-        color="#4c91b0",
+        color="#558387",
         label="Positive",
         linewidth=2,
     )
@@ -492,7 +492,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         data=weekly_sentiment,
         x="Week",
         y="neg",
-        color="#ae4f4d",
+        color="#bc362a",
         label="Negative",
         linewidth=2,
     )
@@ -581,13 +581,13 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     fig, ax = plt.subplots(figsize=(16, 5))
 
     # Plot each sentiment as a layer in the stacked bar
-    ax.bar(new["date"], new["neg"], label="Negative", color="#ae4f4d", alpha=1)
+    ax.bar(new["date"], new["neg"], label="Negative", color="#bc362a", alpha=1)
     ax.bar(
         new["date"],
         new["pos"],
         bottom=bottom_pos,
         label="Positive",
-        color="#437e97",
+        color="#5f8186",
         alpha=0.9,
     )
     ax.bar(
@@ -595,7 +595,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         new["neu"],
         bottom=bottom_neu,
         label="Neutral",
-        color="#f0e8d2",
+        color="#d2c5a5",
         alpha=0.6,
     )
 
@@ -929,7 +929,7 @@ We employ several machine learning techniques for analysis:
 4. Visit [**AI MedReview**](https://github.com/janduplessis883/friends-and-family-test-analysis) on GitHub, collaboration welcomed."""
     )
     fig, ax = plt.subplots(figsize=(10, 4))
-    sns.countplot(y='surgery', data=data, color='#536570')
+    sns.countplot(y='surgery', data=data, color='#558387')
     for p in ax.patches:
         width = p.get_width()
         try:
@@ -952,6 +952,8 @@ We employ several machine learning techniques for analysis:
     plt.ylabel("")
     plt.tight_layout()
     st.pyplot(plt)
+    
+    
     st.markdown("---")
 
     col1, col2, col3 = st.columns(3)
@@ -1166,7 +1168,7 @@ elif page == "Full Responses":
     daily_count_df.columns = ["Date", "Daily Count"]
     fig, ax = plt.subplots(figsize=(12, 2))
     sns.lineplot(
-        data=daily_count_df, x="Date", y="Daily Count", color="#6b899f", linewidth=2
+        data=daily_count_df, x="Date", y="Daily Count", color="#558387", linewidth=2
     )
 
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
