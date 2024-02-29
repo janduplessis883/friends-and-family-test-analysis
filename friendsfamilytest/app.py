@@ -1083,7 +1083,9 @@ elif page == "GPT4 Summary":
 2. **AI-Powered Summarization**: ChatGPT-4 reads through the feedback and suggestions, understanding the nuances and key points.  
 3. **Receive Your Summary**: Get a well-structured, comprehensive summary that highlights the core sentiments and suggestions from your patients."""
         )
-
+    st.markdown(
+        "Press the button below to create a summary with GPT-4 of all received free text responses, highlighting key trends."
+    )
     filtered_data = surgery_data[
         (surgery_data["time"].dt.date >= selected_date_range[0])
         & (surgery_data["time"].dt.date <= selected_date_range[1])
@@ -1156,7 +1158,7 @@ elif page == "GPT4 Summary":
             "images/openailogo.png"
         )
 
-# == Generate ChatGPT Summaries ==========================================================
+# == Full Responses ==========================================================
 elif page == "Full Responses":
     st.title("Full Responses")
     
