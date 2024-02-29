@@ -413,7 +413,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     # Data for plotting
     labels = "Positive", "Neutral", "Negative"
     sizes = sentiment_totals(filtered_data)
-    colors = ["#558387", "#d2c5a5", "#bc362a"]
+    colors = ["#558387", "#eee8d6", "#bc362a"]
     explode = (0, 0, 0)  # 'explode' the 1st slice (Positive)
 
     # Plot
@@ -475,7 +475,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         data=weekly_sentiment,
         x="Week",
         y="neu",
-        color="#d2c5a5",
+        color="#eee8d6",
         label="Neutral",
         linewidth=2,
     )
@@ -595,7 +595,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         new["neu"],
         bottom=bottom_neu,
         label="Neutral",
-        color="#d2c5a5",
+        color="#eee8d6",
         alpha=0.6,
     )
 
