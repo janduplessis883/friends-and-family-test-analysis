@@ -417,7 +417,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     explode = (0, 0, 0)  # 'explode' the 1st slice (Positive)
 
     # Plot
-    fig, ax = plt.subplots(figsize=(10, 6))
+    fig, ax = plt.subplots(figsize=(12, 5))
     ax.pie(
         sizes,
         explode=explode,
@@ -431,8 +431,6 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     # Draw a circle at the center of pie to make it look like a donut
     centre_circle = plt.Circle((0, 0), 0.50, fc="white")
     fig.gca().add_artist(centre_circle)
-
-    plt.title("Patient Feedback Sentiment Distribution")
     st.pyplot(fig)
 
     # Resample and count the entries per month from filtered data
