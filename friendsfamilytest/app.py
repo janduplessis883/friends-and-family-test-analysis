@@ -927,7 +927,7 @@ We employ several machine learning techniques for analysis:
 4. Visit [**AI MedReview**](https://github.com/janduplessis883/friends-and-family-test-analysis) on GitHub, collaboration welcomed."""
     )
     fig, ax = plt.subplots(figsize=(10, 4))
-    sns.countplot(y='surgery', data=data, color='#283745')
+    sns.countplot(y='surgery', data=data, color='#374a60')
     for p in ax.patches:
         width = p.get_width()
         try:
