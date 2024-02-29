@@ -417,7 +417,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     explode = (0, 0, 0)  # 'explode' the 1st slice (Positive)
 
     # Plot
-    fig, ax = plt.subplots(figsize=(12, 5))
+    fig, ax = plt.subplots(figsize=(10, 6))
     ax.pie(
         sizes,
         explode=explode,
@@ -812,7 +812,7 @@ Below the chart is a multi-select field where you can choose to filter and revie
     st.pyplot(plt)
 
     # View Patient Feedback
-    st.title("View Patient Feedback")
+    st.subheader("View Patient Feedback")
     class_list = list(filtered_data["feedback_labels"].unique())
     cleaned_class_list = [x for x in class_list if not pd.isna(x)]
     selected_ratings = st.multiselect("Select Feedback Categories:", cleaned_class_list)
@@ -906,7 +906,7 @@ Rows are labeled with an Index, which you can think of as the address of the dat
 
 # == About ==========================================================
 elif page == "About":
-    st.title("About (FFT Dashboard)")
+    st.title("About")
     # st.image(
     #     "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftestabout.png?raw=true",
     #     use_column_width=True,
@@ -1067,7 +1067,7 @@ The length of each bar signifies the count of feedback entries that fall into th
 
 # == Generate ChatGPT Summaries ==========================================================
 elif page == "GPT4 Summary":
-    st.title("GPT4 Summary")
+    st.title("GPT4 Free-text Summary")
     toggle = ui.switch(
         default_checked=False, label="Explain this page.", key="switch_dash"
     )
@@ -1160,7 +1160,7 @@ elif page == "GPT4 Summary":
 
 # == Generate ChatGPT Summaries ==========================================================
 elif page == "Full Responses":
-    st.title("Friends & Family Test - Full Responses")
+    st.title("Full Responses")
     
     
     daily_count = filtered_data.resample("D", on="time").size()
