@@ -161,7 +161,7 @@ filtered_data = filter_data_by_date_range(surgery_data, selected_date_range)
 
 # == DASHBOARD ==========================================================================================================
 if page == "Dashboard":
-    st.subheader(f"{selected_surgery}")
+    st.title(f"{selected_surgery}")
     toggle = ui.switch(
         default_checked=False, label="Explain this page.", key="switch_dash"
     )
@@ -392,7 +392,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
 
 # == Rating & Sentiment Analysis Correlation ======================================================================
 elif page == "Sentiment Analysis":
-    st.subheader("Sentiment Analysis")
+    st.title("Sentiment Analysis")
     toggle = ui.switch(
         default_checked=False, label="Explain this page.", key="switch_dash"
     )
@@ -708,7 +708,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         plt.title("Positive Sentiment")
         st.pyplot(plt)  # Display the plot in Streamlit
 
-    st.subheader("View Patient Feedback")
+    st.title("View Patient Feedback")
 
     # Create the slider
 
@@ -762,7 +762,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 
 # == Feedback Classification ========================================================================================
 elif page == "Feedback Classification":
-    st.subheader("Feedback Classification")
+    st.title("Feedback Classification")
 
     toggle = ui.switch(
         default_checked=False, label="Explain this page.", key="switch_dash"
@@ -812,7 +812,7 @@ Below the chart is a multi-select field where you can choose to filter and revie
     st.pyplot(plt)
 
     # View Patient Feedback
-    st.subheader("View Patient Feedback")
+    st.title("View Patient Feedback")
     class_list = list(filtered_data["feedback_labels"].unique())
     cleaned_class_list = [x for x in class_list if not pd.isna(x)]
     selected_ratings = st.multiselect("Select Feedback Categories:", cleaned_class_list)
@@ -855,7 +855,7 @@ elif page == "Word Cloud":
     In the context of patient feedback, a word cloud can be especially useful to quickly identify the key themes or subjects that are most talked about by patients. For example, if many patients mention terms like "waiting times" or "friendly staff," these words will stand out in the word cloud, indicating areas that are notably good or need improvement.  
 2. The **Improvement Suggestions Word Cloud** is a creative and intuitive representation of the feedback collected from patients through the Friends and Family Test (FFT). When patients are asked, "Is there anything that would have made your experience better?" their responses provide invaluable insights into how healthcare services can be enhanced."""
             )
-        st.subheader("Feedback Word Cloud")
+        st.title("Feedback Word Cloud")
         text = " ".join(filtered_data["free_text"].dropna())
         wordcloud = WordCloud(background_color="white", colormap="Blues").generate(text)
         plt.imshow(wordcloud, interpolation="bilinear")
@@ -886,7 +886,7 @@ elif page == "Word Cloud":
 
 # == Dataframe ==========================================================
 elif page == "Dataframe":
-    st.subheader("Dataframe")
+    st.title("Dataframe")
     toggle = ui.switch(
         default_checked=False, label="Explain this page.", key="switch_dash"
     )
@@ -906,7 +906,7 @@ Rows are labeled with an Index, which you can think of as the address of the dat
 
 # == About ==========================================================
 elif page == "About":
-    st.subheader("About (FFT Dashboard)")
+    st.title("About (FFT Dashboard)")
     # st.image(
     #     "https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftestabout.png?raw=true",
     #     use_column_width=True,
@@ -980,7 +980,7 @@ We employ several machine learning techniques for analysis:
 
 # == Improvement Suggestions ==========================================================
 elif page == "Improvement Suggestions":
-    st.subheader("Improvement Suggestions")
+    st.title("Improvement Suggestions")
     toggle = ui.switch(
         default_checked=False, label="Explain this page.", key="switch_dash"
     )
@@ -1067,7 +1067,7 @@ The length of each bar signifies the count of feedback entries that fall into th
 
 # == Generate ChatGPT Summaries ==========================================================
 elif page == "GPT4 Summary":
-    st.subheader("GPT4 Summary")
+    st.title("GPT4 Summary")
     toggle = ui.switch(
         default_checked=False, label="Explain this page.", key="switch_dash"
     )
@@ -1160,7 +1160,7 @@ elif page == "GPT4 Summary":
 
 # == Generate ChatGPT Summaries ==========================================================
 elif page == "Full Responses":
-    st.subheader("Friends & Family Test - Full Responses")
+    st.title("Friends & Family Test - Full Responses")
     
     
     daily_count = filtered_data.resample("D", on="time").size()
