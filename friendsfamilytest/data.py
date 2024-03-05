@@ -516,3 +516,4 @@ if __name__ == "__main__":
         monitor.ping(state='complete')
         print(f"{Fore.RED}[*] No New rows to add - terminated.")
         logger.error("❌ Make Data terminated - No now rows")
+        

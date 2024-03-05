@@ -1212,3 +1212,4 @@ elif page == "Full Responses":
                     st.markdown("🗣️ " + str(free_text))
                     if str(do_better) not in ["nan"]:
                         st.markdown("💡 " + str(do_better))
+                        
