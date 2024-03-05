@@ -261,12 +261,12 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     ]
 
     palette = {
-        "Extremely likely": "#749c6f",
-        "Likely": "#a66685",
-        "Neither likely nor unlikely": "#558387",
-        "Unlikely": "#ce9c3e",
-        "Extremely unlikely": "#989736",
-        "Don't know": "#bc362a",
+        "Extremely likely": "#112f45",
+        "Likely": "#4d9cb9",
+        "Neither likely nor unlikely": "#9bc8e3",
+        "Unlikely": "#f4ba41",
+        "Extremely unlikely": "#ec8b33",
+        "Don't know": "#ae4f4d",
     }
 
     # Set the figure size (width, height) in inches
@@ -354,7 +354,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Create the figure and the bar plot
     fig, ax = plt.subplots(figsize=(12, 3.5))
     sns.barplot(
-        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#5f8186"
+        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#aabd3b"
     )
 
     # Set grid, spines and annotations as before
@@ -416,7 +416,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     # Data for plotting
     labels = "Positive", "Neutral", "Negative"
     sizes = sentiment_totals(filtered_data)
-    colors = ["#558387", "#eee8d6", "#bc362a"]
+    colors = ["#6894a8", "#eee8d6", "#ae4f4d"]
     explode = (0, 0, 0)  # 'explode' the 1st slice (Positive)
 
     # Plot
@@ -485,7 +485,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         data=weekly_sentiment,
         x="Week",
         y="pos",
-        color="#558387",
+        color="#6894a8",
         label="Positive",
         linewidth=2,
     )
@@ -493,7 +493,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         data=weekly_sentiment,
         x="Week",
         y="neg",
-        color="#bc362a",
+        color="#ae4f4d",
         label="Negative",
         linewidth=2,
     )
@@ -582,13 +582,13 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     fig, ax = plt.subplots(figsize=(16, 5))
 
     # Plot each sentiment as a layer in the stacked bar
-    ax.bar(new["date"], new["neg"], label="Negative", color="#bc362a", alpha=1)
+    ax.bar(new["date"], new["neg"], label="Negative", color="#ae4f4d", alpha=1)
     ax.bar(
         new["date"],
         new["pos"],
         bottom=bottom_pos,
         label="Positive",
-        color="#5f8186",
+        color="#6894a8",
         alpha=0.9,
     )
     ax.bar(
@@ -638,7 +638,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     scatter_plot = sns.scatterplot(
         data=filtered_data,
         y="rating_score",
-        x="sentiment_score",
+        x="compound",
         hue="sentiment",
         s=65,
         palette=palette_colors,
@@ -657,10 +657,10 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     st.pyplot(plt)
 
     # Negative sentiment plot
-    neg_sentiment = filtered_data[filtered_data["sentiment"] == "negative"]
-    slider_start_point = neg_sentiment["sentiment_score"].min() - 0.02
+    neg_sentiment = filtered_data[filtered_data["compound"] < 0]
+    slider_start_point = neg_sentiment["neg"].min()
     if slider_start_point == 0:
-        slider_start = 0.5
+        slider_start = 0.4
     else:
         slider_start = slider_start_point
 
@@ -669,8 +669,8 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         label="Select Negative Sentiment Analysis threshold:",
         min_value=slider_start,
         max_value=1.0,
-        value=0.4,  # Set initial value to the max value
-        step=0.05,
+        value=0.9,  # Set initial value to the max value
+        step=0.1,
     )
 
     # Create two columns
@@ -680,7 +680,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     with col1:
 
         fig, ax = plt.subplots(figsize=(5, 2))
-        sns.histplot(data=neg_sentiment, x="sentiment_score", color="#be6933", kde=True)
+        sns.histplot(data=neg_sentiment, x="neg", color="#be6933", kde=True, bins=10)
         # Set grid, spines and annotations as before
         # Add a vertical red line at sentiment score of 0.90
         plt.axvline(x=slider_value, color="#ae4f4d", linestyle="-", linewidth=4)
@@ -696,9 +696,9 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     # Content for the second column
     with col2:
         # Positive sentiment plot
-        pos_sentiment = filtered_data[filtered_data["sentiment"] == "positive"]
+        pos_sentiment = filtered_data[filtered_data["compound"] > 0]
         fig, ax = plt.subplots(figsize=(5, 2))
-        sns.histplot(data=pos_sentiment, x="sentiment_score", color="#4187aa", kde=True)
+        sns.histplot(data=pos_sentiment, x="pos", color="#4187aa", kde=True)
         # Set grid, spines and annotations as before
         ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
         ax.xaxis.grid(False)
@@ -715,9 +715,9 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 
     # View SELECTED Patient Feedback with Sentiment Analaysis NEG >= 0.5
     selected_feedback = filtered_data[
-        (filtered_data["sentiment"] == "negative")
-        & (filtered_data["sentiment_score"] >= slider_value)
-    ].sort_values(by="sentiment_score", ascending=False)
+        (filtered_data["neg"] >= 0.3)
+        
+    ].sort_values(by="neg", ascending=False)
 
     class_list = list(selected_feedback["feedback_labels"].unique())
     cleaned_class_list = [x for x in class_list if not pd.isna(x)]
@@ -1175,7 +1175,7 @@ elif page == "Full Responses":
     daily_count = filtered_data.resample("D", on="time").size()
     daily_count_df = daily_count.reset_index()
     daily_count_df.columns = ["Date", "Daily Count"]
-    fig, ax = plt.subplots(figsize=(12, 2))
+    fig, ax = plt.subplots(figsize=(12, 3))
     sns.lineplot(
         data=daily_count_df, x="Date", y="Daily Count", color="#558387", linewidth=2
     )

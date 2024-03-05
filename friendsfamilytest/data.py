@@ -82,21 +82,28 @@ def text_classification(data):
 
 @time_it
 def sentiment_analysis(data):
-    # sentiment_task = pipeline(
-    #     "sentiment-analysis", model="cardiffnlp/twitter-roberta-base-sentiment-latest"
-    # )
+    sentiment_task = pipeline(
+        "sentiment-analysis", model="cardiffnlp/twitter-roberta-base-sentiment-latest"
+    )
 
     # Initialize lists to store labels and scores
     sentiment = []
     sentiment_score = []
 
     # Iterate over DataFrame rows and classify text
-    for _, row in data.iterrows():
-        # sentence = row["free_text"]
-        # model_outputs = sentiment_task(sentence)
-        sentiment.append("")
-        sentiment_score.append(0)
-
+    for index, row in data.iterrows():
+        print(index)
+        sentence = row["free_text"]
+        sentence = str(sentence)
+        sentence = sentence[:513]
+        if sentence == 'nan':
+            sentiment.append('neutral')
+            sentiment_score.append(1)
+        else:
+            model_output = sentiment_task(sentence)
+            sentiment.append(model_output[0]['label'])
+            sentiment_score.append(model_output[0]['score'])
+        
     # Add labels and scores as new columns
     data["sentiment"] = sentiment
     data["sentiment_score"] = sentiment_score
@@ -417,40 +424,6 @@ def improvement_classification(data, batch_size=16):
     return data
 
 
-def openai_classify_string(input_string):
-    prompt = """you are an expert practice manager for a GP Surgery, you will review improvement suggestions from patients and classify them into one of the following categories:
-improvement_labels_list = ['Appointment Accessibility', 'Reception Staff Interaction',
-       'Medical Staff Competence', 'Patient-Doctor Communication',
-       'Follow-Up and Continuity of Care', 'Facilities and Cleanliness',
-       'Prescription and Medication Management', 'Referral Efficiency',
-       'Emergency Handling', 'Patient Privacy and Confidentiality',
-       'Telehealth Services', 'Patient Education and Resources',
-       'Waiting Room Comfort', 'Patient Empowerment and Support',
-       'Health Outcome Satisfaction', 'Cultural Sensitivity',
-       'Mental Health Support', 'Accessibility for Disabled Patients',
-       'Ambiance of Facility', 'Online Services & Digital Health',
-       'Patient Safety', 'Weekend Service Availability',
-       'Telephone Service', 'Overall Patient Satisfaction',
-       'Blood Test Results & Imaging', 'Patient Participation Group',
-       'Doctor Consultations', 'Home Visits', 'Cancer Screening',
-       'Vaccinations', 'Test Results']
-when you respond only select the most appropriate category and only return the category as specified in the 'improvement_labels_list', do not return any other text. if the text provided does not fit into an improvement suggestion category classify it as 'No Improvement Suggestion'
-You should only ever return one of the 'improvement_labels_list' classifications or nothing at all. This is very important. Positive comments without any improvement suggestions should be classified as 'Overall Patient Satisfaction', and phrases that are very short and has no meaning should be classified as 'No Improvement Suggestion'. """
-
-    completion = client.chat.completions.create(
-        model="gpt-3.5-turbo-1106",
-        messages=[
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": input_string},
-        ],
-    )
-
-    gpt3_classification = completion.choices[0].message.content
-    print(
-        f"[GPT3 working] - {Fore.LIGHTGREEN_EX}{input_string} ::: {Fore.BLUE}{gpt3_classification}"
-    )
-
-    return gpt3_classification
 
 
 @time_it
