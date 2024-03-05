@@ -1094,10 +1094,10 @@ elif page == "GPT4 Summary":
     st.markdown(
         "Press the button below to create a summary with GPT-4 of all received free text responses, highlighting key trends."
     )
-    filtered_data = surgery_data[
-        (surgery_data["time"].dt.date >= selected_date_range[0])
-        & (surgery_data["time"].dt.date <= selected_date_range[1])
-    ]
+    # filtered_data = surgery_data[
+    #     (surgery_data["time"].dt.date >= selected_date_range[0])
+    #     & (surgery_data["time"].dt.date <= selected_date_range[1])
+    # ]
     filtered_data["prompt"] = filtered_data["free_text"].str.cat(
         filtered_data["do_better"], sep=" "
     )
@@ -1127,7 +1127,7 @@ elif page == "GPT4 Summary":
     user_input = text
 
     # Button to trigger summarization
-    if st.button("Summarize with GPT4", help="Click to start generating a summary."):
+    if st.button("Summarize with GPT4"):
         if user_input:
             # Call the function to interact with ChatGPT API
             st.markdown("### Input Text")
