@@ -10,7 +10,7 @@ from matplotlib.patches import Patch
 import time
 from openai import OpenAI
 import streamlit_shadcn_ui as ui
-import calplot
+
 
 client = OpenAI()
 
