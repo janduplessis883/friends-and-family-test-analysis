@@ -67,3 +67,4 @@ streamlit-shadcn-ui
 cronitor
 loguru
 schedule
+calplot

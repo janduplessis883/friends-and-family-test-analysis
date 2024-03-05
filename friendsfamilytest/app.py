@@ -10,7 +10,7 @@ from matplotlib.patches import Patch
 import time
 from openai import OpenAI
 import streamlit_shadcn_ui as ui
-
+import calplot
 
 client = OpenAI()
 
@@ -123,7 +123,7 @@ start_date = surgery_data["time"].dt.date.min()
 current_date = date.today()
 
 selected_date_range = st.slider(
-    "",
+    f"**{selected_surgery}**",
     min_value=start_date,
     max_value=current_date,
     value=(start_date, current_date),
@@ -388,11 +388,14 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     # Apply tight layout and display plot
     plt.tight_layout()
     st.pyplot(fig)
-
+    
+ 
 
 # == Rating & Sentiment Analysis Correlation ======================================================================
 elif page == "Sentiment Analysis":
+ 
     st.title("Sentiment Analysis")
+    
     toggle = ui.switch(
         default_checked=False, label="Explain this page.", key="switch_dash"
     )
@@ -840,8 +843,10 @@ Below the chart is a multi-select field where you can choose to filter and revie
 
 # == Word Cloud ==========================================================
 elif page == "Word Cloud":
+    
     try:
         st.header("Word Cloud")
+ 
         toggle = ui.switch(
             default_checked=False, label="Explain this page.", key="switch_dash"
         )
@@ -885,6 +890,7 @@ elif page == "Word Cloud":
 # == Dataframe ==========================================================
 elif page == "Dataframe":
     st.title("Dataframe")
+  
     toggle = ui.switch(
         default_checked=False, label="Explain this page.", key="switch_dash"
     )
@@ -979,6 +985,7 @@ We employ several machine learning techniques for analysis:
 # == Improvement Suggestions ==========================================================
 elif page == "Improvement Suggestions":
     st.title("Improvement Suggestions")
+
     toggle = ui.switch(
         default_checked=False, label="Explain this page.", key="switch_dash"
     )
@@ -1066,6 +1073,7 @@ The length of each bar signifies the count of feedback entries that fall into th
 # == Generate ChatGPT Summaries ==========================================================
 elif page == "GPT4 Summary":
     st.title("GPT4 Free-text Summary")
+
     toggle = ui.switch(
         default_checked=False, label="Explain this page.", key="switch_dash"
     )
@@ -1161,6 +1169,7 @@ elif page == "GPT4 Summary":
 # == Full Responses ==========================================================
 elif page == "Full Responses":
     st.title("Full Responses")
+
     
     
     daily_count = filtered_data.resample("D", on="time").size()
