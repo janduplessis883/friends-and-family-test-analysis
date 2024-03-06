@@ -1072,7 +1072,7 @@ The length of each bar signifies the count of feedback entries that fall into th
 
 # == Generate ChatGPT Summaries ==========================================================
 elif page == "GPT4 Summary":
-    st.title("GPT4 Free-text Summary")
+    st.title("GPT4 Free-Text Summary")
 
     toggle = ui.switch(
         default_checked=False, label="Explain this page.", key="switch_dash"
@@ -1116,7 +1116,7 @@ elif page == "GPT4 Summary":
                     "role": "system",
                     "content": "You are a helpful assistant. and expert at summarixing friends and family Test Feedback for a GP Surgery",
                 },
-                {"role": "user", "content": f"Summarize the follwing text\n\n{text}"},
+                {"role": "user", "content": f"Summarize the following text\n\n{text}"},
             ],
         )
 
