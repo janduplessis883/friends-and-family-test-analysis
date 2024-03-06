@@ -1,18 +1,14 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+# Use the official Python image as the base image
+FROM python:3.9
 
 # Set the working directory in the container
-WORKDIR /usr/src/app
+WORKDIR /app
 
-# Copy the current directory contents into the container at /usr/src/app
-COPY . /usr/src/app
+# Copy the project files to the container
+COPY . .
 
-# Install any dependencies (if you have a requirements.txt)
+# Install the project dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy your scripts into the container
-COPY /friendsfamilytest/scheduler.py .
-COPY /friendsfamilytest/data.py /usr/src/app/friendsfamilytest/
-
-# Run scheduler.py when the container launches
-CMD ["python", "scheduler.py"]
+# Run the scheduler.py script when the container starts
+CMD ["python", "friendsfamilytest/scheduler.py"]

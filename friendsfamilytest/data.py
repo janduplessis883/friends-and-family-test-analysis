@@ -12,9 +12,9 @@ from textblob import TextBlob
 from nltk.sentiment import SentimentIntensityAnalyzer
 
 
-from friendsfamilytest.params import *
-from friendsfamilytest.utils import *
-from friendsfamilytest.auto_git.git_merge import *
+from params import *
+from utils import *
+from auto_git.git_merge import *
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 init(autoreset=True)
