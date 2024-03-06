@@ -12,9 +12,9 @@ from textblob import TextBlob
 from nltk.sentiment import SentimentIntensityAnalyzer
 
 
-from params import *
-from utils import *
-from auto_git.git_merge import *
+from friendsfamilytest.params import *
+from friendsfamilytest.utils import *
+from friendsfamilytest.auto_git.git_merge import *
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 init(autoreset=True)
@@ -462,6 +462,7 @@ def add_rating_score(data):
 @time_it
 def concat_save_final_df(processed_df, new_df):
     combined_data = pd.concat([processed_df, new_df], ignore_index=True)
+    combined_data.sort_values(by='time', inplace=True, ascending=True)
     combined_data.to_csv(f"{DATA_PATH}/data.csv", index=False)
     print(f"💾 data.csv saved to: {DATA_PATH}")
 
