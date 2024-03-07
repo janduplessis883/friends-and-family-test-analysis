@@ -127,42 +127,42 @@ st.sidebar.markdown(centered_html, unsafe_allow_html=True)
 # Create a date range slider
 start_date = surgery_data["time"].dt.date.min()
 current_date = date.today()
-
-selected_date_range = st.slider(
-    f"**{selected_surgery}**",
-    min_value=start_date,
-    max_value=current_date,
-    value=(start_date, current_date),
-    help="Select a start and end date",  # Set default range
-)
-
-
-@st.cache_data(ttl=100)  # This decorator caches the output of this function
-def filter_data_by_date_range(data, date_range):
-    """
-    Filter the provided DataFrame based on a date range.
-
-    Parameters:
-    data (DataFrame): The DataFrame to filter.
-    date_range (tuple): A tuple of two dates (start_date, end_date).
-
-    Returns:
-    DataFrame: Filtered DataFrame.
-    """
-    # Ensure that the 'time' column is a datetime type
-    data["time"] = pd.to_datetime(data["time"], dayfirst=True)
-
-    # Apply the date range filter
-    filtered_d = data[
-        (data["time"].dt.date >= date_range[0])
-        & (data["time"].dt.date <= date_range[1])
-    ]
-    return filtered_d
+if page not in  ['PCN Dashboard', 'About']:
+    selected_date_range = st.slider(
+        f"**{selected_surgery}**",
+        min_value=start_date,
+        max_value=current_date,
+        value=(start_date, current_date),
+        help="Select a start and end date",  # Set default range
+    )
 
 
-# Example usage in your Streamlit app
-# surgery_data and selected_date_range should be defined earlier in your app
-filtered_data = filter_data_by_date_range(surgery_data, selected_date_range)
+    @st.cache_data(ttl=100)  # This decorator caches the output of this function
+    def filter_data_by_date_range(data, date_range):
+        """
+        Filter the provided DataFrame based on a date range.
+
+        Parameters:
+        data (DataFrame): The DataFrame to filter.
+        date_range (tuple): A tuple of two dates (start_date, end_date).
+
+        Returns:
+        DataFrame: Filtered DataFrame.
+        """
+        # Ensure that the 'time' column is a datetime type
+        data["time"] = pd.to_datetime(data["time"], dayfirst=True)
+
+        # Apply the date range filter
+        filtered_d = data[
+            (data["time"].dt.date >= date_range[0])
+            & (data["time"].dt.date <= date_range[1])
+        ]
+        return filtered_d
+
+
+    # Example usage in your Streamlit app
+    # surgery_data and selected_date_range should be defined earlier in your app
+    filtered_data = filter_data_by_date_range(surgery_data, selected_date_range)
 
 
 # == DASHBOARD ==========================================================================================================
@@ -1276,7 +1276,8 @@ elif page == "Feedback Timeline":
 elif page == "PCN Dashboard":
     
     st.title("Brompton Health PCN")
-
+    st.markdown("**Friends & Family Test Analysis** (FFT)")
+    st.write("")
 
     #alldata_date_range = filter_data_by_date_range(data, selected_date_range)
     pivot_data = data.pivot_table(index='surgery', columns='rating', aggfunc='size', fill_value=0)
@@ -1363,6 +1364,18 @@ elif page == "PCN Dashboard":
     ax_title = ax.set_title("Mean Weekly Rating Score - Brompton Health PCN", loc="right")
 
     # Display the line plot
+    st.pyplot(plt)
+    st.markdown("---")
+    new_data = data[data['sentiment_score'] != 1]
+    sentiment_totals = new_data.groupby('sentiment')['sentiment_score'].sum()
+    colors = ['#7495a8' if sentiment == 'positive' else '#ae4f4d' if sentiment == 'negative' else '#eeeadb' for sentiment in sentiment_totals.index]
+
+    # Create a donut plot with the specified colors
+    fig, ax = plt.subplots()
+    ax.pie(sentiment_totals, labels=sentiment_totals.index, autopct='%1.1f%%', startangle=90, colors=colors)
+    ax.add_artist(plt.Circle((0, 0), 0.70, fc='white'))
+
+    plt.title('Total Sentiment Analysis Scores')
     st.pyplot(plt)
     st.markdown("---")
     
