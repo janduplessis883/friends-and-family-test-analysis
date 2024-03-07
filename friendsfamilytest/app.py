@@ -63,7 +63,6 @@ st.sidebar.image(
     "images/transparent2.png"
 )
 
-
 @st.cache_data(ttl=100)  # This decorator enables caching for this function
 def get_surgery_data(data, selected_surgery):
     # Extracting unique surgery types
@@ -74,17 +73,9 @@ def get_surgery_data(data, selected_surgery):
     return surgery_data
 
 
-surgery_list = data["surgery"].unique()
-surgery_list.sort()
-selected_surgery = st.sidebar.selectbox("Select Surgery", surgery_list)
-
-# Call the function with the selected surgery
-surgery_data = get_surgery_data(data, selected_surgery)
-
-st.sidebar.container(height=5, border=0)
 
 page = st.sidebar.radio(
-    "Choose a Page",
+    "Select a Page",
     [
         "PCN Dashboard",
         "Surgery Dashboard",
@@ -98,8 +89,21 @@ page = st.sidebar.radio(
         "About",
     ],
 )
-st.sidebar.container(height=200, border=0)
+# Only show the surgery selection if the selected page is not 'Survey Summary' or 'About'
+if page not in ["PCN Dashboard", "About"]:
+    surgery_list = data["surgery"].unique()
+    surgery_list.sort()
+    selected_surgery = st.sidebar.selectbox("Select Surgery", surgery_list)
 
+    # Call the function with the selected surgery
+    surgery_data = get_surgery_data(data, selected_surgery)
+else:
+    selected_surgery = 'Earls Court Medical Centre'
+    
+st.sidebar.container(height=200, border=0)
+# Call the function with the selected surgery
+
+surgery_data = get_surgery_data(data, selected_surgery)
 
 st.sidebar.write("")
 
@@ -1294,7 +1298,7 @@ elif page == "PCN Dashboard":
     st.pyplot(plt)
     st.markdown("---")
     
-    fig, ax = plt.subplots(figsize=(12, 6))
+    fig, ax = plt.subplots(figsize=(12, 7))
     sns.countplot(y='surgery', data=data, color='#59646b')
     for p in ax.patches:
         width = p.get_width()
@@ -1316,5 +1320,92 @@ elif page == "PCN Dashboard":
     ax.yaxis.grid(False)
     plt.xlabel("Count")
     plt.ylabel("")
+    plt.title("Total FFT Responses by Surgery", loc="right")
     plt.tight_layout()
     st.pyplot(plt)
+    st.markdown("---")
+    
+        # Resample and count the entries per month from filtered data
+    weekly_sent = data.resample("D", on="time")[
+        "neg", "pos", "neu", "compound"
+    ].mean()
+    weekly_sent_df = weekly_sent.reset_index()
+    weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
+    weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
+
+    @st.cache_data(ttl=100) # This decorator caches the output of this function
+    def calculate_weekly_sentiment(data):
+        """
+        Calculate the weekly sentiment averages from the given DataFrame.
+
+        Parameters:
+        data (DataFrame): The DataFrame containing sentiment scores and time data.
+
+        Returns:
+        DataFrame: A DataFrame with weekly averages of sentiment scores.
+        """
+        # Resample the data to a weekly frequency and calculate the mean of sentiment scores
+        weekly_sent = data.resample("D", on="time")[
+            "neg", "pos", "neu", "compound"
+        ].mean()
+
+        # Reset the index to turn the 'time' index into a column and rename columns
+        weekly_sent_df = weekly_sent.reset_index()
+        weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
+
+        # Convert the 'Week' column to datetime format
+        weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
+
+        return weekly_sent_df
+
+    weekly_sentiment = calculate_weekly_sentiment(data)
+
+    fig, ax = plt.subplots(figsize=(12, 6))
+    sns.lineplot(
+        data=weekly_sentiment,
+        x="Week",
+        y="neu",
+        color="#eee8d6",
+        label="Neutral",
+        linewidth=2,
+    )
+
+    sns.lineplot(
+        data=weekly_sentiment,
+        x="Week",
+        y="pos",
+        color="#6894a8",
+        label="Positive",
+        linewidth=2,
+    )
+    sns.lineplot(
+        data=weekly_sentiment,
+        x="Week",
+        y="neg",
+        color="#ae4f4d",
+        label="Negative",
+        linewidth=2,
+    )
+    
+
+    # Set grid, spines and annotations as before
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.xaxis.grid(False)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+
+    # Set title to the right
+    ax_title = ax.set_title("Cumulitive Daily Sentiment Analysis - Brompton Health PCN", loc="right")
+    ax_title.set_position((1.02, 1))  # Adjust title position
+
+    # Redraw the figure to ensure the formatter is applied
+    fig.canvas.draw()
+
+    # Remove xlabel as it's redundant with the dates
+    plt.xlabel("Weeks")
+    plt.ylabel("Mean Sentiment")
+    # Apply tight layout and display plot
+    plt.tight_layout()
+    st.pyplot(fig)
