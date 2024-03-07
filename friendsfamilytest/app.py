@@ -38,6 +38,7 @@ html = """
 def load_data():
     df = pd.read_csv("friendsfamilytest/data/data.csv")
     df["time"] = pd.to_datetime(df["time"], dayfirst=True)
+    df.drop_duplicates(inplace=True)
     return df
 
 
