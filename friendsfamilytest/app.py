@@ -1092,7 +1092,7 @@ elif page == "GPT4 Summary":
 3. **Receive Your Summary**: Get a well-structured, comprehensive summary that highlights the core sentiments and suggestions from your patients."""
         )
     st.markdown(
-        "Press the button below to create a summary with GPT-4 of all received free text responses, highlighting key trends."
+        "**Follow the steps below to Summarise Free-Text with GPT4.**"
     )
     # filtered_data = surgery_data[
     #     (surgery_data["time"].dt.date >= selected_date_range[0])
@@ -1125,9 +1125,55 @@ elif page == "GPT4 Summary":
 
     # Text input
     user_input = text
+    
+    # Initial state setup, assuming you have session state handling configured
+    if 'pin_verified' not in st.session_state:
+        st.session_state.pin_verified = False
+    if 'pin_sent' not in st.session_state:
+        st.session_state.pin_sent = False
+
+    # Mobile number input field
+    mobile_number = st.text_input("Enter your mobile number (including 🇬🇧 +44) to receive a PIN:", "")
+
+    # Function to handle sending the PIN (pseudo-code, replace with your Continguity implementation)
+    def send_pin(mobile_number):
+        # Your code to send PIN via SMS
+        st.session_state.pin_sent = True
+        # Display a message or handle the result of sending the PIN
+        st.info(f"A PIN has been sent to {mobile_number}.")
+
+    # PIN verification input field
+    def verify_pin_input():
+        # Function to verify the entered PIN (pseudo-code)
+        def verify_pin(pin):
+            # Your verification code here
+            # If verified:
+            st.session_state.pin_verified = True
+            st.success("PIN successfully verified!")
+            # Else, handle failed verification:
+            # st.error("Incorrect PIN.")
+
+        pin = st.text_input("Enter the PIN you received")
+        verify_pin_button = st.button("Verify PIN", on_click=verify_pin, args=(pin,))
+        if not verify_pin_button:
+            st.warning("Please enter the PIN you received to proceed.")
+
+    # Button to send the PIN
+    if mobile_number and not st.session_state.pin_sent:
+        send_pin_button = st.button("Send PIN", on_click=send_pin, args=(mobile_number,))
+
+    # Display the PIN input field after the PIN has been sent
+    if st.session_state.pin_sent and not st.session_state.pin_verified:
+        verify_pin_input()
+
+    # Only display the "Generate GPT4 Summary" button if the PIN has been verified
+    if st.session_state.pin_verified:
+        if st.button("Generate GPT4 Summary"):
+            # Your existing code to generate summary
+            pass
 
     # Button to trigger summarization
-    if st.button("Summarize with GPT4"):
+    #if st.button("Summarize with GPT4"):
         if user_input:
             # Call the function to interact with ChatGPT API
             st.markdown("### Input Text")
