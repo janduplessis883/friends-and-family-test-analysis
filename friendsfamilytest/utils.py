@@ -5,6 +5,7 @@ import time
 from colorama import Fore, Back, Style, init
 import functools
 import streamlit as st
+from loguru import logger
 
 init(autoreset=True)
 
@@ -91,13 +92,12 @@ def sentiment_totals(data):
 def time_it(func):
     def wrapper(*args, **kwargs):
         start_time = time.time()
-        print(f"{Fore.YELLOW}[🏁] FUCTION: {func.__name__}()")
         result = func(*args, **kwargs)
-        print(
-            f"{Fore.GREEN}{Style.DIM}[✔️] Completed: {func.__name__}() - Time taken: {time.time() - start_time:.2f} seconds"
-        )
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        func_name = func.__name__
+        logger.info(f"Function '{func_name}' ⚡️ {elapsed_time:.6f} sec")
         return result
-
     return wrapper
 
 
