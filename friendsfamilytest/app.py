@@ -81,7 +81,7 @@ page = st.sidebar.radio(
         "Surgery Dashboard",
         "Feedback Classification",
         "Improvement Suggestions",
-        "Full Responses",
+        "Feedback Timeline",
         "Sentiment Analysis",
         "Word Cloud",
         "GPT4 Summary",
@@ -1224,8 +1224,8 @@ elif page == "GPT4 Summary":
         )
 
 # == Full Responses ==========================================================
-elif page == "Full Responses":
-    st.title("Full Responses")
+elif page == "Feedback Timeline":
+    st.title("Feedback Timeline")
 
     
     
@@ -1253,7 +1253,7 @@ elif page == "Full Responses":
     plt.xlabel("")
     plt.tight_layout()
     st.pyplot(fig)
-    
+    st.markdown("---")
     st.markdown(f"Showing **{filtered_data.shape[0]}** FFT Responses")
     
     with st.container(height=500, border=True):
