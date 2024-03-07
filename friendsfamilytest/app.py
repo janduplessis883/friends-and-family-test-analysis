@@ -86,7 +86,8 @@ st.sidebar.container(height=5, border=0)
 page = st.sidebar.radio(
     "Choose a Page",
     [
-        "Dashboard",
+        "PCN Dashboard",
+        "Surgery Dashboard",
         "Feedback Classification",
         "Improvement Suggestions",
         "Full Responses",
@@ -160,7 +161,7 @@ filtered_data = filter_data_by_date_range(surgery_data, selected_date_range)
 
 
 # == DASHBOARD ==========================================================================================================
-if page == "Dashboard":
+if page == "Surgery Dashboard":
     st.title(f"{selected_surgery}")
     toggle = ui.switch(
         default_checked=False, label="Explain this page.", key="switch_dash"
@@ -238,6 +239,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
             )  # Adjust these values to align your title as needed
             # Display the plot in Streamlit
             st.pyplot(fig)
+            
         except:
             st.info("No rating available for this date range.")
 
@@ -270,6 +272,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     }
 
     # Set the figure size (width, height) in inches
+    st.markdown("---")
     plt.figure(figsize=(12, 4))
 
     # Create the countplot
@@ -318,9 +321,8 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     plt.ylabel("Rating")
     plt.tight_layout()
     st.pyplot(plt)
-    st.write("")
+    st.write("---")
 
-    st.write("")
     # Plotting the line plot
     fig, ax = plt.subplots(figsize=(12, 3.5))
     sns.lineplot(
@@ -343,7 +345,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
     plt.xlabel("")
     plt.tight_layout()
     st.pyplot(fig)
-    st.write("")
+    st.markdown("---")
     # Resample and count the entries per month from filtered data
     monthly_count_filtered = filtered_data.resample("M", on="time").size()
     monthly_count_filtered_df = monthly_count_filtered.reset_index()
@@ -1259,3 +1261,60 @@ elif page == "Full Responses":
                     if str(do_better) not in ["nan"]:
                         st.markdown("💡 " + str(do_better))
                         
+                        
+# == Generate ChatGPT Summaries ==========================================================
+elif page == "PCN Dashboard":
+    
+    st.title("Brompton Health PCN")
+
+
+    #alldata_date_range = filter_data_by_date_range(data, selected_date_range)
+    pivot_data = data.pivot_table(index='surgery', columns='rating', aggfunc='size', fill_value=0)
+    total_responses_per_surgery = pivot_data.sum(axis=1)
+
+    # Compute the percentage of each rating category for each surgery
+    percentage_pivot_data = pivot_data.div(total_responses_per_surgery, axis=0) * 100
+    # Define the desired column order based on the rating categories
+    column_order = ["Extremely likely", "Likely", "Neither likely nor unlikely", "Unlikely", "Extremely unlikely", "Don't know"]
+
+    # Reorder the columns in the percentage pivot data
+    ordered_percentage_pivot_data = percentage_pivot_data[column_order]
+
+    # Create the heatmap with the ordered columns
+    plt.figure(figsize=(12, 9))
+    ordered_percentage_heatmap = sns.heatmap(ordered_percentage_pivot_data, annot=True, fmt=".1f", cmap="Blues", linewidths=.5)
+    plt.title('% Heatmap of Surgery Ratings', fontsize=16)
+    plt.ylabel('Surgery', fontsize=12)
+    plt.xlabel('Rating (%)', fontsize=12)
+    plt.xticks(rotation=45)
+    plt.yticks(rotation=0)
+    plt.tight_layout()
+
+    # Display the ordered percentage heatmap
+    st.pyplot(plt)
+    st.markdown("---")
+    
+    fig, ax = plt.subplots(figsize=(12, 6))
+    sns.countplot(y='surgery', data=data, color='#59646b')
+    for p in ax.patches:
+        width = p.get_width()
+        try:
+            y = p.get_y() + p.get_height() / 2
+            ax.text(
+                width + 1,
+                y,
+                f"{int(width)}",
+                va="center",
+                fontsize=8,
+            )
+        except ValueError:
+            pass
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["bottom"].set_visible(False)
+    ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.yaxis.grid(False)
+    plt.xlabel("Count")
+    plt.ylabel("")
+    plt.tight_layout()
+    st.pyplot(plt)
