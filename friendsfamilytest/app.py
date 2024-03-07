@@ -441,6 +441,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     centre_circle = plt.Circle((0, 0), 0.50, fc="white")
     fig.gca().add_artist(centre_circle)
     st.pyplot(fig)
+    st.markdown("---")
 
     # Resample and count the entries per month from filtered data
     weekly_sent = filtered_data.resample("W", on="time")[
@@ -525,7 +526,8 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     # Apply tight layout and display plot
     plt.tight_layout()
     st.pyplot(fig)
-
+    st.markdown("---")
+    
     @st.cache_data(ttl=100)  # This decorator caches the output of this function
     def process_sentiment_data(data):
         """
@@ -715,7 +717,8 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         plt.title("Positive Sentiment")
         st.pyplot(plt)  # Display the plot in Streamlit
 
-    st.title("View Patient Feedback")
+    st.markdown("---")
+    st.subheader("View Patient Feedback")
 
     # Create the slider
 
@@ -817,7 +820,7 @@ Below the chart is a multi-select field where you can choose to filter and revie
 
     # Streamlit function to display matplotlib figures
     st.pyplot(plt)
-
+    st.markdown("---")
     # View Patient Feedback
     st.subheader("View Patient Feedback")
     class_list = list(filtered_data["feedback_labels"].unique())
@@ -1049,6 +1052,8 @@ The length of each bar signifies the count of feedback entries that fall into th
 
     # Streamlit function to display matplotlib figures
     st.pyplot(plt)
+    st.markdown("---")
+    
     st.subheader("View Patient Improvement Suggestions")
     improvement_list = [label for label in label_counts_df["Improvement Labels"]]
 
@@ -1298,7 +1303,7 @@ elif page == "PCN Dashboard":
     st.pyplot(plt)
     st.markdown("---")
     
-    fig, ax = plt.subplots(figsize=(12, 7))
+    fig, ax = plt.subplots(figsize=(12, 6))
     sns.countplot(y='surgery', data=data, color='#59646b')
     for p in ax.patches:
         width = p.get_width()
@@ -1325,6 +1330,41 @@ elif page == "PCN Dashboard":
     st.pyplot(plt)
     st.markdown("---")
     
+    # Convert 'time' to datetime and extract the date
+    data['date'] = pd.to_datetime(data['time']).dt.date
+
+    # Group by the new 'date' column and calculate the mean 'rating_score' for each day
+    daily_mean_rating = data.groupby('date')['rating_score'].mean().reset_index()
+    # Ensure the 'date' column is in datetime format for resampling
+    daily_mean_rating['date'] = pd.to_datetime(daily_mean_rating['date'])
+
+    # Set the 'date' column as the index
+    daily_mean_rating.set_index('date', inplace=True)
+
+    # Resample the data by week and calculate the mean 'rating_score' for each week
+    weekly_mean_rating = daily_mean_rating['rating_score'].resample('W').mean().reset_index()
+
+    # Create a seaborn line plot for weekly mean rating scores
+    fig, ax = plt.subplots(figsize=(12, 7))
+    weekly_lineplot = sns.lineplot(x='date', y='rating_score', data=weekly_mean_rating, color="#adbd52", linewidth=2)
+    
+    plt.xlabel('Week')
+    plt.ylabel('Average Rating Score')
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+
+    # Set title to the right
+    ax_title = ax.set_title("Mean Weekly Rating Score - Brompton Health PCN", loc="right")
+
+    # Display the line plot
+    st.pyplot(plt)
+    st.markdown("---")
+    
         # Resample and count the entries per month from filtered data
     weekly_sent = data.resample("D", on="time")[
         "neg", "pos", "neu", "compound"
@@ -1345,7 +1385,7 @@ elif page == "PCN Dashboard":
         DataFrame: A DataFrame with weekly averages of sentiment scores.
         """
         # Resample the data to a weekly frequency and calculate the mean of sentiment scores
-        weekly_sent = data.resample("D", on="time")[
+        weekly_sent = data.resample("W", on="time")[
             "neg", "pos", "neu", "compound"
         ].mean()
 
@@ -1397,7 +1437,7 @@ elif page == "PCN Dashboard":
     ax.spines["left"].set_visible(False)
 
     # Set title to the right
-    ax_title = ax.set_title("Cumulitive Daily Sentiment Analysis - Brompton Health PCN", loc="right")
+    ax_title = ax.set_title("Mean Weekly Sentiment Analysis - Brompton Health PCN", loc="right")
     ax_title.set_position((1.02, 1))  # Adjust title position
 
     # Redraw the figure to ensure the formatter is applied
@@ -1409,3 +1449,4 @@ elif page == "PCN Dashboard":
     # Apply tight layout and display plot
     plt.tight_layout()
     st.pyplot(fig)
+    
