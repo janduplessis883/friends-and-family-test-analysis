@@ -421,15 +421,16 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         )
 
     # Data for plotting
-    labels = "Positive", "Neutral", "Negative"
-    sizes = sentiment_totals(filtered_data)
-    colors = ["#6894a8", "#eee8d6", "#ae4f4d"]
+    labels = "Negative", "Neutral", "Positive"
+    new_data = filtered_data[filtered_data['sentiment_score'] != 1]
+    sentiment_totals = new_data.groupby('sentiment')['sentiment_score'].sum()
+    colors = ['#7495a8' if sentiment == 'positive' else '#ae4f4d' if sentiment == 'negative' else '#eeeadb' for sentiment in sentiment_totals.index]
     explode = (0, 0, 0)  # 'explode' the 1st slice (Positive)
 
     # Plot
     fig, ax = plt.subplots(figsize=(12, 5))
     ax.pie(
-        sizes,
+        sentiment_totals,
         explode=explode,
         labels=labels,
         colors=colors,
@@ -1366,17 +1367,29 @@ elif page == "PCN Dashboard":
     # Display the line plot
     st.pyplot(plt)
     st.markdown("---")
+    labels = "Negative", "Neutral", "Positive"
     new_data = data[data['sentiment_score'] != 1]
     sentiment_totals = new_data.groupby('sentiment')['sentiment_score'].sum()
     colors = ['#7495a8' if sentiment == 'positive' else '#ae4f4d' if sentiment == 'negative' else '#eeeadb' for sentiment in sentiment_totals.index]
+    explode = (0, 0, 0)  # 'explode' the 1st slice (Positive)
 
-    # Create a donut plot with the specified colors
-    fig, ax = plt.subplots()
-    ax.pie(sentiment_totals, labels=sentiment_totals.index, autopct='%1.1f%%', startangle=90, colors=colors)
-    ax.add_artist(plt.Circle((0, 0), 0.70, fc='white'))
+    # Plot
+    fig, ax = plt.subplots(figsize=(12, 5))
+    ax.pie(
+        sentiment_totals,
+        explode=explode,
+        labels=labels,
+        colors=colors,
+        autopct="%1.1f%%",
+        startangle=140,
+    )
+    ax.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle.
 
-    plt.title('Total Sentiment Analysis Scores')
-    st.pyplot(plt)
+    # Draw a circle at the center of pie to make it look like a donut
+    centre_circle = plt.Circle((0, 0), 0.50, fc="white")
+    fig.gca().add_artist(centre_circle)
+    plt.title("Total Sentiment - Brompton Health PCN")
+    st.pyplot(fig)
     st.markdown("---")
     
         # Resample and count the entries per month from filtered data
