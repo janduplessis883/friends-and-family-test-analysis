@@ -1306,7 +1306,7 @@ elif page == "PCN Dashboard":
     st.pyplot(plt)
     st.markdown("---")
     
-    fig, ax = plt.subplots(figsize=(12, 6))
+    fig, ax = plt.subplots(figsize=(12, 5))
     sns.countplot(y='surgery', data=data, color='#59646b')
     for p in ax.patches:
         width = p.get_width()
@@ -1345,13 +1345,13 @@ elif page == "PCN Dashboard":
     daily_mean_rating.set_index('date', inplace=True)
 
     # Resample the data by week and calculate the mean 'rating_score' for each week
-    weekly_mean_rating = daily_mean_rating['rating_score'].resample('W').mean().reset_index()
+    weekly_mean_rating = daily_mean_rating['rating_score'].resample('M').mean().reset_index()
 
     # Create a seaborn line plot for weekly mean rating scores
-    fig, ax = plt.subplots(figsize=(12, 7))
-    weekly_lineplot = sns.lineplot(x='date', y='rating_score', data=weekly_mean_rating, color="#d2b570", linewidth=2)
+    fig, ax = plt.subplots(figsize=(12, 5))
+    weekly_lineplot = sns.lineplot(x='date', y='rating_score', data=weekly_mean_rating, color="#d2b570", linewidth=3)
     
-    plt.xlabel('Week')
+    plt.xlabel('Month')
     plt.ylabel('Average Rating Score')
     plt.xticks(rotation=45)
     plt.tight_layout()
@@ -1427,7 +1427,7 @@ elif page == "PCN Dashboard":
 
     weekly_sentiment = calculate_weekly_sentiment(data)
 
-    fig, ax = plt.subplots(figsize=(12, 6))
+    fig, ax = plt.subplots(figsize=(12, 5))
     sns.lineplot(
         data=weekly_sentiment,
         x="Week",
@@ -1473,6 +1473,50 @@ elif page == "PCN Dashboard":
     # Remove xlabel as it's redundant with the dates
     plt.xlabel("Weeks")
     plt.ylabel("Mean Sentiment")
+    # Apply tight layout and display plot
+    plt.tight_layout()
+    st.pyplot(fig)
+    st.markdown("---")
+    monthly_count_filtered = data.resample("M", on="time").size()
+    monthly_count_filtered_df = monthly_count_filtered.reset_index()
+    monthly_count_filtered_df.columns = ["Month", "Monthly Count"]
+    monthly_count_filtered_df["Month"] = pd.to_datetime(
+        monthly_count_filtered_df["Month"]
+    )
+    # Create the figure and the bar plot
+    fig, ax = plt.subplots(figsize=(12, 5))
+    sns.barplot(
+        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#aabd3b"
+    )
+
+    # Set grid, spines and annotations as before
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.xaxis.grid(False)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+
+    # Annotate bars with the height (monthly count)
+    for p in ax.patches:
+        ax.annotate(
+            f"{int(p.get_height())}",
+            (p.get_x() + p.get_width() / 2.0, p.get_height()),
+            ha="center",
+            va="center",
+            xytext=(0, 10),
+            textcoords="offset points",
+        )
+
+    # Set title to the right
+    ax_title = ax.set_title("Monthly FFT Responses", loc="right")
+    ax_title.set_position((1.02, 1))  # Adjust title position
+
+    # Redraw the figure to ensure the formatter is applied
+    fig.canvas.draw()
+
+    # Remove xlabel as it's redundant with the dates
+    plt.xlabel("")
+
     # Apply tight layout and display plot
     plt.tight_layout()
     st.pyplot(fig)
