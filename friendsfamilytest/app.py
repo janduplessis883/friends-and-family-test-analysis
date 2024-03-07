@@ -1347,7 +1347,7 @@ elif page == "PCN Dashboard":
 
     # Create a seaborn line plot for weekly mean rating scores
     fig, ax = plt.subplots(figsize=(12, 7))
-    weekly_lineplot = sns.lineplot(x='date', y='rating_score', data=weekly_mean_rating, color="#adbd52", linewidth=2)
+    weekly_lineplot = sns.lineplot(x='date', y='rating_score', data=weekly_mean_rating, color="#d2b570", linewidth=2)
     
     plt.xlabel('Week')
     plt.ylabel('Average Rating Score')

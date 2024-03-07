@@ -62,6 +62,7 @@ def clean_and_replace(text):
         "its  okey",
         "not really",
         "answer above",
+        "no comment",
     ]
 
     # Replace 'no' with None
