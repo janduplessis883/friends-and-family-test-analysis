@@ -1141,48 +1141,48 @@ elif page == "GPT-4 Summary":
     text = ' '.join(filtered_data['prompt'])
     words = text.split()
     word_count = len(words)
-    # Step 2: Slice the first 6000 words and join them back into a string
-    if len(words) > 6000:
-        text = ' '.join(words[:6000])
-    else:
-        text = ' '.join(words)  # If there are fewer than 6000 words, keep them all
+    text = ' '.join(words)
 
+    # Display the text container
     with st.container(height=200, border=True):
         st.write(text)
-        
+
+    # Display and handle the word count badge
     if 0 < word_count <= 6000:
         ui.badges(badge_list=[(f"Word count: {word_count}", "outline"), ("✔️ GPT-4 prompt size acceptable", "secondary")], class_name="flex gap-2", key="badges10")
         
         # Get user's name input
         name_input_value = ui.input(default_value="", type='text', placeholder="Enter your name", key="gpt_name_input")
         
-        # Check if a name has been entered
         if name_input_value:
             st.markdown(f"You entered: **{name_input_value}**")
-            clicked = ui.button("Submit", key="clk_btn")
+            st.session_state['user_name'] = name_input_value  # Save the user name to the session state
             
-            # After the 'Submit' button is clicked and the webhook is sent
-            if clicked:
-                response = send_webhook(name_input_value, selected_surgery, word_count)
-                st.success('Webhook sent successfully!')
-
-                # Outside and after the 'if clicked' block, independently check for 'Summarize with GPT-4' button click
-                summarize_button = ui.button(text="Summarize with GPT-4", key="styled_btn_tailwind", className="bg-orange-500 text-white")
-
-                if summarize_button:
-                    # Now directly inside the condition check for the 'Summarize' button
-                    summary = call_chatgpt_api(text)
-                    with st.container():
-                        st.subheader("Friends & Family Test Feedback Summary")
-                        st.markdown(f"**{selected_surgery}**")
-                        st.markdown(f"Date range: {selected_date_range[0]} - {selected_date_range[1]}")
-                        st.markdown("---")
-                        st.write(summary)
-            
-        st.image("images/openailogo.png")
-        st.write(f"You entered: {name_input_value}")
+            # Handle the 'Submit' button click
+            if ui.button("Submit", key="clk_btn"):
+                st.session_state['submitted'] = True  # Mark as submitted in the session state
+                
+                # Send the webhook only once upon submission
+                if not st.session_state.get('webhook_sent', False):
+                    send_webhook(name_input_value, selected_surgery, word_count)
+                    st.session_state['webhook_sent'] = True  # Avoid sending the webhook again on rerun
+                    st.write('Webhook sent successfully!')
         
-          
+        # Conditionally show the 'Summarize with GPT-4' button based on the submission state
+        if st.session_state.get('submitted', False):
+            if ui.button(text="Summarize with GPT-4", key="styled_btn_tailwind", className="bg-orange-500 text-white"):
+                # Once the 'Summarize with GPT-4' is clicked, fetch and display the summary
+                summary = call_chatgpt_api(text)
+                with st.container(border=True):
+                    st.subheader("Friends & Family Test Feedback Summary")
+                    st.markdown(f"**{selected_surgery}**")
+                    st.markdown(f"Date range: {selected_date_range[0]} - {selected_date_range[1]}")
+                    st.markdown("---")
+                    st.write(summary)
+
+        # Display the logo and entered name (if any)
+        st.image("images/openailogo.png")
+
     elif word_count == 0:
         ui.badges(badge_list=[(f"Word count: {word_count}", "destructive"),  ("⤬ Nothing to summarise.", "secondary")], class_name="flex gap-2", key="badges11")
 
