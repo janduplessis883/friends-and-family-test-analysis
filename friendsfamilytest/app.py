@@ -306,7 +306,7 @@ if page == "Surgery Dashboard":
         
 
     elif surgery_tab_selector == 'Surgery Responses':
-        st.markdown(f"### Total: **{filtered_data.shape[0]}**")
+        st.markdown(f"### Total: {filtered_data.shape[0]}")
         # Plotting the line plot
         # Add more content to col2 as needed
         daily_count = filtered_data.resample("D", on="time").size()
@@ -930,7 +930,7 @@ We employ several machine learning techniques for analysis:
 3. **Zero-shot Classification** of Patient Improvement Suggestions: The 'facebook/bart-large-mnli' model helps us identify and classify suggestions for improving patient care, even when the model hasn’t been specifically trained on healthcare data.
 4. Visit [**AI MedReview**](https://github.com/janduplessis883/friends-and-family-test-analysis) on GitHub, collaboration welcomed."""
     )
-    fig, ax = plt.subplots(figsize=(10, 4))
+    fig, ax = plt.subplots(figsize=(10, 5))
     sns.countplot(y='surgery', data=data, color='#59646b')
     for p in ax.patches:
         width = p.get_width()
