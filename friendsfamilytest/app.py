@@ -1122,7 +1122,8 @@ elif page == "GPT4 Summary":
         text = ' '.join(words)  # If there are fewer than 6000 words, keep them all
 
     # Display the truncated text
-    st.write(text)
+    st.info(f"Word Count:{word_count}")
+    st.code(text)
 
     def call_chatgpt_api(text):
         # Example OpenAI Python library request
