@@ -1508,7 +1508,7 @@ elif page == "PCN Dashboard":
         )
 
     # Set title to the right
-    ax_title = ax.set_title("Monthly FFT Responses", loc="right")
+    ax_title = ax.set_title("Monthly FFT Responses - Brompton Health PCN", loc="right")
     ax_title.set_position((1.02, 1))  # Adjust title position
 
     # Redraw the figure to ensure the formatter is applied
