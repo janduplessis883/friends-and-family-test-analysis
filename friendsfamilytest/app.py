@@ -1546,3 +1546,4 @@ elif page == "PCN Dashboard":
 
             # Display the line plot
             st.pyplot(plt)
+            
