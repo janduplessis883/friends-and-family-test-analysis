@@ -437,7 +437,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
     weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
 
-    @st.cache_data(ttl=100) # This decorator caches the output of this function
+    @st.cache_data(ttl=3600) # This decorator caches the output of this function
     def calculate_weekly_sentiment(data):
         """
         Calculate the weekly sentiment averages from the given DataFrame.
@@ -514,7 +514,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     st.pyplot(fig)
     st.markdown("---")
     
-    @st.cache_data(ttl=100)  # This decorator caches the output of this function
+    @st.cache_data(ttl=3600)  # This decorator caches the output of this function
     def process_sentiment_data(data):
         """
         Process the sentiment data to calculate the percentage of positive, negative,
@@ -1358,7 +1358,7 @@ elif page == "PCN Dashboard":
             weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
             weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
 
-            @st.cache_data(ttl=100) # This decorator caches the output of this function
+            @st.cache_data(ttl=3600) # This decorator caches the output of this function
             def calculate_weekly_sentiment(data):
                 """
                 Calculate the weekly sentiment averages from the given DataFrame.
