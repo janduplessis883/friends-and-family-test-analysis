@@ -1535,7 +1535,7 @@ elif page == "PCN Dashboard":
             ax.spines["left"].set_visible(False)
 
             # Set title to the right
-            ax_title = ax.set_title("Mean Weekly Rating Score - Brompton Health PCN", loc="right")
+            ax_title = ax.set_title("Mean Monthly Rating Score - Brompton Health PCN", loc="right")
 
             # Display the line plot
             st.pyplot(plt)
