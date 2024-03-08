@@ -1105,17 +1105,26 @@ elif page == "GPT4 Summary":
     #     (surgery_data["time"].dt.date >= selected_date_range[0])
     #     & (surgery_data["time"].dt.date <= selected_date_range[1])
     # ]
-    filtered_data["prompt"] = filtered_data["free_text"].str.cat(
-        filtered_data["do_better"], sep=" "
-    )
-    series = pd.Series(filtered_data["prompt"])
-    series.dropna(inplace=True)
-    word_series = series.to_list()
-    
-    
-    text = " ".join(word_series)
-    word_count = len(text.split())
-    st.write(f"Word Count: {word_count}")
+    # Step 1: Concatenate 'free_text' and 'do_better' into 'prompt'
+    filtered_data['prompt'] = filtered_data['free_text'].fillna('') + " " + filtered_data['do_better'].fillna('')
+
+    # Step 2: Drop NaN values (now unnecessary as we handled NaNs during concatenation)
+    filtered_data.dropna(subset=['prompt'], inplace=True)
+
+    # Step 3: Join all rows to form one large corpus of words
+    text = ' '.join(filtered_data['prompt'])
+    words = text.split()
+
+    # Step 2: Slice the first 6000 words and join them back into a string
+    if len(words) > 6000:
+        text = ' '.join(words[:6000])
+    else:
+        text = ' '.join(words)  # If there are fewer than 6000 words, keep them all
+
+    # Display the truncated text
+    st.write(text)
+    st.write(f"Displayed Word Count: {min(len(words), 6000)}")
+
     def call_chatgpt_api(text):
         # Example OpenAI Python library request
         completion = client.chat.completions.create(
