@@ -68,4 +68,5 @@ cronitor
 loguru
 schedule
 wordcloud
+requests
 

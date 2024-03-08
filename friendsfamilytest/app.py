@@ -10,6 +10,7 @@ from matplotlib.patches import Patch
 import time
 from openai import OpenAI
 import streamlit_shadcn_ui as ui
+import requests
 
 
 client = OpenAI()
@@ -1110,6 +1111,8 @@ elif page == "GPT4 Summary":
     series = pd.Series(filtered_data["prompt"])
     series.dropna(inplace=True)
     word_series = series.to_list()
+    word_count = len(word_series)
+    st.write(f"Word Count: {word_count}")
     text = " ".join(word_series)
 
 
@@ -1131,92 +1134,50 @@ elif page == "GPT4 Summary":
 
     # Text input
     user_input = text
-    
-    # Initial state setup, assuming you have session state handling configured
-    if 'pin_verified' not in st.session_state:
-        st.session_state.pin_verified = False
-    if 'pin_sent' not in st.session_state:
-        st.session_state.pin_sent = False
 
-    # Mobile number input field
-    mobile_number = st.text_input("Enter your mobile number (including 🇬🇧 +44) to receive a PIN:", "")
 
-    # Function to handle sending the PIN (pseudo-code, replace with your Continguity implementation)
-    def send_pin(mobile_number):
-        # Your code to send PIN via SMS
-        st.session_state.pin_sent = True
-        # Display a message or handle the result of sending the PIN
-        st.info(f"A PIN has been sent to {mobile_number}.")
+    user_name = st.text_input("Enter your name:")
 
-    # PIN verification input field
-    def verify_pin_input():
-        # Function to verify the entered PIN (pseudo-code)
-        def verify_pin(pin):
-            # Your verification code here
-            # If verified:
-            st.session_state.pin_verified = True
-            st.success("PIN successfully verified!")
-            # Else, handle failed verification:
-            # st.error("Incorrect PIN.")
+    if user_name:
+        # When the user's name is entered, send a webhook
+        webhook_url = "https://eodj7kiwqrtobj4.m.pipedream.net"
+        data = {"user_name": user_name, "surgery": selected_surgery, "word_count": word_count}
+        requests.post(webhook_url, json=data)
 
-        pin = st.text_input("Enter the PIN you received")
-        verify_pin_button = st.button("Verify PIN", on_click=verify_pin, args=(pin,))
-        if not verify_pin_button:
-            st.warning("Please enter the PIN you received to proceed.")
+        # Display the rest of your UI only if the user has entered their name
+        if st.button("Summarize with GPT4"):
+            # Your existing code for summarization
+            # Make sure to indent this part so it's executed as part of the if block
+            user_input = text  # Assuming 'text' is defined earlier as in your original code
+            
+            # Display input text and summary
+            if user_input:
+                st.markdown("### Input Text")
+                st.info(f"{user_input}")
 
-    # Button to send the PIN
-    if mobile_number and not st.session_state.pin_sent:
-        send_pin_button = st.button("Send PIN", on_click=send_pin, args=(mobile_number,))
+                # Your existing code to display and process the summarization
+                # Make sure this entire section is indented to be inside the if block
+                my_bar = st.progress(0)
+                for percent_complete in range(100):
+                    time.sleep(0.2)
+                    my_bar.progress(percent_complete + 1)
 
-    # Display the PIN input field after the PIN has been sent
-    if st.session_state.pin_sent and not st.session_state.pin_verified:
-        verify_pin_input()
-
-    # Only display the "Generate GPT4 Summary" button if the PIN has been verified
-    if st.session_state.pin_verified:
-        if st.button("Generate GPT4 Summary"):
-            # Your existing code to generate summary
-            pass
-
-    # Button to trigger summarization
-    #if st.button("Summarize with GPT4"):
-        if user_input:
-            # Call the function to interact with ChatGPT API
-            st.markdown("### Input Text")
-            code = text
-            st.info(f"{code}")
-
-            # Initiate progress bar
-            my_bar = st.progress(0)
-
-            # Simulate a loading process
-            for percent_complete in range(100):
-                time.sleep(0.2)
-                my_bar.progress(percent_complete + 1)
-
-            summary = call_chatgpt_api(user_input)
-
-            # Hide the progress bar after completion
-            my_bar.empty()
-            st.markdown("---")
-            st.markdown("### GPT4 Feedback Summary")
-            st.markdown("`Copy GPPT4 Summary as required.`")
-            st.write(summary)
-            st.download_button(
-                "Download GPT-4 Output", summary, help="Download summary as a TXT file."
-            )
-
-        else:
-            st.write(text)
-            ui.badges(
-                badge_list=[("Not able to summarise text.", "destructive")],
-                class_name="flex gap-2",
-                key="badges10",
-            )
+                summary = call_chatgpt_api(user_input)
+                my_bar.empty()
+                st.markdown("---")
+                st.markdown("### GPT4 Feedback Summary")
+                st.write(summary)
+                st.download_button("Download GPT-4 Output", summary, help="Download summary as a TXT file.")
+            else:
+                st.write(text)
+                ui.badges(
+                    badge_list=[("Not able to summarise text.", "destructive")],
+                    class_name="flex gap-2",
+                    key="badges10",
+                )
     else:
-        st.image(
-            "images/openailogo.png"
-        )
+        # Optionally, display a message asking the user to enter their name
+        st.image("images/openailogo.png")
 
 # == Full Responses ==========================================================
 elif page == "Feedback Timeline":
