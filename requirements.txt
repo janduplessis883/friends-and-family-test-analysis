@@ -67,4 +67,5 @@ streamlit-shadcn-ui
 cronitor
 loguru
 schedule
+wordcloud
 

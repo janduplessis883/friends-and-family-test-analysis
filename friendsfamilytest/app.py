@@ -168,30 +168,14 @@ if page not in  ['PCN Dashboard', 'About']:
 # == DASHBOARD ==========================================================================================================
 if page == "Surgery Dashboard":
     st.title(f"{selected_surgery}")
-    toggle = ui.switch(
-        default_checked=False, label="Explain this page.", key="switch_dash"
-    )
-    # React to the toggle's state
 
-    if toggle:
-        st.markdown(
-            """1. **Average Monthly Rating (Line Chart)**:
-This line chart shows the average rating given by patients each month. The y-axis represents the average rating, and the x-axis represents time. Each point on the line represents the average rating for that month, allowing viewers to track changes over time.
-2. **Rating Distribution (Horizontal Bar Chart)**:
-The horizontal bar chart below the line chart represents the distribution of ratings across different categories such as 'Extremely likely', 'Likely', 'Neither likely nor unlikely', 'Unlikely', 'Extremely unlikely', and 'Don't know'. The length of each bar correlates with the count of responses in each category.
-3. **Daily FFT Responses (Time Series Plot)**:
-This time series plot displays the daily count of FFT responses over the same period. The y-axis shows the number of responses, while the x-axis corresponds to the days within each month. Spikes in the graph may indicate specific days when an unusually high number of responses were collected.
-4. **Monthly FFT Responses (Bar Chart)**:
-The final plot is a vertical bar chart showing the total count of FFT responses collected each month. The y-axis represents the count of responses, and the x-axis indicates the month. Each bar's height represents the total number of responses for that month, providing a clear comparison of month-to-month variation in the volume of feedback."""
-        )
-    col1, col2 = st.columns([5, 2])
+    surgery_tab_selector = ui.tabs(options=['Surgery Ratings', 'Surgery Responses'], default_value='Surgery Ratings', key="tab4")
+    
 
-    # Use the columns
-    with col1:
-        # Add more content to col2 as needed
-        daily_count = filtered_data.resample("D", on="time").size()
-        daily_count_df = daily_count.reset_index()
-        daily_count_df.columns = ["Date", "Daily Count"]
+        
+       
+    if surgery_tab_selector == 'Surgery Ratings':
+   
         try:
             # Resample to get monthly average rating
             monthly_avg = filtered_data.resample("M", on="time")["rating_score"].mean()
@@ -200,7 +184,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
             monthly_avg_df = monthly_avg.reset_index()
 
             # Create a line plot
-            fig, ax = plt.subplots(figsize=(10, 4))
+            fig, ax = plt.subplots(figsize=(12, 4))
             sns.lineplot(
                 x="time",
                 y="rating_score",
@@ -237,7 +221,7 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
             plt.ylabel("Average Rating")
             plt.tight_layout()
             ax_title = ax.set_title(
-                "Average Monthly Rating", loc="right"
+                "Mean Monthly Rating", loc="right"
             )  # loc parameter aligns the title
             ax_title.set_position(
                 (1, 1)
@@ -247,154 +231,157 @@ The final plot is a vertical bar chart showing the total count of FFT responses 
             
         except:
             st.info("No rating available for this date range.")
+        st.write("---")
 
-    with col2:
-        ui.metric_card(
-            title="Total Responses",
-            content=f"{filtered_data.shape[0]}",
-            description=f"since {start_date}",
-            key="card1",
+        order = [
+            "Extremely likely",
+            "Likely",
+            "Neither likely nor unlikely",
+            "Unlikely",
+            "Extremely unlikely",
+            "Don't know",
+        ]
+
+        palette = {
+            "Extremely likely": "#112f45",
+            "Likely": "#4d9cb9",
+            "Neither likely nor unlikely": "#9bc8e3",
+            "Unlikely": "#f4ba41",
+            "Extremely unlikely": "#ec8b33",
+            "Don't know": "#ae4f4d",
+        }
+
+        # Set the figure size (width, height) in inches
+
+        plt.figure(figsize=(12, 5))
+
+        # Create the countplot
+        sns.countplot(data=filtered_data, y="rating", order=order, palette=palette)
+        ax = plt.gca()
+
+        # Remove y-axis labels
+        ax.set_yticklabels([])
+
+        # Create a custom legend
+        from matplotlib.patches import Patch
+
+        legend_patches = [
+            Patch(color=color, label=label) for label, color in palette.items()
+        ]
+        plt.legend(
+            handles=legend_patches,
+            title="Rating Categories",
+            bbox_to_anchor=(1.05, 1),
+            loc="best",
         )
 
-    st.write("")
+        # Iterate through the rectangles (bars) of the plot for width annotations
+        for p in ax.patches:
+            width = p.get_width()
+            offset = width * 0.02
+            try:
+                y = p.get_y() + p.get_height() / 2
+                ax.text(
+                    width + offset,
+                    y,
+                    f"{int(width)} / {round((int(width)/filtered_data.shape[0])*100, 1)}%",
+                    va="center",
+                    fontsize=10,
+                )
+            except ValueError:
+                pass
 
-    order = [
-        "Extremely likely",
-        "Likely",
-        "Neither likely nor unlikely",
-        "Unlikely",
-        "Extremely unlikely",
-        "Don't know",
-    ]
+        # Adjust plot appearance
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.spines["bottom"].set_visible(False)
+        ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        ax.yaxis.grid(False)
+        plt.xlabel("Count")
+        plt.ylabel("Rating")
+        plt.tight_layout()
+        st.pyplot(plt)
 
-    palette = {
-        "Extremely likely": "#112f45",
-        "Likely": "#4d9cb9",
-        "Neither likely nor unlikely": "#9bc8e3",
-        "Unlikely": "#f4ba41",
-        "Extremely unlikely": "#ec8b33",
-        "Don't know": "#ae4f4d",
-    }
 
-    # Set the figure size (width, height) in inches
-    st.markdown("---")
-    plt.figure(figsize=(12, 4))
+        
 
-    # Create the countplot
-    sns.countplot(data=filtered_data, y="rating", order=order, palette=palette)
-    ax = plt.gca()
+    elif surgery_tab_selector == 'Surgery Responses':
+        st.markdown(f"### Total: **{filtered_data.shape[0]}**")
+        # Plotting the line plot
+        # Add more content to col2 as needed
+        daily_count = filtered_data.resample("D", on="time").size()
+        daily_count_df = daily_count.reset_index()
+        daily_count_df.columns = ["Date", "Daily Count"]
+        fig, ax = plt.subplots(figsize=(12, 4))
+        sns.lineplot(
+            data=daily_count_df, x="Date", y="Daily Count", color="#558387", linewidth=2
+        )
 
-    # Remove y-axis labels
-    ax.set_yticklabels([])
+        ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        ax.xaxis.grid(False)
 
-    # Create a custom legend
-    from matplotlib.patches import Patch
+        # Customizing the x-axis labels for better readability
+        ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
 
-    legend_patches = [
-        Patch(color=color, label=label) for label, color in palette.items()
-    ]
-    plt.legend(
-        handles=legend_patches,
-        title="Rating Categories",
-        bbox_to_anchor=(1.05, 1),
-        loc="best",
-    )
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.spines["left"].set_visible(False)
+        ax_title = ax.set_title(
+            "Daily FFT Responses", loc="right"
+        )  # loc parameter aligns the title
+        ax_title.set_position((1, 1))  # Adjust these values to align your title as needed
+        plt.xlabel("")
+        plt.tight_layout()
+        st.pyplot(fig)
+        st.markdown("---")
+        # Resample and count the entries per month from filtered data
+        monthly_count_filtered = filtered_data.resample("M", on="time").size()
+        
+        monthly_count_filtered_df = monthly_count_filtered.reset_index()
+        #st.write(monthly_count_filtered_df.head())
+        monthly_count_filtered_df.columns = ["Month", "Monthly Count"]
+        #st.write(monthly_count_filtered_df.head())
+        monthly_count_filtered_df["Month"] = pd.to_datetime(monthly_count_filtered_df["Month"], format="%Y-%m-%d %H:%M:%S")
+        
+        #st.write(monthly_count_filtered_df.head())
+        # Create the figure and the bar plot
+        fig, ax = plt.subplots(figsize=(12, 4))
+        sns.barplot(
+            data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#aabd3b"
+        )
 
-    # Iterate through the rectangles (bars) of the plot for width annotations
-    for p in ax.patches:
-        width = p.get_width()
-        offset = width * 0.02
-        try:
-            y = p.get_y() + p.get_height() / 2
-            ax.text(
-                width + offset,
-                y,
-                f"{int(width)} / {round((int(width)/filtered_data.shape[0])*100, 1)}%",
+        # Set grid, spines and annotations as before
+        ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        ax.xaxis.grid(False)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.spines["left"].set_visible(False)
+
+        # Annotate bars with the height (monthly count)
+        for p in ax.patches:
+            ax.annotate(
+                f"{int(p.get_height())}",
+                (p.get_x() + p.get_width() / 2.0, p.get_height()),
+                ha="center",
                 va="center",
-                fontsize=10,
+                xytext=(0, 10),
+                textcoords="offset points",
             )
-        except ValueError:
-            pass
 
-    # Adjust plot appearance
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-    ax.spines["bottom"].set_visible(False)
-    ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-    ax.yaxis.grid(False)
-    plt.xlabel("Count")
-    plt.ylabel("Rating")
-    plt.tight_layout()
-    st.pyplot(plt)
-    st.write("---")
+        # Set title to the right
+        ax_title = ax.set_title("Monthly FFT Responses", loc="right")
+        ax_title.set_position((1.02, 1))  # Adjust title position
+        ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
+        fig.autofmt_xdate()
+        # Redraw the figure to ensure the formatter is applied
+        fig.canvas.draw()
 
-    # Plotting the line plot
-    fig, ax = plt.subplots(figsize=(12, 3.5))
-    sns.lineplot(
-        data=daily_count_df, x="Date", y="Daily Count", color="#558387", linewidth=2
-    )
+        # Remove xlabel as it's redundant with the dates
+        plt.xlabel("")
 
-    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-    ax.xaxis.grid(False)
-
-    # Customizing the x-axis labels for better readability
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
-
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-    ax.spines["left"].set_visible(False)
-    ax_title = ax.set_title(
-        "Daily FFT Responses", loc="right"
-    )  # loc parameter aligns the title
-    ax_title.set_position((1, 1))  # Adjust these values to align your title as needed
-    plt.xlabel("")
-    plt.tight_layout()
-    st.pyplot(fig)
-    st.markdown("---")
-    # Resample and count the entries per month from filtered data
-    monthly_count_filtered = filtered_data.resample("M", on="time").size()
-    monthly_count_filtered_df = monthly_count_filtered.reset_index()
-    monthly_count_filtered_df.columns = ["Month", "Monthly Count"]
-    monthly_count_filtered_df["Month"] = pd.to_datetime(
-        monthly_count_filtered_df["Month"]
-    )
-    # Create the figure and the bar plot
-    fig, ax = plt.subplots(figsize=(12, 3.5))
-    sns.barplot(
-        data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#aabd3b"
-    )
-
-    # Set grid, spines and annotations as before
-    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-    ax.xaxis.grid(False)
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-    ax.spines["left"].set_visible(False)
-
-    # Annotate bars with the height (monthly count)
-    for p in ax.patches:
-        ax.annotate(
-            f"{int(p.get_height())}",
-            (p.get_x() + p.get_width() / 2.0, p.get_height()),
-            ha="center",
-            va="center",
-            xytext=(0, 10),
-            textcoords="offset points",
-        )
-
-    # Set title to the right
-    ax_title = ax.set_title("Monthly FFT Responses", loc="right")
-    ax_title.set_position((1.02, 1))  # Adjust title position
-
-    # Redraw the figure to ensure the formatter is applied
-    fig.canvas.draw()
-
-    # Remove xlabel as it's redundant with the dates
-    plt.xlabel("")
-
-    # Apply tight layout and display plot
-    plt.tight_layout()
-    st.pyplot(fig)
+        # Apply tight layout and display plot
+        plt.tight_layout()
+        st.pyplot(fig)
     
  
 
@@ -1532,7 +1519,7 @@ elif page == "PCN Dashboard":
                 )
             
             plt.xlabel('Month')
-            plt.ylabel('Average Rating Score')
+            plt.ylabel('Mean Rating Score')
             plt.xticks(rotation=45)
             plt.tight_layout()
             ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
