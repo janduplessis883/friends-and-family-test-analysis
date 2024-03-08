@@ -12,7 +12,6 @@ from openai import OpenAI
 import streamlit_shadcn_ui as ui
 import requests
 
-
 client = OpenAI()
 
 from utils import *
@@ -34,13 +33,15 @@ html = """
 
 """
 
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# --Defining dataframe loading and manipulation to cache all for performance improvment -----
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-@st.cache_data(ttl=100)
+@st.cache_data(ttl=3600)
 def load_data():
     df = pd.read_csv("friendsfamilytest/data/data.csv")
     df["time"] = pd.to_datetime(df["time"], dayfirst=True)
     return df
-
 
 data = load_data()
 
@@ -51,8 +52,6 @@ def load_timedata():
     df.set_index("time", inplace=True)
     return df
 
-
-# Calculate monthly averages
 data_time = load_timedata()
 
 monthly_avg = data_time["rating_score"].resample("M").mean()
@@ -64,7 +63,7 @@ st.sidebar.image(
     "images/transparent2.png"
 )
 
-@st.cache_data(ttl=100)  # This decorator enables caching for this function
+@st.cache_data(ttl=3600)  
 def get_surgery_data(data, selected_surgery):
     # Extracting unique surgery types
     surgery_list = data["surgery"].unique()
@@ -72,7 +71,6 @@ def get_surgery_data(data, selected_surgery):
     # Filtering the dataset based on the selected surgery type
     surgery_data = data[data["surgery"] == selected_surgery]
     return surgery_data
-
 
 
 page = st.sidebar.radio(
@@ -85,7 +83,7 @@ page = st.sidebar.radio(
         "Feedback Timeline",
         "Sentiment Analysis",
         "Word Cloud",
-        "GPT4 Summary",
+        "GPT-4 Summary",
         "Dataframe",
         "About",
     ],
@@ -137,7 +135,7 @@ if page not in  ['PCN Dashboard', 'About']:
     )
 
 
-    @st.cache_data(ttl=100)  # This decorator caches the output of this function
+    @st.cache_data(ttl=3600)  # This decorator caches the output of this function
     def filter_data_by_date_range(data, date_range):
         """
         Filter the provided DataFrame based on a date range.
@@ -169,12 +167,10 @@ if page not in  ['PCN Dashboard', 'About']:
 if page == "Surgery Dashboard":
     st.title(f"{selected_surgery}")
 
-    surgery_tab_selector = ui.tabs(options=['Surgery Ratings', 'Surgery Responses'], default_value='Surgery Ratings', key="tab4")
+    surgery_tab_selector = ui.tabs(options=['Surgery Rating', 'Surgery Responses'], default_value='Surgery Rating', key="tab4")
     
-
-        
        
-    if surgery_tab_selector == 'Surgery Ratings':
+    if surgery_tab_selector == 'Surgery Rating':
    
         try:
             # Resample to get monthly average rating
@@ -1078,7 +1074,7 @@ The length of each bar signifies the count of feedback entries that fall into th
                 st.write("- " + str(text))
 
 # == Generate ChatGPT Summaries ==========================================================
-elif page == "GPT4 Summary":
+elif page == "GPT-4 Summary":
     st.title("GPT4 Free-Text Summary")
 
     toggle = ui.switch(
@@ -1101,11 +1097,41 @@ elif page == "GPT4 Summary":
     st.markdown(
         "**Follow the steps below to Summarise Free-Text with GPT4.**"
     )
-    # filtered_data = surgery_data[
-    #     (surgery_data["time"].dt.date >= selected_date_range[0])
-    #     & (surgery_data["time"].dt.date <= selected_date_range[1])
-    # ]
-    # Step 1: Concatenate 'free_text' and 'do_better' into 'prompt'
+    
+    def call_chatgpt_api(text):
+        # Example OpenAI Python library request
+        completion = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are an expert in summarizing Friends & Family Test feedback comments.",
+                },
+                {"role": "user", "content": f"Simmarize the folloing text, making sure to highlight any trens in feedback and improvement suggestions: \n{text}"},
+            ],
+        )
+
+        output = completion.choices[0].message.content
+        return output
+    
+    def send_webhook(user_name, selected_surgery, word_count):
+        """
+        Send a webhook POST request with the provided data.
+
+        Parameters:
+        user_name (str): The user's name.
+        selected_surgery (str): The selected surgery.
+        word_count (int): The word count.
+        """
+        webhook_url = "https://eodj7kiwqrtobj4.m.pipedream.net"
+        data = {
+            "user_name": user_name,
+            "surgery": selected_surgery,
+            "word_count": word_count
+        }
+        response = requests.post(webhook_url, json=data)
+        return response
+
     filtered_data['prompt'] = filtered_data['free_text'].fillna('') + " " + filtered_data['do_better'].fillna('')
 
     # Step 2: Drop NaN values (now unnecessary as we handled NaNs during concatenation)
@@ -1121,72 +1147,49 @@ elif page == "GPT4 Summary":
     else:
         text = ' '.join(words)  # If there are fewer than 6000 words, keep them all
 
-    # Display the truncated text
-    st.info(f"Word Count:{word_count}")
-    st.code(text)
-
-    def call_chatgpt_api(text):
-        # Example OpenAI Python library request
-        completion = client.chat.completions.create(
-            model="gpt-4",
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You are a helpful assistant. and expert at summarixing friends and family Test Feedback for a GP Surgery",
-                },
-                {"role": "user", "content": f"Summarize the following text\n\n{text}"},
-            ],
-        )
-
-        output = completion.choices[0].message.content
-        return output
-
-    # Text input
-    user_input = text
-
-
-    user_name = st.text_input("Enter your name:")
-
-    if user_name:
-        # When the user's name is entered, send a webhook
-        webhook_url = "https://eodj7kiwqrtobj4.m.pipedream.net"
-        data = {"user_name": user_name, "surgery": selected_surgery, "word_count": word_count}
-        requests.post(webhook_url, json=data)
-
-        # Display the rest of your UI only if the user has entered their name
-        if st.button("Summarize with GPT4"):
-            # Your existing code for summarization
-            # Make sure to indent this part so it's executed as part of the if block
-            user_input = text  # Assuming 'text' is defined earlier as in your original code
+    with st.container(height=200, border=True):
+        st.write(text)
+        
+    if 0 < word_count <= 6000:
+        ui.badges(badge_list=[(f"Word count: {word_count}", "outline"), ("✔️ GPT-4 prompt size acceptable", "secondary")], class_name="flex gap-2", key="badges10")
+        
+        # Get user's name input
+        name_input_value = ui.input(default_value="", type='text', placeholder="Enter your name", key="gpt_name_input")
+        
+        # Check if a name has been entered
+        if name_input_value:
+            st.markdown(f"You entered: **{name_input_value}**")
+            clicked = ui.button("Submit", key="clk_btn")
             
-            # Display input text and summary
-            if user_input:
-                st.markdown("### Input Text")
-                st.info(f"{user_input}")
+            # After the 'Submit' button is clicked and the webhook is sent
+            if clicked:
+                response = send_webhook(name_input_value, selected_surgery, word_count)
+                st.success('Webhook sent successfully!')
 
-                # Your existing code to display and process the summarization
-                # Make sure this entire section is indented to be inside the if block
-                my_bar = st.progress(0)
-                for percent_complete in range(100):
-                    time.sleep(0.2)
-                    my_bar.progress(percent_complete + 1)
+                # Outside and after the 'if clicked' block, independently check for 'Summarize with GPT-4' button click
+                summarize_button = ui.button(text="Summarize with GPT-4", key="styled_btn_tailwind", className="bg-orange-500 text-white")
 
-                summary = call_chatgpt_api(user_input)
-                my_bar.empty()
-                st.markdown("---")
-                st.markdown("### GPT4 Feedback Summary")
-                st.write(summary)
-                st.download_button("Download GPT-4 Output", summary, help="Download summary as a TXT file.")
-            else:
-                st.write(text)
-                ui.badges(
-                    badge_list=[("Not able to summarise text.", "destructive")],
-                    class_name="flex gap-2",
-                    key="badges10",
-                )
-    else:
-        # Optionally, display a message asking the user to enter their name
+                if summarize_button:
+                    # Now directly inside the condition check for the 'Summarize' button
+                    summary = call_chatgpt_api(text)
+                    with st.container():
+                        st.subheader("Friends & Family Test Feedback Summary")
+                        st.markdown(f"**{selected_surgery}**")
+                        st.markdown(f"Date range: {selected_date_range[0]} - {selected_date_range[1]}")
+                        st.markdown("---")
+                        st.write(summary)
+            
         st.image("images/openailogo.png")
+        st.write(f"You entered: {name_input_value}")
+        
+          
+    elif word_count == 0:
+        ui.badges(badge_list=[(f"Word count: {word_count}", "destructive"),  ("⤬ Nothing to summarise.", "secondary")], class_name="flex gap-2", key="badges11")
+
+    else:
+        ui.badges(badge_list=[(f"Word count: {word_count}", "destructive"),  ("⤬ Exceeds GPT-4 prompt limit. Adjust the date range to reduce the input size.", "secondary")], class_name="flex gap-2", key="badges11")
+
+        
 
 # == Full Responses ==========================================================
 elif page == "Feedback Timeline":
