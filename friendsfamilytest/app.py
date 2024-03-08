@@ -955,6 +955,11 @@ We employ several machine learning techniques for analysis:
     plt.tight_layout()
     st.pyplot(plt)
     
+    debug_toggle = ui.switch(
+        default_checked=False, label="Debug", key="debug"
+    )
+    if debug_toggle:
+        st.dataframe(data.tail(50))
     
     st.markdown("---")
 
