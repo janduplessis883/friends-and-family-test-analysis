@@ -961,11 +961,6 @@ We employ several machine learning techniques for analysis:
     if debug_toggle:
         st.dataframe(data.tail(50))
         
-    with st.popover("Debug"):
-        st.markdown("Select debug Mode 👋")
-        name = st.text_input("What's your name?")
-
-    st.write("Your name:", name)
     
     st.markdown("---")
 
