@@ -50,7 +50,7 @@ transformers
 python-dotenv
 openai
 wordcloud
-streamlit
+streamlit==1.32.0
 python-dotenv
 
 
