@@ -1148,7 +1148,7 @@ elif page == "GPT-4 Summary":
         st.write(text)
 
     # Display and handle the word count badge
-    if 0 < word_count <= 6000:
+    if 0 < word_count <= 6400:
         ui.badges(badge_list=[(f"Word count: {word_count}", "outline"), ("✔️ GPT-4 prompt size acceptable", "secondary")], class_name="flex gap-2", key="badges10")
         
         # Get user's name input
