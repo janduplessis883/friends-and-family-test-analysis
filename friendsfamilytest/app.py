@@ -904,7 +904,7 @@ Rows are labeled with an Index, which you can think of as the address of the dat
     st.write("The data below is filtered based on the date range selected above.")
 
     # Display the filtered DataFrame
-    st.dataframe(filtered_data)
+    st.dataframe(filtered_data.tail(100))
 
 # == About ==========================================================
 elif page == "About":
