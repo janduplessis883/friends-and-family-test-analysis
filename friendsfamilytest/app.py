@@ -38,7 +38,6 @@ html = """
 def load_data():
     df = pd.read_csv("friendsfamilytest/data/data.csv")
     df["time"] = pd.to_datetime(df["time"], dayfirst=True)
-    df.drop_duplicates(inplace=True)
     return df
 
 
@@ -356,7 +355,7 @@ if page == "Surgery Dashboard":
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
         ax.spines["left"].set_visible(False)
-
+        
         # Annotate bars with the height (monthly count)
         for p in ax.patches:
             ax.annotate(
@@ -372,6 +371,7 @@ if page == "Surgery Dashboard":
         ax_title = ax.set_title("Monthly FFT Responses", loc="right")
         ax_title.set_position((1.02, 1))  # Adjust title position
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
+        ax.set_xticklabels(ax.get_xticklabels(), rotation=45)
         fig.autofmt_xdate()
         # Redraw the figure to ensure the formatter is applied
         fig.canvas.draw()
@@ -1360,7 +1360,7 @@ elif page == "PCN Dashboard":
             explode = (0, 0, 0)  # 'explode' the 1st slice (Positive)
 
             # Plot
-            fig, ax = plt.subplots(figsize=(12, 4))
+            fig, ax = plt.subplots(figsize=(12, 5))
             ax.pie(
                 sentiment_totals,
                 explode=explode,
