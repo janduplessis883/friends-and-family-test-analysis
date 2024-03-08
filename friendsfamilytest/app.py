@@ -1114,7 +1114,7 @@ elif page == "GPT4 Summary":
     # Step 3: Join all rows to form one large corpus of words
     text = ' '.join(filtered_data['prompt'])
     words = text.split()
-
+    word_count = len(words)
     # Step 2: Slice the first 6000 words and join them back into a string
     if len(words) > 6000:
         text = ' '.join(words[:6000])
@@ -1123,7 +1123,6 @@ elif page == "GPT4 Summary":
 
     # Display the truncated text
     st.write(text)
-    st.write(f"Displayed Word Count: {min(len(words), 6000)}")
 
     def call_chatgpt_api(text):
         # Example OpenAI Python library request
