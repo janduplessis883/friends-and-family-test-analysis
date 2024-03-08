@@ -1111,11 +1111,11 @@ elif page == "GPT4 Summary":
     series = pd.Series(filtered_data["prompt"])
     series.dropna(inplace=True)
     word_series = series.to_list()
-    word_count = len(word_series)
-    st.write(f"Word Count: {word_count}")
+    
+    
     text = " ".join(word_series)
-
-
+    word_count = len(text.split())
+    st.write(f"Word Count: {word_count}")
     def call_chatgpt_api(text):
         # Example OpenAI Python library request
         completion = client.chat.completions.create(
