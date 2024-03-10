@@ -380,7 +380,281 @@ if page == "Surgery Dashboard":
         plt.tight_layout()
         st.pyplot(fig)
     
+ #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++                     
+# == PCN Dashboard ==========================================================
+elif page == "PCN Dashboard":
+    
+    st.title("Brompton Health PCN")
+    st.markdown("**Friends & Family Test Analysis** (FFT)")
+   
+    tab_selector = ui.tabs(options=['PCN Rating', 'PCN Responses', 'Cum. Sentiment', 'Surgery Ratings', 'Surgery Responses'], default_value='PCN Rating', key="tab3")
+    
+    if tab_selector == 'PCN Responses':
+        with st.container(border=False):
+            # Monthly Totals Plot
+            monthly_count_filtered = data.resample("M", on="time").size()
+            monthly_count_filtered_df = monthly_count_filtered.reset_index()
+            monthly_count_filtered_df.columns = ["Month", "Monthly Count"]
+            monthly_count_filtered_df["Month"] = pd.to_datetime(
+                monthly_count_filtered_df["Month"]
+            )
+            # Create the figure and the bar plot
+            fig, ax = plt.subplots(figsize=(12, 7))
+            sns.barplot(
+                data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#aabd3b"
+            )
+
+            # Set grid, spines and annotations as before
+            ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+            ax.xaxis.grid(False)
+            ax.spines["top"].set_visible(False)
+            ax.spines["right"].set_visible(False)
+            ax.spines["left"].set_visible(False)
+
+            # Annotate bars with the height (monthly count)
+            for p in ax.patches:
+                ax.annotate(
+                    f"{int(p.get_height())}",
+                    (p.get_x() + p.get_width() / 2.0, p.get_height()),
+                    ha="center",
+                    va="center",
+                    xytext=(0, 10),
+                    textcoords="offset points",
+                )
+
+            # Set title to the right
+            ax_title = ax.set_title("Monthly FFT Responses - Brompton Health PCN", loc="right")
+            ax_title.set_position((1.02, 1))  # Adjust title position
+
+            # Redraw the figure to ensure the formatter is applied
+            fig.canvas.draw()
+
+            # Remove xlabel as it's redundant with the dates
+            plt.xlabel("")
+
+            # Apply tight layout and display plot
+            plt.tight_layout()
+            st.pyplot(fig)
+            
+        
+    elif tab_selector == 'Surgery Ratings':
+        with st.container(border=False):
  
+            #alldata_date_range = filter_data_by_date_range(data, selected_date_range)
+            pivot_data = data.pivot_table(index='surgery', columns='rating', aggfunc='size', fill_value=0)
+            total_responses_per_surgery = pivot_data.sum(axis=1)
+
+            # Compute the percentage of each rating category for each surgery
+            percentage_pivot_data = pivot_data.div(total_responses_per_surgery, axis=0) * 100
+            # Define the desired column order based on the rating categories
+            column_order = ["Extremely likely", "Likely", "Neither likely nor unlikely", "Unlikely", "Extremely unlikely", "Don't know"]
+
+            # Reorder the columns in the percentage pivot data
+            ordered_percentage_pivot_data = percentage_pivot_data[column_order]
+
+            # Create the heatmap with the ordered columns
+            plt.figure(figsize=(12, 9))
+            ordered_percentage_heatmap = sns.heatmap(ordered_percentage_pivot_data, annot=True, fmt=".1f", cmap="Blues", linewidths=.5)
+            plt.title('% Heatmap of Surgery Ratings', fontsize=16)
+            plt.ylabel('')
+            plt.xlabel('Rating (%)', fontsize=12)
+            plt.xticks(rotation=45)
+            plt.yticks(rotation=0)
+            plt.tight_layout()
+
+            # Display the ordered percentage heatmap
+            st.pyplot(plt)
+       
+
+    elif tab_selector == 'Cum. Sentiment':
+        with st.container(border=False):
+            labels = "Negative", "Neutral", "Positive"
+            new_data = data[data['sentiment_score'] != 1]
+            sentiment_totals = new_data.groupby('sentiment')['sentiment_score'].sum()
+            colors = ['#7495a8' if sentiment == 'positive' else '#ae4f4d' if sentiment == 'negative' else '#eeeadb' for sentiment in sentiment_totals.index]
+            explode = (0, 0, 0)  # 'explode' the 1st slice (Positive)
+
+            # Plot
+            fig, ax = plt.subplots(figsize=(12, 5))
+            ax.pie(
+                sentiment_totals,
+                explode=explode,
+                labels=labels,
+                colors=colors,
+                autopct="%1.1f%%",
+                startangle=140,
+            )
+            ax.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+            # Draw a circle at the center of pie to make it look like a donut
+            centre_circle = plt.Circle((0, 0), 0.50, fc="white")
+            fig.gca().add_artist(centre_circle)
+            plt.title("Cumulative Sentiment - Brompton Health PCN")
+            st.pyplot(fig)
+        
+            # Resample and count the entries per month from filtered data
+            weekly_sent = data.resample("D", on="time")[
+                "neg", "pos", "neu", "compound"
+            ].mean()
+            weekly_sent_df = weekly_sent.reset_index()
+            weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
+            weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
+
+            @st.cache_data(ttl=3600) # This decorator caches the output of this function
+            def calculate_weekly_sentiment(data):
+                """
+                Calculate the weekly sentiment averages from the given DataFrame.
+
+                Parameters:
+                data (DataFrame): The DataFrame containing sentiment scores and time data.
+
+                Returns:
+                DataFrame: A DataFrame with weekly averages of sentiment scores.
+                """
+                # Resample the data to a weekly frequency and calculate the mean of sentiment scores
+                weekly_sent = data.resample("W", on="time")[
+                    "neg", "pos", "neu", "compound"
+                ].mean()
+
+                # Reset the index to turn the 'time' index into a column and rename columns
+                weekly_sent_df = weekly_sent.reset_index()
+                weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
+
+                # Convert the 'Week' column to datetime format
+                weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
+
+                return weekly_sent_df
+
+            weekly_sentiment = calculate_weekly_sentiment(data)
+
+            fig, ax = plt.subplots(figsize=(12, 5))
+            sns.lineplot(
+                data=weekly_sentiment,
+                x="Week",
+                y="neu",
+                color="#eee8d6",
+                label="Neutral",
+                linewidth=2,
+            )
+
+            sns.lineplot(
+                data=weekly_sentiment,
+                x="Week",
+                y="pos",
+                color="#6894a8",
+                label="Positive",
+                linewidth=2,
+            )
+            sns.lineplot(
+                data=weekly_sentiment,
+                x="Week",
+                y="neg",
+                color="#ae4f4d",
+                label="Negative",
+                linewidth=2,
+            )
+            
+
+            # Set grid, spines and annotations as before
+            ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+            ax.xaxis.grid(False)
+            ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
+            ax.spines["top"].set_visible(False)
+            ax.spines["right"].set_visible(False)
+            ax.spines["left"].set_visible(False)
+
+            # Set title to the right
+            ax_title = ax.set_title("Mean Weekly Sentiment - Brompton Health PCN", loc="right")
+            ax_title.set_position((1.02, 1))  # Adjust title position
+
+            # Redraw the figure to ensure the formatter is applied
+            fig.canvas.draw()
+
+            # Remove xlabel as it's redundant with the dates
+            plt.xlabel("Weeks")
+            plt.ylabel("Mean Sentiment")
+            # Apply tight layout and display plot
+            plt.tight_layout()
+            st.pyplot(fig)
+        
+        
+    elif tab_selector == 'Surgery Responses':
+        with st.container(border=False):
+            fig, ax = plt.subplots(figsize=(12, 8))
+            sns.countplot(y='surgery', data=data, color='#59646b')
+            for p in ax.patches:
+                width = p.get_width()
+                try:
+                    y = p.get_y() + p.get_height() / 2
+                    ax.text(
+                        width + 1,
+                        y,
+                        f"{int(width)}",
+                        va="center",
+                        fontsize=8,
+                    )
+                except ValueError:
+                    pass
+            ax.spines["top"].set_visible(False)
+            ax.spines["right"].set_visible(False)
+            ax.spines["bottom"].set_visible(False)
+            ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+            ax.yaxis.grid(False)
+            plt.xlabel("Count")
+            plt.ylabel("")
+            plt.title("Total FFT Responses by Surgery", loc="right")
+            plt.tight_layout()
+            st.pyplot(plt)
+            
+        
+        
+        
+    elif tab_selector == 'PCN Rating':
+        with st.container(border=False):
+            # Convert 'time' to datetime and extract the date
+            data['date'] = pd.to_datetime(data['time']).dt.date
+
+            # Group by the new 'date' column and calculate the mean 'rating_score' for each day
+            daily_mean_rating = data.groupby('date')['rating_score'].mean().reset_index()
+            # Ensure the 'date' column is in datetime format for resampling
+            daily_mean_rating['date'] = pd.to_datetime(daily_mean_rating['date'])
+
+            # Set the 'date' column as the index
+            daily_mean_rating.set_index('date', inplace=True)
+
+            # Resample the data by week and calculate the mean 'rating_score' for each week
+            weekly_mean_rating = daily_mean_rating['rating_score'].resample('M').mean().reset_index()
+
+            # Create a seaborn line plot for weekly mean rating scores
+            fig, ax = plt.subplots(figsize=(12, 7))
+            weekly_lineplot = sns.lineplot(x='date', y='rating_score', data=weekly_mean_rating, color="#d2b570", linewidth=4)
+            
+            for index, row in weekly_mean_rating.iterrows():
+                ax.annotate(
+                    f'{row["rating_score"]:.2f}',
+                    (row["date"], row["rating_score"]),
+                    textcoords="offset points",
+                    xytext=(0, 10),
+                    ha="center",
+                    fontsize=12,  # Adjust this value as needed
+                )
+            
+            plt.xlabel('Month')
+            plt.ylabel('Mean Rating Score')
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+            ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+            ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+            ax.spines["top"].set_visible(False)
+            ax.spines["right"].set_visible(False)
+            ax.spines["left"].set_visible(False)
+
+            # Set title to the right
+            ax_title = ax.set_title("Mean Monthly Rating Score - Brompton Health PCN", loc="right")
+
+            # Display the line plot
+            st.pyplot(plt)
+            
 
 # == Rating & Sentiment Analysis Correlation ======================================================================
 elif page == "Sentiment Analysis":
@@ -427,7 +701,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     centre_circle = plt.Circle((0, 0), 0.50, fc="white")
     fig.gca().add_artist(centre_circle)
     st.pyplot(fig)
-    st.markdown("---")
+
 
     # Resample and count the entries per month from filtered data
     weekly_sent = filtered_data.resample("W", on="time")[
@@ -573,7 +847,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     bottom_neu = new["neg"] + new["pos"]
 
     # Create a stacked bar plot
-    fig, ax = plt.subplots(figsize=(16, 5))
+    fig, ax = plt.subplots(figsize=(16, 6))
 
     # Plot each sentiment as a layer in the stacked bar
     ax.bar(new["date"], new["neg"], label="Negative", color="#ae4f4d", alpha=1)
@@ -621,139 +895,8 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     # Show the plot
     st.pyplot(fig)
 
-    st.markdown("---")
+ 
 
-    palette_colors = {
-        "positive": "#4187aa",
-        "neutral": "#d8ae46",
-        "negative": "#be6933",
-    }
-    plt.figure(figsize=(12, 4))  # You can adjust the figure size as needed
-    scatter_plot = sns.scatterplot(
-        data=filtered_data,
-        y="rating_score",
-        x="compound",
-        hue="sentiment",
-        s=65,
-        palette=palette_colors,
-        marker="o",
-    )
-
-    # Setting x-axis ticks to 1, 2, 3, 4, 5
-    # Define the color palette as a dictionary
-
-    plt.grid(axis="y", color="grey", linestyle="-", linewidth=0.5, alpha=0.6)
-
-    scatter_plot.spines["left"].set_visible(False)
-    scatter_plot.spines["top"].set_visible(False)
-    scatter_plot.spines["right"].set_visible(False)
-    plt.tight_layout()
-    st.pyplot(plt)
-
-    # Negative sentiment plot
-    neg_sentiment = filtered_data[filtered_data["compound"] < 0]
-    slider_start_point = neg_sentiment["neg"].min()
-    if slider_start_point == 0:
-        slider_start = 0.4
-    else:
-        slider_start = slider_start_point
-
-    # The value parameter is set to slider_end, which is the maximum value
-    slider_value = st.slider(
-        label="Select Negative Sentiment Analysis threshold:",
-        min_value=slider_start,
-        max_value=1.0,
-        value=0.9,  # Set initial value to the max value
-        step=0.1,
-    )
-
-    # Create two columns
-    col1, col2 = st.columns(2)
-
-    # Content for the first column
-    with col1:
-
-        fig, ax = plt.subplots(figsize=(5, 2))
-        sns.histplot(data=neg_sentiment, x="neg", color="#be6933", kde=True, bins=10)
-        # Set grid, spines and annotations as before
-        # Add a vertical red line at sentiment score of 0.90
-        plt.axvline(x=slider_value, color="#ae4f4d", linestyle="-", linewidth=4)
-        ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-        ax.xaxis.grid(False)
-        ax.spines["top"].set_visible(False)
-        ax.spines["right"].set_visible(False)
-        ax.spines["left"].set_visible(False)
-        plt.xlabel("Sentiment Score")
-        plt.title("Negative Sentiment")
-        st.pyplot(plt)  # Display the plot in Streamlit
-
-    # Content for the second column
-    with col2:
-        # Positive sentiment plot
-        pos_sentiment = filtered_data[filtered_data["compound"] > 0]
-        fig, ax = plt.subplots(figsize=(5, 2))
-        sns.histplot(data=pos_sentiment, x="pos", color="#4187aa", kde=True)
-        # Set grid, spines and annotations as before
-        ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-        ax.xaxis.grid(False)
-        ax.spines["top"].set_visible(False)
-        ax.spines["right"].set_visible(False)
-        ax.spines["left"].set_visible(False)
-        plt.xlabel("Sentiment Score")
-        plt.title("Positive Sentiment")
-        st.pyplot(plt)  # Display the plot in Streamlit
-
-    st.markdown("---")
-    st.subheader("View Patient Feedback")
-
-    # Create the slider
-
-    # View SELECTED Patient Feedback with Sentiment Analaysis NEG >= 0.5
-    selected_feedback = filtered_data[
-        (filtered_data["neg"] >= 0.3)
-        
-    ].sort_values(by="neg", ascending=False)
-
-    class_list = list(selected_feedback["feedback_labels"].unique())
-    cleaned_class_list = [x for x in class_list if not pd.isna(x)]
-    selected_ratings = st.multiselect(
-        f"Viewing Feedback with Sentiment Analysis *NEG > {slider_value}:",
-        cleaned_class_list,
-        default=cleaned_class_list,
-    )
-
-    # Filter the data based on the selected classifications
-    filtered_classes = selected_feedback[
-        selected_feedback["feedback_labels"].isin(selected_ratings)
-    ]
-
-    if not selected_ratings:
-        ui.badges(
-            badge_list=[("Please select at least one classification.", "outline")],
-            class_name="flex gap-2",
-            key="badges10",
-        )
-
-    else:
-        for rating in selected_ratings:
-            specific_class = filtered_classes[
-                filtered_classes["feedback_labels"] == rating
-            ]
-            st.subheader(f"{rating.capitalize()} ({str(specific_class.shape[0])})")
-            for _, row in specific_class.iterrows():
-                text = row["free_text"]
-                do_better = row["do_better"]
-                sentiment_score = row["sentiment_score"]
-
-                # Check if the text is valid and not neutral or nan
-                if str(text) not in ["nan"]:
-                    st.markdown("🗣️ " + str(text))
-                    if str(do_better) not in ["nan"]:
-                        st.markdown("🔧 " + str(do_better))
-                    if str(sentiment_score).lower() not in [
-                        "nan",
-                    ]:
-                        st.markdown("`Neg: " + str(sentiment_score) + "`")
 
 
 # == Feedback Classification ========================================================================================
@@ -1095,7 +1238,7 @@ elif page == "GPT-4 Summary":
 3. **Receive Your Summary**: Get a well-structured, comprehensive summary that highlights the core sentiments and suggestions from your patients."""
         )
     st.markdown(
-        "**Follow the steps below to Summarise Free-Text with GPT4.**"
+        "**Follow the steps below to summarise free-text with GPT4.**"
     )
     
     def call_chatgpt_api(text):
@@ -1105,9 +1248,9 @@ elif page == "GPT-4 Summary":
             messages=[
                 {
                     "role": "system",
-                    "content": "You are an expert in summarizing Friends & Family Test feedback comments.",
+                    "content": "You are an expert in summarizing Friends & Family Test feedback for GP surgeries.",
                 },
-                {"role": "user", "content": f"Simmarize the folloing text, making sure to highlight any trens in feedback and improvement suggestions: \n{text}"},
+                {"role": "user", "content": f"Summarize the folloing text, making sure to highlight any trend in feedback and improvement suggestions: \n{text}"},
             ],
         )
 
@@ -1149,10 +1292,10 @@ elif page == "GPT-4 Summary":
 
     # Display and handle the word count badge
     if 0 < word_count <= 6400:
-        ui.badges(badge_list=[(f"Word count: {word_count}", "outline"), ("✔️ GPT-4 prompt size acceptable", "secondary")], class_name="flex gap-2", key="badges10")
+        ui.badges(badge_list=[(f"Word count: {word_count}", "outline"), ("✔️ Summarise with GPT-4 API", "secondary")], class_name="flex gap-2", key="badges10")
         
         # Get user's name input
-        name_input_value = ui.input(default_value="", type='text', placeholder="Enter your name", key="gpt_name_input")
+        name_input_value = ui.input(default_value="", type='text', placeholder="Enter your name, to continue...", key="gpt_name_input")
         
         if name_input_value:
             st.markdown(f"You entered: **{name_input_value}**")
@@ -1184,12 +1327,13 @@ elif page == "GPT-4 Summary":
         st.image("images/openailogo.png")
 
     elif word_count == 0:
-        ui.badges(badge_list=[(f"Word count: {word_count}", "destructive"),  ("⤬ Nothing to summarise.", "secondary")], class_name="flex gap-2", key="badges11")
+        ui.badges(badge_list=[(f"Word Count: {word_count}", "destructive"),  ("⤬ Nothing to summarise.", "secondary")], class_name="flex gap-2", key="badges11")
 
     else:
-        ui.badges(badge_list=[(f"Word count: {word_count}", "destructive"),  ("⤬ Exceeds GPT-4 prompt limit. Adjust the date range to reduce the input size.", "secondary")], class_name="flex gap-2", key="badges11")
-
-        
+        ui.badges(badge_list=[(f"Word Count: {word_count}", "destructive"),  ("⤬ The input text surpasses the maximum limit allowed for GPT-4 API.", "secondary")], class_name="flex gap-2", key="badges11")
+        ui.badges(badge_list=[(f"Option 1:", "default"),  ("⤬ Adjust the date range to reduce input text size.", "outline")], class_name="flex gap-2", key="badges12")
+        ui.badges(badge_list=[(f"Option 2:", "default"),  ("⤬ Download feedback as .txt file - upload to ChatGPT & prompt to summarise.", "outline")], class_name="flex gap-2", key="badges13")
+        st.download_button("Download feedback as .txt", data=text, file_name=f'FFT_Feedback-{selected_surgery}-{selected_date_range[0]} to {selected_date_range[1]}.txt', help="Upload this Plain Text file to ChtGPT and prompt to summarize.")
 
 # == Full Responses ==========================================================
 elif page == "Feedback Timeline":
@@ -1238,278 +1382,3 @@ elif page == "Feedback Timeline":
                     if str(do_better) not in ["nan"]:
                         st.markdown("💡 " + str(do_better))
                         
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++                     
-# == PCN Dashboard ==========================================================
-elif page == "PCN Dashboard":
-    
-    st.title("Brompton Health PCN")
-    st.markdown("**Friends & Family Test Analysis** (FFT)")
-   
-    tab_selector = ui.tabs(options=['PCN Rating', 'PCN Responses', 'Cum. Sentiment', 'Surgery Ratings', 'Surgery Responses'], default_value='PCN Rating', key="tab3")
-    
-    if tab_selector == 'PCN Responses':
-        with st.container(border=False):
-            # Monthly Totals Plot
-            monthly_count_filtered = data.resample("M", on="time").size()
-            monthly_count_filtered_df = monthly_count_filtered.reset_index()
-            monthly_count_filtered_df.columns = ["Month", "Monthly Count"]
-            monthly_count_filtered_df["Month"] = pd.to_datetime(
-                monthly_count_filtered_df["Month"]
-            )
-            # Create the figure and the bar plot
-            fig, ax = plt.subplots(figsize=(12, 7))
-            sns.barplot(
-                data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#aabd3b"
-            )
-
-            # Set grid, spines and annotations as before
-            ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-            ax.xaxis.grid(False)
-            ax.spines["top"].set_visible(False)
-            ax.spines["right"].set_visible(False)
-            ax.spines["left"].set_visible(False)
-
-            # Annotate bars with the height (monthly count)
-            for p in ax.patches:
-                ax.annotate(
-                    f"{int(p.get_height())}",
-                    (p.get_x() + p.get_width() / 2.0, p.get_height()),
-                    ha="center",
-                    va="center",
-                    xytext=(0, 10),
-                    textcoords="offset points",
-                )
-
-            # Set title to the right
-            ax_title = ax.set_title("Monthly FFT Responses - Brompton Health PCN", loc="right")
-            ax_title.set_position((1.02, 1))  # Adjust title position
-
-            # Redraw the figure to ensure the formatter is applied
-            fig.canvas.draw()
-
-            # Remove xlabel as it's redundant with the dates
-            plt.xlabel("")
-
-            # Apply tight layout and display plot
-            plt.tight_layout()
-            st.pyplot(fig)
-            
-        
-    elif tab_selector == 'Surgery Ratings':
-        with st.container(border=False):
- 
-            #alldata_date_range = filter_data_by_date_range(data, selected_date_range)
-            pivot_data = data.pivot_table(index='surgery', columns='rating', aggfunc='size', fill_value=0)
-            total_responses_per_surgery = pivot_data.sum(axis=1)
-
-            # Compute the percentage of each rating category for each surgery
-            percentage_pivot_data = pivot_data.div(total_responses_per_surgery, axis=0) * 100
-            # Define the desired column order based on the rating categories
-            column_order = ["Extremely likely", "Likely", "Neither likely nor unlikely", "Unlikely", "Extremely unlikely", "Don't know"]
-
-            # Reorder the columns in the percentage pivot data
-            ordered_percentage_pivot_data = percentage_pivot_data[column_order]
-
-            # Create the heatmap with the ordered columns
-            plt.figure(figsize=(12, 9))
-            ordered_percentage_heatmap = sns.heatmap(ordered_percentage_pivot_data, annot=True, fmt=".1f", cmap="Blues", linewidths=.5)
-            plt.title('% Heatmap of Surgery Ratings', fontsize=16)
-            plt.ylabel('')
-            plt.xlabel('Rating (%)', fontsize=12)
-            plt.xticks(rotation=45)
-            plt.yticks(rotation=0)
-            plt.tight_layout()
-
-            # Display the ordered percentage heatmap
-            st.pyplot(plt)
-       
-
-    elif tab_selector == 'Cum. Sentiment':
-        with st.container(border=False):
-            labels = "Negative", "Neutral", "Positive"
-            new_data = data[data['sentiment_score'] != 1]
-            sentiment_totals = new_data.groupby('sentiment')['sentiment_score'].sum()
-            colors = ['#7495a8' if sentiment == 'positive' else '#ae4f4d' if sentiment == 'negative' else '#eeeadb' for sentiment in sentiment_totals.index]
-            explode = (0, 0, 0)  # 'explode' the 1st slice (Positive)
-
-            # Plot
-            fig, ax = plt.subplots(figsize=(12, 5))
-            ax.pie(
-                sentiment_totals,
-                explode=explode,
-                labels=labels,
-                colors=colors,
-                autopct="%1.1f%%",
-                startangle=140,
-            )
-            ax.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle.
-
-            # Draw a circle at the center of pie to make it look like a donut
-            centre_circle = plt.Circle((0, 0), 0.50, fc="white")
-            fig.gca().add_artist(centre_circle)
-            plt.title("Cumulative Sentiment - Brompton Health PCN")
-            st.pyplot(fig)
-        
-            # Resample and count the entries per month from filtered data
-            weekly_sent = data.resample("D", on="time")[
-                "neg", "pos", "neu", "compound"
-            ].mean()
-            weekly_sent_df = weekly_sent.reset_index()
-            weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
-            weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
-
-            @st.cache_data(ttl=3600) # This decorator caches the output of this function
-            def calculate_weekly_sentiment(data):
-                """
-                Calculate the weekly sentiment averages from the given DataFrame.
-
-                Parameters:
-                data (DataFrame): The DataFrame containing sentiment scores and time data.
-
-                Returns:
-                DataFrame: A DataFrame with weekly averages of sentiment scores.
-                """
-                # Resample the data to a weekly frequency and calculate the mean of sentiment scores
-                weekly_sent = data.resample("W", on="time")[
-                    "neg", "pos", "neu", "compound"
-                ].mean()
-
-                # Reset the index to turn the 'time' index into a column and rename columns
-                weekly_sent_df = weekly_sent.reset_index()
-                weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
-
-                # Convert the 'Week' column to datetime format
-                weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
-
-                return weekly_sent_df
-
-            weekly_sentiment = calculate_weekly_sentiment(data)
-
-            fig, ax = plt.subplots(figsize=(12, 5))
-            sns.lineplot(
-                data=weekly_sentiment,
-                x="Week",
-                y="neu",
-                color="#eee8d6",
-                label="Neutral",
-                linewidth=2,
-            )
-
-            sns.lineplot(
-                data=weekly_sentiment,
-                x="Week",
-                y="pos",
-                color="#6894a8",
-                label="Positive",
-                linewidth=2,
-            )
-            sns.lineplot(
-                data=weekly_sentiment,
-                x="Week",
-                y="neg",
-                color="#ae4f4d",
-                label="Negative",
-                linewidth=2,
-            )
-            
-
-            # Set grid, spines and annotations as before
-            ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-            ax.xaxis.grid(False)
-            ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
-            ax.spines["top"].set_visible(False)
-            ax.spines["right"].set_visible(False)
-            ax.spines["left"].set_visible(False)
-
-            # Set title to the right
-            ax_title = ax.set_title("Mean Weekly Sentiment - Brompton Health PCN", loc="right")
-            ax_title.set_position((1.02, 1))  # Adjust title position
-
-            # Redraw the figure to ensure the formatter is applied
-            fig.canvas.draw()
-
-            # Remove xlabel as it's redundant with the dates
-            plt.xlabel("Weeks")
-            plt.ylabel("Mean Sentiment")
-            # Apply tight layout and display plot
-            plt.tight_layout()
-            st.pyplot(fig)
-        
-        
-    elif tab_selector == 'Surgery Responses':
-        with st.container(border=False):
-            fig, ax = plt.subplots(figsize=(12, 8))
-            sns.countplot(y='surgery', data=data, color='#59646b')
-            for p in ax.patches:
-                width = p.get_width()
-                try:
-                    y = p.get_y() + p.get_height() / 2
-                    ax.text(
-                        width + 1,
-                        y,
-                        f"{int(width)}",
-                        va="center",
-                        fontsize=8,
-                    )
-                except ValueError:
-                    pass
-            ax.spines["top"].set_visible(False)
-            ax.spines["right"].set_visible(False)
-            ax.spines["bottom"].set_visible(False)
-            ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-            ax.yaxis.grid(False)
-            plt.xlabel("Count")
-            plt.ylabel("")
-            plt.title("Total FFT Responses by Surgery", loc="right")
-            plt.tight_layout()
-            st.pyplot(plt)
-            
-        
-        
-        
-    elif tab_selector == 'PCN Rating':
-        with st.container(border=False):
-            # Convert 'time' to datetime and extract the date
-            data['date'] = pd.to_datetime(data['time']).dt.date
-
-            # Group by the new 'date' column and calculate the mean 'rating_score' for each day
-            daily_mean_rating = data.groupby('date')['rating_score'].mean().reset_index()
-            # Ensure the 'date' column is in datetime format for resampling
-            daily_mean_rating['date'] = pd.to_datetime(daily_mean_rating['date'])
-
-            # Set the 'date' column as the index
-            daily_mean_rating.set_index('date', inplace=True)
-
-            # Resample the data by week and calculate the mean 'rating_score' for each week
-            weekly_mean_rating = daily_mean_rating['rating_score'].resample('M').mean().reset_index()
-
-            # Create a seaborn line plot for weekly mean rating scores
-            fig, ax = plt.subplots(figsize=(12, 7))
-            weekly_lineplot = sns.lineplot(x='date', y='rating_score', data=weekly_mean_rating, color="#d2b570", linewidth=4)
-            
-            for index, row in weekly_mean_rating.iterrows():
-                ax.annotate(
-                    f'{row["rating_score"]:.2f}',
-                    (row["date"], row["rating_score"]),
-                    textcoords="offset points",
-                    xytext=(0, 10),
-                    ha="center",
-                    fontsize=12,  # Adjust this value as needed
-                )
-            
-            plt.xlabel('Month')
-            plt.ylabel('Mean Rating Score')
-            plt.xticks(rotation=45)
-            plt.tight_layout()
-            ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-            ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-            ax.spines["top"].set_visible(False)
-            ax.spines["right"].set_visible(False)
-            ax.spines["left"].set_visible(False)
-
-            # Set title to the right
-            ax_title = ax.set_title("Mean Monthly Rating Score - Brompton Health PCN", loc="right")
-
-            # Display the line plot
-            st.pyplot(plt)
-            

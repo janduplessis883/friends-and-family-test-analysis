@@ -33,37 +33,25 @@ httpx
 pytest-asyncio
 
 # jupiter notebook
-notebook==7
-notebook_shim==0.2.3
+notebook
 ipython
-tpot
-imblearn
-wandb
 torch
 ipywidgets
 
-traitlets==5.9.0
 
 # Dependancies for sheethelper
 gspread
 transformers
-python-dotenv
 openai
 wordcloud
 streamlit==1.32.0
-python-dotenv
-
-
 sentencepiece
 textblob
 nltk
-
 requests
 black
-setfit
-ollama
 skimpy
-streamlit-shadcn-ui  
+streamlit-shadcn-ui
 cronitor
 loguru
 schedule
