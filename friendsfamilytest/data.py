@@ -42,8 +42,10 @@ def load_google_sheet():
 
 @time_it
 def word_count(df):
-    df["free_text_len"] = df["free_text"].str.split().apply(len)
-    df["do_better_len"] = df["do_better"].str.split().apply(len)
+    df["free_text_len"] = df["free_text"].apply(lambda x: len(str(x).split()) if isinstance(x, str) else np.nan)
+
+    df["do_better_len"] = df["do_better"].apply(lambda x: len(str(x).split()) if isinstance(x, str) else np.nan)
+
     return df
 
 
