@@ -606,7 +606,31 @@ elif page == "PCN Dashboard":
             plt.tight_layout()
             st.pyplot(plt)
             
-        
+        st.markdwon("---")
+            
+        data_sorted = data.sort_values('time')
+
+        # Group by 'surgery' and 'time', then calculate the cumulative count
+        data_sorted['cumulative_count'] = data_sorted.groupby('surgery').cumcount() + 1
+
+        # Pivot the table to have surgeries as columns and their cumulative counts as values
+        data_pivot = data_sorted.pivot_table(index='time', columns='surgery', values='cumulative_count', aggfunc='first')
+
+        # Forward fill the NaN values to maintain the cumulative nature
+        data_pivot_filled = data_pivot.fillna(method='ffill').fillna(0)
+
+        # Plotting
+        plt.figure(figsize=(12, 8))
+        for column in data_pivot_filled.columns:
+            plt.plot(data_pivot_filled.index, data_pivot_filled[column], label=column)
+
+        plt.title('Cumulative Entries Over Time for Each Surgery')
+        plt.xlabel('Time')
+        plt.ylabel('Cumulative Entries')
+        plt.legend(title='Surgery', bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.grid(True)
+        plt.tight_layout()
+        st.pyplot(plt)
         
         
     elif tab_selector == 'PCN Rating':
