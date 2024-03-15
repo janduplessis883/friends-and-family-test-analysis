@@ -81,6 +81,19 @@ def text_classification(data):
 
     return data
 
+@time_it
+def check_column_length(dataframe, column_name, word_count_length):
+    # Iterate over each entry in the specified column
+    for index, entry in enumerate(dataframe[column_name]):
+        # Count the number of words in the entry
+        word_count = len(str(entry).split())
+
+        # Check if the word count is less than the specified limit
+        if word_count < word_count_length:
+            # Replace with NaN if the condition is met
+            dataframe.at[index, column_name] = ''
+
+    return dataframe
 
 @time_it
 def sentiment_analysis(data):
@@ -117,15 +130,21 @@ ner_pipeline = pipeline("ner", model="dbmdz/bert-large-cased-finetuned-conll03-e
 # Function to anonymize names in text
 @time_it
 def anonymize_names_with_transformers(text):
+    # Check if the text is empty and return an empty string if so
+    if pd.isnull(text) or text.strip() == "":
+        return ""
+
     # Run the NER pipeline on the input text
     entities = ner_pipeline(text)
     anonymized_text = text
+
     # Iterate over detected entities
     for entity in entities:
         # Check if the entity is a person
         if entity['entity_group'] == 'PER':
             # Replace the detected name with [PERSON]
             anonymized_text = anonymized_text.replace(entity['word'], '[PERSON]')
+
     return anonymized_text
 
 
@@ -498,6 +517,9 @@ if __name__ == "__main__":
         data = clean_text(data)  # clean text
         data = word_count(data)  # word count
         data = add_rating_score(data)
+        logger.info(f"4️⃣ Discard short input")
+        data = check_column_length(data, 'do_better', 5)
+        data = check_column_length(data, 'free_text', 2)
         data["free_text"] = data["free_text"].apply(anonymize_names_with_transformers)
         data["do_better"] = data["do_better"].apply(anonymize_names_with_transformers)
         data = feedback_classification(data, batch_size=16)
