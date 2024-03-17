@@ -620,10 +620,16 @@ elif page == "PCN Dashboard":
         data_pivot_filled = data_pivot.fillna(method='ffill').fillna(0)
 
         # Plotting
-        plt.figure(figsize=(12, 8))
+        fig, ax = plt.subplots(figsize=(12, 9))
         for column in data_pivot_filled.columns:
             plt.plot(data_pivot_filled.index, data_pivot_filled[column], label=column)
 
+        ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.spines["left"].set_visible(False)
         plt.title('Cumulative Entries Over Time for Each Surgery')
         plt.xlabel('Time')
         plt.ylabel('Cumulative Entries')
