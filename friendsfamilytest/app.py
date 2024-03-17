@@ -606,7 +606,7 @@ elif page == "PCN Dashboard":
             plt.tight_layout()
             st.pyplot(plt)
             
-        st.markdwon("---")
+        st.markdown("---")
             
         data_sorted = data.sort_values('time')
 
