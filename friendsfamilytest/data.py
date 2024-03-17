@@ -517,11 +517,11 @@ if __name__ == "__main__":
         # data = check_column_length(data, 'free_text', 2)
         data["free_text"] = data["free_text"].apply(anonymize_names_with_transformers)
         data["do_better"] = data["do_better"].apply(anonymize_names_with_transformers)
-        data = feedback_classification(data, batch_size=32)
+        data = feedback_classification(data, batch_size=16)
         data = sentiment_analysis(data)
         data = improvement_classification(
             data, batch_size=16
-        )  # data = gpt3_improvement_classification(data)
+        ) 
         data = textblob_sentiment(data)
         logger.info("Data pre-processing completed")
         
