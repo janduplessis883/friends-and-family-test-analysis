@@ -528,7 +528,7 @@ if __name__ == "__main__":
         concat_save_final_df(processed_data, data)
         logger.info("💾 Concat Dataframes to data.csv successfully")
         
-        do_git_merge()  # Push everything to GitHub
+        #do_git_merge()  # Push everything to GitHub
         logger.info("Pushed to GitHub - Master Branch")
         monitor.ping(state='complete')
         logger.info("✅ Successful Run completed")
