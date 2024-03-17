@@ -91,7 +91,7 @@ def check_column_length(dataframe, column_name, word_count_length):
         # Check if the word count is less than the specified limit
         if word_count < word_count_length:
             # Replace with NaN if the condition is met
-            dataframe.at[index, column_name] = ''
+            dataframe.at[index, column_name] = np.nan
 
     return dataframe
 
@@ -130,21 +130,15 @@ ner_pipeline = pipeline("ner", model="dbmdz/bert-large-cased-finetuned-conll03-e
 # Function to anonymize names in text
 @time_it
 def anonymize_names_with_transformers(text):
-    # Check if the text is empty and return an empty string if so
-    if pd.isnull(text) or text.strip() == "":
-        return ""
-
     # Run the NER pipeline on the input text
     entities = ner_pipeline(text)
     anonymized_text = text
-
     # Iterate over detected entities
     for entity in entities:
         # Check if the entity is a person
         if entity['entity_group'] == 'PER':
             # Replace the detected name with [PERSON]
             anonymized_text = anonymized_text.replace(entity['word'], '[PERSON]')
-
     return anonymized_text
 
 
@@ -201,9 +195,10 @@ def textblob_sentiment(data):
 # Zer0-shot classification - do_better column
 def batch_generator(data, column_name, batch_size):
     for i in range(0, len(data), batch_size):
-        yield data[column_name][
-            i : i + batch_size
-        ], i  # Yield the batch and the starting index
+        batch = data[column_name][i: i + batch_size]
+        # Logging the batch content; you can comment this out or remove it in production
+        print(f"Batch starting at index {i}: {batch}")
+        yield batch, i  # Yield the batch and the starting index
 
 
 # Zero-Shot Classification (facebook model tried), now review the BartForConditionalGeneration
@@ -518,11 +513,11 @@ if __name__ == "__main__":
         data = word_count(data)  # word count
         data = add_rating_score(data)
         logger.info(f"4️⃣ Discard short input")
-        data = check_column_length(data, 'do_better', 5)
-        data = check_column_length(data, 'free_text', 2)
+        # data = check_column_length(data, 'do_better', 5)
+        # data = check_column_length(data, 'free_text', 2)
         data["free_text"] = data["free_text"].apply(anonymize_names_with_transformers)
         data["do_better"] = data["do_better"].apply(anonymize_names_with_transformers)
-        data = feedback_classification(data, batch_size=16)
+        data = feedback_classification(data, batch_size=32)
         data = sentiment_analysis(data)
         data = improvement_classification(
             data, batch_size=16
