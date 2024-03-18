@@ -388,7 +388,7 @@ elif page == "PCN Dashboard":
     st.title("Brompton Health PCN")
     st.markdown("**Friends & Family Test Analysis** (FFT)")
    
-    tab_selector = ui.tabs(options=['PCN Rating', 'PCN Responses', 'Cum. Sentiment', 'Surgery Ratings', 'Surgery Responses'], default_value='PCN Rating', key="tab3")
+    tab_selector = ui.tabs(options=['PCN Rating', 'PCN Responses', 'Sentiment Analysis', 'Surgery Ratings', 'Surgery Responses'], default_value='PCN Rating', key="tab3")
     
     if tab_selector == 'PCN Responses':
         
@@ -494,7 +494,7 @@ elif page == "PCN Dashboard":
             st.pyplot(plt)
        
 
-    elif tab_selector == 'Cum. Sentiment':
+    elif tab_selector == 'Sentiment Analysis':
         with st.container(border=False):
             labels = "Negative", "Neutral", "Positive"
             new_data = data[data['sentiment_score'] != 1]
