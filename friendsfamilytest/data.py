@@ -471,6 +471,27 @@ def add_rating_score(data):
     data["rating_score"] = data["rating"].map(rating_map)
     return data
 
+@time_it
+def clean_data(df):
+    """
+    Cleans the input DataFrame based on specific conditions.
+
+    Parameters:
+    df (pd.DataFrame): The input DataFrame to be cleaned.
+
+    Returns:
+    pd.DataFrame: The cleaned DataFrame.
+    """
+    # Copy the DataFrame to avoid modifying the original data
+    cleaned_df = df.copy()
+
+    # Apply the conditions and update the DataFrame
+    cleaned_df.loc[cleaned_df['do_better_len'] < 5, 'do_better'] = np.nan
+    cleaned_df.loc[cleaned_df['do_better_len'] < 5, 'improvement_labels'] = np.nan
+    cleaned_df.loc[cleaned_df['free_text_len'] < 3, 'free_text'] = np.nan
+    cleaned_df.loc[cleaned_df['free_text_len'] < 3, 'feedback_labels'] = np.nan
+
+    return cleaned_df
 
 @time_it
 def concat_save_final_df(processed_df, new_df):
@@ -510,8 +531,6 @@ if __name__ == "__main__":
         data = word_count(data)  # word count
         data = add_rating_score(data)
         logger.info(f"4️⃣ Discard short input")
-        # data = check_column_length(data, 'do_better', 5)
-        # data = check_column_length(data, 'free_text', 2)
         data["free_text"] = data["free_text"].apply(anonymize_names_with_transformers)
         data["do_better"] = data["do_better"].apply(anonymize_names_with_transformers)
         data = feedback_classification(data, batch_size=16)
@@ -521,6 +540,8 @@ if __name__ == "__main__":
         ) 
         data = textblob_sentiment(data)
         logger.info("Data pre-processing completed")
+        
+        data = clean_data(data)
         
         concat_save_final_df(processed_data, data)
         logger.info("💾 Concat Dataframes to data.csv successfully")
