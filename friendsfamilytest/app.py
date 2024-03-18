@@ -46,6 +46,7 @@ def load_data():
 data = load_data()
 
 
+
 def load_timedata():
     df = pd.read_csv("friendsfamilytest/data/data.csv")
     df["time"] = pd.to_datetime(df["time"], dayfirst=True)
