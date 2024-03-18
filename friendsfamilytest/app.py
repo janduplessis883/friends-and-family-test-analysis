@@ -391,6 +391,33 @@ elif page == "PCN Dashboard":
     tab_selector = ui.tabs(options=['PCN Rating', 'PCN Responses', 'Cum. Sentiment', 'Surgery Ratings', 'Surgery Responses'], default_value='PCN Rating', key="tab3")
     
     if tab_selector == 'PCN Responses':
+        
+        daily_count = data.resample("D", on="time").size()
+        daily_count_df = daily_count.reset_index()
+        daily_count_df.columns = ["Date", "Daily Count"]
+        fig, ax = plt.subplots(figsize=(12, 5))
+        sns.lineplot(
+            data=daily_count_df, x="Date", y="Daily Count", color="#558387", linewidth=2
+        )
+
+        ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        ax.xaxis.grid(False)
+
+        # Customizing the x-axis labels for better readability
+        ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
+
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.spines["left"].set_visible(False)
+        ax_title = ax.set_title(
+            "Daily FFT Responses - Brompton Health PCN", loc="right"
+        )  # loc parameter aligns the title
+        ax_title.set_position((1, 1))  # Adjust these values to align your title as needed
+        plt.xlabel("")
+        plt.tight_layout()
+        st.pyplot(fig)
+        st.markdown("---")
+        
         with st.container(border=False):
             # Monthly Totals Plot
             monthly_count_filtered = data.resample("M", on="time").size()
@@ -400,7 +427,7 @@ elif page == "PCN Dashboard":
                 monthly_count_filtered_df["Month"]
             )
             # Create the figure and the bar plot
-            fig, ax = plt.subplots(figsize=(12, 7))
+            fig, ax = plt.subplots(figsize=(12, 5))
             sns.barplot(
                 data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#aabd3b"
             )
