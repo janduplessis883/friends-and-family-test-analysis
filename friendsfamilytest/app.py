@@ -331,18 +331,14 @@ if page == "Surgery Dashboard":
         plt.tight_layout()
         st.pyplot(fig)
         st.markdown("---")
-        # Resample and count the entries per month from filtered data
+        # Monthly Totals Plot
         monthly_count_filtered = filtered_data.resample("M", on="time").size()
-        
         monthly_count_filtered_df = monthly_count_filtered.reset_index()
-        #st.write(monthly_count_filtered_df.head())
         monthly_count_filtered_df.columns = ["Month", "Monthly Count"]
-        #st.write(monthly_count_filtered_df.head())
-        monthly_count_filtered_df["Month"] = pd.to_datetime(monthly_count_filtered_df["Month"], format="%Y-%m-%d %H:%M:%S")
-        
-        #st.write(monthly_count_filtered_df.head())
+        monthly_count_filtered_df['Month'] = monthly_count_filtered_df['Month'].dt.date
+
         # Create the figure and the bar plot
-        fig, ax = plt.subplots(figsize=(12, 4))
+        fig, ax = plt.subplots(figsize=(12, 5))
         sns.barplot(
             data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#aabd3b"
         )
@@ -353,7 +349,7 @@ if page == "Surgery Dashboard":
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
         ax.spines["left"].set_visible(False)
-        
+
         # Annotate bars with the height (monthly count)
         for p in ax.patches:
             ax.annotate(
@@ -368,12 +364,7 @@ if page == "Surgery Dashboard":
         # Set title to the right
         ax_title = ax.set_title("Monthly FFT Responses", loc="right")
         ax_title.set_position((1.02, 1))  # Adjust title position
-        ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))
         ax.set_xticklabels(ax.get_xticklabels(), rotation=45)
-        fig.autofmt_xdate()
-        # Redraw the figure to ensure the formatter is applied
-        fig.canvas.draw()
-
         # Remove xlabel as it's redundant with the dates
         plt.xlabel("")
 
@@ -423,9 +414,8 @@ elif page == "PCN Dashboard":
             monthly_count_filtered = data.resample("M", on="time").size()
             monthly_count_filtered_df = monthly_count_filtered.reset_index()
             monthly_count_filtered_df.columns = ["Month", "Monthly Count"]
-            monthly_count_filtered_df["Month"] = pd.to_datetime(
-                monthly_count_filtered_df["Month"]
-            )
+            monthly_count_filtered_df['Month'] = monthly_count_filtered_df['Month'].dt.date
+
             # Create the figure and the bar plot
             fig, ax = plt.subplots(figsize=(12, 5))
             sns.barplot(
@@ -453,10 +443,7 @@ elif page == "PCN Dashboard":
             # Set title to the right
             ax_title = ax.set_title("Monthly FFT Responses - Brompton Health PCN", loc="right")
             ax_title.set_position((1.02, 1))  # Adjust title position
-
-            # Redraw the figure to ensure the formatter is applied
-            fig.canvas.draw()
-
+            ax.set_xticklabels(ax.get_xticklabels(), rotation=45)
             # Remove xlabel as it's redundant with the dates
             plt.xlabel("")
 
@@ -561,7 +548,7 @@ elif page == "PCN Dashboard":
                         y,
                         f"{int(width)}",
                         va="center",
-                        fontsize=8,
+                        fontsize=10,
                     )
                 except ValueError:
                     pass
@@ -920,7 +907,7 @@ We employ several machine learning techniques for analysis:
                 y,
                 f"{int(width)}",
                 va="center",
-                fontsize=8,
+                fontsize=10,
             )
         except ValueError:
             pass
