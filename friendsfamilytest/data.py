@@ -10,7 +10,7 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer, pipe
 import pandas as pd
 from textblob import TextBlob
 from nltk.sentiment import SentimentIntensityAnalyzer
-
+import torch
 
 from friendsfamilytest.params import *
 from friendsfamilytest.utils import *
@@ -128,20 +128,31 @@ def sentiment_analysis(data):
 ner_pipeline = pipeline("ner", model="dbmdz/bert-large-cased-finetuned-conll03-english", aggregation_strategy="simple")
 
 # Function to anonymize names in text
-@time_it
+
 def anonymize_names_with_transformers(text):
-    # Run the NER pipeline on the input text
-    entities = ner_pipeline(text)
+    # Check if the text is empty or not a string
+    if not text or not isinstance(text, str):
+        return text  # Return the text as-is if it's invalid or empty
+
+    # Initialize the anonymized text
     anonymized_text = text
-    # Iterate over detected entities
-    for entity in entities:
-        # Check if the entity is a person
-        if entity['entity_group'] == 'PER':
-            # Replace the detected name with [PERSON]
-            anonymized_text = anonymized_text.replace(entity['word'], '[PERSON]')
+    
+    try:
+        # Run the NER pipeline on the valid input text
+        entities = ner_pipeline(text)
+        
+        # Iterate over detected entities
+        for entity in entities:
+            # Check if the entity is classified as a person
+            if entity['entity_group'] == 'PER':
+                # Replace the detected name with a placeholder
+                anonymized_text = anonymized_text.replace(entity['word'], '[PERSON]')
+    except ValueError as e:
+        # Log the error for debugging
+        print(f"Error processing text: {text}")
+        raise e
+
     return anonymized_text
-
-
 
 
 @time_it
@@ -201,101 +212,20 @@ def batch_generator(data, column_name, batch_size):
         yield batch, i  # Yield the batch and the starting index
 
 
-# Zero-Shot Classification (facebook model tried), now review the BartForConditionalGeneration
-# facebook/bart-large-mnli
-# trl-internal-testing/tiny-random-BartForConditionalGeneration ❌
-# ybelkada/tiny-random-T5ForConditionalGeneration-calibrated
-# MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli
-@time_it
-def improvement_classification(data, batch_size=16):
-    # Load model and tokenizer
-    model = AutoModelForSequenceClassification.from_pretrained(
-        "facebook/bart-large-mnli"
-    ).to("cpu")
-    tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-mnli")
-
-    # Create classifier pipeline
-    classifier = pipeline("zero-shot-classification", model=model, tokenizer=tokenizer)
-
-    # Labels
-    improvement_labels_list = [
-        "Appointment Accessibility",
-        "Reception Staff Interaction",
-        "Medical Staff Competence",
-        "Patient-Doctor Communication",
-        "Follow-Up and Continuity of Care",
-        "Facilities and Cleanliness",
-        "Prescription and Medication Management",
-        "Referral Efficiency",
-        "Emergency Handling",
-        "Patient Privacy and Confidentiality",
-        "Telehealth Services",
-        "Patient Education and Resources",
-        "Waiting Room Comfort",
-        "Patient Empowerment and Support",
-        "Health Outcome Satisfaction",
-        "Cultural Sensitivity",
-        "Accessibility for Disabled Patients",
-        "Mental Health Support",
-        "Nursing Quality",
-        "Online Services & Digital Health",
-        "Patient Safety",
-        "Weekend Service Availability",
-        "Telephone Service",
-        "Overall Patient Satisfaction",
-        "Blood Test Results & Imaging",
-        "Patient Participation Group",
-        "Doctor Consultations",
-        "Home Visits",
-        "Cancer Screening",
-        "Vaccinations",
-        "Test Results",
-    ]
-
-    # Initialize the list to store labels
-    improvement_labels = [""] * len(data)  # Pre-fill with empty strings
-
-    # Iterate over batches
-    for batch, start_index in batch_generator(data, "do_better", batch_size):
-        # Filter out empty or whitespace-only sentences
-        valid_sentences = [
-            (sentence, idx)
-            for idx, sentence in enumerate(batch)
-            if sentence and not sentence.isspace()
-        ]
-        sentences, valid_indices = (
-            zip(*valid_sentences) if valid_sentences else ([], [])
-        )
-
-        # Classify the batch
-        if sentences:
-            model_outputs = classifier(
-                list(sentences), improvement_labels_list, device="cpu"
-            )
-            # Assign labels to corresponding indices
-            for output, idx in zip(model_outputs, valid_indices):
-                improvement_labels[start_index + idx] = output["labels"][0]
-                print(
-                    f"{Fore.GREEN}Batch processed: {start_index + idx + 1}/{len(data)}"
-                )
-
-    # Add labels as a new column
-    data["improvement_labels"] = improvement_labels
-    return data
-
-
 @time_it
 def feedback_classification(data, batch_size=16):
     # Load model and tokenizer
-    model = AutoModelForSequenceClassification.from_pretrained(
-        "facebook/bart-large-mnli"
-    ).to("cpu")
+    model = AutoModelForSequenceClassification.from_pretrained("facebook/bart-large-mnli").to("cpu")
     tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-mnli")
 
     # Create classifier pipeline
-    classifier = pipeline("zero-shot-classification", model=model, tokenizer=tokenizer)
+    try:
+        classifier = pipeline("zero-shot-classification", model=model, tokenizer=tokenizer, device=-1)  # -1 for CPU
+    except Exception as e:
+        print(f"Error in initializing the classifier pipeline: {e}")
+        return data  # Exit if the pipeline cannot be created
 
-    # Labels
+    # Define the categories for classification
     categories = [
         "Appointment Accessibility",
         "Reception Staff Interaction",
@@ -328,34 +258,31 @@ def feedback_classification(data, batch_size=16):
         "Cancer Screening",
         "Vaccinations",
         "Test Results",
-    ]
+    ]  # Include all your categories here
 
     # Initialize the list to store labels
     feedback_labels = [""] * len(data)  # Pre-fill with empty strings
 
-    # Iterate over batches
+    # Process batches
     for batch, start_index in batch_generator(data, "free_text", batch_size):
-        # Filter out empty or whitespace-only sentences
-        valid_sentences = [
-            (sentence, idx)
-            for idx, sentence in enumerate(batch)
-            if sentence and not sentence.isspace()
-        ]
-        sentences, valid_indices = (
-            zip(*valid_sentences) if valid_sentences else ([], [])
-        )
+        # Validate and filter batch data
+        valid_sentences = [(sentence.strip(), idx) for idx, sentence in enumerate(batch) if isinstance(sentence, str) and sentence.strip()]
+        if not valid_sentences:
+            continue  # Skip if no valid sentences are present
 
-        # Classify the batch
-        if sentences:
+        sentences, valid_indices = zip(*valid_sentences) if valid_sentences else ([], [])
+
+        try:
+            # Perform classification
             model_outputs = classifier(list(sentences), categories, device="cpu")
-            # Assign labels to corresponding indices
+            # Assign the most relevant category label
             for output, idx in zip(model_outputs, valid_indices):
                 feedback_labels[start_index + idx] = output["labels"][0]
-                print(
-                    f"{Fore.GREEN}Batch processed: {start_index + idx + 1}/{len(data)}"
-                )
+        except Exception as e:
+            print(f"Error during classification: {e}")
+            # Optionally, handle specific actions for failed classification, such as logging or retrying
 
-    # Add labels as a new column
+    # Assign the computed labels back to the data
     data["feedback_labels"] = feedback_labels
     return data
 
@@ -363,15 +290,17 @@ def feedback_classification(data, batch_size=16):
 @time_it
 def improvement_classification(data, batch_size=16):
     # Load model and tokenizer
-    model = AutoModelForSequenceClassification.from_pretrained(
-        "facebook/bart-large-mnli"
-    ).to("cpu")
+    model = AutoModelForSequenceClassification.from_pretrained("facebook/bart-large-mnli").to("cpu")
     tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-mnli")
 
     # Create classifier pipeline
-    classifier = pipeline("zero-shot-classification", model=model, tokenizer=tokenizer)
+    try:
+        classifier = pipeline("zero-shot-classification", model=model, tokenizer=tokenizer, device=-1)  # -1 denotes CPU
+    except Exception as e:
+        print(f"Error initializing the classifier pipeline: {e}")
+        return data  # Exit if the pipeline cannot be created
 
-    # Labels
+    # Define the labels for improvement categories
     improvement_labels_list = [
         "Appointment Accessibility",
         "Reception Staff Interaction",
@@ -403,40 +332,33 @@ def improvement_classification(data, batch_size=16):
         "Cancer Screening",
         "Vaccinations",
         "Test Results",
-    ]
+    ]  # Your improvement labels
 
-    # Initialize the list to store labels
+    # Initialize the list to store improvement labels
     improvement_labels = [""] * len(data)  # Pre-fill with empty strings
 
-    # Iterate over batches
+    # Iterate over data in batches
     for batch, start_index in batch_generator(data, "do_better", batch_size):
-        # Filter out empty or whitespace-only sentences
-        valid_sentences = [
-            (sentence, idx)
-            for idx, sentence in enumerate(batch)
-            if sentence and not sentence.isspace()
-        ]
-        sentences, valid_indices = (
-            zip(*valid_sentences) if valid_sentences else ([], [])
-        )
+        # Validate and filter batch data
+        valid_sentences = [(sentence.strip(), idx) for idx, sentence in enumerate(batch) if isinstance(sentence, str) and sentence.strip()]
+        if not valid_sentences:
+            continue  # Skip if no valid sentences are present
 
-        # Classify the batch
-        if sentences:
-            model_outputs = classifier(
-                list(sentences), improvement_labels_list, device="cpu"
-            )
-            # Assign labels to corresponding indices
+        sentences, valid_indices = zip(*valid_sentences) if valid_sentences else ([], [])
+
+        try:
+            # Classify the valid sentences
+            model_outputs = classifier(list(sentences), improvement_labels_list, device="cpu")
+            # Update labels based on classification output
             for output, idx in zip(model_outputs, valid_indices):
                 improvement_labels[start_index + idx] = output["labels"][0]
-                print(
-                    f"{Fore.GREEN}Batch processed: {start_index + idx + 1}/{len(data)}"
-                )
+        except Exception as e:
+            print(f"Error during classification: {e}")
+            # Handle errors appropriately, possibly by logging or taking specific actions
 
-    # Add labels as a new column
+    # Assign the computed labels back to the data
     data["improvement_labels"] = improvement_labels
     return data
-
-
 
 
 @time_it
@@ -527,10 +449,10 @@ if __name__ == "__main__":
     logger.info(f"🆕 New rows to process: {data.shape[0]}")
     
     if data.shape[0] != 0:
-        data = clean_text(data)  # clean text
         data = word_count(data)  # word count
         data = add_rating_score(data)
-        logger.info(f"4️⃣ Discard short input")
+
+        logger.info("🫥 Annonymize free_text and do_better")
         data["free_text"] = data["free_text"].apply(anonymize_names_with_transformers)
         data["do_better"] = data["do_better"].apply(anonymize_names_with_transformers)
         data = feedback_classification(data, batch_size=16)
@@ -538,15 +460,15 @@ if __name__ == "__main__":
         data = improvement_classification(
             data, batch_size=16
         ) 
-        data = textblob_sentiment(data)
         logger.info("Data pre-processing completed")
         
+        logger.info("🧽 Clean Data - ommit free_text < 3 and do_better < 5")
         data = clean_data(data)
         
-        concat_save_final_df(processed_data, data)
         logger.info("💾 Concat Dataframes to data.csv successfully")
+        concat_save_final_df(processed_data, data)
         
-        #do_git_merge()  # Push everything to GitHub
+        do_git_merge()  # Push everything to GitHub
         logger.info("Pushed to GitHub - Master Branch")
         monitor.ping(state='complete')
         logger.info("✅ Successful Run completed")

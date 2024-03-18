@@ -492,92 +492,34 @@ elif page == "PCN Dashboard":
             fig.gca().add_artist(centre_circle)
             plt.title("Cumulative Sentiment - Brompton Health PCN")
             st.pyplot(fig)
-        
-            # Resample and count the entries per month from filtered data
-            weekly_sent = data.resample("D", on="time")[
-                "neg", "pos", "neu", "compound"
-            ].mean()
-            weekly_sent_df = weekly_sent.reset_index()
-            weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
-            weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
+            st.markdown("---")
+            data['time'] = pd.to_datetime(data['time'])
+            data.set_index('time', inplace=True)
 
-            @st.cache_data(ttl=3600) # This decorator caches the output of this function
-            def calculate_weekly_sentiment(data):
-                """
-                Calculate the weekly sentiment averages from the given DataFrame.
+            # Now, group by 'sentiment' and resample by month, then calculate the mean sentiment_score
+            monthly_sentiment_means_adjusted = data.groupby('sentiment').resample('M')['sentiment_score'].mean().unstack(level=0)
 
-                Parameters:
-                data (DataFrame): The DataFrame containing sentiment scores and time data.
+            # Fill NaN values, which might be there if there are no records for a given month
+            monthly_sentiment_means_adjusted.fillna(0, inplace=True)
 
-                Returns:
-                DataFrame: A DataFrame with weekly averages of sentiment scores.
-                """
-                # Resample the data to a weekly frequency and calculate the mean of sentiment scores
-                weekly_sent = data.resample("W", on="time")[
-                    "neg", "pos", "neu", "compound"
-                ].mean()
+            # Melting the DataFrame to long format for easier plotting with seaborn
+            data_long_monthly = monthly_sentiment_means_adjusted.reset_index().melt(id_vars='time', var_name='Sentiment', value_name='Average Score')
+            colors = ['#7495a8' if sentiment == 'positive' else '#ae4f4d' if sentiment == 'negative' else '#eeeadb' for sentiment in sentiment_totals.index]
+            # Creating the plot for monthly sentiment scores
+            fig, ax = plt.subplots(figsize=(12, 6))
+            sns.lineplot(data=data_long_monthly, x='time', y='Average Score', hue='Sentiment', marker='o', palette=colors, linewidth=2)
 
-                # Reset the index to turn the 'time' index into a column and rename columns
-                weekly_sent_df = weekly_sent.reset_index()
-                weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
-
-                # Convert the 'Week' column to datetime format
-                weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
-
-                return weekly_sent_df
-
-            weekly_sentiment = calculate_weekly_sentiment(data)
-
-            fig, ax = plt.subplots(figsize=(12, 5))
-            sns.lineplot(
-                data=weekly_sentiment,
-                x="Week",
-                y="neu",
-                color="#eee8d6",
-                label="Neutral",
-                linewidth=2,
-            )
-
-            sns.lineplot(
-                data=weekly_sentiment,
-                x="Week",
-                y="pos",
-                color="#6894a8",
-                label="Positive",
-                linewidth=2,
-            )
-            sns.lineplot(
-                data=weekly_sentiment,
-                x="Week",
-                y="neg",
-                color="#ae4f4d",
-                label="Negative",
-                linewidth=2,
-            )
-            
-
-            # Set grid, spines and annotations as before
-            ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-            ax.xaxis.grid(False)
-            ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
             ax.spines["top"].set_visible(False)
             ax.spines["right"].set_visible(False)
             ax.spines["left"].set_visible(False)
-
-            # Set title to the right
-            ax_title = ax.set_title("Mean Weekly Sentiment - Brompton Health PCN", loc="right")
-            ax_title.set_position((1.02, 1))  # Adjust title position
-
-            # Redraw the figure to ensure the formatter is applied
-            fig.canvas.draw()
-
-            # Remove xlabel as it's redundant with the dates
-            plt.xlabel("Weeks")
-            plt.ylabel("Mean Sentiment")
-            # Apply tight layout and display plot
+            ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+            ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+            plt.title('Monthly Sentiment Score Averages', fontsize=16)
+            plt.xlabel('Month', fontsize=12)
+            plt.ylabel('Average Sentiment Score', fontsize=12)
+            plt.legend(title='Sentiment')
             plt.tight_layout()
-            st.pyplot(fig)
-        
+            st.pyplot(plt)
         
     elif tab_selector == 'Surgery Responses':
         with st.container(border=False):
@@ -733,200 +675,39 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     fig.gca().add_artist(centre_circle)
     st.pyplot(fig)
 
-
-    # Resample and count the entries per month from filtered data
-    weekly_sent = filtered_data.resample("W", on="time")[
-        "neg", "pos", "neu", "compound"
-    ].mean()
-    weekly_sent_df = weekly_sent.reset_index()
-    weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
-    weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
-
-    @st.cache_data(ttl=3600) # This decorator caches the output of this function
-    def calculate_weekly_sentiment(data):
-        """
-        Calculate the weekly sentiment averages from the given DataFrame.
-
-        Parameters:
-        data (DataFrame): The DataFrame containing sentiment scores and time data.
-
-        Returns:
-        DataFrame: A DataFrame with weekly averages of sentiment scores.
-        """
-        # Resample the data to a weekly frequency and calculate the mean of sentiment scores
-        weekly_sent = data.resample("W", on="time")[
-            "neg", "pos", "neu", "compound"
-        ].mean()
-
-        # Reset the index to turn the 'time' index into a column and rename columns
-        weekly_sent_df = weekly_sent.reset_index()
-        weekly_sent_df.columns = ["Week", "neg", "pos", "neu", "compound"]
-
-        # Convert the 'Week' column to datetime format
-        weekly_sent_df["Week"] = pd.to_datetime(weekly_sent_df["Week"])
-
-        return weekly_sent_df
-
-    weekly_sentiment = calculate_weekly_sentiment(filtered_data)
-
-    fig, ax = plt.subplots(figsize=(16, 6))
-    sns.lineplot(
-        data=weekly_sentiment,
-        x="Week",
-        y="neu",
-        color="#eee8d6",
-        label="Neutral",
-        linewidth=2,
-    )
-
-    sns.lineplot(
-        data=weekly_sentiment,
-        x="Week",
-        y="pos",
-        color="#6894a8",
-        label="Positive",
-        linewidth=2,
-    )
-    sns.lineplot(
-        data=weekly_sentiment,
-        x="Week",
-        y="neg",
-        color="#ae4f4d",
-        label="Negative",
-        linewidth=2,
-    )
-
-    # Set grid, spines and annotations as before
-    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-    ax.xaxis.grid(False)
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%d %b"))
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-    ax.spines["left"].set_visible(False)
-
-    # Set title to the right
-    ax_title = ax.set_title("Mean Weekly Sentiment Analysis", loc="right")
-    ax_title.set_position((1.02, 1))  # Adjust title position
-
-    # Redraw the figure to ensure the formatter is applied
-    fig.canvas.draw()
-
-    # Remove xlabel as it's redundant with the dates
-    plt.xlabel("Weeks")
-    plt.ylabel("Mean Sentiment")
-    # Apply tight layout and display plot
-    plt.tight_layout()
-    st.pyplot(fig)
     st.markdown("---")
+
     
-    @st.cache_data(ttl=3600)  # This decorator caches the output of this function
-    def process_sentiment_data(data):
-        """
-        Process the sentiment data to calculate the percentage of positive, negative,
-        and neutral sentiments for each date.
 
-        Parameters:
-        data (DataFrame): The DataFrame containing sentiment data and time.
+    # Resampling the data by month instead of week
+    # Ensure the 'time' column is in datetime format and set it as the DataFrame index
+    filtered_data['time'] = pd.to_datetime(filtered_data['time'])
+    filtered_data.set_index('time', inplace=True)
 
-        Returns:
-        DataFrame: A DataFrame with the processed sentiment data.
-        """
-        # Ensure 'time' column is in datetime format and create a 'date' column
-        data["date"] = pd.to_datetime(data["time"]).dt.date
+    # Now, group by 'sentiment' and resample by month, then calculate the mean sentiment_score
+    monthly_sentiment_means_adjusted = filtered_data.groupby('sentiment').resample('M')['sentiment_score'].mean().unstack(level=0)
 
-        pos_list, neg_list, neu_list, date_list = [], [], [], []
+    # Fill NaN values, which might be there if there are no records for a given month
+    monthly_sentiment_means_adjusted.fillna(0, inplace=True)
 
-        # Calculate the sentiment percentages
-        for i in data["date"].unique():
-            temp = data[data["date"] == i]
-            positive_temp = temp[temp["sentiment"] == "positive"]
-            negative_temp = temp[temp["sentiment"] == "negative"]
-            neutral_temp = temp[temp["sentiment"] == "neutral"]
+    # Melting the DataFrame to long format for easier plotting with seaborn
+    data_long_monthly = monthly_sentiment_means_adjusted.reset_index().melt(id_vars='time', var_name='Sentiment', value_name='Average Score')
 
-            pos_list.append((positive_temp.shape[0] / temp.shape[0]) * 100)
-            neg_list.append((negative_temp.shape[0] / temp.shape[0]) * 100)
-            neu_list.append((neutral_temp.shape[0] / temp.shape[0]) * 100)
-            date_list.append(str(i))
-
-        # Create a new DataFrame with the calculated data
-        new_data = pd.DataFrame(
-            {"date": date_list, "pos": pos_list, "neg": neg_list, "neu": neu_list}
-        )
-
-        # Convert 'date' to datetime and normalize the sentiment columns
-        new_data["date"] = pd.to_datetime(new_data["date"])
-        new_data["total"] = new_data[["neg", "pos", "neu"]].sum(axis=1)
-        new_data["neg"] /= new_data["total"]
-        new_data["pos"] /= new_data["total"]
-        new_data["neu"] /= new_data["total"]
-
-        # Convert 'date' back to string for plotting and sort the DataFrame
-        new_data["date"] = new_data["date"].dt.strftime("%Y-%m-%d")
-        new_data = new_data.sort_values("date")
-
-        return new_data
-
-    # Example usage in your Streamlit app
-    # Assume filtered_data is defined earlier in your app
-    new = process_sentiment_data(filtered_data)
-
-    # Get the date_list for x-axis ticks
-    date_list = new["date"]
-
-    # Create the bottom parameters for stacking
-    bottom_pos = new["neg"]
-    bottom_neu = new["neg"] + new["pos"]
-
-    # Create a stacked bar plot
-    fig, ax = plt.subplots(figsize=(16, 6))
-
-    # Plot each sentiment as a layer in the stacked bar
-    ax.bar(new["date"], new["neg"], label="Negative", color="#ae4f4d", alpha=1)
-    ax.bar(
-        new["date"],
-        new["pos"],
-        bottom=bottom_pos,
-        label="Positive",
-        color="#6894a8",
-        alpha=0.9,
-    )
-    ax.bar(
-        new["date"],
-        new["neu"],
-        bottom=bottom_neu,
-        label="Neutral",
-        color="#eee8d6",
-        alpha=0.6,
-    )
-
-    # Set grid, spines and annotations as before
-    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-    ax.xaxis.grid(False)
+    # Creating the plot for monthly sentiment scores
+    fig, ax = plt.subplots(figsize=(12, 6))
+    sns.lineplot(data=data_long_monthly, x='time', y='Average Score', hue='Sentiment', marker='o', palette=colors, linewidth=2)
 
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["left"].set_visible(False)
-    # Rotate the x-axis dates for better readability
-    plt.xticks(rotation=90, fontsize=8)  # Set x-tick font size
-
-    # Add legend
-    plt.legend()
-    # Redraw the figure to ensure the formatter is applied
-    # Set title to the right
-    ax_title = ax.set_title("Daily Sentiment", loc="right")
-    ax_title.set_position((1.02, 1))  # Adjust title position
-    fig.canvas.draw()
-
-    # Remove xlabel as it's redundant with the dates
-    plt.xlabel("Unique Days")
-    plt.ylabel("Sentiment Analysis")
-    # Apply tight layout and display plot
+    ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    plt.title('Monthly Sentiment Score Averages', fontsize=16)
+    plt.xlabel('Month', fontsize=12)
+    plt.ylabel('Average Sentiment Score', fontsize=12)
+    plt.legend(title='Sentiment')
     plt.tight_layout()
-
-    # Show the plot
-    st.pyplot(fig)
-
- 
+    st.pyplot(plt)
 
 
 
