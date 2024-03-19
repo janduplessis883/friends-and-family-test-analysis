@@ -168,7 +168,7 @@ if page not in  ['PCN Dashboard', 'About']:
 if page == "Surgery Dashboard":
     st.title(f"{selected_surgery}")
 
-    surgery_tab_selector = ui.tabs(options=['Surgery Rating', 'Surgery Responses'], default_value='Surgery Rating', key="tab4")
+    surgery_tab_selector = ui.tabs(options=['Surgery Rating', 'Surgery Responses', 'Feedback Word Count'], default_value='Surgery Rating', key="tab4")
     
        
     if surgery_tab_selector == 'Surgery Rating':
@@ -303,7 +303,18 @@ if page == "Surgery Dashboard":
         
 
     elif surgery_tab_selector == 'Surgery Responses':
-        st.markdown(f"### Total: {filtered_data.shape[0]}")
+        cols = st.columns(2)
+        with cols[0]:
+            ui.metric_card(
+                title="Total Responses",
+                content=f"{surgery_data.shape[0]}",
+                description=f"Since {start_date}.",
+                key="total",
+            )
+        with cols[1]:
+            pass
+
+
         # Plotting the line plot
         # Add more content to col2 as needed
         daily_count = filtered_data.resample("D", on="time").size()
@@ -371,6 +382,31 @@ if page == "Surgery Dashboard":
         # Apply tight layout and display plot
         plt.tight_layout()
         st.pyplot(fig)
+        
+    elif surgery_tab_selector == 'Feedback Word Count':
+        fig, ax = plt.subplots(1, 2, figsize=(12, 6))  # figsize can be adjusted as needed
+
+        # Plot the first histogram on the first subplot
+        sns.histplot(surgery_data['free_text_len'], ax=ax[0], color="#708695", bins=25)
+        ax[0].yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        ax[0].xaxis.grid(False)
+        ax[0].spines["top"].set_visible(False)
+        ax[0].spines["right"].set_visible(False)
+        ax[0].spines["left"].set_visible(False)
+        ax[0].set_title('Distribution of Free Text Feedback Word Count')  # Optional title for the first plot
+
+        # Plot the second histogram on the second subplot
+        sns.histplot(surgery_data['do_better_len'], ax=ax[1], color='#985e5b', bins=25)
+        ax[1].yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        ax[1].xaxis.grid(False)
+        ax[1].spines["top"].set_visible(False)
+        ax[1].spines["right"].set_visible(False)
+        ax[1].spines["left"].set_visible(False)
+        ax[1].set_title('Distribution of Imporvement Suggestion Word Count')  # Optional title for the second plot
+
+        # Show the plots next to each other
+        plt.tight_layout()
+        st.pyplot(plt)
     
  #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++                     
 # == PCN Dashboard ==========================================================
@@ -537,7 +573,7 @@ elif page == "PCN Dashboard":
         
     elif tab_selector == 'Surgery Responses':
         with st.container(border=False):
-            fig, ax = plt.subplots(figsize=(12, 8))
+            fig, ax = plt.subplots(figsize=(12, 6))
             sns.countplot(y='surgery', data=data, color='#59646b')
             for p in ax.patches:
                 width = p.get_width()
@@ -577,7 +613,7 @@ elif page == "PCN Dashboard":
         data_pivot_filled = data_pivot.fillna(method='ffill').fillna(0)
 
         # Plotting
-        fig, ax = plt.subplots(figsize=(12, 9))
+        fig, ax = plt.subplots(figsize=(12, 6))
         for column in data_pivot_filled.columns:
             plt.plot(data_pivot_filled.index, data_pivot_filled[column], label=column)
 
