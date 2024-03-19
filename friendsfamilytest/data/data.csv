@@ -2295,8 +2295,8 @@ I needed to call in to have them take my name and then to set up an appoitment. 
 2024-02-29 15:07:00,Extremely likely,Iâ€™ve been a patient for 30 years and Iâ€™m very satisfied always have the service I received. Thank you,,The Chelsea Practice,19.0,0,5.0,,,positive,0.9769862294197084,,Overall Patient Satisfaction
 2024-02-29 15:07:13,Extremely likely,I’ve been a patient for 30 years and I’m very satisfied always have the service I received. Thank you,,The Chelsea Practice,19.0,0,5.0,,,positive,0.9755343198776244,,Overall Patient Satisfaction
 2024-02-29 15:07:41,Extremely likely,,,The Chelsea Practice,0.0,0,5.0,,,positive,0.4012986123561859,,
-2024-02-29 15:08:12,Extremely likely,Wonderful Service. Kind. Friendly. Helpful. Excellent care & advice.,,The Chelsea Practice,9.0,0,5.0,,,positive,0.9725871682167052,,Overall Patient Satisfaction
 2024-02-29 15:08:12,Extremely likely,Absolutely Zero complaints.  New patient & most impressed with  The Chelsea Practice ,,The Chelsea Practice,12.0,0,5.0,,,positive,0.9608348608016968,,Overall Patient Satisfaction
+2024-02-29 15:08:12,Extremely likely,Wonderful Service. Kind. Friendly. Helpful. Excellent care & advice.,,The Chelsea Practice,9.0,0,5.0,,,positive,0.9725871682167052,,Overall Patient Satisfaction
 2024-02-29 15:08:20,Extremely likely,,,The Chelsea Practice,0.0,0,5.0,,,positive,0.4012986123561859,,
 2024-02-29 15:08:24,Neither likely nor unlikely,,,The Chelsea Practice,0.0,0,3.0,,,positive,0.4012986123561859,,
 2024-02-29 15:08:31,Likely,,,Scarsdale Medical Centre,0.0,0,4.0,,,positive,0.4012986123561859,,
@@ -2322,8 +2322,8 @@ I needed to call in to have them take my name and then to set up an appoitment. 
 2024-02-29 15:17:36,Extremely likely,,,Health Partners @ Violet Melchett,0.0,0,5.0,,,positive,0.4012986123561859,,
 2024-02-29 15:17:48,Extremely likely,,,Scarsdale Medical Centre,0.0,0,5.0,,,positive,0.4012986123561859,,
 2024-02-29 15:18:25,Extremely likely,Fantastic surgery thank you ,,The Chelsea Practice,4.0,0,5.0,,,positive,0.9843981862068176,,Health Outcome Satisfaction
-2024-02-29 15:19:00,Extremely likely,"I can't answer any of the above - so have gone for a neutral answer - because I have't been to the surgery in a long while, certainly not since it moved. I have no idea whether it provides a good or bad service or even who the GPs are.",,Health Partners @ Violet Melchett,50.0,0,5.0,,,negative,0.7915966510772705,,Follow-Up and Continuity of Care
 2024-02-29 15:19:00,Extremely likely,,,Scarsdale Medical Centre,0.0,0,5.0,,,positive,0.4012986123561859,,
+2024-02-29 15:19:00,Extremely likely,"I can't answer any of the above - so have gone for a neutral answer - because I have't been to the surgery in a long while, certainly not since it moved. I have no idea whether it provides a good or bad service or even who the GPs are.",,Health Partners @ Violet Melchett,50.0,0,5.0,,,negative,0.7915966510772705,,Follow-Up and Continuity of Care
 2024-02-29 15:19:12,Extremely likely,"My family’s experience with The Chelsea Practice has been excellent. The reception staff are always courteous, whether talking to them on the phone or in person. The nursing staff, too have been lovely and understanding. Drs have also been helpful.",,The Chelsea Practice,40.0,0,5.0,,,positive,0.9721317887306212,,Reception Staff Interaction
 2024-02-29 15:20:56,Likely,,,Health Partners @ Violet Melchett,0.0,0,4.0,,,positive,0.4012986123561859,,
 2024-02-29 15:21:17,Extremely likely,,,Scarsdale Medical Centre,0.0,0,5.0,,,positive,0.4012986123561859,,
@@ -3191,8 +3191,8 @@ As i was unhappy as she just wasted my time .",,The Abingdon Health Centre,134.0
 2024-03-06 12:19:51,Extremely likely,Dr [PERSON]...a living legend !,,The Good Practice,6.0,0,5.0,,,positive,0.9650412797927856,,Patient-Doctor Communication
 2024-03-06 12:20:19,Extremely likely,,,Earls Court Medical Centre,0.0,0,5.0,,,positive,0.4012986123561859,,
 2024-03-06 12:20:27,Likely,,,Earls Court Medical Centre,0.0,0,4.0,,,positive,0.4012986123561859,,
-2024-03-06 12:20:43,Unlikely,"It took 3 weeks, several phone calls to have a document signed to proceed with insurance for a broken knee. And I got different answers every time I called. ",,Earls Court Medical Centre,29.0,0,2.0,,,negative,0.8588845133781433,,Telephone Service
 2024-03-06 12:20:43,Extremely likely,,,Earls Court Medical Centre,0.0,0,5.0,,,positive,0.4012986123561859,,
+2024-03-06 12:20:43,Unlikely,"It took 3 weeks, several phone calls to have a document signed to proceed with insurance for a broken knee. And I got different answers every time I called. ",,Earls Court Medical Centre,29.0,0,2.0,,,negative,0.8588845133781433,,Telephone Service
 2024-03-06 12:20:47,Likely,very caring and looked after by all staff ,,The Good Practice,8.0,0,4.0,,,positive,0.9627014398574828,,Follow-Up and Continuity of Care
 2024-03-06 12:21:32,Extremely likely,,,The Good Practice,1.0,0,5.0,,,positive,0.6844379305839539,,
 2024-03-06 12:21:39,Extremely likely,,,Earls Court Medical Centre,0.0,0,5.0,,,positive,0.4012986123561859,,
@@ -3909,3 +3909,5 @@ A quick short notification that a result has been uploaded to the patient record
 2024-03-18 19:50:19,Extremely likely,Very comprehensive care including follow up appointments when necessary. Able to call up easily and get a face-to-face appointment when necessary. Lovely staff.,,The Chelsea Practice,23.0,0,5.0,,,positive,0.9261699914932252,,Follow-Up and Continuity of Care
 2024-03-18 20:32:04,Extremely likely,"Friendly staffs, Doctors provide great patient care. Options for waiting time appointments ",,Earls Court Surgery,12.0,0,5.0,,,positive,0.9378082156181335,,Waiting Room Comfort
 2024-03-18 20:33:12,Likely,Competitive lot better then others in our area,General update  will make a difference to the place,Earls Court Surgery,8.0,9,4.0,,,positive,0.9064753651618958,Follow-Up and Continuity of Care,Overall Patient Satisfaction
+2024-03-18 23:11:50,Extremely likely,"the surgery is friendly and helpful, [PERSON] who does bloods and Dr [PERSON] both of whom I have seen are excellent",,Earls Court Surgery,21.0,1,5.0,,,positive,0.9664285182952881,,Medical Staff Competence
+2024-03-19 00:18:08,Extremely likely,Happy with the service ,,The Chelsea Practice,4.0,1,5.0,,,positive,0.9752500057220459,,Overall Patient Satisfaction
