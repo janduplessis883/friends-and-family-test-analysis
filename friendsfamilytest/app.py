@@ -307,7 +307,7 @@ if page == "Surgery Dashboard":
         with cols[0]:
             ui.metric_card(
                 title="Total Responses",
-                content=f"{surgery_data.shape[0]}",
+                content=f"{filtered_data.shape[0]}",
                 description=f"Since {start_date}.",
                 key="total",
             )
