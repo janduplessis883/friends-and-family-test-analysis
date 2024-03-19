@@ -387,7 +387,7 @@ if page == "Surgery Dashboard":
         fig, ax = plt.subplots(1, 2, figsize=(12, 6))  # figsize can be adjusted as needed
 
         # Plot the first histogram on the first subplot
-        sns.histplot(surgery_data['free_text_len'], ax=ax[0], color="#708695", bins=25)
+        sns.histplot(filtered_data['free_text_len'], ax=ax[0], color="#708695", bins=25)
         ax[0].yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
         ax[0].xaxis.grid(False)
         ax[0].spines["top"].set_visible(False)
@@ -396,7 +396,7 @@ if page == "Surgery Dashboard":
         ax[0].set_title('Distribution of Free Text Feedback Word Count')  # Optional title for the first plot
 
         # Plot the second histogram on the second subplot
-        sns.histplot(surgery_data['do_better_len'], ax=ax[1], color='#985e5b', bins=25)
+        sns.histplot(filtered_data['do_better_len'], ax=ax[1], color='#985e5b', bins=25)
         ax[1].yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
         ax[1].xaxis.grid(False)
         ax[1].spines["top"].set_visible(False)
