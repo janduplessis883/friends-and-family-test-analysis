@@ -943,7 +943,7 @@ We employ several machine learning techniques for analysis:
                 y,
                 f"{int(width)}",
                 va="center",
-                fontsize=10,
+                fontsize=9,
             )
         except ValueError:
             pass
