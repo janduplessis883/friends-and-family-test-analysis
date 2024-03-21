@@ -547,7 +547,7 @@ elif page == "PCN Dashboard":
             data.set_index('time', inplace=True)
 
             # Now, group by 'sentiment' and resample by month, then calculate the mean sentiment_score
-            monthly_sentiment_means_adjusted = data.groupby('sentiment').resample('M')['sentiment_score'].mean().unstack(level=0)
+            monthly_sentiment_means_adjusted = data.groupby('sentiment').resample('M')['sentiment_score'].sum().unstack(level=0)
 
             # Fill NaN values, which might be there if there are no records for a given month
             monthly_sentiment_means_adjusted.fillna(0, inplace=True)
@@ -732,7 +732,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     filtered_data.set_index('time', inplace=True)
 
     # Now, group by 'sentiment' and resample by month, then calculate the mean sentiment_score
-    monthly_sentiment_means_adjusted = filtered_data.groupby('sentiment').resample('M')['sentiment_score'].mean().unstack(level=0)
+    monthly_sentiment_means_adjusted = filtered_data.groupby('sentiment').resample('M')['sentiment_score'].sum().unstack(level=0)
 
     # Fill NaN values, which might be there if there are no records for a given month
     monthly_sentiment_means_adjusted.fillna(0, inplace=True)
