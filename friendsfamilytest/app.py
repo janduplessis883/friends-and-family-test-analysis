@@ -556,7 +556,7 @@ elif page == "PCN Dashboard":
             data_long_monthly = monthly_sentiment_means_adjusted.reset_index().melt(id_vars='time', var_name='Sentiment', value_name='Average Score')
             colors = ['#7495a8' if sentiment == 'positive' else '#ae4f4d' if sentiment == 'negative' else '#eeeadb' for sentiment in sentiment_totals.index]
             # Creating the plot for monthly sentiment scores
-            fig, ax = plt.subplots(figsize=(12, 6))
+            fig, ax = plt.subplots(figsize=(12, 5))
             sns.lineplot(data=data_long_monthly, x='time', y='Average Score', hue='Sentiment', marker='o', palette=colors, linewidth=2)
 
             ax.spines["top"].set_visible(False)
@@ -573,7 +573,7 @@ elif page == "PCN Dashboard":
         
     elif tab_selector == 'Surgery Responses':
         with st.container(border=False):
-            fig, ax = plt.subplots(figsize=(12, 6))
+            fig, ax = plt.subplots(figsize=(12, 5))
             sns.countplot(y='surgery', data=data, color='#59646b')
             for p in ax.patches:
                 width = p.get_width()
@@ -613,7 +613,7 @@ elif page == "PCN Dashboard":
         data_pivot_filled = data_pivot.fillna(method='ffill').fillna(0)
 
         # Plotting
-        fig, ax = plt.subplots(figsize=(12, 6))
+        fig, ax = plt.subplots(figsize=(12, 5))
         for column in data_pivot_filled.columns:
             plt.plot(data_pivot_filled.index, data_pivot_filled[column], label=column)
 
@@ -665,17 +665,14 @@ elif page == "PCN Dashboard":
             plt.xlabel('Month')
             plt.ylabel('Mean Rating Score')
             plt.xticks(rotation=45)
-            plt.tight_layout()
             ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
             ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
             ax.spines["top"].set_visible(False)
             ax.spines["right"].set_visible(False)
             ax.spines["left"].set_visible(False)
-
             # Set title to the right
             ax_title = ax.set_title("Mean Monthly Rating Score - Brompton Health PCN", loc="right")
-
-            # Display the line plot
+            plt.tight_layout()
             st.pyplot(plt)
             
 
