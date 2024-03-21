@@ -520,8 +520,8 @@ elif page == "PCN Dashboard":
     elif tab_selector == 'Sentiment Analysis':
         with st.container(border=False):
             labels = "Negative", "Neutral", "Positive"
-            new_data = data[data['sentiment_score'] != 1]
-            sentiment_totals = new_data.groupby('sentiment')['sentiment_score'].sum()
+
+            sentiment_totals = data.groupby('sentiment')['sentiment_score'].sum()
             colors = ['#7495a8' if sentiment == 'positive' else '#ae4f4d' if sentiment == 'negative' else '#eeeadb' for sentiment in sentiment_totals.index]
             explode = (0, 0, 0)  # 'explode' the 1st slice (Positive)
 
