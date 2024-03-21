@@ -613,7 +613,7 @@ elif page == "PCN Dashboard":
         data_pivot_filled = data_pivot.fillna(method='ffill').fillna(0)
 
         # Plotting
-        fig, ax = plt.subplots(figsize=(12, 5))
+        fig, ax = plt.subplots(figsize=(12, 8))
         for column in data_pivot_filled.columns:
             plt.plot(data_pivot_filled.index, data_pivot_filled[column], label=column)
 
