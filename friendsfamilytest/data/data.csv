@@ -1441,8 +1441,8 @@ Very happy patient!!",,Earls Court Surgery,56.0,0,5.0,,,positive,0.9674000144004
 2024-02-23 15:06:35,Extremely likely,,,Royal Hospital Chelsea,0.0,0,5.0,,,positive,0.4012986123561859,,
 2024-02-23 15:06:44,Extremely likely,Always prompt and helpful,,The Chelsea Practice,4.0,1,5.0,,,positive,0.902690887451172,,Follow-Up and Continuity of Care
 2024-02-23 15:09:58,Extremely likely,,,Royal Hospital Chelsea,0.0,0,5.0,,,positive,0.4012986123561859,,
-2024-02-23 15:10:00,Extremely likely,,,Royal Hospital Chelsea,2.0,0,5.0,,,neutral,0.4624760150909424,,
 2024-02-23 15:10:00,Likely,,,Scarsdale Medical Centre,0.0,0,4.0,,,positive,0.4012986123561859,,
+2024-02-23 15:10:00,Extremely likely,,,Royal Hospital Chelsea,2.0,0,5.0,,,neutral,0.4624760150909424,,
 2024-02-23 15:10:07,Extremely likely,,,Royal Hospital Chelsea,0.0,0,5.0,,,positive,0.4012986123561859,,
 2024-02-23 15:10:13,Extremely likely,,,Royal Hospital Chelsea,2.0,0,5.0,,,positive,0.6902768015861511,,
 2024-02-23 15:10:56,Extremely likely,,,Royal Hospital Chelsea,0.0,0,5.0,,,positive,0.4012986123561859,,
@@ -2291,8 +2291,8 @@ I needed to call in to have them take my name and then to set up an appoitment. 
 2024-02-29 15:06:00,Extremely likely,,,The Chelsea Practice,0.0,0,5.0,,,positive,0.4012986123561859,,
 2024-02-29 15:06:42,Extremely likely,I’ve only ever got to see a nurse.,,The Chelsea Practice,8.0,0,5.0,,,neutral,0.7373712062835693,,Reception Staff Interaction
 2024-02-29 15:06:49,Extremely likely,,,The Chelsea Practice,0.0,0,5.0,,,positive,0.4012986123561859,,
-2024-02-29 15:07:00,Likely,,,Scarsdale Medical Centre,0.0,0,4.0,,,positive,0.4012986123561859,,
 2024-02-29 15:07:00,Extremely likely,Iâ€™ve been a patient for 30 years and Iâ€™m very satisfied always have the service I received. Thank you,,The Chelsea Practice,19.0,0,5.0,,,positive,0.9769862294197084,,Overall Patient Satisfaction
+2024-02-29 15:07:00,Likely,,,Scarsdale Medical Centre,0.0,0,4.0,,,positive,0.4012986123561859,,
 2024-02-29 15:07:13,Extremely likely,I’ve been a patient for 30 years and I’m very satisfied always have the service I received. Thank you,,The Chelsea Practice,19.0,0,5.0,,,positive,0.9755343198776244,,Overall Patient Satisfaction
 2024-02-29 15:07:41,Extremely likely,,,The Chelsea Practice,0.0,0,5.0,,,positive,0.4012986123561859,,
 2024-02-29 15:08:12,Extremely likely,Absolutely Zero complaints.  New patient & most impressed with  The Chelsea Practice ,,The Chelsea Practice,12.0,0,5.0,,,positive,0.9608348608016968,,Overall Patient Satisfaction
@@ -2410,8 +2410,8 @@ Mn on the phonr",,Knightsbridge Medical Centre,21.0,0,5.0,,,negative,0.761164665
 2024-02-29 16:06:51,Extremely likely,So far so good,,The Chelsea Practice,4.0,0,5.0,,,positive,0.9565063118934632,,Overall Patient Satisfaction
 2024-02-29 16:06:55,Likely,,,The Chelsea Practice,0.0,0,4.0,,,positive,0.4012986123561859,,
 2024-02-29 16:07:06,Unlikely,,,The Chelsea Practice,0.0,0,2.0,,,positive,0.4012986123561859,,
-2024-02-29 16:07:23,Extremely likely,,,Scarsdale Medical Centre,0.0,0,5.0,,,positive,0.4012986123561859,,
 2024-02-29 16:07:23,Unlikely,Had a blood test and am not able to get the results as I cannot get an appointment. A terrible client experience ,,The Chelsea Practice,22.0,0,2.0,,,negative,0.9163410067558287,,Test Results
+2024-02-29 16:07:23,Extremely likely,,,Scarsdale Medical Centre,0.0,0,5.0,,,positive,0.4012986123561859,,
 2024-02-29 16:07:29,Extremely likely,,,The Chelsea Practice,0.0,0,5.0,,,positive,0.4012986123561859,,
 2024-02-29 16:07:32,Likely,It used to be a lot better. But it’s not surgeries fault. NHS changed. ,,Scarsdale Medical Centre,14.0,0,4.0,,,negative,0.4835792183876037,,Health Outcome Satisfaction
 2024-02-29 16:07:49,Extremely likely,,,The Chelsea Practice,0.0,0,5.0,,,positive,0.4012986123561859,,
@@ -3927,4 +3927,32 @@ A quick short notification that a result has been uploaded to the patient record
 2024-03-20 06:54:36,Extremely likely,,,The Chelsea Practice,1.0,1,5.0,,,positive,0.5715733170509338,,
 2024-03-20 10:16:29,Extremely likely,,,Stanhope Mews West,0.0,0,5.0,,,positive,0.4012986123561859,,
 2024-03-20 12:21:51,Extremely likely,"Friendly and very good to get an appointment
-and advice ",,The Chelsea Practice,10.0,0,5.0,,,positive,0.9467838406562805,,Follow-Up and Continuity of Care
+and advice ",,The Chelsea Practice,10.0,0,5.0,,,positive,0.9467838406562804,,Follow-Up and Continuity of Care
+2024-03-21 18:39:58,Extremely likely,"The environment is really friendly and the workers there are extremely sympathetic and well-trained.  The GP here is also very caring and helpful in many aspects, for example in  handling certain types of patients. ",,Earls Court Surgery,34.0,3,5.0,,,positive,0.9728773832321167,,Medical Staff Competence
+2024-03-22 13:59:58,Likely,Always taking care of the patient ,Friendly staff at reception and Nurse [PERSON] is the best ,Earls Court Surgery,6.0,10,4.0,,,positive,0.48645031452178955,Reception Staff Interaction,Follow-Up and Continuity of Care
+2024-03-22 14:25:02,Extremely likely,Very good Practise,Saw a highly competent Doctor. Very pleased.,The Chelsea Practice,3.0,7,5.0,,,positive,0.9482399821281433,Medical Staff Competence,Follow-Up and Continuity of Care
+2024-03-22 14:28:06,Extremely likely,Professional and friendly ,,The Chelsea Practice,3.0,0,5.0,,,positive,0.8078685402870178,,Follow-Up and Continuity of Care
+2024-03-22 14:29:42,Extremely likely,"The doctors led by Dr [PERSON], are excellent and caring.",,The Chelsea Practice,10.0,3,5.0,,,positive,0.974775493144989,,Medical Staff Competence
+2024-03-22 14:29:54,Neither likely nor unlikely,,,The Chelsea Practice,0.0,0,3.0,,,neutral,0.0,,
+2024-03-22 14:39:39,Extremely likely,"Everyone is professional, helpful and quick to respond ",,The Chelsea Practice,8.0,0,5.0,,,positive,0.9410287737846375,,Follow-Up and Continuity of Care
+2024-03-22 14:43:39,Extremely likely,Always get app and friendly staff,,The Chelsea Practice,6.0,1,5.0,,,positive,0.8655315637588501,,Follow-Up and Continuity of Care
+2024-03-22 14:44:37,Extremely likely,"Always extremely friendly, helpull and efficient.",,The Chelsea Practice,6.0,1,5.0,,,positive,0.9633021950721741,,Overall Patient Satisfaction
+2024-03-22 14:47:01,Extremely likely,"Superb practice in all respects l. Doctors, nurses and receptionists all friendly and efficient. ",,The Chelsea Practice,14.0,4,5.0,,,positive,0.9805378317832947,,Reception Staff Interaction
+2024-03-22 14:47:04,Extremely likely,Always helpfull and efficient.,Not i can think of.,The Chelsea Practice,4.0,5,5.0,,,positive,0.9215983152389526,Accessibility for Disabled Patients,Follow-Up and Continuity of Care
+2024-03-22 14:54:09,Likely,,,The Chelsea Practice,2.0,0,4.0,,,positive,0.9599564075469971,,
+2024-03-22 14:59:32,Extremely likely,Courteous and competent professionals ,,The Chelsea Practice,4.0,2,5.0,,,positive,0.91182541847229,,Follow-Up and Continuity of Care
+2024-03-22 15:00:18,Extremely likely,Very friendly and professional ,,The Chelsea Practice,4.0,0,5.0,,,positive,0.949654757976532,,Overall Patient Satisfaction
+2024-03-22 15:04:23,Extremely likely,Couteous caring and efficient ,,The Chelsea Practice,4.0,3,5.0,,,positive,0.8721084594726562,,Follow-Up and Continuity of Care
+2024-03-22 15:11:54,Extremely likely,They are consistently wonderful.,,The Chelsea Practice,4.0,1,5.0,,,positive,0.9749503135681152,,Follow-Up and Continuity of Care
+2024-03-22 15:27:25,Likely,Nice friendly place. The doctors seem to know what they are doing. Clean and nice. ,"Yes, as I pointed out at the time, it would have been far better to have the prostate inspection and blood test in one ten minute appointment, but I had to come back for two ten minute appointments - there would have been plenty of time. The prostate and blood tests took a total of six minutes to do. 
+I took the trouble to write a note to your email to suggest this, but an automatic reply came back saying you don’t accept suggestions from patients or correspondence.
+It felt that a lot of extra work was being created - and it would instantly reduce the waiting lists if a more efficient system was adopted. ",The Chelsea Practice,15.0,115,4.0,,,positive,0.9617617130279541,Test Results,Medical Staff Competence
+2024-03-22 15:35:23,Extremely likely,,,The Chelsea Practice,2.0,1,5.0,,,positive,0.960500955581665,,
+2024-03-22 15:50:34,Extremely likely,Excellent in every way,,The Chelsea Practice,4.0,1,5.0,,,positive,0.966040313243866,,Overall Patient Satisfaction
+2024-03-22 16:02:01,Likely,Good staff and efficient ,,The Chelsea Practice,4.0,0,4.0,,,positive,0.9422899484634399,,Overall Patient Satisfaction
+2024-03-22 16:08:40,Extremely likely,,,The Chelsea Practice,0.0,0,5.0,,,neutral,0.0,,
+2024-03-22 16:13:58,Extremely likely,,,The Chelsea Practice,0.0,0,5.0,,,neutral,0.0,,
+2024-03-22 16:14:34,Extremely likely,An excellent Practice ,,The Chelsea Practice,3.0,0,5.0,,,positive,0.9689890742301941,,Follow-Up and Continuity of Care
+2024-03-22 16:41:32,Extremely likely,Everybody is really nice!,,Health Partners @ Violet Melchett,4.0,0,5.0,,,positive,0.9692277312278748,,Overall Patient Satisfaction
+2024-03-22 16:43:10,Extremely likely,"Fast, professional service ",,Health Partners @ Violet Melchett,3.0,2,5.0,,,positive,0.8836246132850647,,Overall Patient Satisfaction
+2024-03-22 16:43:38,Extremely likely,Very good service ,I am happy with everything ,Health Partners @ Violet Melchett,3.0,5,5.0,,,positive,0.9322715997695923,Overall Patient Satisfaction,Overall Patient Satisfaction

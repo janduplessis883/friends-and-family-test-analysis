@@ -95,11 +95,12 @@ def check_column_length(dataframe, column_name, word_count_length):
 
     return dataframe
 
-@time_it
-def sentiment_analysis(data):
-    sentiment_task = pipeline(
+sentiment_task = pipeline(
         "sentiment-analysis", model="cardiffnlp/twitter-roberta-base-sentiment-latest"
     )
+
+@time_it
+def sentiment_analysis(data):
 
     # Initialize lists to store labels and scores
     sentiment = []
@@ -111,9 +112,9 @@ def sentiment_analysis(data):
         sentence = row["free_text"]
         sentence = str(sentence)
         sentence = sentence[:513]
-        if sentence == 'nan':
+        if pd.isna(sentence) or sentence == '':
             sentiment.append('neutral')
-            sentiment_score.append(1)
+            sentiment_score.append(0)
         else:
             model_output = sentiment_task(sentence)
             sentiment.append(model_output[0]['label'])
