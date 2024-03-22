@@ -394,6 +394,7 @@ if page == "Surgery Dashboard":
         ax[0].spines["right"].set_visible(False)
         ax[0].spines["left"].set_visible(False)
         ax[0].set_title('Distribution of Free Text Feedback Word Count')  # Optional title for the first plot
+        ax[0].set_ylim(0, 300)
 
         # Plot the second histogram on the second subplot
         sns.histplot(filtered_data['do_better_len'], ax=ax[1], color='#985e5b', bins=25)
@@ -403,6 +404,7 @@ if page == "Surgery Dashboard":
         ax[1].spines["right"].set_visible(False)
         ax[1].spines["left"].set_visible(False)
         ax[1].set_title('Distribution of Imporvement Suggestion Word Count')  # Optional title for the second plot
+        ax[1].set_ylim(0, 300)
 
         # Show the plots next to each other
         plt.tight_layout()
@@ -515,7 +517,10 @@ elif page == "PCN Dashboard":
 
             # Display the ordered percentage heatmap
             st.pyplot(plt)
-       
+
+            st.markdown("---")
+            
+            
 
     elif tab_selector == 'Sentiment Analysis':
         with st.container(border=False):
@@ -573,7 +578,7 @@ elif page == "PCN Dashboard":
         
     elif tab_selector == 'Surgery Responses':
         with st.container(border=False):
-            fig, ax = plt.subplots(figsize=(12, 5))
+            fig, ax = plt.subplots(figsize=(12, 6))
             sns.countplot(y='surgery', data=data, color='#59646b')
             for p in ax.patches:
                 width = p.get_width()
@@ -613,7 +618,7 @@ elif page == "PCN Dashboard":
         data_pivot_filled = data_pivot.fillna(method='ffill').fillna(0)
 
         # Plotting
-        fig, ax = plt.subplots(figsize=(12, 8))
+        fig, ax = plt.subplots(figsize=(12, 10))
         for column in data_pivot_filled.columns:
             plt.plot(data_pivot_filled.index, data_pivot_filled[column], label=column)
 
@@ -649,7 +654,7 @@ elif page == "PCN Dashboard":
             weekly_mean_rating = daily_mean_rating['rating_score'].resample('M').mean().reset_index()
 
             # Create a seaborn line plot for weekly mean rating scores
-            fig, ax = plt.subplots(figsize=(12, 7))
+            fig, ax = plt.subplots(figsize=(12, 5))
             weekly_lineplot = sns.lineplot(x='date', y='rating_score', data=weekly_mean_rating, color="#d2b570", linewidth=4)
             
             for index, row in weekly_mean_rating.iterrows():
@@ -675,7 +680,91 @@ elif page == "PCN Dashboard":
             plt.tight_layout()
             st.pyplot(plt)
             
+            st.markdown("---")
+            
+            st.subheader("Feedback Categories (PCN)")
+            
+            label_counts = data["feedback_labels"].value_counts(
+                ascending=False
+            )  # Use ascending=True to match the order in your image
 
+            # Convert the Series to a DataFrame
+            label_counts_df = label_counts.reset_index()
+            label_counts_df.columns = ["Feedback Classification", "Counts"]
+
+            # Define the palette conditionally based on the category names
+            palette = [
+                "#aec867" if (label == "Overall Patient Satisfaction") else "#62899f"
+                for label in label_counts_df["Feedback Classification"]
+            ]
+
+            # Create a Seaborn bar plot
+            plt.figure(figsize=(10, 8))
+            ax = sns.barplot(
+                x="Counts", y="Feedback Classification", data=label_counts_df, palette=palette
+            )
+            ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+            ax.yaxis.grid(False)
+            ax.spines["top"].set_visible(False)
+            ax.spines["right"].set_visible(False)
+            ax.spines["left"].set_visible(True)
+            ax.spines["bottom"].set_visible(False)
+            # Adding titles and labels for clarity
+            plt.title("Counts of Feedback Classification")
+            plt.xlabel("Counts")
+            plt.ylabel("")
+            st.pyplot(plt)
+            
+            st.markdown('---')
+            
+            st.subheader("Improvement Suggestions (PCN)")
+            improvement_data = data[
+            (data["improvement_labels"] != "No Improvement Suggestion")
+            ]
+            # Calculate value counts
+            label_counts = improvement_data["improvement_labels"].value_counts(
+                ascending=False
+            )  # Use ascending=True to match the order in your image
+
+            # Convert the Series to a DataFrame
+            label_counts_df = label_counts.reset_index()
+            label_counts_df.columns = ["Improvement Labels", "Counts"]
+
+            # Define the palette conditionally based on the category names
+            palette = [
+                (
+                    "#d89254"
+                    if (
+                        label == "Overall Patient Satisfaction"
+                        or label == "No Improvement Suggestion"
+                    )
+                    else "#ae4f4d"
+                )
+                for label in label_counts_df["Improvement Labels"]
+            ]
+
+            # Create a Seaborn bar plot
+            plt.figure(figsize=(10, 8))
+            ax = sns.barplot(
+                x="Counts", y="Improvement Labels", data=label_counts_df, palette=palette
+            )
+
+            ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+            ax.yaxis.grid(False)
+
+            ax.spines["top"].set_visible(False)
+            ax.spines["right"].set_visible(False)
+            ax.spines["left"].set_visible(True)
+            ax.spines["bottom"].set_visible(False)
+            # Adding titles and labels for clarity
+            plt.title("Counts of Improvement Catergories")
+            plt.xlabel("Counts")
+            plt.ylabel("")
+
+        # Streamlit function to display matplotlib figures
+        st.pyplot(plt)
+        
+        
 # == Rating & Sentiment Analysis Correlation ======================================================================
 elif page == "Sentiment Analysis":
  
@@ -761,6 +850,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 # == Feedback Classification ========================================================================================
 elif page == "Feedback Classification":
     st.title("Feedback Classification")
+    st.markdown("Responses to **FFT Q1**: Please tell us why you feel this way?")
 
     toggle = ui.switch(
         default_checked=False, label="Explain this page.", key="switch_dash"
@@ -988,6 +1078,7 @@ We employ several machine learning techniques for analysis:
 # == Improvement Suggestions ==========================================================
 elif page == "Improvement Suggestions":
     st.title("Improvement Suggestions")
+    st.markdown("Responses to **FFT Q2**: Is there anything that would have made your experience better?")
 
     toggle = ui.switch(
         default_checked=False, label="Explain this page.", key="switch_dash"
