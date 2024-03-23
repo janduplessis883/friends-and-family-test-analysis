@@ -11,6 +11,7 @@ import time
 from openai import OpenAI
 import streamlit_shadcn_ui as ui
 import requests
+import ollama
 
 client = OpenAI()
 
@@ -168,7 +169,7 @@ if page not in  ['PCN Dashboard', 'About']:
 if page == "Surgery Dashboard":
     st.title(f"{selected_surgery}")
 
-    surgery_tab_selector = ui.tabs(options=['Surgery Rating', 'Surgery Responses', 'Feedback Word Count'], default_value='Surgery Rating', key="tab4")
+    surgery_tab_selector = ui.tabs(options=['Surgery Rating', 'Live Review Summary', 'Surgery Responses', 'Feedback Word Count'], default_value='Surgery Rating', key="tab4")
     
        
     if surgery_tab_selector == 'Surgery Rating':
@@ -228,6 +229,7 @@ if page == "Surgery Dashboard":
             
         except:
             st.info("No rating available for this date range.")
+
         st.write("---")
 
         order = [
@@ -299,8 +301,32 @@ if page == "Surgery Dashboard":
         plt.tight_layout()
         st.pyplot(plt)
 
+    elif surgery_tab_selector == 'Live Review Summary':
+           
+        # Surgery front page Summary stream ---------------------------------------------------
+        with st.container(height=300):
+            
+           
+            def summarize_gp_reviews(reviews):
+                messages = [
+                {
+                    'role': 'system',
+                    'content': "You are an expert in summarising GP Surgery reviews.",
+                },
+                {
+                    'role': 'user',
+                    'content': reviews,
+                },
+                ]
+                for chunk in ollama.chat('llama2', messages=messages, stream=True):
+                    st.write(chunk['message']['content'])
 
-        
+
+            # Call the function with the user messages
+            reviews = """
+            I am EXTREMELY frustrated with who I think are the pharmacist doctors. I get these annoying texts to submit my blood pressure reading. I know my blood pressure is high. I am working with a GP at Earls Court medical to get it under control. If I input a high number, I'm told I urgently need to make an appointment with my GP - which I have already done... because we're monitoring my blood pressure closely. Moreover, the survey timing seems random and often wrong: I was told I had two weeks to submit a reading (I have that in writing), but the survey expired after a week. Finally, I was supposed to be called by a pharmacist doctor to review my medication. I cleared time on my schedule for this and... nothing. Clearly, things aren't joined up and this is simply unacceptable. I am a patient and a person. I'm not a box that can be ticked once a text has been sent to my phone. This is no way to practice medicine. It's striking there are amazing people like [PERSON] and Dr [PERSON] and Dr [PERSON] at ECMC - and many of the receptionists are lovely too. But the surgery's AI/digital presence is dehumanising and so is the 'I' who is requesting blood pressure readings from me.
+            """
+            summarize_gp_reviews(reviews)
 
     elif surgery_tab_selector == 'Surgery Responses':
         cols = st.columns(2)
