@@ -779,7 +779,8 @@ elif page == "Feedback Classification":
     if toggle:
         st.markdown(
             """Responses to FFT Q1: Please tell us why you feel this way? This plot represents positive and negative response.  
-            1. **Bar Chart**:
+            
+1. **Bar Chart**:
 This bar chart illustrates the range of emotions captured in the FFT feedback, as categorized by a sentiment analysis model trained on the `go_emotions` dataset. Each bar represents one of the 27 emotion labels that the model can assign, showing how often each emotion was detected in the patient feedback.
 The **'neutral' category**, which has been assigned the most counts, includes instances where patients did not provide any textual feedback, defaulting to a 'neutral' classification. Other emotions, such as 'admiration' and 'approval', show varying lower counts, reflecting the variety of sentiments expressed by patients regarding their care experiences.
 
