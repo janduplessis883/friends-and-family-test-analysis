@@ -169,7 +169,7 @@ if page not in  ['PCN Dashboard', 'About']:
 if page == "Surgery Dashboard":
     st.title(f"{selected_surgery}")
 
-    surgery_tab_selector = ui.tabs(options=['Surgery Rating', 'Live Review Summary', 'Surgery Responses', 'Feedback Word Count'], default_value='Surgery Rating', key="tab4")
+    surgery_tab_selector = ui.tabs(options=['Surgery Rating', 'Surgery Responses', 'Feedback Word Count'], default_value='Surgery Rating', key="tab4")
     
        
     if surgery_tab_selector == 'Surgery Rating':
@@ -301,32 +301,7 @@ if page == "Surgery Dashboard":
         plt.tight_layout()
         st.pyplot(plt)
 
-    elif surgery_tab_selector == 'Live Review Summary':
-           
-        # Surgery front page Summary stream ---------------------------------------------------
-        with st.container(height=300):
-            
-           
-            def summarize_gp_reviews(reviews):
-                messages = [
-                {
-                    'role': 'system',
-                    'content': "You are an expert in summarising GP Surgery reviews.",
-                },
-                {
-                    'role': 'user',
-                    'content': reviews,
-                },
-                ]
-                for chunk in ollama.chat('llama2', messages=messages, stream=True):
-                    st.write(chunk['message']['content'])
-
-
-            # Call the function with the user messages
-            reviews = """
-            I am EXTREMELY frustrated with who I think are the pharmacist doctors. I get these annoying texts to submit my blood pressure reading. I know my blood pressure is high. I am working with a GP at Earls Court medical to get it under control. If I input a high number, I'm told I urgently need to make an appointment with my GP - which I have already done... because we're monitoring my blood pressure closely. Moreover, the survey timing seems random and often wrong: I was told I had two weeks to submit a reading (I have that in writing), but the survey expired after a week. Finally, I was supposed to be called by a pharmacist doctor to review my medication. I cleared time on my schedule for this and... nothing. Clearly, things aren't joined up and this is simply unacceptable. I am a patient and a person. I'm not a box that can be ticked once a text has been sent to my phone. This is no way to practice medicine. It's striking there are amazing people like [PERSON] and Dr [PERSON] and Dr [PERSON] at ECMC - and many of the receptionists are lovely too. But the surgery's AI/digital presence is dehumanising and so is the 'I' who is requesting blood pressure readings from me.
-            """
-            summarize_gp_reviews(reviews)
+   
 
     elif surgery_tab_selector == 'Surgery Responses':
         cols = st.columns(2)
@@ -706,89 +681,9 @@ elif page == "PCN Dashboard":
             plt.tight_layout()
             st.pyplot(plt)
             
-            st.markdown("---")
+    
             
-            st.subheader("Feedback Categories (PCN)")
             
-            label_counts = data["feedback_labels"].value_counts(
-                ascending=False
-            )  # Use ascending=True to match the order in your image
-
-            # Convert the Series to a DataFrame
-            label_counts_df = label_counts.reset_index()
-            label_counts_df.columns = ["Feedback Classification", "Counts"]
-
-            # Define the palette conditionally based on the category names
-            palette = [
-                "#aec867" if (label == "Overall Patient Satisfaction") else "#62899f"
-                for label in label_counts_df["Feedback Classification"]
-            ]
-
-            # Create a Seaborn bar plot
-            plt.figure(figsize=(10, 8))
-            ax = sns.barplot(
-                x="Counts", y="Feedback Classification", data=label_counts_df, palette=palette
-            )
-            ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-            ax.yaxis.grid(False)
-            ax.spines["top"].set_visible(False)
-            ax.spines["right"].set_visible(False)
-            ax.spines["left"].set_visible(True)
-            ax.spines["bottom"].set_visible(False)
-            # Adding titles and labels for clarity
-            plt.title("Counts of Feedback Classification")
-            plt.xlabel("Counts")
-            plt.ylabel("")
-            st.pyplot(plt)
-            
-            st.markdown('---')
-            
-            st.subheader("Improvement Suggestions (PCN)")
-            improvement_data = data[
-            (data["improvement_labels"] != "No Improvement Suggestion")
-            ]
-            # Calculate value counts
-            label_counts = improvement_data["improvement_labels"].value_counts(
-                ascending=False
-            )  # Use ascending=True to match the order in your image
-
-            # Convert the Series to a DataFrame
-            label_counts_df = label_counts.reset_index()
-            label_counts_df.columns = ["Improvement Labels", "Counts"]
-
-            # Define the palette conditionally based on the category names
-            palette = [
-                (
-                    "#d89254"
-                    if (
-                        label == "Overall Patient Satisfaction"
-                        or label == "No Improvement Suggestion"
-                    )
-                    else "#ae4f4d"
-                )
-                for label in label_counts_df["Improvement Labels"]
-            ]
-
-            # Create a Seaborn bar plot
-            plt.figure(figsize=(10, 8))
-            ax = sns.barplot(
-                x="Counts", y="Improvement Labels", data=label_counts_df, palette=palette
-            )
-
-            ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-            ax.yaxis.grid(False)
-
-            ax.spines["top"].set_visible(False)
-            ax.spines["right"].set_visible(False)
-            ax.spines["left"].set_visible(True)
-            ax.spines["bottom"].set_visible(False)
-            # Adding titles and labels for clarity
-            plt.title("Counts of Improvement Catergories")
-            plt.xlabel("Counts")
-            plt.ylabel("")
-
-        # Streamlit function to display matplotlib figures
-        st.pyplot(plt)
         
         
 # == Rating & Sentiment Analysis Correlation ======================================================================
