@@ -999,8 +999,7 @@ Below the chart is a multi-select field where you can choose to filter and revie
 
     # Filter the data based on the selected classifications
     filtered_classes = filtered_data[
-        filtered_data["feedback_labels"].isin(selected_ratings)
-    ]
+        filtered_data["feedback_labels"].isin(selected_ratings)]
 
     if not selected_ratings:
         ui.badges(
@@ -1010,15 +1009,19 @@ Below the chart is a multi-select field where you can choose to filter and revie
         )
     else:
         for rating in selected_ratings:
-            specific_class = filtered_classes[
-                filtered_classes["feedback_labels"] == rating
-            ]
+            specific_class = filtered_classes[filtered_classes["feedback_labels"] == rating]
             st.subheader(f"{rating.capitalize()} ({str(specific_class.shape[0])})")
-            for text in specific_class[
-                "free_text"
-            ]:  # Assuming 'free_text' is the column with the text you want to display
-                if str(text).lower() != "nan" and str(text).lower() != "neutral":
-                    st.write("- " + str(text))
+            for index, row in specific_class.iterrows(): 
+                text = row['free_text'] 
+                text = text.replace('[PERSON]', 'PERSON').replace('(','').replace(')','')
+                sentiment = row['sentiment']
+                if sentiment == 'positive' or sentiment == 'neutral':
+                    text_color = 'blue'
+                else:
+                    text_color = 'orange'
+                    
+                if str(text).lower() != "nan":
+                    st.markdown(f"- :{text_color}[{str(text)}] ")
 
 # == Word Cloud ==========================================================
 elif page == "Word Cloud":
@@ -1252,10 +1255,17 @@ The length of each bar signifies the count of feedback entries that fall into th
                 filtered_classes["improvement_labels"] == rating
             ]
             st.subheader(f"{str(rating).capitalize()} ({str(specific_class.shape[0])})")
-            for text in specific_class[
-                "do_better"
-            ]:  # Assuming 'free_text' is the column with the text you want to display
-                st.markdown(f"- {str(text)}")
+            for index, row in specific_class.iterrows(): 
+                text = row['do_better'] 
+                text = text.replace('[PERSON]', 'PERSON').replace('(','').replace(')','')
+                sentiment = row['sentiment']
+                if sentiment == 'positive' or sentiment == 'neutral':
+                    text_color = 'blue'
+                else:
+                    text_color = 'orange'
+                    
+                if str(text).lower() != "nan":
+                    st.markdown(f"- :{text_color}[{str(text)}] ")
 
 # == Generate ChatGPT Summaries ==========================================================
 elif page == "GPT-4 Summary":
