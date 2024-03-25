@@ -86,6 +86,8 @@ def sentiment_totals(data):
 
 def time_it(func):
     def wrapper(*args, **kwargs):
+        func_name = func.__name__
+        logger.info(f"Function '{func_name}' - started")
         start_time = time.time()
         result = func(*args, **kwargs)
         end_time = time.time()
