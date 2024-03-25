@@ -388,6 +388,8 @@ def clean_data(df):
     cleaned_df.loc[cleaned_df["do_better_len"] < 6, "improvement_labels"] = np.nan
     cleaned_df.loc[cleaned_df["free_text_len"] < 3, "free_text"] = np.nan
     cleaned_df.loc[cleaned_df["free_text_len"] < 3, "feedback_labels"] = np.nan
+    cleaned_df.loc[cleaned_df["free_text_len"] < 3, "sentiment"] = 'neutral'
+    cleaned_df.loc[cleaned_df["free_text_len"] < 3, "sentiment_score"] = 0
 
     return cleaned_df
 
