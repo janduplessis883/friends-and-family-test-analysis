@@ -36,7 +36,7 @@ def load_google_sheet():
     data = sh.gsheet_to_df()
     data.columns = ["time", "rating", "free_text", "do_better", "surgery"]
     data["time"] = pd.to_datetime(data["time"], format="%d/%m/%Y %H:%M:%S")
-
+    data.sort_values(by='time', inplace=True)
     return data
 
 
@@ -409,8 +409,8 @@ def clean_data(df):
     cleaned_df = df.copy()
 
     # Apply the conditions and update the DataFrame
-    cleaned_df.loc[cleaned_df['do_better_len'] < 5, 'do_better'] = np.nan
-    cleaned_df.loc[cleaned_df['do_better_len'] < 5, 'improvement_labels'] = np.nan
+    cleaned_df.loc[cleaned_df['do_better_len'] < 6, 'do_better'] = np.nan
+    cleaned_df.loc[cleaned_df['do_better_len'] < 6, 'improvement_labels'] = np.nan
     cleaned_df.loc[cleaned_df['free_text_len'] < 3, 'free_text'] = np.nan
     cleaned_df.loc[cleaned_df['free_text_len'] < 3, 'feedback_labels'] = np.nan
 

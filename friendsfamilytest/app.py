@@ -1087,7 +1087,7 @@ The length of each bar signifies the count of feedback entries that fall into th
             for text in specific_class[
                 "do_better"
             ]:  # Assuming 'free_text' is the column with the text you want to display
-                st.write("- " + str(text))
+                st.markdown(f"- {str(text)}")
 
 # == Generate ChatGPT Summaries ==========================================================
 elif page == "GPT-4 Summary":
