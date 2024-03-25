@@ -4,14 +4,13 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from wordcloud import WordCloud
 import seaborn as sns
-from datetime import datetime
+from datetime import datetime, timedelta
 from datetime import date
 from matplotlib.patches import Patch
 import time
 from openai import OpenAI
 import streamlit_shadcn_ui as ui
 import requests
-import ollama
 
 client = OpenAI()
 
@@ -878,35 +877,66 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 
     st.markdown("---")
     st.markdown(f"### FFT Feedback with a `NEGATIVE` Sentiment Score.")
-    neg = filtered_data[filtered_data["sentiment"] == "negative"]
 
-    fig, ax = plt.subplots(figsize=(12, 3))
-    sns.histplot(neg["sentiment_score"], color="#ae4f4d", kde=True)
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-    ax.spines["left"].set_visible(False)
-    plt.xlabel("Sentiment Score")
-    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-    plt.tight_layout()
-    st.pyplot(plt)
-    st.write("")
-    st.markdown(f"Showing **{neg.shape[0]}** responses.")
-    with st.container(height=500, border=True):
-        for _, row in neg.iterrows():
-            free_text = row["free_text"]
-            do_better = row["do_better"]
-            # time_ = row["time"]
-            rating = row["rating"]
-            score = row["sentiment_score"]
-            sentiment = row["sentiment"]
+    toggle = ui.switch(
+        default_checked=False, label="Show last 30 days only.", key="switch_dash_neg"
+    )
 
-            with st.chat_message("user"):
-                st.markdown(f"**{rating}** `{sentiment} {score}`")
-                if str(free_text) not in ["nan"]:
-                    st.markdown("🗣️ " + str(free_text))
-                    if str(do_better) not in ["nan"]:
-                        st.markdown("💡 " + str(do_better))
+    # React to the toggle's state
+    if toggle:
+        # Convert 'time' column to datetime
+        negative = filtered_data.reset_index("time")
+        negative["time"] = pd.to_datetime(negative["time"])
+        neg = negative[negative["sentiment"] == "negative"]
+        neg["time"] = pd.to_datetime(neg["time"])
 
+        # Calculate the date 30 days ago from today
+        latest_date = datetime.now().date()
+        thirty_days_ago = latest_date - timedelta(days=30)
+
+        # Filter the DataFrame based on the 'time' column
+        neg = neg[neg["time"].dt.date > thirty_days_ago]
+
+    else:
+        negative = filtered_data.reset_index("time")
+        negative["time"] = pd.to_datetime(negative["time"])
+        neg = negative[negative["sentiment"] == "negative"]
+
+    if neg.shape[0] > 0:
+        fig, ax = plt.subplots(figsize=(12, 3))
+        sns.histplot(neg["sentiment_score"], color="#ae4f4d", kde=True)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.spines["left"].set_visible(False)
+        plt.xlabel("Sentiment Score")
+        ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        plt.tight_layout()
+        st.pyplot(plt)
+        st.write("")
+        st.markdown(f"Showing **{neg.shape[0]}** responses.")
+        with st.container(height=500, border=True):
+            for _, row in neg.iterrows():
+                free_text = row["free_text"]
+                do_better = row["do_better"]
+                time_ = row["time"]
+                rating = row["rating"]
+                score = row["sentiment_score"]
+                sentiment = row["sentiment"]
+
+                with st.chat_message("user"):
+                    st.markdown(f"**{rating}** `{time_}`")
+
+                    if str(free_text) not in ["nan"]:
+                        st.markdown("🗣️ " + str(free_text))
+                        if str(do_better) not in ["nan"]:
+                            st.markdown("💡 " + str(do_better))
+                    st.markdown(f"`{sentiment} {score}`")
+    else:
+        ui.badges(
+            badge_list=[("Nothing to display.", "outline")],
+            class_name="flex gap-2",
+            key="badges1_waring_sentiment",
+        )
 # == Feedback Classification ========================================================================================
 elif page == "Feedback Classification":
     st.title("Feedback Classification")
