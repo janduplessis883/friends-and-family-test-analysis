@@ -402,7 +402,7 @@ if page == "Surgery Dashboard":
         ax[0].set_title(
             "Distribution of Free Text Feedback Word Count"
         )  # Optional title for the first plot
-        ax[0].set_ylim(0, 300)
+   
 
         # Plot the second histogram on the second subplot
         sns.histplot(filtered_data["do_better_len"], ax=ax[1], color="#985e5b", bins=25)
@@ -414,7 +414,7 @@ if page == "Surgery Dashboard":
         ax[1].set_title(
             "Distribution of Imporvement Suggestion Word Count"
         )  # Optional title for the second plot
-        ax[1].set_ylim(0, 300)
+      
 
         # Show the plots next to each other
         plt.tight_layout()
