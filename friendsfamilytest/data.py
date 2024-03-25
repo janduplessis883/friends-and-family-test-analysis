@@ -171,53 +171,6 @@ def anonymize_names_with_transformers(text):
     return anonymized_text
 
 
-@time_it
-def textblob_sentiment(data):
-    data["free_text"] = data["free_text"].fillna("").astype(str)
-
-    def analyze_sentiment(text):
-        if text:
-            sentiment = TextBlob(text).sentiment
-            return pd.Series(
-                [sentiment.polarity, sentiment.subjectivity],
-                index=["polarity", "subjectivity"],
-            )
-        else:
-            return pd.Series([0, 0], index=["polarity", "subjectivity"])
-
-    sentiments = data["free_text"].apply(analyze_sentiment)
-    data = pd.concat([data, sentiments], axis=1)
-
-    # Check if the number of rows matches
-    if len(sentiments) != len(data):
-        raise ValueError("Mismatched row count between original data and sentiments")
-
-    # Initialize SentimentIntensityAnalyzer
-    sia = SentimentIntensityAnalyzer()
-
-    # Define the function to be applied to each row
-    def get_sentiment(row):
-        # Analyze sentiment using SentimentIntensityAnalyzer
-        score = sia.polarity_scores(row["free_text"])
-
-        # Assign the scores to the row
-        for key in ["neg", "neu", "pos", "compound"]:
-            row[key] = score[key]
-
-        # Determine the overall sentiment based on the scores
-        row["sentiment"] = "neutral"  # Default to neutral
-        if score["neg"] > score["pos"]:
-            row["sentiment"] = "negative"
-        elif score["pos"] > score["neg"]:
-            row["sentiment"] = "positive"
-
-        return row
-
-    # Apply the function to each row
-    data = data.apply(get_sentiment, axis=1)
-
-    return data
-
 
 # Zer0-shot classification - do_better column
 def batch_generator(data, column_name, batch_size):
@@ -398,22 +351,6 @@ def improvement_classification(data, batch_size=16):
     data["improvement_labels"] = improvement_labels
     return data
 
-
-@time_it
-def gpt3_improvement_classification(df):
-    do_better_list = df["do_better"].tolist()
-    gpt3_labels = []
-
-    for input in do_better_list:
-        if pd.isna(input):
-            gpt3_labels.append("")  # Append an empty string for NaN values
-        else:
-            # gpt3_classification = openai_classify_string(input)
-            gpt3_labels.append("gpt3_classification")  # Append classification label
-
-    df["improvement_gpt3"] = gpt3_labels
-
-    return df
 
 
 @time_it
