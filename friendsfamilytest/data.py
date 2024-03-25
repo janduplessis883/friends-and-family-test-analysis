@@ -118,8 +118,9 @@ def sentiment_analysis(data):
     # Iterate over DataFrame rows and classify text
     for index, row in data.iterrows():
         print(index)
-        sentence = row["free_text"]
-        sentence = str(sentence)
+        freetext = row["free_text"]
+        dobetter = row['do_better']
+        sentence = str(freetext) + ' ' + str(dobetter)
         sentence = sentence[:513]
         if pd.isna(sentence) or sentence == "":
             sentiment.append("neutral")
@@ -371,26 +372,12 @@ def add_rating_score(data):
 
 @time_it
 def clean_data(df):
-    """
-    Cleans the input DataFrame based on specific conditions.
-
-    Parameters:
-    df (pd.DataFrame): The input DataFrame to be cleaned.
-
-    Returns:
-    pd.DataFrame: The cleaned DataFrame.
-    """
     # Copy the DataFrame to avoid modifying the original data
     cleaned_df = df.copy()
-
     # Apply the conditions and update the DataFrame
     cleaned_df.loc[cleaned_df["do_better_len"] < 6, "do_better"] = np.nan
-    cleaned_df.loc[cleaned_df["do_better_len"] < 6, "improvement_labels"] = np.nan
     cleaned_df.loc[cleaned_df["free_text_len"] < 3, "free_text"] = np.nan
-    cleaned_df.loc[cleaned_df["free_text_len"] < 3, "feedback_labels"] = np.nan
-    cleaned_df.loc[cleaned_df["free_text_len"] < 3, "sentiment"] = 'neutral'
-    cleaned_df.loc[cleaned_df["free_text_len"] < 3, "sentiment_score"] = 0
-
+    
     return cleaned_df
 
 
@@ -430,18 +417,19 @@ if __name__ == "__main__":
     if data.shape[0] != 0:
         data = word_count(data)  # word count
         data = add_rating_score(data)
-
+        
+        data = clean_data(data)
+        
         logger.info("🫥 Annonymize free_text and do_better")
         data["free_text"] = data["free_text"].apply(anonymize_names_with_transformers)
         data["do_better"] = data["do_better"].apply(anonymize_names_with_transformers)
         data = feedback_classification(data, batch_size=16)
+        
         data = sentiment_analysis(data)
+        
         data = improvement_classification(data, batch_size=16)
         logger.info("Data pre-processing completed")
-
-        logger.info("🧽 Clean Data - ommit free_text < 3 and do_better < 5")
-        data = clean_data(data)
-
+        
         logger.info("💾 Concat Dataframes to data.csv successfully")
         concat_save_final_df(processed_data, data)
 
