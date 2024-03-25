@@ -10,9 +10,6 @@ from loguru import logger
 init(autoreset=True)
 
 
-
-
-
 def clean_and_replace(text):
     # Convert to lowercase and strip whitespace
     cleaned_text = str(text).strip()
@@ -84,9 +81,6 @@ def sentiment_totals(data):
     ]
 
 
-
-
-
 # = Decorators =================================================================
 
 
@@ -99,6 +93,7 @@ def time_it(func):
         func_name = func.__name__
         logger.info(f"Function '{func_name}' ⚡️{elapsed_time:.6f} sec")
         return result
+
     return wrapper
 
 

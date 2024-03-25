@@ -13,8 +13,6 @@ def stream_data():
         yield word + " "
         time.sleep(0.002)
 
-
-
     for word in _LOREM_IPSUM.split(" "):
         yield word + " "
         time.sleep(0.02)

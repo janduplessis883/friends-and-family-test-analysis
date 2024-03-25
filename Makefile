@@ -35,6 +35,7 @@ repeat:
 
 git_merge:
 	$(MAKE) clean
+	$(MAKE) lint
 	@python friendsfamilytest/auto_git/git_merge.py
 
 git_push:
