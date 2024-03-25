@@ -458,7 +458,9 @@ elif page == "PCN Dashboard":
             # Create the figure and the bar plot
             fig, ax = plt.subplots(figsize=(12, 5))
             sns.barplot(
-                data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#aabd3b"
+                data=monthly_count_filtered_df, x="Month", y="Monthly Count", color="#aabd3b",
+                edgecolor='black', 
+                linewidth=0.5       
             )
 
             # Set grid, spines and annotations as before
@@ -734,8 +736,6 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 
     st.markdown("---")
 
-    
-
     # Resampling the data by month instead of week
     # Ensure the 'time' column is in datetime format and set it as the DataFrame index
     filtered_data['time'] = pd.to_datetime(filtered_data['time'])
@@ -766,7 +766,36 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     plt.tight_layout()
     st.pyplot(plt)
 
+    st.markdown("---")
+    st.markdown(f"### FFT Feedback with a `NEGATIVE` Sentiment Score.")
+    neg = filtered_data[filtered_data['sentiment'] == 'negative']
+    
+    fig, ax = plt.subplots(figsize=(12, 3))
+    sns.histplot(neg['sentiment_score'], color='#ae4f4d', kde=True)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+    plt.xlabel('Sentiment Score')
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    plt.tight_layout()
+    st.pyplot(plt)
+    st.write("")
+    st.markdown(f"Showing **{neg.shape[0]}** responses.")
+    with st.container(height=500, border=True):
+            for _, row in neg.iterrows():
+                free_text = row["free_text"]
+                do_better = row["do_better"]
+                #time_ = row["time"]
+                rating = row["rating"]
+                score = row['sentiment_score']
+                sentiment = row['sentiment']
 
+                with st.chat_message("user"):
+                    st.markdown(f"**{rating}** `{sentiment} {score}`")
+                    if str(free_text) not in ["nan"]:
+                        st.markdown("🗣️ " + str(free_text))
+                        if str(do_better) not in ["nan"]:
+                            st.markdown("💡 " + str(do_better))
 
 # == Feedback Classification ========================================================================================
 elif page == "Feedback Classification":
