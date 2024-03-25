@@ -621,7 +621,7 @@ elif page == "PCN Dashboard":
         # Plotting
         fig, ax = plt.subplots(figsize=(12, 10))
         for column in data_pivot_filled.columns:
-            plt.plot(data_pivot_filled.index, data_pivot_filled[column], label=column)
+            plt.plot(data_pivot_filled.index, data_pivot_filled[column], label=column, linewidth=2)
 
         ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
         ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
