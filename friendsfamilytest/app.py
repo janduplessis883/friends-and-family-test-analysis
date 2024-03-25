@@ -629,7 +629,7 @@ elif page == "PCN Dashboard":
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
         ax.spines["left"].set_visible(False)
-        plt.title('Cumulative Entries Over Time for Each Surgery')
+        plt.title('Cumulative Responses Over Time for Each Surgery')
         plt.xlabel('Time')
         plt.ylabel('Cumulative Entries')
         plt.legend(title='Surgery', bbox_to_anchor=(1.05, 1), loc='upper left')
