@@ -57,5 +57,4 @@ loguru
 schedule
 wordcloud
 requests
-ollama
 

@@ -10,7 +10,8 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer, pipe
 import pandas as pd
 from textblob import TextBlob
 from nltk.sentiment import SentimentIntensityAnalyzer
-import torch
+import string
+import numpy as np
 
 from friendsfamilytest.params import *
 from friendsfamilytest.utils import *
@@ -395,6 +396,16 @@ def load_local_data():
     df["time"] = pd.to_datetime(df["time"], dayfirst=True)
     return df
 
+@time_it
+def remove_special_characters(sentence):
+    # Define the characters to remove
+    special_chars = ['[', ']', '(', ')', '\n', '-']
+
+    # Remove each special character
+    for char in special_chars:
+        sentence = sentence.replace(char, '')
+
+    return sentence
 
 if __name__ == "__main__":
 
@@ -423,10 +434,13 @@ if __name__ == "__main__":
         logger.info("🫥 Annonymize free_text and do_better")
         data["free_text"] = data["free_text"].apply(anonymize_names_with_transformers)
         data["do_better"] = data["do_better"].apply(anonymize_names_with_transformers)
-        data = feedback_classification(data, batch_size=16)
+        
+        data['free_text'] = data['free_text'].apply(lambda x: remove_special_characters(str(x)) if not pd.isna(x) else np.nan)
+        data['do_better'] = data['do_better'].apply(lambda x: remove_special_characters(str(x)) if not pd.isna(x) else np.nan)
         
         data = sentiment_analysis(data)
         
+        data = feedback_classification(data, batch_size=16)
         data = improvement_classification(data, batch_size=16)
         logger.info("Data pre-processing completed")
         

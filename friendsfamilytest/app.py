@@ -1257,7 +1257,7 @@ The length of each bar signifies the count of feedback entries that fall into th
             st.subheader(f"{str(rating).capitalize()} ({str(specific_class.shape[0])})")
             for index, row in specific_class.iterrows(): 
                 text = row['do_better'] 
-                text = text.replace('[PERSON]', 'PERSON').replace('(','').replace(')','')
+                text = text.replace('[PERSON]', 'PERSON')
                 sentiment = row['sentiment']
                 if sentiment == 'positive' or sentiment == 'neutral':
                     text_color = 'blue'
