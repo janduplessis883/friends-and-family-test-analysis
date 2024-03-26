@@ -396,7 +396,7 @@ def load_local_data():
     df["time"] = pd.to_datetime(df["time"], dayfirst=True)
     return df
 
-@time_it
+
 def remove_special_characters(sentence):
     # Define the characters to remove
     special_chars = ['[', ']', '(', ')', '\n', '-']
@@ -428,13 +428,13 @@ if __name__ == "__main__":
     if data.shape[0] != 0:
         data = word_count(data)  # word count
         data = add_rating_score(data)
-        
+        logger.info("🧽 Claen Data")
         data = clean_data(data)
         
         logger.info("🫥 Annonymize free_text and do_better")
         data["free_text"] = data["free_text"].apply(anonymize_names_with_transformers)
         data["do_better"] = data["do_better"].apply(anonymize_names_with_transformers)
-        
+        logger.info("👓 Remove special characters")
         data['free_text'] = data['free_text'].apply(lambda x: remove_special_characters(str(x)) if not pd.isna(x) else np.nan)
         data['do_better'] = data['do_better'].apply(lambda x: remove_special_characters(str(x)) if not pd.isna(x) else np.nan)
         
