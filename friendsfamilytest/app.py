@@ -549,7 +549,7 @@ elif page == "PCN Dashboard":
             ordered_percentage_pivot_data = percentage_pivot_data[column_order]
 
             # Create the heatmap with the ordered columns
-            plt.figure(figsize=(12, 10))
+            plt.figure(figsize=(12, 6))
             ordered_percentage_heatmap = sns.heatmap(
                 ordered_percentage_pivot_data,
                 annot=True,
@@ -569,100 +569,165 @@ elif page == "PCN Dashboard":
 
             st.markdown("---")
 
+
     elif tab_selector == "Sentiment Analysis":
-        with st.container(border=False):
-            labels = "Negative", "Neutral", "Positive"
+        # Assuming 'data' is already defined and processed
+        # Define labels and colors outside since they are the same for both plots
+        labels = ["Negative", "Neutral", "Positive"]
+        colors = ["#ae4f4d", "#eeeadb", "#7495a8"]  # Order adjusted to match labels
+        explode = (0, 0, 0)  # No slice exploded
 
-            sentiment_totals = data.groupby("sentiment")["sentiment_score"].sum()
-            colors = [
-                (
-                    "#7495a8"
-                    if sentiment == "positive"
-                    else "#ae4f4d" if sentiment == "negative" else "#eeeadb"
-                )
-                for sentiment in sentiment_totals.index
-            ]
-            explode = (0, 0, 0)  # 'explode' the 1st slice (Positive)
+        # Create a subplot with 1 row and 2 columns
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
-            # Plot
-            fig, ax = plt.subplots(figsize=(12, 5))
-            ax.pie(
-                sentiment_totals,
-                explode=explode,
-                labels=labels,
-                colors=colors,
-                autopct="%1.1f%%",
-                startangle=140,
-            )
-            ax.axis(
-                "equal"
-            )  # Equal aspect ratio ensures that pie is drawn as a circle.
+        # First pie chart - Cum Sentiment - Feedback
+        sentiment_totals_feedback = data.groupby("sentiment_free_text")["sentiment_score_free_text"].sum()
+        ax1.pie(
+            sentiment_totals_feedback,
+            explode=explode,
+            labels=labels,
+            colors=colors,
+            autopct="%1.1f%%",
+            startangle=140
+        )
+        ax1.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle.
+        centre_circle = plt.Circle((0, 0), 0.50, fc="white")
+        ax1.add_artist(centre_circle)
+        ax1.set_title("Cum Sentiment - Feedback")
 
-            # Draw a circle at the center of pie to make it look like a donut
-            centre_circle = plt.Circle((0, 0), 0.50, fc="white")
-            fig.gca().add_artist(centre_circle)
-            plt.title("Cumulative Sentiment - Brompton Health PCN")
-            st.pyplot(fig)
-            st.markdown("---")
-            data["time"] = pd.to_datetime(data["time"])
-            data.set_index("time", inplace=True)
+        # Second pie chart - Cum Sentiment - Improvement Suggestions
+        sentiment_totals_improvement = data.groupby("sentiment_do_better")["sentiment_score_do_better"].sum()
+        ax2.pie(
+            sentiment_totals_improvement,
+            explode=explode,
+            labels=labels,
+            colors=colors,
+            autopct="%1.1f%%",
+            startangle=140
+        )
+        ax2.axis("equal")
+        centre_circle = plt.Circle((0, 0), 0.50, fc="white")
+        ax2.add_artist(centre_circle)
+        ax2.set_title("Cum Sentiment - Improvement Sugg")
 
-            # Assuming filtered_data is your DataFrame and 'sentiment_score' is the column with the scores
-            # Also assuming that 'time' column has been converted to datetime and set as the index
+        # Display the subplot
+        st.pyplot(fig)
+            
+        st.markdown("---")
+        
+        data["time"] = pd.to_datetime(data["time"])
+        data.set_index("time", inplace=True)
 
-            # Calculate the standard deviation for each month and sentiment
-            monthly_sentiment_std = (
-                data.groupby("sentiment")
-                .resample("M")["sentiment_score"]
-                .std()
-                .unstack(level=0)
-            )
+        # Assuming filtered_data is your DataFrame and 'sentiment_score' is the column with the scores
+        # Also assuming that 'time' column has been converted to datetime and set as the index
 
-            # Fill NaN values
-            monthly_sentiment_std.fillna(0, inplace=True)
+        # Calculate the standard deviation for each month and sentiment
+        monthly_sentiment_std = (
+            data.groupby("sentiment_free_text")
+            .resample("M")["sentiment_score_free_text"]
+            .std()
+            .unstack(level=0)
+        )
 
-            # Calculate the mean sentiment scores for each month and sentiment, if not already done
-            monthly_sentiment_means_adjusted = (
-                data.groupby("sentiment")
-                .resample("M")["sentiment_score"]
-                .mean()
-                .unstack(level=0)
-            )
+        # Fill NaN values
+        monthly_sentiment_std.fillna(0, inplace=True)
 
-            # Fill NaN values for the means
-            monthly_sentiment_means_adjusted.fillna(0, inplace=True)
+        # Calculate the mean sentiment scores for each month and sentiment, if not already done
+        monthly_sentiment_means_adjusted = (
+            data.groupby("sentiment_free_text")
+            .resample("M")["sentiment_score_free_text"]
+            .mean()
+            .unstack(level=0)
+        )
 
-            # Define colors for each sentiment
-            colors = {"negative": "#ae4f4d", "neutral": "#edeadc", "positive": "#7b94a6"}
+        # Fill NaN values for the means
+        monthly_sentiment_means_adjusted.fillna(0, inplace=True)
 
-            # Creating the plot for monthly sentiment scores
-            fig, ax = plt.subplots(figsize=(12, 6))
+        # Define colors for each sentiment
+        colors = {"negative": "#ae4f4d", "neutral": "#edeadc", "positive": "#7b94a6"}
 
-            # Plot each sentiment mean with standard deviation as shaded area
-            for sentiment in monthly_sentiment_means_adjusted.columns:
-                # Plot the mean sentiment scores
-                ax.plot(monthly_sentiment_means_adjusted.index, monthly_sentiment_means_adjusted[sentiment],
-                        label=sentiment.capitalize(), marker='o', color=colors[sentiment], linewidth=2)
-                
-                # Add the standard deviation with a shaded area
-                ax.fill_between(monthly_sentiment_means_adjusted.index,
-                                monthly_sentiment_means_adjusted[sentiment] - monthly_sentiment_std[sentiment],
-                                monthly_sentiment_means_adjusted[sentiment] + monthly_sentiment_std[sentiment],
-                                color=colors[sentiment], alpha=0.2)
+        # Creating the plot for monthly sentiment scores
+        fig, ax = plt.subplots(figsize=(12, 5))
 
-            ax.spines["top"].set_visible(False)
-            ax.spines["right"].set_visible(False)
-            ax.spines["left"].set_visible(False)
-            ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-            ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-            plt.title("Monthly Sentiment Score Averages with Standard Deviation", fontsize=16)
-            plt.xlabel("Month", fontsize=12)
-            plt.ylabel("Average Sentiment Score", fontsize=12)
-            plt.legend(title="Sentiment")
-            plt.tight_layout()
+        # Plot each sentiment mean with standard deviation as shaded area
+        for sentiment in monthly_sentiment_means_adjusted.columns:
+            # Plot the mean sentiment scores
+            ax.plot(monthly_sentiment_means_adjusted.index, monthly_sentiment_means_adjusted[sentiment],
+                    label=sentiment.capitalize(), marker='o', color=colors[sentiment], linewidth=2)
+            
+            # Add the standard deviation with a shaded area
+            ax.fill_between(monthly_sentiment_means_adjusted.index,
+                            monthly_sentiment_means_adjusted[sentiment] - monthly_sentiment_std[sentiment],
+                            monthly_sentiment_means_adjusted[sentiment] + monthly_sentiment_std[sentiment],
+                            color=colors[sentiment], alpha=0.2)
 
-            # Show the plot (or use st.pyplot(plt) if you are using Streamlit)
-            st.pyplot(plt)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.spines["left"].set_visible(False)
+        ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        plt.title("Monthly Sentiment Score Averages with Standard Deviation - Feedback", fontsize=16)
+        plt.xlabel("Month", fontsize=12)
+        plt.ylabel("Average Sentiment Score", fontsize=12)
+        plt.legend(title="Sentiment")
+        plt.tight_layout()
+
+        # Show the plot (or use st.pyplot(plt) if you are using Streamlit)
+        st.pyplot(plt)
+        st.markdown("---")
+        
+        monthly_sentiment_std = (
+            data.groupby("sentiment_do_better")
+            .resample("M")["sentiment_score_do_better"]
+            .std()
+            .unstack(level=0)
+        )
+
+        # Fill NaN values
+        monthly_sentiment_std.fillna(0, inplace=True)
+
+        # Calculate the mean sentiment scores for each month and sentiment, if not already done
+        monthly_sentiment_means_adjusted = (
+            data.groupby("sentiment_do_better")
+            .resample("M")["sentiment_score_do_better"]
+            .mean()
+            .unstack(level=0)
+        )
+
+        # Fill NaN values for the means
+        monthly_sentiment_means_adjusted.fillna(0, inplace=True)
+
+        # Define colors for each sentiment
+        colors = {"negative": "#ae4f4d", "neutral": "#edeadc", "positive": "#7b94a6"}
+
+        # Creating the plot for monthly sentiment scores
+        fig, ax = plt.subplots(figsize=(12, 5))
+
+        # Plot each sentiment mean with standard deviation as shaded area
+        for sentiment in monthly_sentiment_means_adjusted.columns:
+            # Plot the mean sentiment scores
+            ax.plot(monthly_sentiment_means_adjusted.index, monthly_sentiment_means_adjusted[sentiment],
+                    label=sentiment.capitalize(), marker='o', color=colors[sentiment], linewidth=2)
+            
+            # Add the standard deviation with a shaded area
+            ax.fill_between(monthly_sentiment_means_adjusted.index,
+                            monthly_sentiment_means_adjusted[sentiment] - monthly_sentiment_std[sentiment],
+                            monthly_sentiment_means_adjusted[sentiment] + monthly_sentiment_std[sentiment],
+                            color=colors[sentiment], alpha=0.2)
+
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.spines["left"].set_visible(False)
+        ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        plt.title("Monthly Sentiment Score Averages with Standard Deviation - Improvement Sugg.", fontsize=16)
+        plt.xlabel("Month", fontsize=12)
+        plt.ylabel("Average Sentiment Score", fontsize=12)
+        plt.legend(title="Sentiment")
+        plt.tight_layout()
+
+        # Show the plot (or use st.pyplot(plt) if you are using Streamlit)
+        st.pyplot(plt)
 
     elif tab_selector == "Surgery Responses":
         with st.container(border=False):
@@ -786,7 +851,26 @@ elif page == "PCN Dashboard":
             plt.tight_layout()
             st.pyplot(plt)
 
+            st.markdown("---")
+            
+            fig, ax = plt.subplots(figsize=(12, 5))
+            sns.countplot(data=data, x='rating_score', color="#e69136")
 
+            # Get the current Matplotlib figure
+            ax.spines["top"].set_visible(False)
+            ax.spines["right"].set_visible(False)
+            ax.spines["left"].set_visible(False)
+            ax.xaxis.grid(False)
+            ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+            plt.title("Rating Score Count")
+            plt.xlabel("Rating")
+            plt.ylabel("Count")
+            plt.tight_layout()
+
+            # Display the figure in Streamlit
+            st.pyplot(fig)
+            
+            
 # == Rating & Sentiment Analysis Correlation ======================================================================
 elif page == "Sentiment Analysis":
 
@@ -808,49 +892,64 @@ Similar to the negative sentiment histogram, this one represents the distributio
 4. **View Patient Feedback (Multi-Select Input)**:
 Select Patient feedback to review, this page only displays feedback that on Sentiment Analysis scored **NEGATIVE > Selected Value (using slider)**, indicating negative feedback despite rating given by the patient. It is very important to review feedback with a high NEG sentiment analysis. In this section both feedback and Improvement Suggestions are displayed to review them in context, together with the automated category assigned by our machine learning model."""
         )
+    try:    
+        # Assuming 'data' is already defined and processed
+        # Define labels and colors outside since they are the same for both plots
+        labels = ["Negative", "Neutral", "Positive"]
+        colors = ["#ae4f4d", "#eeeadb", "#7495a8"]  # Order adjusted to match labels
+        explode = (0, 0, 0)  # No slice exploded
 
-    # Data for plotting
-    labels = "Negative", "Neutral", "Positive"
+        # Create a subplot with 1 row and 2 columns
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
-    sentiment_totals = filtered_data.groupby("sentiment")["sentiment_score"].sum()
-    colors = [
-        (
-            "#7495a8"
-            if sentiment == "positive"
-            else "#ae4f4d" if sentiment == "negative" else "#eeeadb"
+        # First pie chart - Cum Sentiment - Feedback
+        sentiment_totals_feedback = filtered_data.groupby("sentiment_free_text")["sentiment_score_free_text"].sum()
+        ax1.pie(
+            sentiment_totals_feedback,
+            explode=explode,
+            labels=labels,
+            colors=colors,
+            autopct="%1.1f%%",
+            startangle=140
         )
-        for sentiment in sentiment_totals.index
-    ]
-    explode = (0, 0, 0)  # 'explode' the 1st slice (Positive)
+        ax1.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle.
+        centre_circle = plt.Circle((0, 0), 0.50, fc="white")
+        ax1.add_artist(centre_circle)
+        ax1.set_title("Cum Sentiment - Feedback")
 
-    # Plot
-    fig, ax = plt.subplots(figsize=(12, 5))
-    ax.pie(
-        sentiment_totals,
-        explode=explode,
-        labels=labels,
-        colors=colors,
-        autopct="%1.1f%%",
-        startangle=140,
-    )
-    ax.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle.
+        # Second pie chart - Cum Sentiment - Improvement Suggestions
+        sentiment_totals_improvement = filtered_data.groupby("sentiment_do_better")["sentiment_score_do_better"].sum()
+        ax2.pie(
+            sentiment_totals_improvement,
+            explode=explode,
+            labels=labels,
+            colors=colors,
+            autopct="%1.1f%%",
+            startangle=140
+        )
+        ax2.axis("equal")
+        centre_circle = plt.Circle((0, 0), 0.50, fc="white")
+        ax2.add_artist(centre_circle)
+        ax2.set_title("Cum Sentiment - Improvement Sugg")
 
-    # Draw a circle at the center of pie to make it look like a donut
-    centre_circle = plt.Circle((0, 0), 0.50, fc="white")
-    fig.gca().add_artist(centre_circle)
-    st.pyplot(fig)
-
+        # Display the subplot
+        st.pyplot(fig)
+        
+    except ValueError:
+        ui.badges(badge_list=[("Not able to display Cumm Sentiment Totals.", "outline")], class_name="flex gap-2", key="badges1_waring_warning",) 
+                
     st.markdown("---")
-
+    
     filtered_data["time"] = pd.to_datetime(filtered_data["time"])
     filtered_data.set_index("time", inplace=True)
 
+    # Assuming filtered_data is your DataFrame and 'sentiment_score' is the column with the scores
     # Also assuming that 'time' column has been converted to datetime and set as the index
 
     # Calculate the standard deviation for each month and sentiment
     monthly_sentiment_std = (
-        filtered_data.groupby("sentiment")
-        .resample("M")["sentiment_score"]
+        filtered_data.groupby("sentiment_free_text")
+        .resample("M")["sentiment_score_free_text"]
         .std()
         .unstack(level=0)
     )
@@ -860,8 +959,8 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 
     # Calculate the mean sentiment scores for each month and sentiment, if not already done
     monthly_sentiment_means_adjusted = (
-        filtered_data.groupby("sentiment")
-        .resample("M")["sentiment_score"]
+        filtered_data.groupby("sentiment_free_text")
+        .resample("M")["sentiment_score_free_text"]
         .mean()
         .unstack(level=0)
     )
@@ -873,7 +972,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     colors = {"negative": "#ae4f4d", "neutral": "#edeadc", "positive": "#7b94a6"}
 
     # Creating the plot for monthly sentiment scores
-    fig, ax = plt.subplots(figsize=(12, 6))
+    fig, ax = plt.subplots(figsize=(12, 5))
 
     # Plot each sentiment mean with standard deviation as shaded area
     for sentiment in monthly_sentiment_means_adjusted.columns:
@@ -892,7 +991,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
     ax.spines["left"].set_visible(False)
     ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-    plt.title("Monthly Sentiment Score Averages with Standard Deviation", fontsize=16)
+    plt.title("Monthly Sentiment Score Averages with Standard Deviation - Feedback", fontsize=16)
     plt.xlabel("Month", fontsize=12)
     plt.ylabel("Average Sentiment Score", fontsize=12)
     plt.legend(title="Sentiment")
@@ -900,20 +999,75 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 
     # Show the plot (or use st.pyplot(plt) if you are using Streamlit)
     st.pyplot(plt)
-
     st.markdown("---")
-    st.markdown(f"### FFT Feedback with a `NEGATIVE` Sentiment Score.")
-
-    toggle = ui.switch(
-        default_checked=False, label="Show last 30 days only.", key="switch_dash_neg"
+    
+    monthly_sentiment_std = (
+        filtered_data.groupby("sentiment_do_better")
+        .resample("M")["sentiment_score_do_better"]
+        .std()
+        .unstack(level=0)
     )
 
-    # React to the toggle's state
+    # Fill NaN values
+    monthly_sentiment_std.fillna(0, inplace=True)
+
+    # Calculate the mean sentiment scores for each month and sentiment, if not already done
+    monthly_sentiment_means_adjusted = (
+        filtered_data.groupby("sentiment_do_better")
+        .resample("M")["sentiment_score_do_better"]
+        .mean()
+        .unstack(level=0)
+    )
+
+    # Fill NaN values for the means
+    monthly_sentiment_means_adjusted.fillna(0, inplace=True)
+
+    # Define colors for each sentiment
+    colors = {"negative": "#ae4f4d", "neutral": "#edeadc", "positive": "#7b94a6"}
+
+    # Creating the plot for monthly sentiment scores
+    fig, ax = plt.subplots(figsize=(12, 5))
+
+    # Plot each sentiment mean with standard deviation as shaded area
+    for sentiment in monthly_sentiment_means_adjusted.columns:
+        # Plot the mean sentiment scores
+        ax.plot(monthly_sentiment_means_adjusted.index, monthly_sentiment_means_adjusted[sentiment],
+                label=sentiment.capitalize(), marker='o', color=colors[sentiment], linewidth=2)
+        
+        # Add the standard deviation with a shaded area
+        ax.fill_between(monthly_sentiment_means_adjusted.index,
+                        monthly_sentiment_means_adjusted[sentiment] - monthly_sentiment_std[sentiment],
+                        monthly_sentiment_means_adjusted[sentiment] + monthly_sentiment_std[sentiment],
+                        color=colors[sentiment], alpha=0.2)
+
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+    ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+    plt.title("Monthly Sentiment Score Averages with Standard Deviation - Improvement Sugg.", fontsize=16)
+    plt.xlabel("Month", fontsize=12)
+    plt.ylabel("Average Sentiment Score", fontsize=12)
+    plt.legend(title="Sentiment")
+    plt.tight_layout()
+
+    # Show the plot (or use st.pyplot(plt) if you are using Streamlit)
+    st.pyplot(plt)
+    
+    st.markdown("---")
+  
+    st.markdown(f"### FFT Feedback with a `NEGATIVE` Sentiment Score.")
+    
+    toggle = ui.switch(
+            default_checked=False, label="Show last 30 days only.", key="switch_dash_neg"
+        )
+
+        # React to the toggle's state
     if toggle:
         # Convert 'time' column to datetime
         negative = filtered_data.reset_index("time")
         negative["time"] = pd.to_datetime(negative["time"])
-        neg = negative[negative["sentiment"] == "negative"]
+        neg = negative[(negative["sentiment_free_text"] == "negative") | (negative["sentiment_do_better"] == "negative")]
         neg["time"] = pd.to_datetime(neg["time"])
 
         # Calculate the date 30 days ago from today
@@ -922,47 +1076,85 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 
         # Filter the DataFrame based on the 'time' column
         neg = neg[neg["time"].dt.date > thirty_days_ago]
+        neg1 = neg[neg["sentiment_free_text"] == "negative"]
+        neg2 = neg[neg["sentiment_do_better"] == "negative"]
 
     else:
         negative = filtered_data.reset_index("time")
         negative["time"] = pd.to_datetime(negative["time"])
-        neg = negative[negative["sentiment"] == "negative"]
+        neg = negative[(negative["sentiment_free_text"] == "negative") | (negative["sentiment_do_better"] == "negative")]
+        neg1 = neg[neg["sentiment_free_text"] == "negative"]
+        neg2 = neg[neg["sentiment_do_better"] == "negative"]
+        
+    sentiment_tab_selector = ui.tabs(
+        options=["Feedback Responses", "Improvement Suggestions"],
+        default_value="Feedback Responses",
+        key="tab45",
+    )
+    if sentiment_tab_selector == "Feedback Responses":
+    
 
-    if neg.shape[0] > 0:
-        fig, ax = plt.subplots(figsize=(12, 3))
-        sns.histplot(neg["sentiment_score"], color="#ae4f4d", kde=True)
-        ax.spines["top"].set_visible(False)
-        ax.spines["right"].set_visible(False)
-        ax.spines["left"].set_visible(False)
-        plt.xlabel("Sentiment Score")
-        ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-        plt.tight_layout()
-        st.pyplot(plt)
-        st.write("")
-        st.markdown(f"Showing **{neg.shape[0]}** responses.")
-        with st.container(height=500, border=True):
-            for _, row in neg.iterrows():
-                free_text = row["free_text"]
-                do_better = row["do_better"]
-                time_ = row["time"]
-                rating = row["rating"]
-                score = row["sentiment_score"]
-                sentiment = row["sentiment"]
 
-                with st.chat_message("user"):
-                    st.markdown(f"**{rating}** `{time_}`")
+        if neg.shape[0] > 0:
+            fig, ax = plt.subplots(figsize=(12, 2.5))
+            sns.histplot(neg1["sentiment_score_free_text"], color="#ae4f4d", kde=True)
+            ax.spines["top"].set_visible(False)
+            ax.spines["right"].set_visible(False)
+            ax.spines["left"].set_visible(False)
+            plt.xlabel("Sentiment Score")
+            ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+            plt.tight_layout()
+            st.pyplot(plt)
+            st.write("")
+            st.markdown(f"Showing **{neg1.shape[0]}** Feedback Responses.")
+            with st.container(height=500, border=True):
+                for _, row in neg1.iterrows():
+                    free_text = row["free_text"]
+            
+                    time_ = row["time"]
+                    rating = row["rating"]
+                    score = row["sentiment_score_free_text"]
+                    sentiment = row["sentiment_free_text"]
 
-                    if str(free_text) not in ["nan"]:
-                        st.markdown("🗣️ " + str(free_text))
+                    with st.chat_message("user"):
+                        st.markdown(f"**{rating}** `{time_}`")
+
+                        if str(free_text) not in ["nan"]:
+                            st.markdown("🗣️ " + str(free_text))
+                        st.markdown(f"`{sentiment} {score}`")
+    
+    elif sentiment_tab_selector == "Improvement Suggestions":
+        if neg.shape[0] > 0:
+            fig, ax = plt.subplots(figsize=(12, 2.5))
+            sns.histplot(neg2["sentiment_score_do_better"], color="#d7662a", kde=True)
+            ax.spines["top"].set_visible(False)
+            ax.spines["right"].set_visible(False)
+            ax.spines["left"].set_visible(False)
+            plt.xlabel("Sentiment Score")
+            ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+            plt.tight_layout()
+            st.pyplot(plt)
+            st.write("")
+            st.markdown(f"Showing **{neg2.shape[0]}** Improvement Suggestions.")
+            with st.container(height=500, border=True):
+                for _, row in neg2.iterrows():
+                    do_better = row["do_better"]
+            
+                    time_ = row["time"]
+                    rating = row["rating"]
+                    score = row["sentiment_score_do_better"]
+                    sentiment = row["sentiment_do_better"]
+
+                    with st.chat_message("user"):
+                        st.markdown(f"**{rating}** `{time_}`")
+
                         if str(do_better) not in ["nan"]:
                             st.markdown("💡 " + str(do_better))
-                    st.markdown(f"`{sentiment} {score}`")
-    else:
-        ui.badges(
-            badge_list=[("Nothing to display.", "outline")],
-            class_name="flex gap-2",
-            key="badges1_waring_sentiment",
-        )
+                        st.markdown(f"`{sentiment} {score}`")
+        
+        
+        
+        
 # == Feedback Classification ========================================================================================
 elif page == "Feedback Classification":
     st.title("Feedback Classification")
@@ -1039,10 +1231,9 @@ Below the chart is a multi-select field where you can choose to filter and revie
             st.subheader(f"{rating.capitalize()} ({str(specific_class.shape[0])})")
             for index, row in specific_class.iterrows(): 
                 text = row['free_text'] 
-                text = text.replace('[PERSON]', 'PERSON').replace('(','').replace(')','')
-                sentiment = row['sentiment']
+                sentiment = row['sentiment_free_text']
                 if sentiment == 'positive' or sentiment == 'neutral':
-                    text_color = 'blue'
+                    text_color = 'black'
                 else:
                     text_color = 'orange'
                     
@@ -1284,9 +1475,9 @@ The length of each bar signifies the count of feedback entries that fall into th
             for index, row in specific_class.iterrows(): 
                 text = row['do_better'] 
                 text = text.replace('[PERSON]', 'PERSON')
-                sentiment = row['sentiment']
+                sentiment = row['sentiment_do_better']
                 if sentiment == 'positive' or sentiment == 'neutral':
-                    text_color = 'blue'
+                    text_color = 'black'
                 else:
                     text_color = 'orange'
                     
