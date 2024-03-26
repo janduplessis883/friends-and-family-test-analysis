@@ -10,8 +10,11 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer, pipe
 import pandas as pd
 from textblob import TextBlob
 from nltk.sentiment import SentimentIntensityAnalyzer
-import string
 import numpy as np
+from nlpretext import Preprocessor
+from nlpretext.basic.preprocess import (normalize_whitespace, remove_punct, remove_eol_characters,
+remove_stopwords, lower_text)
+from nlpretext.social.preprocess import remove_mentions, remove_hashtag, remove_emoji
 
 from friendsfamilytest.params import *
 from friendsfamilytest.utils import *
@@ -396,16 +399,20 @@ def load_local_data():
     df["time"] = pd.to_datetime(df["time"], dayfirst=True)
     return df
 
+@time_it
+def text_preprocessing(text):
+    preprocessor = Preprocessor()
+    preprocessor.pipe(lower_text)
+    preprocessor.pipe(remove_mentions)
+    preprocessor.pipe(remove_hashtag)
+    #preprocessor.pipe(remove_emoji)
+    preprocessor.pipe(remove_eol_characters)
+    #preprocessor.pipe(remove_stopwords, args={'lang': 'en'})
+    preprocessor.pipe(remove_punct)
+    preprocessor.pipe(normalize_whitespace)
+    text = preprocessor.run(text)
 
-def remove_special_characters(sentence):
-    # Define the characters to remove
-    special_chars = ['[', ']', '(', ')', '\n', '-']
-
-    # Remove each special character
-    for char in special_chars:
-        sentence = sentence.replace(char, '')
-
-    return sentence
+    return text
 
 if __name__ == "__main__":
 
@@ -435,8 +442,8 @@ if __name__ == "__main__":
         data["free_text"] = data["free_text"].apply(anonymize_names_with_transformers)
         data["do_better"] = data["do_better"].apply(anonymize_names_with_transformers)
         logger.info("👓 Remove special characters")
-        data['free_text'] = data['free_text'].apply(lambda x: remove_special_characters(str(x)) if not pd.isna(x) else np.nan)
-        data['do_better'] = data['do_better'].apply(lambda x: remove_special_characters(str(x)) if not pd.isna(x) else np.nan)
+        data['free_text'] = data['free_text'].apply(lambda x: text_preprocessing(str(x)) if not pd.isna(x) else np.nan)
+        data['do_better'] = data['do_better'].apply(lambda x: text_preprocessing(str(x)) if not pd.isna(x) else np.nan)
         
         data = sentiment_analysis(data)
         
