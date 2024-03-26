@@ -112,8 +112,8 @@ sentiment_task = pipeline(
 )
 
 
-@time_it
-def sentiment_analysis(data):
+
+def sentiment_analysis(data, column):
 
     # Initialize lists to store labels and scores
     sentiment = []
@@ -121,10 +121,9 @@ def sentiment_analysis(data):
 
     # Iterate over DataFrame rows and classify text
     for index, row in data.iterrows():
-        print(index)
-        freetext = row["free_text"]
-        dobetter = row['do_better']
-        sentence = str(freetext) + ' ' + str(dobetter)
+        print(f"\r{index}", end="")
+        freetext = row[column]
+        sentence = str(freetext)
         sentence = sentence[:513]
         if pd.isna(sentence) or sentence == "":
             sentiment.append("neutral")
@@ -135,8 +134,8 @@ def sentiment_analysis(data):
             sentiment_score.append(model_output[0]["score"])
 
     # Add labels and scores as new columns
-    data["sentiment"] = sentiment
-    data["sentiment_score"] = sentiment_score
+    data[f"sentiment_{column}"] = sentiment
+    data[f"sentiment_score_{column}"] = sentiment_score
 
     return data
 
@@ -381,7 +380,8 @@ def clean_data(df):
     # Apply the conditions and update the DataFrame
     cleaned_df.loc[cleaned_df["do_better_len"] < 6, "do_better"] = np.nan
     cleaned_df.loc[cleaned_df["free_text_len"] < 3, "free_text"] = np.nan
-    
+    cleaned_df.loc[cleaned_df["do_better_len"] < 6, "improvement_labels"] = np.nan
+    cleaned_df.loc[cleaned_df["free_text_len"] < 3, "feedback_labels"] = np.nan   
     return cleaned_df
 
 
@@ -399,7 +399,7 @@ def load_local_data():
     df["time"] = pd.to_datetime(df["time"], dayfirst=True)
     return df
 
-@time_it
+
 def text_preprocessing(text):
     preprocessor = Preprocessor()
     preprocessor.pipe(lower_text)
@@ -441,11 +441,12 @@ if __name__ == "__main__":
         logger.info("🫥 Annonymize free_text and do_better")
         data["free_text"] = data["free_text"].apply(anonymize_names_with_transformers)
         data["do_better"] = data["do_better"].apply(anonymize_names_with_transformers)
-        logger.info("👓 Remove special characters")
+        logger.info("👓 Text Preprocesssing with *NLPretext")
         data['free_text'] = data['free_text'].apply(lambda x: text_preprocessing(str(x)) if not pd.isna(x) else np.nan)
         data['do_better'] = data['do_better'].apply(lambda x: text_preprocessing(str(x)) if not pd.isna(x) else np.nan)
         
-        data = sentiment_analysis(data)
+        data = sentiment_analysis(data, 'free_text')
+        data = sentiment_analysis(data, 'do_better')
         
         data = feedback_classification(data, batch_size=16)
         data = improvement_classification(data, batch_size=16)
