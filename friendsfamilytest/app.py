@@ -547,7 +547,7 @@ elif page == "PCN Dashboard":
             ordered_percentage_pivot_data = percentage_pivot_data[column_order]
 
             # Create the heatmap with the ordered columns
-            plt.figure(figsize=(12, 9))
+            plt.figure(figsize=(12, 10))
             ordered_percentage_heatmap = sns.heatmap(
                 ordered_percentage_pivot_data,
                 annot=True,
@@ -605,7 +605,21 @@ elif page == "PCN Dashboard":
             data["time"] = pd.to_datetime(data["time"])
             data.set_index("time", inplace=True)
 
-            # Now, group by 'sentiment' and resample by month, then calculate the mean sentiment_score
+            # Assuming filtered_data is your DataFrame and 'sentiment_score' is the column with the scores
+            # Also assuming that 'time' column has been converted to datetime and set as the index
+
+            # Calculate the standard deviation for each month and sentiment
+            monthly_sentiment_std = (
+                data.groupby("sentiment")
+                .resample("M")["sentiment_score"]
+                .std()
+                .unstack(level=0)
+            )
+
+            # Fill NaN values
+            monthly_sentiment_std.fillna(0, inplace=True)
+
+            # Calculate the mean sentiment scores for each month and sentiment, if not already done
             monthly_sentiment_means_adjusted = (
                 data.groupby("sentiment")
                 .resample("M")["sentiment_score"]
@@ -613,43 +627,39 @@ elif page == "PCN Dashboard":
                 .unstack(level=0)
             )
 
-            # Fill NaN values, which might be there if there are no records for a given month
+            # Fill NaN values for the means
             monthly_sentiment_means_adjusted.fillna(0, inplace=True)
 
-            # Melting the DataFrame to long format for easier plotting with seaborn
-            data_long_monthly = monthly_sentiment_means_adjusted.reset_index().melt(
-                id_vars="time", var_name="Sentiment", value_name="Average Score"
-            )
-            colors = [
-                (
-                    "#7495a8"
-                    if sentiment == "positive"
-                    else "#ae4f4d" if sentiment == "negative" else "#eeeadb"
-                )
-                for sentiment in sentiment_totals.index
-            ]
+            # Define colors for each sentiment
+            colors = {"negative": "#ae4f4d", "neutral": "#edeadc", "positive": "#7b94a6"}
+
             # Creating the plot for monthly sentiment scores
-            fig, ax = plt.subplots(figsize=(12, 5))
-            sns.lineplot(
-                data=data_long_monthly,
-                x="time",
-                y="Average Score",
-                hue="Sentiment",
-                marker="o",
-                palette=colors,
-                linewidth=2,
-            )
+            fig, ax = plt.subplots(figsize=(12, 6))
+
+            # Plot each sentiment mean with standard deviation as shaded area
+            for sentiment in monthly_sentiment_means_adjusted.columns:
+                # Plot the mean sentiment scores
+                ax.plot(monthly_sentiment_means_adjusted.index, monthly_sentiment_means_adjusted[sentiment],
+                        label=sentiment.capitalize(), marker='o', color=colors[sentiment], linewidth=2)
+                
+                # Add the standard deviation with a shaded area
+                ax.fill_between(monthly_sentiment_means_adjusted.index,
+                                monthly_sentiment_means_adjusted[sentiment] - monthly_sentiment_std[sentiment],
+                                monthly_sentiment_means_adjusted[sentiment] + monthly_sentiment_std[sentiment],
+                                color=colors[sentiment], alpha=0.2)
 
             ax.spines["top"].set_visible(False)
             ax.spines["right"].set_visible(False)
             ax.spines["left"].set_visible(False)
             ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
             ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-            plt.title("Monthly Sentiment Score Averages", fontsize=16)
+            plt.title("Monthly Sentiment Score Averages with Standard Deviation", fontsize=16)
             plt.xlabel("Month", fontsize=12)
             plt.ylabel("Average Sentiment Score", fontsize=12)
             plt.legend(title="Sentiment")
             plt.tight_layout()
+
+            # Show the plot (or use st.pyplot(plt) if you are using Streamlit)
             st.pyplot(plt)
 
     elif tab_selector == "Surgery Responses":
@@ -830,12 +840,23 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 
     st.markdown("---")
 
-    # Resampling the data by month instead of week
-    # Ensure the 'time' column is in datetime format and set it as the DataFrame index
     filtered_data["time"] = pd.to_datetime(filtered_data["time"])
     filtered_data.set_index("time", inplace=True)
 
-    # Now, group by 'sentiment' and resample by month, then calculate the mean sentiment_score
+    # Also assuming that 'time' column has been converted to datetime and set as the index
+
+    # Calculate the standard deviation for each month and sentiment
+    monthly_sentiment_std = (
+        filtered_data.groupby("sentiment")
+        .resample("M")["sentiment_score"]
+        .std()
+        .unstack(level=0)
+    )
+
+    # Fill NaN values
+    monthly_sentiment_std.fillna(0, inplace=True)
+
+    # Calculate the mean sentiment scores for each month and sentiment, if not already done
     monthly_sentiment_means_adjusted = (
         filtered_data.groupby("sentiment")
         .resample("M")["sentiment_score"]
@@ -843,36 +864,39 @@ Select Patient feedback to review, this page only displays feedback that on Sent
         .unstack(level=0)
     )
 
-    # Fill NaN values, which might be there if there are no records for a given month
+    # Fill NaN values for the means
     monthly_sentiment_means_adjusted.fillna(0, inplace=True)
 
-    # Melting the DataFrame to long format for easier plotting with seaborn
-    data_long_monthly = monthly_sentiment_means_adjusted.reset_index().melt(
-        id_vars="time", var_name="Sentiment", value_name="Average Score"
-    )
+    # Define colors for each sentiment
+    colors = {"negative": "#ae4f4d", "neutral": "#edeadc", "positive": "#7b94a6"}
 
     # Creating the plot for monthly sentiment scores
     fig, ax = plt.subplots(figsize=(12, 6))
-    sns.lineplot(
-        data=data_long_monthly,
-        x="time",
-        y="Average Score",
-        hue="Sentiment",
-        marker="o",
-        palette=colors,
-        linewidth=2,
-    )
+
+    # Plot each sentiment mean with standard deviation as shaded area
+    for sentiment in monthly_sentiment_means_adjusted.columns:
+        # Plot the mean sentiment scores
+        ax.plot(monthly_sentiment_means_adjusted.index, monthly_sentiment_means_adjusted[sentiment],
+                label=sentiment.capitalize(), marker='o', color=colors[sentiment], linewidth=2)
+        
+        # Add the standard deviation with a shaded area
+        ax.fill_between(monthly_sentiment_means_adjusted.index,
+                        monthly_sentiment_means_adjusted[sentiment] - monthly_sentiment_std[sentiment],
+                        monthly_sentiment_means_adjusted[sentiment] + monthly_sentiment_std[sentiment],
+                        color=colors[sentiment], alpha=0.2)
 
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
     ax.spines["left"].set_visible(False)
     ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
     ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-    plt.title("Monthly Sentiment Score Averages", fontsize=16)
+    plt.title("Monthly Sentiment Score Averages with Standard Deviation", fontsize=16)
     plt.xlabel("Month", fontsize=12)
     plt.ylabel("Average Sentiment Score", fontsize=12)
     plt.legend(title="Sentiment")
     plt.tight_layout()
+
+    # Show the plot (or use st.pyplot(plt) if you are using Streamlit)
     st.pyplot(plt)
 
     st.markdown("---")
