@@ -356,6 +356,8 @@ if page == "Surgery Dashboard":
             x="Month",
             y="Monthly Count",
             color="#aabd3b",
+            edgecolor="black",
+            linewidth=0.5,
         )
 
         # Set grid, spines and annotations as before
