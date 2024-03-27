@@ -433,8 +433,8 @@ elif page == "PCN Dashboard":
         options=[
             "PCN Rating",
             "PCN Responses",
-            "Sentiment A",
-            "Topic A",
+            "Sentiment A.",
+            "Topic A.",
             "Surgery Ratings",
             "Surgery Responses",
         ],
@@ -443,7 +443,8 @@ elif page == "PCN Dashboard":
     )
 
     if tab_selector == "PCN Responses":
-        st.subheader("Accumulated Responses Rate")
+        st.subheader("Accumulated Response Rate")
+        st.markdown("**Dialy FFT Responses**")
         daily_count = data.resample("D", on="time").size()
         daily_count_df = daily_count.reset_index()
         daily_count_df.columns = ["Date", "Daily Count"]
@@ -471,7 +472,7 @@ elif page == "PCN Dashboard":
         plt.tight_layout()
         st.pyplot(fig)
         st.markdown("---")
-
+        st.markdown("**Monthly FFT Responses**")
         with st.container(border=False):
             # Monthly Totals Plot
             monthly_count_filtered = data.resample("M", on="time").size()
@@ -525,7 +526,8 @@ elif page == "PCN Dashboard":
             
 
     elif tab_selector == "Surgery Ratings":
-        st.subheader("Analyze Surgery Ratings")
+        st.subheader("Analyse Surgery Ratings")
+        
         with st.container(border=False):
 
             # alldata_date_range = filter_data_by_date_range(data, selected_date_range)
@@ -573,7 +575,7 @@ elif page == "PCN Dashboard":
             
 
 
-    elif tab_selector == "Sentiment A":
+    elif tab_selector == "Sentiment A.":
         st.subheader("Accumulated Sentiment Analysis")
         # Assuming 'data' is already defined and processed
         # Define labels and colors outside since they are the same for both plots
@@ -612,13 +614,13 @@ elif page == "PCN Dashboard":
         ax2.axis("equal")
         centre_circle = plt.Circle((0, 0), 0.50, fc="white")
         ax2.add_artist(centre_circle)
-        ax2.set_title("Cum Sentiment - Improvement Sugg")
+        ax2.set_title("Cum Sentiment - Improvement Sugg.")
 
         # Display the subplot
         st.pyplot(fig)
             
         st.markdown("---")
-        
+        st.markdown("**Sentiment Analysis Score** - Feedback")
         data["time"] = pd.to_datetime(data["time"])
         data.set_index("time", inplace=True)
 
@@ -679,7 +681,7 @@ elif page == "PCN Dashboard":
         # Show the plot (or use st.pyplot(plt) if you are using Streamlit)
         st.pyplot(plt)
         st.markdown("---")
-        
+        st.markdown("**Sentiment Analysis Score** - Improvement Suggestions")
         monthly_sentiment_std = (
             data.groupby("sentiment_do_better")
             .resample("M")["sentiment_score_do_better"]
@@ -734,7 +736,7 @@ elif page == "PCN Dashboard":
         st.pyplot(plt)
 
     elif tab_selector == "Surgery Responses":
-        st.subheader("Analyze Surgery Responses")
+        st.subheader("Analyse Surgery Responses")
         with st.container(border=False):
             fig, ax = plt.subplots(figsize=(12, 6))
             sns.countplot(y="surgery", data=data, color="#59646b")
@@ -763,7 +765,7 @@ elif page == "PCN Dashboard":
             st.pyplot(plt)
 
         st.markdown("---")
-
+        st.markdown("**Cumulative Response Count.** over Time")
         data_sorted = data.sort_values("time")
 
         # Group by 'surgery' and 'time', then calculate the cumulative count
@@ -803,6 +805,7 @@ elif page == "PCN Dashboard":
 
     elif tab_selector == "PCN Rating":
         st.subheader("Accumulated Rating")
+        st.markdown("**Average Monthly Rating**")
         with st.container(border=False):
             # Convert 'time' to datetime and extract the date
             data["date"] = pd.to_datetime(data["time"]).dt.date
@@ -858,7 +861,7 @@ elif page == "PCN Dashboard":
             st.pyplot(plt)
 
             st.markdown("---")
-            
+            st.markdown("**Rating Count**")
             fig, ax = plt.subplots(figsize=(12, 5))
             sns.countplot(data=data, x='rating_score', color="#616884")
 
@@ -876,9 +879,9 @@ elif page == "PCN Dashboard":
             # Display the figure in Streamlit
             st.pyplot(fig)
             
-    elif tab_selector == "Topic A":
+    elif tab_selector == "Topic A.":
             st.subheader("Topic Analysis over Time")
-            st.markdown('**Feedback Topic Analysis** - Brompton Health PCN')
+            st.markdown('**Topic Analysis (Feedback)** - Brompton Health PCN')
             data['time'] = pd.to_datetime(data['time'])
 
             # Setting the 'time' column as the index
@@ -908,7 +911,7 @@ elif page == "PCN Dashboard":
             
             st.markdown("---")
             
-            st.markdown('**Improvement Suggestions Topic Analysis** - Brompton Health PCN')
+            st.markdown('**Topic Analysis (Improvement Suggestions )** - Brompton Health PCN')
 
             # Grouping by month and 'improvement_labels' and then counting the occurrences
             monthly_improvement_counts = data.groupby([data.index, 'improvement_labels']).size().unstack(fill_value=0)
@@ -1327,7 +1330,8 @@ Below the chart is a multi-select field where you can choose to filter and revie
         # Plotting the data
         plt.figure(figsize=(12, 10))
         sns.lineplot(data=monthly_feedback_counts, dashes=False)
-
+        plt.gca().spines['right'].set_visible(False)
+        plt.gca().spines['top'].set_visible(False)
         plt.grid(True)
         plt.title('Time Series of Feedback Topics (Monthly Aggregation)')
         plt.ylabel('Count of Feedback Labels')
@@ -1641,7 +1645,8 @@ The length of each bar signifies the count of feedback entries that fall into th
             # Plotting the data
             plt.figure(figsize=(12, 10))
             sns.lineplot(data=monthly_feedback_counts, dashes=False)
-
+            plt.gca().spines['right'].set_visible(False)
+            plt.gca().spines['top'].set_visible(False)
             plt.grid(True)
             plt.title('Time Series of Improvement Topics (Monthly Aggregation)')
             plt.ylabel('Count of Improvement Labels')
