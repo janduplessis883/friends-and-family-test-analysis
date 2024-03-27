@@ -433,7 +433,8 @@ elif page == "PCN Dashboard":
         options=[
             "PCN Rating",
             "PCN Responses",
-            "Sentiment Analysis",
+            "Sentiment A",
+            "Topic A",
             "Surgery Ratings",
             "Surgery Responses",
         ],
@@ -522,63 +523,6 @@ elif page == "PCN Dashboard":
             plt.tight_layout()
             st.pyplot(fig)
             
-            st.markdown("---")
-            
-            st.subheader("Topic Analysis over Time")
-            st.markdown('**Feedback Topic Analysis** - Brompton Health PCN')
-            data['time'] = pd.to_datetime(data['time'])
-
-            # Setting the 'time' column as the index
-            data.set_index('time', inplace=True)
-
-            # Grouping by month and 'feedback_labels' and then counting the occurrences
-            # Converting the time index to a period index for monthly resampling
-            data.index = data.index.to_period('M')
-            monthly_feedback_counts = data.groupby([data.index, 'feedback_labels']).size().unstack(fill_value=0)
-
-            # Converting the period index back to a timestamp for compatibility with Seaborn
-            monthly_feedback_counts.index = monthly_feedback_counts.index.to_timestamp()
-
-            # Plotting the data
-            plt.figure(figsize=(12, 10))
-            sns.lineplot(data=monthly_feedback_counts, dashes=False)
-            plt.grid(True)
-            plt.gca().spines['right'].set_visible(False)
-            plt.gca().spines['top'].set_visible(False)
-            plt.title('Time Series of Feedback Labels (Monthly Aggregation)')
-            plt.ylabel('Count of Feedback Labels')
-            plt.xlabel('Month')
-            plt.xticks(rotation=45)
-            plt.tight_layout()
-            plt.legend(title='Feedback Labels', bbox_to_anchor=(1.05, 1), loc='upper left')
-            st.pyplot(plt)
-            
-            st.markdown("---")
-            
-            st.markdown('**Improvement Suggestions Topic Analysis** - Brompton Health PCN')
-
-            data['time'] = pd.to_datetime(data['time'])
-
-        # Setting the 'time' column as the index
-        data.set_index('time', inplace=True)
-
-        # Grouping by month and 'improvement_labels' and then counting the occurrences
-        data.index = data.index.to_period('M')
-        monthly_improvement_counts = data.groupby([data.index, 'improvement_labels']).size().unstack(fill_value=0)
-
-        # Converting the period index back to a timestamp for compatibility with Seaborn
-        monthly_improvement_counts.index = monthly_improvement_counts.index.to_timestamp()
-
-        # Plotting the data for 'improvement_labels'
-        plt.figure(figsize=(12, 8))
-        sns.lineplot(data=monthly_improvement_counts, dashes=False)
-        plt.title('Time Series of Improvement Labels (Monthly Aggregation)')
-        plt.ylabel('Count of Improvement Labels')
-        plt.xlabel('Month')
-        plt.xticks(rotation=45)
-        plt.tight_layout()
-        plt.legend(title='Improvement Labels', bbox_to_anchor=(1.05, 1), loc='upper left')
-        plt.show()
 
     elif tab_selector == "Surgery Ratings":
         with st.container(border=False):
@@ -607,7 +551,7 @@ elif page == "PCN Dashboard":
             ordered_percentage_pivot_data = percentage_pivot_data[column_order]
 
             # Create the heatmap with the ordered columns
-            plt.figure(figsize=(12, 6))
+            plt.figure(figsize=(12, 10))
             ordered_percentage_heatmap = sns.heatmap(
                 ordered_percentage_pivot_data,
                 annot=True,
@@ -628,7 +572,7 @@ elif page == "PCN Dashboard":
             
 
 
-    elif tab_selector == "Sentiment Analysis":
+    elif tab_selector == "Sentiment A":
         # Assuming 'data' is already defined and processed
         # Define labels and colors outside since they are the same for both plots
         labels = ["Negative", "Neutral", "Positive"]
@@ -912,7 +856,7 @@ elif page == "PCN Dashboard":
             st.markdown("---")
             
             fig, ax = plt.subplots(figsize=(12, 5))
-            sns.countplot(data=data, x='rating_score', color="#e69136")
+            sns.countplot(data=data, x='rating_score', color="#616884")
 
             # Get the current Matplotlib figure
             ax.spines["top"].set_visible(False)
@@ -927,6 +871,60 @@ elif page == "PCN Dashboard":
 
             # Display the figure in Streamlit
             st.pyplot(fig)
+            
+    elif tab_selector == "Topic A":
+            st.subheader("Topic Analysis over Time")
+            st.markdown('**Feedback Topic Analysis** - Brompton Health PCN')
+            data['time'] = pd.to_datetime(data['time'])
+
+            # Setting the 'time' column as the index
+            data.set_index('time', inplace=True)
+
+            # Grouping by month and 'feedback_labels' and then counting the occurrences
+            # Converting the time index to a period index for monthly resampling
+            data.index = data.index.to_period('M')
+            monthly_feedback_counts = data.groupby([data.index, 'feedback_labels']).size().unstack(fill_value=0)
+
+            # Converting the period index back to a timestamp for compatibility with Seaborn
+            monthly_feedback_counts.index = monthly_feedback_counts.index.to_timestamp()
+
+            # Plotting the data
+            plt.figure(figsize=(12, 8))
+            sns.lineplot(data=monthly_feedback_counts, dashes=False)
+            plt.grid(True)
+            plt.gca().spines['right'].set_visible(False)
+            plt.gca().spines['top'].set_visible(False)
+            plt.title('Time Series of Feedback Labels (Monthly Aggregation)')
+            plt.ylabel('Count of Feedback Labels')
+            plt.xlabel('Month')
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+            plt.legend(title='Feedback Labels', bbox_to_anchor=(1.05, 1), loc='upper left')
+            st.pyplot(plt)
+            
+            st.markdown("---")
+            
+            st.markdown('**Improvement Suggestions Topic Analysis** - Brompton Health PCN')
+
+            # Grouping by month and 'improvement_labels' and then counting the occurrences
+            monthly_improvement_counts = data.groupby([data.index, 'improvement_labels']).size().unstack(fill_value=0)
+
+            # Converting the period index back to a timestamp for compatibility with Seaborn
+            monthly_improvement_counts.index = monthly_improvement_counts.index.to_timestamp()
+
+            # Plotting the data for 'improvement_labels'
+            plt.figure(figsize=(12, 8))
+            sns.lineplot(data=monthly_improvement_counts, dashes=False)
+            plt.grid(True)
+            plt.gca().spines['right'].set_visible(False)
+            plt.gca().spines['top'].set_visible(False)
+            plt.title('Time Series of Improvement Labels (Monthly Aggregation)')
+            plt.ylabel('Count of Improvement Labels')
+            plt.xlabel('Month')
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+            plt.legend(title='Improvement Labels', bbox_to_anchor=(1.05, 1), loc='upper left')
+            st.pyplot(plt)
             
             
 # == Rating & Sentiment Analysis Correlation ======================================================================
@@ -1236,7 +1234,7 @@ Below the chart is a multi-select field where you can choose to filter and revie
     tab_selector = ui.tabs(
         options=[
             "Feedback Topic Counts",
-            "Feedback Topics Analysis over Time",
+            "Feedback Topic Analysis over Time",
         ],
         default_value="Feedback Topic Counts",
         key="tab_feedback",
@@ -1281,7 +1279,7 @@ Below the chart is a multi-select field where you can choose to filter and revie
         st.subheader("View Patient Feedback")
         class_list = list(filtered_data["feedback_labels"].unique())
         cleaned_class_list = [x for x in class_list if not pd.isna(x)]
-        selected_ratings = st.multiselect("Select Feedback Categories:", cleaned_class_list)
+        selected_ratings = st.multiselect("Select Feedback Categories:", cleaned_class_list, help="Feedback in orange have a negative sentiment.")
 
         # Filter the data based on the selected classifications
         filtered_classes = filtered_data[
@@ -1308,33 +1306,64 @@ Below the chart is a multi-select field where you can choose to filter and revie
                     if str(text).lower() != "nan":
                         st.markdown(f"- :{text_color}[{str(text)}] ")
     
-    if tab_selector == "Feedback Topics Analysis over Time":
-            filtered_data['time'] = pd.to_datetime(filtered_data['time'])
+    if tab_selector == "Feedback Topic Analysis over Time":
+        filtered_data['time'] = pd.to_datetime(filtered_data['time'])
 
-            # Setting the 'time' column as the index
-            filtered_data.set_index('time', inplace=True)
+        # Setting the 'time' column as the index
+        filtered_data.set_index('time', inplace=True)
 
-            # Grouping by month and 'feedback_labels' and then counting the occurrences
-            # Converting the time index to a period index for monthly resampling
-            filtered_data.index = filtered_data.index.to_period('M')
-            monthly_feedback_counts = filtered_data.groupby([filtered_data.index, 'feedback_labels']).size().unstack(fill_value=0)
+        # Grouping by month and 'feedback_labels' and then counting the occurrences
+        # Converting the time index to a period index for monthly resampling
+        filtered_data.index = filtered_data.index.to_period('M')
+        monthly_feedback_counts = filtered_data.groupby([filtered_data.index, 'feedback_labels']).size().unstack(fill_value=0)
 
-            # Converting the period index back to a timestamp for compatibility with Seaborn
-            monthly_feedback_counts.index = monthly_feedback_counts.index.to_timestamp()
+        # Converting the period index back to a timestamp for compatibility with Seaborn
+        monthly_feedback_counts.index = monthly_feedback_counts.index.to_timestamp()
 
-            # Plotting the data
-            plt.figure(figsize=(12, 10))
-            sns.lineplot(data=monthly_feedback_counts, dashes=False)
+        # Plotting the data
+        plt.figure(figsize=(12, 10))
+        sns.lineplot(data=monthly_feedback_counts, dashes=False)
 
-            plt.grid(True)
-            plt.title('Time Series of Feedback Topics (Monthly Aggregation)')
-            plt.ylabel('Count of Feedback Labels')
-            plt.xlabel('Month')
-            plt.xticks(rotation=45)
-            plt.tight_layout()
-            plt.legend(title='Feedback Labels', bbox_to_anchor=(1.05, 1), loc='upper left')
-            st.pyplot(plt)
+        plt.grid(True)
+        plt.title('Time Series of Feedback Topics (Monthly Aggregation)')
+        plt.ylabel('Count of Feedback Labels')
+        plt.xlabel('Month')
+        plt.xticks(rotation=45)
+        plt.tight_layout()
+        plt.legend(title='Feedback Labels', bbox_to_anchor=(1.05, 1), loc='upper left')
+        st.pyplot(plt)
 
+        st.markdown("---")
+        # View Patient Feedback
+        st.subheader("View Patient Feedback")
+        class_list = list(filtered_data["feedback_labels"].unique())
+        cleaned_class_list = [x for x in class_list if not pd.isna(x)]
+        selected_ratings = st.multiselect("Select Feedback Categories:", cleaned_class_list, help="Feedback in orange have a negative sentiment.")
+
+        # Filter the data based on the selected classifications
+        filtered_classes = filtered_data[
+            filtered_data["feedback_labels"].isin(selected_ratings)]
+
+        if not selected_ratings:
+            ui.badges(
+                badge_list=[("Please select at least one classification.", "outline")],
+                class_name="flex gap-2",
+                key="badges10",
+            )
+        else:
+            for rating in selected_ratings:
+                specific_class = filtered_classes[filtered_classes["feedback_labels"] == rating]
+                st.subheader(f"{rating.capitalize()} ({str(specific_class.shape[0])})")
+                for index, row in specific_class.iterrows(): 
+                    text = row['free_text'] 
+                    sentiment = row['sentiment_free_text']
+                    if sentiment == 'positive' or sentiment == 'neutral':
+                        text_color = 'black'
+                    else:
+                        text_color = 'orange'
+                        
+                    if str(text).lower() != "nan":
+                        st.markdown(f"- :{text_color}[{str(text)}] ")
     
 
 # == Word Cloud ==========================================================
@@ -1510,91 +1539,161 @@ The length of each bar signifies the count of feedback entries that fall into th
     )
 
     if tab_selector == "Improvement Topic Counts":
-        pass
+        improvement_data = filtered_data[
+            (filtered_data["improvement_labels"] != "No Improvement Suggestion")
+        ]
+        # Calculate value counts
+        label_counts = improvement_data["improvement_labels"].value_counts(
+            ascending=False
+        )  # Use ascending=True to match the order in your image
+
+        # Convert the Series to a DataFrame
+        label_counts_df = label_counts.reset_index()
+        label_counts_df.columns = ["Improvement Labels", "Counts"]
+
+        # Define the palette conditionally based on the category names
+        palette = [
+            (
+                "#d89254"
+                if (
+                    label == "Overall Patient Satisfaction"
+                    or label == "No Improvement Suggestion"
+                )
+                else "#ae4f4d"
+            )
+            for label in label_counts_df["Improvement Labels"]
+        ]
+
+        # Create a Seaborn bar plot
+        plt.figure(figsize=(10, 8))
+        ax = sns.barplot(
+            x="Counts", y="Improvement Labels", data=label_counts_df, palette=palette
+        )
+
+        ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        ax.yaxis.grid(False)
+
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.spines["left"].set_visible(True)
+        ax.spines["bottom"].set_visible(False)
+        # Adding titles and labels for clarity
+        plt.title("Counts of Improvement Catergories")
+        plt.xlabel("Counts")
+        plt.ylabel("")
+
+        # Streamlit function to display matplotlib figures
+        st.pyplot(plt)
+        st.markdown("---")
+
+        st.subheader("View Patient Improvement Suggestions")
+        improvement_list = [label for label in label_counts_df["Improvement Labels"]]
+
+        selected_ratings = st.multiselect("Select Categories:", improvement_list, help="Improvement Suggestions in orange have a negative sentiment.")
+
+        # Filter the data based on the selected classifications
+        filtered_classes = improvement_data[
+            improvement_data["improvement_labels"].isin(selected_ratings)
+        ]
+
+        if not selected_ratings:
+            ui.badges(
+                badge_list=[("Please select at least one classification.", "outline")],
+                class_name="flex gap-2",
+                key="badges10",
+            )
+        else:
+            for rating in selected_ratings:
+                specific_class = filtered_classes[
+                    filtered_classes["improvement_labels"] == rating
+                ]
+                st.subheader(f"{str(rating).capitalize()} ({str(specific_class.shape[0])})")
+                for index, row in specific_class.iterrows(): 
+                    text = row['do_better'] 
+                    text = text.replace('[PERSON]', 'PERSON')
+                    sentiment = row['sentiment_do_better']
+                    if sentiment == 'positive' or sentiment == 'neutral':
+                        text_color = 'black'
+                    else:
+                        text_color = 'orange'
+                        
+                    if str(text).lower() != "nan":
+                        st.markdown(f"- :{text_color}[{str(text)}] ")
     
     if tab_selector == "Improvement Topic Analysis over Time":
-        pass
+            filtered_data['time'] = pd.to_datetime(filtered_data['time'])
 
-    improvement_data = filtered_data[
-        (filtered_data["improvement_labels"] != "No Improvement Suggestion")
-    ]
-    # Calculate value counts
-    label_counts = improvement_data["improvement_labels"].value_counts(
-        ascending=False
-    )  # Use ascending=True to match the order in your image
+            # Setting the 'time' column as the index
+            filtered_data.set_index('time', inplace=True)
 
-    # Convert the Series to a DataFrame
-    label_counts_df = label_counts.reset_index()
-    label_counts_df.columns = ["Improvement Labels", "Counts"]
+            # Grouping by month and 'feedback_labels' and then counting the occurrences
+            # Converting the time index to a period index for monthly resampling
+            filtered_data.index = filtered_data.index.to_period('M')
+            monthly_feedback_counts = filtered_data.groupby([filtered_data.index, 'improvement_labels']).size().unstack(fill_value=0)
 
-    # Define the palette conditionally based on the category names
-    palette = [
-        (
-            "#d89254"
-            if (
-                label == "Overall Patient Satisfaction"
-                or label == "No Improvement Suggestion"
-            )
-            else "#ae4f4d"
-        )
-        for label in label_counts_df["Improvement Labels"]
-    ]
+            # Converting the period index back to a timestamp for compatibility with Seaborn
+            monthly_feedback_counts.index = monthly_feedback_counts.index.to_timestamp()
 
-    # Create a Seaborn bar plot
-    plt.figure(figsize=(10, 8))
-    ax = sns.barplot(
-        x="Counts", y="Improvement Labels", data=label_counts_df, palette=palette
-    )
+            # Plotting the data
+            plt.figure(figsize=(12, 10))
+            sns.lineplot(data=monthly_feedback_counts, dashes=False)
 
-    ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-    ax.yaxis.grid(False)
+            plt.grid(True)
+            plt.title('Time Series of Improvement Topics (Monthly Aggregation)')
+            plt.ylabel('Count of Improvement Labels')
+            plt.xlabel('Month')
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+            plt.legend(title='Feedback Labels', bbox_to_anchor=(1.05, 1), loc='upper left')
+            st.pyplot(plt)
 
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-    ax.spines["left"].set_visible(True)
-    ax.spines["bottom"].set_visible(False)
-    # Adding titles and labels for clarity
-    plt.title("Counts of Improvement Catergories")
-    plt.xlabel("Counts")
-    plt.ylabel("")
-
-    # Streamlit function to display matplotlib figures
-    st.pyplot(plt)
-    st.markdown("---")
-
-    st.subheader("View Patient Improvement Suggestions")
-    improvement_list = [label for label in label_counts_df["Improvement Labels"]]
-
-    selected_ratings = st.multiselect("Select Categories:", improvement_list)
-
-    # Filter the data based on the selected classifications
-    filtered_classes = improvement_data[
-        improvement_data["improvement_labels"].isin(selected_ratings)
-    ]
-
-    if not selected_ratings:
-        ui.badges(
-            badge_list=[("Please select at least one classification.", "outline")],
-            class_name="flex gap-2",
-            key="badges10",
-        )
-    else:
-        for rating in selected_ratings:
-            specific_class = filtered_classes[
-                filtered_classes["improvement_labels"] == rating
+            st.markdown("---")
+            improvement_data = filtered_data[
+                (filtered_data["improvement_labels"] != "No Improvement Suggestion")
             ]
-            st.subheader(f"{str(rating).capitalize()} ({str(specific_class.shape[0])})")
-            for index, row in specific_class.iterrows(): 
-                text = row['do_better'] 
-                text = text.replace('[PERSON]', 'PERSON')
-                sentiment = row['sentiment_do_better']
-                if sentiment == 'positive' or sentiment == 'neutral':
-                    text_color = 'black'
-                else:
-                    text_color = 'orange'
-                    
-                if str(text).lower() != "nan":
-                    st.markdown(f"- :{text_color}[{str(text)}] ")
+            # Calculate value counts
+            label_counts = improvement_data["improvement_labels"].value_counts(
+                ascending=False
+            )  # Use ascending=True to match the order in your image
+
+            # Convert the Series to a DataFrame
+            label_counts_df = label_counts.reset_index()
+            label_counts_df.columns = ["Improvement Labels", "Counts"]
+
+            st.subheader("View Patient Improvement Suggestions")
+            improvement_list = [label for label in label_counts_df["Improvement Labels"]]
+
+            selected_ratings = st.multiselect("Select Categories:", improvement_list, help="Improvement Suggestions in orange have a negative sentiment.")
+
+            # Filter the data based on the selected classifications
+            filtered_classes = improvement_data[
+                improvement_data["improvement_labels"].isin(selected_ratings)
+            ]
+
+            if not selected_ratings:
+                ui.badges(
+                    badge_list=[("Please select at least one classification.", "outline")],
+                    class_name="flex gap-2",
+                    key="badges10",
+                )
+            else:
+                for rating in selected_ratings:
+                    specific_class = filtered_classes[
+                        filtered_classes["improvement_labels"] == rating
+                    ]
+                    st.subheader(f"{str(rating).capitalize()} ({str(specific_class.shape[0])})")
+                    for index, row in specific_class.iterrows(): 
+                        text = row['do_better'] 
+                        text = text.replace('[PERSON]', 'PERSON')
+                        sentiment = row['sentiment_do_better']
+                        if sentiment == 'positive' or sentiment == 'neutral':
+                            text_color = 'black'
+                        else:
+                            text_color = 'orange'
+                            
+                        if str(text).lower() != "nan":
+                            st.markdown(f"- :{text_color}[{str(text)}] ")
+        
 
 # == Generate ChatGPT Summaries ==========================================================
 elif page == "GPT-4 Summary":
