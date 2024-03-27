@@ -443,7 +443,7 @@ elif page == "PCN Dashboard":
     )
 
     if tab_selector == "PCN Responses":
-        st.subheader("Responses Rates")
+        st.subheader("Accumulated Responses Rate")
         daily_count = data.resample("D", on="time").size()
         daily_count_df = daily_count.reset_index()
         daily_count_df.columns = ["Date", "Daily Count"]
@@ -525,7 +525,7 @@ elif page == "PCN Dashboard":
             
 
     elif tab_selector == "Surgery Ratings":
-        st.subheader("Compare Surgery Ratings")
+        st.subheader("Analyze Surgery Ratings")
         with st.container(border=False):
 
             # alldata_date_range = filter_data_by_date_range(data, selected_date_range)
@@ -734,7 +734,7 @@ elif page == "PCN Dashboard":
         st.pyplot(plt)
 
     elif tab_selector == "Surgery Responses":
-        st.subheader("Compare Surgery Responses")
+        st.subheader("Analyze Surgery Responses")
         with st.container(border=False):
             fig, ax = plt.subplots(figsize=(12, 6))
             sns.countplot(y="surgery", data=data, color="#59646b")
@@ -802,7 +802,7 @@ elif page == "PCN Dashboard":
         st.pyplot(plt)
 
     elif tab_selector == "PCN Rating":
-        st.subheader("PCN Rating")
+        st.subheader("Accumulated Rating")
         with st.container(border=False):
             # Convert 'time' to datetime and extract the date
             data["date"] = pd.to_datetime(data["time"]).dt.date
