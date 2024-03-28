@@ -443,7 +443,7 @@ elif page == "PCN Dashboard":
     )
 
     if tab_selector == "PCN Responses":
-        st.subheader("Accumulated Response Rate")
+        st.subheader("PCN Response Rate")
         st.markdown("**Dialy FFT Responses**")
         daily_count = data.resample("D", on="time").size()
         daily_count_df = daily_count.reset_index()
@@ -804,7 +804,7 @@ elif page == "PCN Dashboard":
         st.pyplot(plt)
 
     elif tab_selector == "PCN Rating":
-        st.subheader("Accumulated Rating")
+        st.subheader("PCN Rating")
         st.markdown("**Average Monthly Rating**")
         with st.container(border=False):
             # Convert 'time' to datetime and extract the date
