@@ -526,7 +526,7 @@ elif page == "PCN Dashboard":
             
 
     elif tab_selector == "Surgery Ratings":
-        st.subheader("Analyse Surgery Ratings")
+        st.subheader("Surgery Ratings")
         
         with st.container(border=False):
 
@@ -736,7 +736,7 @@ elif page == "PCN Dashboard":
         st.pyplot(plt)
 
     elif tab_selector == "Surgery Responses":
-        st.subheader("Analyse Surgery Responses")
+        st.subheader("Surgery Responses")
         with st.container(border=False):
             fig, ax = plt.subplots(figsize=(12, 6))
             sns.countplot(y="surgery", data=data, color="#59646b")
