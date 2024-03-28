@@ -67,30 +67,6 @@ def clean_text(df):
     return df
 
 
-@time_it
-def text_classification(data):
-    # Initialize classifier
-    classifier = pipeline(
-        task="text-classification", model="SamLowe/roberta-base-go_emotions", top_k=None
-    )
-
-    # Initialize lists to store labels and scores
-    classif = []
-    classif_scores = []
-
-    # Iterate over DataFrame rows and classify text
-    for _, row in data.iterrows():
-        sentence = row["free_text"]
-        model_outputs = classifier(sentence)
-        classif.append(model_outputs[0][0]["label"])
-        classif_scores.append(model_outputs[0][0]["score"])
-
-    # Add labels and scores as new columns
-    data["classif"] = classif
-    data["classif_scores"] = classif_scores
-
-    return data
-
 
 @time_it
 def check_column_length(dataframe, column_name, word_count_length):
@@ -138,6 +114,16 @@ def sentiment_analysis(data, column):
     data[f"sentiment_score_{column}"] = sentiment_score
 
     return data
+
+
+def cleanup_neutral_sentiment(df, column):
+    # Copy the DataFrame to avoid modifying the original data
+    cleaned_df = df.copy()
+
+    # Apply the conditions and update the DataFrame
+    cleaned_df.loc[(df[column].isnull()) | (df[column] == ''), [f"sentiment_score_{column}", f"sentiment_{column}"]] = [0, 'neutral']
+    
+    return cleaned_df
 
 
 ner_pipeline = pipeline(
@@ -204,37 +190,25 @@ def feedback_classification(data, batch_size=16):
 
     # Define the categories for classification
     categories = [
-        "Appointment Accessibility",
-        "Reception Staff Interaction",
-        "Medical Staff Competence",
-        "Patient-Doctor Communication",
-        "Follow-Up and Continuity of Care",
-        "Facilities and Cleanliness",
-        "Prescription and Medication Management",
-        "Referral Efficiency",
-        "Emergency Handling",
-        "Patient Privacy and Confidentiality",
-        "Telehealth Services",
-        "Patient Education and Resources",
-        "Waiting Room Comfort",
-        "Patient Empowerment and Support",
-        "Health Outcome Satisfaction",
-        "Cultural Sensitivity",
-        "Accessibility for Disabled Patients",
-        "Mental Health Support",
-        "Nursing Quality",
-        "Online Services & Digital Health",
-        "Patient Safety",
-        "Weekend Service Availability",
-        "Telephone Service",
-        "Overall Patient Satisfaction",
-        "Blood Test Results & Imaging",
-        "Patient Participation Group",
-        "Doctor Consultations",
-        "Home Visits",
-        "Cancer Screening",
-        "Vaccinations",
-        "Test Results",
+            "Staff Professionalism",
+            "Communication Effectiveness",
+            "Appointment Availability",
+            "Waiting Time",
+            "Facility Cleanliness",
+            "Patient Respect",
+            "Treatment Quality",
+            "Staff Empathy and Compassion",
+            "Administrative Efficiency",
+            "Reception Staff Interaction",
+            "Environment and Ambiance",
+            "Follow-up and Continuity of Care",
+            "Accessibility and Convenience",
+            "Patient Education and Information",
+            "Feedback and Complaints Handling",
+            "Test Results",
+            "Surgery Website",
+            "Telehealth",
+            "Vaccinations",
     ]  # Include all your categories here
 
     # Initialize the list to store labels
@@ -289,36 +263,25 @@ def improvement_classification(data, batch_size=16):
 
     # Define the labels for improvement categories
     improvement_labels_list = [
-        "Appointment Accessibility",
-        "Reception Staff Interaction",
-        "Medical Staff Competence",
-        "Patient-Doctor Communication",
-        "Follow-Up and Continuity of Care",
-        "Facilities and Cleanliness",
-        "Prescription and Medication Management",
-        "Referral Efficiency",
-        "Emergency Handling",
-        "Patient Privacy and Confidentiality",
-        "Telehealth Services",
-        "Patient Education and Resources",
-        "Waiting Room Comfort",
-        "Patient Empowerment and Support",
-        "Health Outcome Satisfaction",
-        "Cultural Sensitivity",
-        "Mental Health Support",
-        "Accessibility for Disabled Patients",
-        "Online Services & Digital Health",
-        "Patient Safety",
-        "Weekend Service Availability",
-        "Telephone Service",
-        "Overall Patient Satisfaction",
-        "Blood Test Results & Imaging",
-        "Patient Participation Group",
-        "Doctor Consultations",
-        "Home Visits",
-        "Cancer Screening",
-        "Vaccinations",
-        "Test Results",
+            "Staff Professionalism",
+            "Communication Effectiveness",
+            "Appointment Availability",
+            "Waiting Time",
+            "Facility Cleanliness",
+            "Patient Respect",
+            "Treatment Quality",
+            "Staff Empathy and Compassion",
+            "Administrative Efficiency",
+            "Reception Staff Interaction",
+            "Environment and Ambiance",
+            "Follow-up and Continuity of Care",
+            "Accessibility and Convenience",
+            "Patient Education and Information",
+            "Feedback and Complaints Handling",
+            "Test Results",
+            "Surgery Website",
+            "Telehealth",
+            "Vaccinations",
     ]  # Your improvement labels
 
     # Initialize the list to store improvement labels
@@ -379,9 +342,9 @@ def clean_data(df):
     cleaned_df = df.copy()
     # Apply the conditions and update the DataFrame
     cleaned_df.loc[cleaned_df["do_better_len"] < 6, "do_better"] = np.nan
-    cleaned_df.loc[cleaned_df["free_text_len"] < 3, "free_text"] = np.nan
+    cleaned_df.loc[cleaned_df["free_text_len"] < 6, "free_text"] = np.nan
     cleaned_df.loc[cleaned_df["do_better_len"] < 6, "improvement_labels"] = np.nan
-    cleaned_df.loc[cleaned_df["free_text_len"] < 3, "feedback_labels"] = np.nan   
+    cleaned_df.loc[cleaned_df["free_text_len"] < 6, "feedback_labels"] = np.nan   
     return cleaned_df
 
 
@@ -402,12 +365,12 @@ def load_local_data():
 
 def text_preprocessing(text):
     preprocessor = Preprocessor()
-    preprocessor.pipe(lower_text)
+    # preprocessor.pipe(lower_text)
     preprocessor.pipe(remove_mentions)
     preprocessor.pipe(remove_hashtag)
     #preprocessor.pipe(remove_emoji)
     preprocessor.pipe(remove_eol_characters)
-    #preprocessor.pipe(remove_stopwords, args={'lang': 'en'})
+    # preprocessor.pipe(remove_stopwords, args={'lang': 'en'})
     preprocessor.pipe(remove_punct)
     preprocessor.pipe(normalize_whitespace)
     text = preprocessor.run(text)
@@ -435,18 +398,23 @@ if __name__ == "__main__":
     if data.shape[0] != 0:
         data = word_count(data)  # word count
         data = add_rating_score(data)
-        logger.info("🧽 Claen Data")
+        logger.info("🧽 Clean data - delete feedback with < 6 words.")
         data = clean_data(data)
         
         logger.info("🫥 Annonymize free_text and do_better")
         data["free_text"] = data["free_text"].apply(anonymize_names_with_transformers)
         data["do_better"] = data["do_better"].apply(anonymize_names_with_transformers)
-        logger.info("👓 Text Preprocesssing with *NLPretext")
+        logger.info("⭐️ Text Preprocesssing with *NLPretext")
         data['free_text'] = data['free_text'].apply(lambda x: text_preprocessing(str(x)) if not pd.isna(x) else np.nan)
         data['do_better'] = data['do_better'].apply(lambda x: text_preprocessing(str(x)) if not pd.isna(x) else np.nan)
         
+        logger.info("🧻 Sentiment Analysis - Functions started.")
         data = sentiment_analysis(data, 'free_text')
         data = sentiment_analysis(data, 'do_better')
+        
+        logger.info("🧻 Cleanup_neutral_sentiment - if free_text and do_better isna()")
+        data = cleanup_neutral_sentiment(data, 'free_text')
+        data = cleanup_neutral_sentiment(data, 'do_better')
         
         data = feedback_classification(data, batch_size=16)
         data = improvement_classification(data, batch_size=16)
@@ -455,9 +423,9 @@ if __name__ == "__main__":
         logger.info("💾 Concat Dataframes to data.csv successfully")
         concat_save_final_df(processed_data, data)
 
-        do_git_merge()  # Push everything to GitHub
-        logger.info("Pushed to GitHub - Master Branch")
-        monitor.ping(state="complete")
+        # do_git_merge()  # Push everything to GitHub
+        # logger.info("Pushed to GitHub - Master Branch")
+        # monitor.ping(state="complete")
         logger.info("✅ Successful Run completed")
     else:
         monitor.ping(state="complete")
