@@ -232,7 +232,7 @@ if page == "Surgery Dashboard":
             st.info("No rating available for this date range.")
 
         st.write("---")
-
+        st.markdown(f"**Total Responses** for selected time period: **{filtered_data.shape[0]}**")
         order = [
             "Extremely likely",
             "Likely",
