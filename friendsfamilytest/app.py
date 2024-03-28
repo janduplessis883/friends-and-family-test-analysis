@@ -576,7 +576,7 @@ elif page == "PCN Dashboard":
 
 
     elif tab_selector == "Sentiment A.":
-        st.subheader("Accumulated Sentiment Analysis")
+        st.subheader("Sentiment Analysis")
         # Assuming 'data' is already defined and processed
         # Define labels and colors outside since they are the same for both plots
         labels = ["Negative", "Neutral", "Positive"]
@@ -620,7 +620,7 @@ elif page == "PCN Dashboard":
         st.pyplot(fig)
             
         st.markdown("---")
-        st.markdown("**Sentiment Analysis Score** - Feedback")
+        st.markdown("Average Monthly **Sentiment Analysis Score** - Feedback")
         data["time"] = pd.to_datetime(data["time"])
         data.set_index("time", inplace=True)
 
@@ -681,7 +681,7 @@ elif page == "PCN Dashboard":
         # Show the plot (or use st.pyplot(plt) if you are using Streamlit)
         st.pyplot(plt)
         st.markdown("---")
-        st.markdown("**Sentiment Analysis Score** - Improvement Suggestions")
+        st.markdown("Average Monthly **Sentiment Analysis Score** - Improvement Suggestions")
         monthly_sentiment_std = (
             data.groupby("sentiment_do_better")
             .resample("M")["sentiment_score_do_better"]
