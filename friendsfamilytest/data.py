@@ -12,8 +12,13 @@ from textblob import TextBlob
 from nltk.sentiment import SentimentIntensityAnalyzer
 import numpy as np
 from nlpretext import Preprocessor
-from nlpretext.basic.preprocess import (normalize_whitespace, remove_punct, remove_eol_characters,
-remove_stopwords, lower_text)
+from nlpretext.basic.preprocess import (
+    normalize_whitespace,
+    remove_punct,
+    remove_eol_characters,
+    remove_stopwords,
+    lower_text,
+)
 from nlpretext.social.preprocess import remove_mentions, remove_hashtag, remove_emoji
 
 from friendsfamilytest.params import *
@@ -32,7 +37,7 @@ from loguru import logger
 
 logger.add("log/debug.log", rotation="500 KB")
 
-# Select Classification Model - facebook/bart-large-mnli or FacebookAI/roberta-large-mnli 
+# Select Classification Model - facebook/bart-large-mnli or FacebookAI/roberta-large-mnli
 classification_model = "facebook/bart-large-mnli"
 
 
@@ -70,7 +75,6 @@ def clean_text(df):
     return df
 
 
-
 @time_it
 def check_column_length(dataframe, column_name, word_count_length):
     # Iterate over each entry in the specified column
@@ -93,7 +97,7 @@ sentiment_task = pipeline(
 
 def sentiment_analysis(data, column):
     logger.info("💛 Sentiment Analysis - Functions started.")
-    
+
     # Initialize lists to store labels and scores
     sentiment = []
     sentiment_score = []
@@ -121,10 +125,13 @@ def sentiment_analysis(data, column):
 
 def cleanup_neutral_sentiment(df, column):
     logger.info("🧻 Cleanup_neutral_sentiment - if free_text and do_better isna()")
-    
+
     cleaned_df = df.copy()
-    cleaned_df.loc[(df[column].isnull()) | (df[column] == ''), [f"sentiment_score_{column}", f"sentiment_{column}"]] = [0, 'neutral']
-    
+    cleaned_df.loc[
+        (df[column].isnull()) | (df[column] == ""),
+        [f"sentiment_score_{column}", f"sentiment_{column}"],
+    ] = [0, "neutral"]
+
     return cleaned_df
 
 
@@ -139,7 +146,7 @@ ner_pipeline = pipeline(
 
 def anonymize_names_with_transformers(text):
     logger.info("🫥 Annonymize with Transformer")
-    
+
     # Check if the text is empty or not a string
     if not text or not isinstance(text, str):
         return text  # Return the text as-is if it's invalid or empty
@@ -165,7 +172,6 @@ def anonymize_names_with_transformers(text):
     return anonymized_text
 
 
-
 # Zer0-shot classification - do_better column
 def batch_generator(data, column_name, batch_size):
     logger.info("Calling Batch Generator")
@@ -179,9 +185,9 @@ def batch_generator(data, column_name, batch_size):
 @time_it
 def feedback_classification(data, batch_size=16):
     # Load model and tokenizer
-    model = AutoModelForSequenceClassification.from_pretrained(
-        classification_model
-    ).to("cpu")
+    model = AutoModelForSequenceClassification.from_pretrained(classification_model).to(
+        "cpu"
+    )
     tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-mnli")
 
     # Create classifier pipeline
@@ -195,25 +201,25 @@ def feedback_classification(data, batch_size=16):
 
     # Define the categories for classification
     categories = [
-            "Staff Professionalism",
-            "Communication Effectiveness",
-            "Appointment Availability",
-            "Waiting Time",
-            "Facility Cleanliness",
-            "Patient Respect",
-            "Treatment Quality",
-            "Staff Empathy and Compassion",
-            "Administrative Efficiency",
-            "Reception Staff Interaction",
-            "Environment and Ambiance",
-            "Follow-up and Continuity of Care",
-            "Accessibility and Convenience",
-            "Patient Education and Information",
-            "Feedback and Complaints Handling",
-            "Test Results",
-            "Surgery Website",
-            "Telehealth",
-            "Vaccinations",
+        "Staff Professionalism",
+        "Communication Effectiveness",
+        "Appointment Availability",
+        "Waiting Time",
+        "Facility Cleanliness",
+        "Patient Respect",
+        "Treatment Quality",
+        "Staff Empathy and Compassion",
+        "Administrative Efficiency",
+        "Reception Staff Interaction",
+        "Environment and Ambiance",
+        "Follow-up and Continuity of Care",
+        "Accessibility and Convenience",
+        "Patient Education and Information",
+        "Feedback and Complaints Handling",
+        "Test Results",
+        "Surgery Website",
+        "Telehealth",
+        "Vaccinations",
     ]  # Include all your categories here
 
     # Initialize the list to store labels
@@ -252,9 +258,9 @@ def feedback_classification(data, batch_size=16):
 @time_it
 def improvement_classification(data, batch_size=16):
     # Load model and tokenizer
-    model = AutoModelForSequenceClassification.from_pretrained(
-        classification_model
-    ).to("cpu")
+    model = AutoModelForSequenceClassification.from_pretrained(classification_model).to(
+        "cpu"
+    )
     tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-mnli")
 
     # Create classifier pipeline
@@ -268,25 +274,25 @@ def improvement_classification(data, batch_size=16):
 
     # Define the labels for improvement categories
     improvement_labels_list = [
-            "Staff Professionalism",
-            "Communication Effectiveness",
-            "Appointment Availability",
-            "Waiting Time",
-            "Facility Cleanliness",
-            "Patient Respect",
-            "Treatment Quality",
-            "Staff Empathy and Compassion",
-            "Administrative Efficiency",
-            "Reception Staff Interaction",
-            "Environment and Ambiance",
-            "Follow-up and Continuity of Care",
-            "Accessibility and Convenience",
-            "Patient Education and Information",
-            "Feedback and Complaints Handling",
-            "Test Results",
-            "Surgery Website",
-            "Telehealth",
-            "Vaccinations",
+        "Staff Professionalism",
+        "Communication Effectiveness",
+        "Appointment Availability",
+        "Waiting Time",
+        "Facility Cleanliness",
+        "Patient Respect",
+        "Treatment Quality",
+        "Staff Empathy and Compassion",
+        "Administrative Efficiency",
+        "Reception Staff Interaction",
+        "Environment and Ambiance",
+        "Follow-up and Continuity of Care",
+        "Accessibility and Convenience",
+        "Patient Education and Information",
+        "Feedback and Complaints Handling",
+        "Test Results",
+        "Surgery Website",
+        "Telehealth",
+        "Vaccinations",
     ]  # Your improvement labels
 
     # Initialize the list to store improvement labels
@@ -324,7 +330,6 @@ def improvement_classification(data, batch_size=16):
     return data
 
 
-
 @time_it
 def add_rating_score(data):
     # Mapping dictionary
@@ -344,14 +349,14 @@ def add_rating_score(data):
 @time_it
 def clean_data(df):
     logger.info("🧽 Clean data - delete feedback / Improvement Suggestions < 6 words.")
-    
+
     # Copy the DataFrame to avoid modifying the original data
     cleaned_df = df.copy()
     # Apply the conditions and update the DataFrame
     cleaned_df.loc[cleaned_df["do_better_len"] < 6, "do_better"] = np.nan
     cleaned_df.loc[cleaned_df["free_text_len"] < 6, "free_text"] = np.nan
     cleaned_df.loc[cleaned_df["do_better_len"] < 6, "improvement_labels"] = np.nan
-    cleaned_df.loc[cleaned_df["free_text_len"] < 6, "feedback_labels"] = np.nan   
+    cleaned_df.loc[cleaned_df["free_text_len"] < 6, "feedback_labels"] = np.nan
     return cleaned_df
 
 
@@ -373,12 +378,12 @@ def load_local_data():
 
 def text_preprocessing(text):
     logger.info("⭐️ Text Preprocesssing with *NLPretext")
-    
+
     preprocessor = Preprocessor()
     # preprocessor.pipe(lower_text)
     preprocessor.pipe(remove_mentions)
     preprocessor.pipe(remove_hashtag)
-    #preprocessor.pipe(remove_emoji)
+    # preprocessor.pipe(remove_emoji)
     preprocessor.pipe(remove_eol_characters)
     # preprocessor.pipe(remove_stopwords, args={'lang': 'en'})
     preprocessor.pipe(remove_punct)
@@ -386,6 +391,7 @@ def text_preprocessing(text):
     text = preprocessor.run(text)
 
     return text
+
 
 if __name__ == "__main__":
 
@@ -408,25 +414,29 @@ if __name__ == "__main__":
     if data.shape[0] != 0:
         data = word_count(data)  # word count
         data = add_rating_score(data)
-        
+
         data = clean_data(data)
-        
+
         data["free_text"] = data["free_text"].apply(anonymize_names_with_transformers)
         data["do_better"] = data["do_better"].apply(anonymize_names_with_transformers)
-        
-        data['free_text'] = data['free_text'].apply(lambda x: text_preprocessing(str(x)) if not pd.isna(x) else np.nan)
-        data['do_better'] = data['do_better'].apply(lambda x: text_preprocessing(str(x)) if not pd.isna(x) else np.nan)
-        
-        data = sentiment_analysis(data, 'free_text')
-        data = sentiment_analysis(data, 'do_better')
-        
-        data = cleanup_neutral_sentiment(data, 'free_text')
-        data = cleanup_neutral_sentiment(data, 'do_better')
-        
+
+        data["free_text"] = data["free_text"].apply(
+            lambda x: text_preprocessing(str(x)) if not pd.isna(x) else np.nan
+        )
+        data["do_better"] = data["do_better"].apply(
+            lambda x: text_preprocessing(str(x)) if not pd.isna(x) else np.nan
+        )
+
+        data = sentiment_analysis(data, "free_text")
+        data = sentiment_analysis(data, "do_better")
+
+        data = cleanup_neutral_sentiment(data, "free_text")
+        data = cleanup_neutral_sentiment(data, "do_better")
+
         data = feedback_classification(data, batch_size=16)
         data = improvement_classification(data, batch_size=16)
         logger.info("Data pre-processing completed")
-        
+
         concat_save_final_df(processed_data, data)
 
         do_git_merge()  # Push everything to GitHub
