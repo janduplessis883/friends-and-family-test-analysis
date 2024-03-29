@@ -803,7 +803,7 @@ elif page == "PCN Dashboard":
         plt.tight_layout()
         st.pyplot(plt)
 
-    elif tab_selector == "PCN Rating":
+    elif tab_selector == "PCN Rating": # ----------------------------------------------------- PCN Rating 
         st.subheader("PCN Rating")
         st.markdown("**Average Monthly Rating**")
         with st.container(border=False):
@@ -879,61 +879,109 @@ elif page == "PCN Dashboard":
             # Display the figure in Streamlit
             st.pyplot(fig)
             
-    elif tab_selector == "Topic A.":
-            st.subheader("Topic Analysis over Time")
-            st.markdown('**Topic Analysis (Feedback)** - Brompton Health PCN')
-            data['time'] = pd.to_datetime(data['time'])
+    elif tab_selector == "Topic A.": # ----------------------------------------------------- Topic Analysis
+            st.subheader("Topic Analysis")
+            toggle = ui.switch(default_checked=False, label="Time Series", key="switch_dash_pcn")
+            if toggle:
+                st.markdown('**Feedback Classification - Time Series** - Brompton Health PCN')
+                data['time'] = pd.to_datetime(data['time'])
 
-            # Setting the 'time' column as the index
-            data.set_index('time', inplace=True)
+                # Setting the 'time' column as the index
+                data.set_index('time', inplace=True)
 
-            # Grouping by month and 'feedback_labels' and then counting the occurrences
-            # Converting the time index to a period index for monthly resampling
-            data.index = data.index.to_period('M')
-            monthly_feedback_counts = data.groupby([data.index, 'feedback_labels']).size().unstack(fill_value=0)
+                # Grouping by month and 'feedback_labels' and then counting the occurrences
+                # Converting the time index to a period index for monthly resampling
+                data.index = data.index.to_period('M')
+                monthly_feedback_counts = data.groupby([data.index, 'feedback_labels']).size().unstack(fill_value=0)
 
-            # Converting the period index back to a timestamp for compatibility with Seaborn
-            monthly_feedback_counts.index = monthly_feedback_counts.index.to_timestamp()
+                # Converting the period index back to a timestamp for compatibility with Seaborn
+                monthly_feedback_counts.index = monthly_feedback_counts.index.to_timestamp()
 
-            # Plotting the data
-            plt.figure(figsize=(12, 8))
-            sns.lineplot(data=monthly_feedback_counts, dashes=False)
-            plt.grid(True)
-            plt.gca().spines['right'].set_visible(False)
-            plt.gca().spines['top'].set_visible(False)
-            plt.title('Time Series of Feedback Labels (Monthly Aggregation)')
-            plt.ylabel('Count of Feedback Labels')
-            plt.xlabel('Month')
-            plt.xticks(rotation=45)
-            plt.tight_layout()
-            plt.legend(title='Feedback Labels', bbox_to_anchor=(1.05, 1), loc='upper left')
-            st.pyplot(plt)
-            
-            st.markdown("---")
-            
-            
-            st.markdown('**Topic Analysis (Improvement Suggestions )** - Brompton Health PCN')
+                # Plotting the data
+                plt.figure(figsize=(12, 8))
+                sns.lineplot(data=monthly_feedback_counts, dashes=False, linewidth=2)
+                plt.grid(True)
+                plt.gca().spines['right'].set_visible(False)
+                plt.gca().spines['top'].set_visible(False)
+                plt.title('Time Series of Feedback Labels (Monthly Aggregation)')
+                plt.ylabel('Count of Feedback Labels')
+                plt.xlabel('Month')
+                plt.xticks(rotation=45)
+                plt.tight_layout()
+                plt.legend(title='Feedback Labels', bbox_to_anchor=(1.05, 1), loc='upper left')
+                st.pyplot(plt)
+                
+                st.markdown("---")
 
-            # Grouping by month and 'improvement_labels' and then counting the occurrences
-            monthly_improvement_counts = data.groupby([data.index, 'improvement_labels']).size().unstack(fill_value=0)
+                st.markdown('**Improvement Suggestions Classification - Time Series** - Brompton Health PCN')
 
-            # Converting the period index back to a timestamp for compatibility with Seaborn
-            monthly_improvement_counts.index = monthly_improvement_counts.index.to_timestamp()
+                # Grouping by month and 'improvement_labels' and then counting the occurrences
+                monthly_improvement_counts = data.groupby([data.index, 'improvement_labels']).size().unstack(fill_value=0)
 
-            # Plotting the data for 'improvement_labels'
-            plt.figure(figsize=(12, 8))
-            sns.lineplot(data=monthly_improvement_counts, dashes=False)
-            plt.grid(True)
-            plt.gca().spines['right'].set_visible(False)
-            plt.gca().spines['top'].set_visible(False)
-            plt.title('Time Series of Improvement Labels (Monthly Aggregation)')
-            plt.ylabel('Count of Improvement Labels')
-            plt.xlabel('Month')
-            plt.xticks(rotation=45)
-            plt.tight_layout()
-            plt.legend(title='Improvement Labels', bbox_to_anchor=(1.05, 1), loc='upper left')
-            st.pyplot(plt)
-            
+                # Converting the period index back to a timestamp for compatibility with Seaborn
+                monthly_improvement_counts.index = monthly_improvement_counts.index.to_timestamp()
+
+                # Plotting the data for 'improvement_labels'
+                plt.figure(figsize=(12, 8))
+                sns.lineplot(data=monthly_improvement_counts, dashes=False, linewidth=2)
+                plt.grid(True)
+                plt.gca().spines['right'].set_visible(False)
+                plt.gca().spines['top'].set_visible(False)
+                plt.title('Time Series of Improvement Labels (Monthly Aggregation)')
+                plt.ylabel('Count of Improvement Labels')
+                plt.xlabel('Month')
+                plt.xticks(rotation=45)
+                plt.tight_layout()
+                plt.legend(title='Improvement Labels', bbox_to_anchor=(1.05, 1), loc='upper left')
+                st.pyplot(plt)
+            else:
+                palette = {'positive': '#2e5f77', 'negative': '#d7662a', 'neutral': '#d7d8d7'}
+                hue_order = ['positive', 'neutral', 'negative']
+                category_counts = data['feedback_labels'].value_counts()
+                order = category_counts.index
+                st.markdown('**Feedback Classification** - Brompton Health PCN')
+                # Create a Seaborn bar plot
+                plt.figure(figsize=(10, 8))
+                ax = sns.countplot(y="feedback_labels", data=data, hue="sentiment_free_text", palette=palette, hue_order=hue_order, order=order, dodge=False)
+                ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+                ax.yaxis.grid(False)
+                ax.spines["top"].set_visible(False)
+                ax.spines["right"].set_visible(False)
+                ax.spines["left"].set_visible(True)
+                ax.spines["bottom"].set_visible(False)
+                # Adding titles and labels for clarity
+                plt.title("Counts of Feedback Classification")
+                plt.xlabel("Counts")
+                plt.ylabel("")
+
+                # Streamlit function to display matplotlib figures
+                st.pyplot(plt)
+                st.markdown("---")
+                palette = {'positive': '#90bfca', 'negative': '#f3aa49', 'neutral': '#ece7e3'}
+                hue_order = ['positive', 'neutral', 'negative']
+                category_counts = data['improvement_labels'].value_counts()
+                order = category_counts.index
+                st.markdown('**Improvement Suggestions Classification** - Brompton Health PCN')
+                # Create a Seaborn bar plot
+                plt.figure(figsize=(10, 8))
+                ax = sns.countplot(data=data, y="improvement_labels", hue="sentiment_free_text", palette=palette, hue_order=hue_order, order=order, dodge=False)
+
+                ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+                ax.yaxis.grid(False)
+
+                ax.spines["top"].set_visible(False)
+                ax.spines["right"].set_visible(False)
+                ax.spines["left"].set_visible(True)
+                ax.spines["bottom"].set_visible(False)
+                # Adding titles and labels for clarity
+                plt.title("Counts of Improvement Catergories")
+                plt.xlabel("Counts")
+                plt.ylabel("")
+
+                # Streamlit function to display matplotlib figures
+                st.pyplot(plt)
+                st.markdown("---")
+                
             
 # == Rating & Sentiment Analysis Correlation ======================================================================
 elif page == "Sentiment Analysis":
@@ -1259,16 +1307,13 @@ Below the chart is a multi-select field where you can choose to filter and revie
         label_counts_df.columns = ["Feedback Classification", "Counts"]
 
         # Define the palette conditionally based on the category names
-        palette = [
-            "#aec867" if (label == "Overall Patient Satisfaction") else "#62899f"
-            for label in label_counts_df["Feedback Classification"]
-        ]
-
+        palette = {'positive': '#2e5f77', 'negative': '#d7662a', 'neutral': '#eda73b'}
+        hue_order = ['positive', 'neutral', 'negative']
+        category_counts = filtered_data['feedback_labels'].value_counts()
+        order = category_counts.index       
         # Create a Seaborn bar plot
         plt.figure(figsize=(10, 8))
-        ax = sns.barplot(
-            x="Counts", y="Feedback Classification", data=label_counts_df, palette=palette
-        )
+        ax = sns.countplot(y="feedback_labels", data=filtered_data, hue="sentiment_free_text", palette=palette, hue_order=hue_order, order=order, dodge=False)
         ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
         ax.yaxis.grid(False)
         ax.spines["top"].set_visible(False)
@@ -1330,7 +1375,7 @@ Below the chart is a multi-select field where you can choose to filter and revie
 
         # Plotting the data
         plt.figure(figsize=(12, 10))
-        sns.lineplot(data=monthly_feedback_counts, dashes=False)
+        sns.lineplot(data=monthly_feedback_counts, dashes=False, linewidth=2)
         plt.gca().spines['right'].set_visible(False)
         plt.gca().spines['top'].set_visible(False)
         plt.grid(True)
@@ -1561,23 +1606,13 @@ The length of each bar signifies the count of feedback entries that fall into th
         label_counts_df.columns = ["Improvement Labels", "Counts"]
 
         # Define the palette conditionally based on the category names
-        palette = [
-            (
-                "#d89254"
-                if (
-                    label == "Overall Patient Satisfaction"
-                    or label == "No Improvement Suggestion"
-                )
-                else "#ae4f4d"
-            )
-            for label in label_counts_df["Improvement Labels"]
-        ]
-
+        palette = {'positive': '#90bfca', 'negative': '#f3aa49', 'neutral': '#ece7e3'}
+        hue_order = ['positive', 'neutral', 'negative']
+        category_counts = filtered_data['improvement_labels'].value_counts()
+        order = category_counts.index
         # Create a Seaborn bar plot
         plt.figure(figsize=(10, 8))
-        ax = sns.barplot(
-            x="Counts", y="Improvement Labels", data=label_counts_df, palette=palette
-        )
+        ax = sns.countplot(data=filtered_data, y="improvement_labels", hue="sentiment_free_text", palette=palette, hue_order=hue_order, order=order, dodge=False)
 
         ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
         ax.yaxis.grid(False)
@@ -1645,7 +1680,7 @@ The length of each bar signifies the count of feedback entries that fall into th
 
             # Plotting the data
             plt.figure(figsize=(12, 10))
-            sns.lineplot(data=monthly_feedback_counts, dashes=False)
+            sns.lineplot(data=monthly_feedback_counts, dashes=False, linewidth=2)
             plt.gca().spines['right'].set_visible(False)
             plt.gca().spines['top'].set_visible(False)
             plt.grid(True)

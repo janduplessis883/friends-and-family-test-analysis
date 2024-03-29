@@ -32,6 +32,9 @@ from loguru import logger
 
 logger.add("log/debug.log", rotation="500 KB")
 
+# Select Classification Model - facebook/bart-large-mnli or FacebookAI/roberta-large-mnli 
+classification_model = "facebook/bart-large-mnli"
+
 
 @time_it
 def load_google_sheet():
@@ -175,7 +178,7 @@ def batch_generator(data, column_name, batch_size):
 def feedback_classification(data, batch_size=16):
     # Load model and tokenizer
     model = AutoModelForSequenceClassification.from_pretrained(
-        "facebook/bart-large-mnli"
+        classification_model
     ).to("cpu")
     tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-mnli")
 
@@ -248,7 +251,7 @@ def feedback_classification(data, batch_size=16):
 def improvement_classification(data, batch_size=16):
     # Load model and tokenizer
     model = AutoModelForSequenceClassification.from_pretrained(
-        "facebook/bart-large-mnli"
+        classification_model
     ).to("cpu")
     tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-mnli")
 
@@ -408,7 +411,7 @@ if __name__ == "__main__":
         data['free_text'] = data['free_text'].apply(lambda x: text_preprocessing(str(x)) if not pd.isna(x) else np.nan)
         data['do_better'] = data['do_better'].apply(lambda x: text_preprocessing(str(x)) if not pd.isna(x) else np.nan)
         
-        logger.info("🧻 Sentiment Analysis - Functions started.")
+        logger.info("💛 Sentiment Analysis - Functions started.")
         data = sentiment_analysis(data, 'free_text')
         data = sentiment_analysis(data, 'do_better')
         
@@ -423,9 +426,9 @@ if __name__ == "__main__":
         logger.info("💾 Concat Dataframes to data.csv successfully")
         concat_save_final_df(processed_data, data)
 
-        # do_git_merge()  # Push everything to GitHub
-        # logger.info("Pushed to GitHub - Master Branch")
-        # monitor.ping(state="complete")
+        do_git_merge()  # Push everything to GitHub
+        logger.info("Pushed to GitHub - Master Branch")
+        monitor.ping(state="complete")
         logger.info("✅ Successful Run completed")
     else:
         monitor.ping(state="complete")
