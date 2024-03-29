@@ -91,9 +91,9 @@ sentiment_task = pipeline(
 )
 
 
-
 def sentiment_analysis(data, column):
-
+    logger.info("💛 Sentiment Analysis - Functions started.")
+    
     # Initialize lists to store labels and scores
     sentiment = []
     sentiment_score = []
@@ -120,10 +120,9 @@ def sentiment_analysis(data, column):
 
 
 def cleanup_neutral_sentiment(df, column):
-    # Copy the DataFrame to avoid modifying the original data
+    logger.info("🧻 Cleanup_neutral_sentiment - if free_text and do_better isna()")
+    
     cleaned_df = df.copy()
-
-    # Apply the conditions and update the DataFrame
     cleaned_df.loc[(df[column].isnull()) | (df[column] == ''), [f"sentiment_score_{column}", f"sentiment_{column}"]] = [0, 'neutral']
     
     return cleaned_df
@@ -341,6 +340,8 @@ def add_rating_score(data):
 
 @time_it
 def clean_data(df):
+    logger.info("🧽 Clean data - delete feedback / Improvement Suggestions < 6 words.")
+    
     # Copy the DataFrame to avoid modifying the original data
     cleaned_df = df.copy()
     # Apply the conditions and update the DataFrame
@@ -353,6 +354,7 @@ def clean_data(df):
 
 @time_it
 def concat_save_final_df(processed_df, new_df):
+    logger.info("💾 Concat Dataframes to data.csv successfully")
     combined_data = pd.concat([processed_df, new_df], ignore_index=True)
     combined_data.sort_values(by="time", inplace=True, ascending=True)
     combined_data.to_csv(f"{DATA_PATH}/data.csv", index=False)
@@ -367,6 +369,8 @@ def load_local_data():
 
 
 def text_preprocessing(text):
+    logger.info("⭐️ Text Preprocesssing with *NLPretext")
+    
     preprocessor = Preprocessor()
     # preprocessor.pipe(lower_text)
     preprocessor.pipe(remove_mentions)
@@ -401,21 +405,21 @@ if __name__ == "__main__":
     if data.shape[0] != 0:
         data = word_count(data)  # word count
         data = add_rating_score(data)
-        logger.info("🧽 Clean data - delete feedback with < 6 words.")
+        
         data = clean_data(data)
         
         logger.info("🫥 Annonymize free_text and do_better")
         data["free_text"] = data["free_text"].apply(anonymize_names_with_transformers)
         data["do_better"] = data["do_better"].apply(anonymize_names_with_transformers)
-        logger.info("⭐️ Text Preprocesssing with *NLPretext")
+        
         data['free_text'] = data['free_text'].apply(lambda x: text_preprocessing(str(x)) if not pd.isna(x) else np.nan)
         data['do_better'] = data['do_better'].apply(lambda x: text_preprocessing(str(x)) if not pd.isna(x) else np.nan)
         
-        logger.info("💛 Sentiment Analysis - Functions started.")
+        
         data = sentiment_analysis(data, 'free_text')
         data = sentiment_analysis(data, 'do_better')
         
-        logger.info("🧻 Cleanup_neutral_sentiment - if free_text and do_better isna()")
+        
         data = cleanup_neutral_sentiment(data, 'free_text')
         data = cleanup_neutral_sentiment(data, 'do_better')
         
@@ -423,14 +427,14 @@ if __name__ == "__main__":
         data = improvement_classification(data, batch_size=16)
         logger.info("Data pre-processing completed")
         
-        logger.info("💾 Concat Dataframes to data.csv successfully")
+        
         concat_save_final_df(processed_data, data)
 
         do_git_merge()  # Push everything to GitHub
-        logger.info("Pushed to GitHub - Master Branch")
+        logger.info("👍 Pushed to GitHub - Master Branch")
         monitor.ping(state="complete")
         logger.info("✅ Successful Run completed")
     else:
         monitor.ping(state="complete")
         print(f"{Fore.RED}[*] No New rows to add - terminated.")
-        logger.error("❌ Make Data terminated - No now rows")
+        logger.error("⛔️ Make Data terminated - No now rows")
