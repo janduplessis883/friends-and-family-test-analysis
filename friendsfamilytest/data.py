@@ -138,6 +138,8 @@ ner_pipeline = pipeline(
 
 
 def anonymize_names_with_transformers(text):
+    logger.info("🫥 Annonymize with Transformer")
+    
     # Check if the text is empty or not a string
     if not text or not isinstance(text, str):
         return text  # Return the text as-is if it's invalid or empty
@@ -166,6 +168,7 @@ def anonymize_names_with_transformers(text):
 
 # Zer0-shot classification - do_better column
 def batch_generator(data, column_name, batch_size):
+    logger.info("Calling Batch Generator")
     for i in range(0, len(data), batch_size):
         batch = data[column_name][i : i + batch_size]
         # Logging the batch content; you can comment this out or remove it in production
@@ -408,17 +411,14 @@ if __name__ == "__main__":
         
         data = clean_data(data)
         
-        logger.info("🫥 Annonymize free_text and do_better")
         data["free_text"] = data["free_text"].apply(anonymize_names_with_transformers)
         data["do_better"] = data["do_better"].apply(anonymize_names_with_transformers)
         
         data['free_text'] = data['free_text'].apply(lambda x: text_preprocessing(str(x)) if not pd.isna(x) else np.nan)
         data['do_better'] = data['do_better'].apply(lambda x: text_preprocessing(str(x)) if not pd.isna(x) else np.nan)
         
-        
         data = sentiment_analysis(data, 'free_text')
         data = sentiment_analysis(data, 'do_better')
-        
         
         data = cleanup_neutral_sentiment(data, 'free_text')
         data = cleanup_neutral_sentiment(data, 'do_better')
@@ -427,13 +427,12 @@ if __name__ == "__main__":
         data = improvement_classification(data, batch_size=16)
         logger.info("Data pre-processing completed")
         
-        
         concat_save_final_df(processed_data, data)
 
         do_git_merge()  # Push everything to GitHub
         logger.info("👍 Pushed to GitHub - Master Branch")
         monitor.ping(state="complete")
-        logger.info("✅ Successful Run completed")
+        logger.info("🎉 Successful Run completed")
     else:
         monitor.ping(state="complete")
         print(f"{Fore.RED}[*] No New rows to add - terminated.")
