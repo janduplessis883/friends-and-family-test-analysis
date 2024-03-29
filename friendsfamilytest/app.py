@@ -1401,7 +1401,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 
                         if str(free_text) not in ["nan"]:
                             st.markdown("🗣️ " + str(free_text))
-                        st.markdown(f"`{sentiment} {score} {cat}`")
+                        st.markdown(f"`{sentiment} {score}` `{cat}`")
 
     elif sentiment_tab_selector == "Improvement Suggestions":
         if neg.shape[0] > 0:
@@ -1430,7 +1430,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 
                         if str(do_better) not in ["nan"]:
                             st.markdown("💡 " + str(do_better))
-                        st.markdown(f"`{sentiment} {score} {cat}`")
+                        st.markdown(f"`{sentiment} {score}` `{cat}`")
 
 
 # == Feedback Classification ========================================================================================
