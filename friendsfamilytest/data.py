@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 from colorama import init, Fore, Back, Style
 import warnings
 from transformers import AutoModelForSequenceClassification, AutoTokenizer, pipeline
-import pandas as pd
 from textblob import TextBlob
 from nltk.sentiment import SentimentIntensityAnalyzer
 import numpy as np
@@ -35,7 +34,7 @@ import cronitor
 cronitor.api_key = os.getenv("CRONITOR_API_KEY")
 from loguru import logger
 
-logger.add("log/debug.log", rotation="500 KB")
+logger.add("log/debug.log", rotation="5000 KB")
 
 # Select Classification Model - facebook/bart-large-mnli or FacebookAI/roberta-large-mnli
 classification_model = "facebook/bart-large-mnli"
@@ -66,13 +65,6 @@ def word_count(df):
 
     return df
 
-
-@time_it
-def clean_text(df):
-    df["do_better"] = df["do_better"].apply(clean_and_replace)
-    df["free_text"] = df["free_text"].apply(clean_and_replace)
-
-    return df
 
 
 @time_it
@@ -145,7 +137,6 @@ ner_pipeline = pipeline(
 
 
 def anonymize_names_with_transformers(text):
-    logger.info("🫥 Annonymize with Transformer")
 
     # Check if the text is empty or not a string
     if not text or not isinstance(text, str):
@@ -405,7 +396,7 @@ if __name__ == "__main__":
 
     # Load new data from Google Sheet
     raw_data = load_google_sheet()
-    logger.info("Google Sheet Data Loaded")
+    logger.info("Google Sheet data loaded")
 
     # Load local data.csv to dataframe
     processed_data = load_local_data()
@@ -420,7 +411,8 @@ if __name__ == "__main__":
         data = add_rating_score(data)
 
         data = clean_data(data)
-
+        
+        logger.info("🫥 Annonymize with Transformer")
         data["free_text"] = data["free_text"].apply(anonymize_names_with_transformers)
         data["do_better"] = data["do_better"].apply(anonymize_names_with_transformers)
 

@@ -1390,7 +1390,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
             with st.container(height=500, border=True):
                 for _, row in neg1.iterrows():
                     free_text = row["free_text"]
-
+                    cat = row['feedback_labels']
                     time_ = row["time"]
                     rating = row["rating"]
                     score = row["sentiment_score_free_text"]
@@ -1401,7 +1401,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 
                         if str(free_text) not in ["nan"]:
                             st.markdown("🗣️ " + str(free_text))
-                        st.markdown(f"`{sentiment} {score}`")
+                        st.markdown(f"`{sentiment} {score} {cat}`")
 
     elif sentiment_tab_selector == "Improvement Suggestions":
         if neg.shape[0] > 0:
@@ -1419,7 +1419,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
             with st.container(height=500, border=True):
                 for _, row in neg2.iterrows():
                     do_better = row["do_better"]
-
+                    cat = row['improvement_labels']
                     time_ = row["time"]
                     rating = row["rating"]
                     score = row["sentiment_score_do_better"]
@@ -1430,7 +1430,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
 
                         if str(do_better) not in ["nan"]:
                             st.markdown("💡 " + str(do_better))
-                        st.markdown(f"`{sentiment} {score}`")
+                        st.markdown(f"`{sentiment} {score} {cat}`")
 
 
 # == Feedback Classification ========================================================================================
