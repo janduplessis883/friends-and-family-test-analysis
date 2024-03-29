@@ -1537,10 +1537,12 @@ Below the chart is a multi-select field where you can choose to filter and revie
                 for index, row in specific_class.iterrows():
                     text = row["free_text"]
                     sentiment = row["sentiment_free_text"]
-                    if sentiment == "positive" or sentiment == "neutral":
-                        text_color = "black"
-                    else:
+                    if sentiment == "negative":
                         text_color = "orange"
+                    elif sentiment == "neutral":
+                        text_color = "gray"
+                    else:
+                        text_color = "black"
 
                     if str(text).lower() != "nan":
                         st.markdown(f"- :{text_color}[{str(text)}] ")
@@ -1608,10 +1610,12 @@ Below the chart is a multi-select field where you can choose to filter and revie
                 for index, row in specific_class.iterrows():
                     text = row["free_text"]
                     sentiment = row["sentiment_free_text"]
-                    if sentiment == "positive" or sentiment == "neutral":
-                        text_color = "black"
-                    else:
+                    if sentiment == "negative":
                         text_color = "orange"
+                    elif sentiment == "neutral":
+                        text_color = "gray"
+                    else:
+                        text_color = "black"
 
                     if str(text).lower() != "nan":
                         st.markdown(f"- :{text_color}[{str(text)}] ")
