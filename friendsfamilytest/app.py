@@ -11,6 +11,7 @@ import time
 from openai import OpenAI
 import streamlit_shadcn_ui as ui
 import requests
+import plotly.graph_objects as go
 
 client = OpenAI()
 
@@ -765,7 +766,7 @@ elif page == "PCN Dashboard":
             st.pyplot(plt)
 
         st.markdown("---")
-        st.markdown("**Cumulative Response Count.** over Time")
+
         data_sorted = data.sort_values("time")
 
         # Group by 'surgery' and 'time', then calculate the cumulative count
@@ -780,28 +781,54 @@ elif page == "PCN Dashboard":
         data_pivot_filled = data_pivot.fillna(method="ffill").fillna(0)
 
         # Plotting
-        fig, ax = plt.subplots(figsize=(12, 10))
+        fig = go.Figure()
+
         for column in data_pivot_filled.columns:
-            plt.plot(
-                data_pivot_filled.index,
-                data_pivot_filled[column],
-                label=column,
-                linewidth=2,
-            )
+            fig.add_trace(go.Scatter(
+                x=data_pivot_filled.index,
+                y=data_pivot_filled[column],
+                name=column,
+                mode='lines',
+                line=dict(width=2)
+            ))
 
-        ax.yaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-        ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
+        fig.update_layout(
+            title='Cumulative FFT Responses Over Time for Each Surgery',
+            xaxis=dict(
+                title='Time',
+                gridcolor='#888888',
+                gridwidth=0.5,
+                showgrid=True,
+                showline=False,  # Show the bottom spine
+                linewidth=1,
+                linecolor='black',
+                mirror=True
+            ),
+            yaxis=dict(
+                title='Cumulative FFT Responses',
+                gridcolor='#888888',
+                gridwidth=0.5,
+                showgrid=True,
+                showline=False,  # Show the left spine
+                linewidth=1,
+                linecolor='black',
+                mirror=True
+            ),
+            plot_bgcolor='white',
+            legend=dict(
+                title='Surgery',
+                x=1.05,
+                y=1,
+                xanchor='left',
+                yanchor='top'
+            ),
+            width=750,  # Set the width to 750 pixels
+            height=750  # Set the height to 850 pixels
+        )
 
-        ax.spines["top"].set_visible(False)
-        ax.spines["right"].set_visible(False)
-        ax.spines["left"].set_visible(False)
-        plt.title("Cumulative FFT Responses Over Time for Each Surgery")
-        plt.xlabel("Time")
-        plt.ylabel("Cumulative FFT Responses")
-        plt.legend(title="Surgery", bbox_to_anchor=(1.05, 1), loc="upper left")
-        plt.xticks(rotation=45)
-        plt.tight_layout()
-        st.pyplot(plt)
+        fig.update_xaxes(tickangle=45)
+
+        st.plotly_chart(fig)
 
     elif tab_selector == "PCN Rating": # ----------------------------------------------------- PCN Rating 
         st.subheader("PCN Rating")
@@ -934,53 +961,84 @@ elif page == "PCN Dashboard":
                 plt.tight_layout()
                 plt.legend(title='Improvement Labels', bbox_to_anchor=(1.05, 1), loc='upper left')
                 st.pyplot(plt)
-            else:
+            else: 
                 palette = {'positive': '#2e5f77', 'negative': '#d7662a', 'neutral': '#d7d8d7'}
                 hue_order = ['positive', 'neutral', 'negative']
-                category_counts = data['feedback_labels'].value_counts()
-                order = category_counts.index
-                st.markdown('**Feedback Classification** - Brompton Health PCN')
-                # Create a Seaborn bar plot
-                plt.figure(figsize=(10, 8))
-                ax = sns.countplot(y="feedback_labels", data=data, hue="sentiment_free_text", palette=palette, hue_order=hue_order, order=order, dodge=False)
-                ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-                ax.yaxis.grid(False)
-                ax.spines["top"].set_visible(False)
-                ax.spines["right"].set_visible(False)
-                ax.spines["left"].set_visible(True)
-                ax.spines["bottom"].set_visible(False)
-                # Adding titles and labels for clarity
-                plt.title("Counts of Feedback Classification")
-                plt.xlabel("Counts")
-                plt.ylabel("")
 
-                # Streamlit function to display matplotlib figures
-                st.pyplot(plt)
+                # Create a cross-tabulation of feedback labels and sentiment categories
+                crosstab = pd.crosstab(data['feedback_labels'], data['sentiment_free_text'])
+                crosstab = crosstab.reindex(columns=hue_order)
+
+                # Sort the feedback labels by total counts in descending order
+                crosstab_sorted = crosstab.sort_values(by=hue_order, ascending=False)
+
+                # Create a horizontal stacked bar chart using Plotly
+                fig = go.Figure(
+                    data=[
+                        go.Bar(
+                            y=crosstab_sorted.index,
+                            x=crosstab_sorted[sentiment],
+                            name=sentiment,
+                            orientation='h',
+                            marker=dict(color=palette[sentiment])
+                        )
+                        for sentiment in hue_order
+                    ],
+                    layout=go.Layout(
+                        title="Feedback Classification",
+                        xaxis=dict(title='Counts', gridcolor='#888888', gridwidth=0.5, showgrid=True),
+                        yaxis=dict(title='Feedback Labels', showgrid=False),
+                        barmode='stack',
+                        plot_bgcolor='white',
+                        showlegend=True,
+                        legend=dict(x=1.0, y=1.0),
+                        width=750,  # Set the width to 1200 pixels (12 inches)
+                        height=550   # Set the height to 800 pixels (8 inches)
+                    )
+                )
+
+                # Streamlit function to display Plotly figures
+                st.plotly_chart(fig)
+                               
                 st.markdown("---")
+                
                 palette = {'positive': '#90bfca', 'negative': '#f3aa49', 'neutral': '#ece7e3'}
                 hue_order = ['positive', 'neutral', 'negative']
-                category_counts = data['improvement_labels'].value_counts()
-                order = category_counts.index
-                st.markdown('**Improvement Suggestions Classification** - Brompton Health PCN')
-                # Create a Seaborn bar plot
-                plt.figure(figsize=(10, 8))
-                ax = sns.countplot(data=data, y="improvement_labels", hue="sentiment_free_text", palette=palette, hue_order=hue_order, order=order, dodge=False)
 
-                ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-                ax.yaxis.grid(False)
+                # Create a cross-tabulation of feedback labels and sentiment categories
+                crosstab = pd.crosstab(data['improvement_labels'], data['sentiment_do_better'])
+                crosstab = crosstab.reindex(columns=hue_order)
 
-                ax.spines["top"].set_visible(False)
-                ax.spines["right"].set_visible(False)
-                ax.spines["left"].set_visible(True)
-                ax.spines["bottom"].set_visible(False)
-                # Adding titles and labels for clarity
-                plt.title("Counts of Improvement Catergories")
-                plt.xlabel("Counts")
-                plt.ylabel("")
+                # Sort the feedback labels by total counts in descending order
+                crosstab_sorted = crosstab.sort_values(by=hue_order, ascending=False)
 
-                # Streamlit function to display matplotlib figures
-                st.pyplot(plt)
-                st.markdown("---")
+                # Create a horizontal stacked bar chart using Plotly
+                fig = go.Figure(
+                    data=[
+                        go.Bar(
+                            y=crosstab_sorted.index,
+                            x=crosstab_sorted[sentiment],
+                            name=sentiment,
+                            orientation='h',
+                            marker=dict(color=palette[sentiment])
+                        )
+                        for sentiment in hue_order
+                    ],
+                    layout=go.Layout(
+                        title='Improvement Suggestion Classification',
+                        xaxis=dict(title='Counts', gridcolor='#888888', gridwidth=0.5, showgrid=True),
+                        yaxis=dict(title='Improvement Suggestion Labels', showgrid=False),
+                        barmode='stack',
+                        plot_bgcolor='white',
+                        showlegend=True,
+                        legend=dict(x=1.0, y=1.0),
+                        width=750,  # Set the width to 1200 pixels (12 inches)
+                        height=550   # Set the height to 800 pixels (8 inches)
+                    )
+                )
+
+                # Streamlit function to display Plotly figures
+                st.plotly_chart(fig)
                 
             
 # == Rating & Sentiment Analysis Correlation ======================================================================
@@ -1297,37 +1355,46 @@ Below the chart is a multi-select field where you can choose to filter and revie
     )
 
     if tab_selector == "Feedback Topic Counts":
-        # Calculate value counts
-        label_counts = filtered_data["feedback_labels"].value_counts(
-            ascending=False
-        )  # Use ascending=True to match the order in your image
-
-        # Convert the Series to a DataFrame
-        label_counts_df = label_counts.reset_index()
-        label_counts_df.columns = ["Feedback Classification", "Counts"]
-
-        # Define the palette conditionally based on the category names
-        palette = {'positive': '#2e5f77', 'negative': '#d7662a', 'neutral': '#eda73b'}
+        palette = {'positive': '#2e5f77', 'negative': '#d7662a', 'neutral': '#d7d8d7'}
         hue_order = ['positive', 'neutral', 'negative']
-        category_counts = filtered_data['feedback_labels'].value_counts()
-        order = category_counts.index       
-        # Create a Seaborn bar plot
-        plt.figure(figsize=(10, 8))
-        ax = sns.countplot(y="feedback_labels", data=filtered_data, hue="sentiment_free_text", palette=palette, hue_order=hue_order, order=order, dodge=False)
-        ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-        ax.yaxis.grid(False)
-        ax.spines["top"].set_visible(False)
-        ax.spines["right"].set_visible(False)
-        ax.spines["left"].set_visible(True)
-        ax.spines["bottom"].set_visible(False)
-        # Adding titles and labels for clarity
-        plt.title("Counts of Feedback Classification")
-        plt.xlabel("Counts")
-        plt.ylabel("")
 
-        # Streamlit function to display matplotlib figures
-        st.pyplot(plt)
+        # Create a cross-tabulation of feedback labels and sentiment categories
+        crosstab = pd.crosstab(filtered_data['feedback_labels'], filtered_data['sentiment_free_text'])
+        crosstab = crosstab.reindex(columns=hue_order)
+
+        # Sort the feedback labels by total counts in descending order
+        crosstab_sorted = crosstab.sort_values(by=hue_order, ascending=False)
+
+        # Create a horizontal stacked bar chart using Plotly
+        fig = go.Figure(
+            data=[
+                go.Bar(
+                    y=crosstab_sorted.index,
+                    x=crosstab_sorted[sentiment],
+                    name=sentiment,
+                    orientation='h',
+                    marker=dict(color=palette[sentiment])
+                )
+                for sentiment in hue_order
+            ],
+            layout=go.Layout(
+                title="Feedback Classification",
+                xaxis=dict(title='Counts', gridcolor='#888888', gridwidth=0.5, showgrid=True),
+                yaxis=dict(title='Feedback Labels', showgrid=False),
+                barmode='stack',
+                plot_bgcolor='white',
+                showlegend=True,
+                legend=dict(x=1.0, y=1.0),
+                width=750,  # Set the width to 1200 pixels (12 inches)
+                height=550   # Set the height to 800 pixels (8 inches)
+            )
+        )
+
+        # Streamlit function to display Plotly figures
+        st.plotly_chart(fig)
+                
         st.markdown("---")
+        
         # View Patient Feedback
         st.subheader("View Patient Feedback")
         class_list = list(filtered_data["feedback_labels"].unique())
@@ -1608,26 +1675,42 @@ The length of each bar signifies the count of feedback entries that fall into th
         # Define the palette conditionally based on the category names
         palette = {'positive': '#90bfca', 'negative': '#f3aa49', 'neutral': '#ece7e3'}
         hue_order = ['positive', 'neutral', 'negative']
-        category_counts = filtered_data['improvement_labels'].value_counts()
-        order = category_counts.index
-        # Create a Seaborn bar plot
-        plt.figure(figsize=(10, 8))
-        ax = sns.countplot(data=filtered_data, y="improvement_labels", hue="sentiment_free_text", palette=palette, hue_order=hue_order, order=order, dodge=False)
 
-        ax.xaxis.grid(True, linestyle="--", linewidth=0.5, color="#888888")
-        ax.yaxis.grid(False)
+        # Create a cross-tabulation of feedback labels and sentiment categories
+        crosstab = pd.crosstab(filtered_data['improvement_labels'], filtered_data['sentiment_do_better'])
+        crosstab = crosstab.reindex(columns=hue_order)
 
-        ax.spines["top"].set_visible(False)
-        ax.spines["right"].set_visible(False)
-        ax.spines["left"].set_visible(True)
-        ax.spines["bottom"].set_visible(False)
-        # Adding titles and labels for clarity
-        plt.title("Counts of Improvement Catergories")
-        plt.xlabel("Counts")
-        plt.ylabel("")
+        # Sort the feedback labels by total counts in descending order
+        crosstab_sorted = crosstab.sort_values(by=hue_order, ascending=False)
 
-        # Streamlit function to display matplotlib figures
-        st.pyplot(plt)
+        # Create a horizontal stacked bar chart using Plotly
+        fig = go.Figure(
+            data=[
+                go.Bar(
+                    y=crosstab_sorted.index,
+                    x=crosstab_sorted[sentiment],
+                    name=sentiment,
+                    orientation='h',
+                    marker=dict(color=palette[sentiment])
+                )
+                for sentiment in hue_order
+            ],
+            layout=go.Layout(
+                title='Improvement Suggestion Classification',
+                xaxis=dict(title='Counts', gridcolor='#888888', gridwidth=0.5, showgrid=True),
+                yaxis=dict(title='Improvement Suggestion Labels', showgrid=False),
+                barmode='stack',
+                plot_bgcolor='white',
+                showlegend=True,
+                legend=dict(x=1.0, y=1.0),
+                width=750,  # Set the width to 1200 pixels (12 inches)
+                height=550   # Set the height to 800 pixels (8 inches)
+            )
+        )
+
+        # Streamlit function to display Plotly figures
+        st.plotly_chart(fig)
+                
         st.markdown("---")
 
         st.subheader("View Patient Improvement Suggestions")
@@ -1663,7 +1746,8 @@ The length of each bar signifies the count of feedback entries that fall into th
                         
                     if str(text).lower() != "nan":
                         st.markdown(f"- :{text_color}[{str(text)}] ")
-    
+                        
+                           
     if tab_selector == "Improvement Topic Analysis over Time":
             filtered_data['time'] = pd.to_datetime(filtered_data['time'])
 
