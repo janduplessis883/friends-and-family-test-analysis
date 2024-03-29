@@ -220,6 +220,8 @@ def feedback_classification(data, batch_size=16):
         "Surgery Website",
         "Telehealth",
         "Vaccinations",
+        "Prescriptions and Medication Management",
+        "Mental Health Support",
     ]  # Include all your categories here
 
     # Initialize the list to store labels
@@ -293,6 +295,8 @@ def improvement_classification(data, batch_size=16):
         "Surgery Website",
         "Telehealth",
         "Vaccinations",
+        "Prescriptions and Medication Management",
+        "Mental Health Support",
     ]  # Your improvement labels
 
     # Initialize the list to store improvement labels

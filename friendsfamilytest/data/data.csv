@@ -3777,26 +3777,26 @@ time,rating,free_text,do_better,surgery,sentiment_free_text,sentiment_score_free
 2024-03-28 18:24:00,Extremely likely,Excellent service from requesting appointments to supportive GP,,The Chelsea Practice,positive,0.9598726034164428,neutral,0.0,8.0,2,5.0,Patient Respect,
 2024-03-28 18:26:00,Likely,,,The Chelsea Practice,neutral,0.0,neutral,0.0,5.0,5,4.0,,
 2024-03-28 18:26:00,Extremely likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,0.0,0,5.0,,
-2024-03-28 18:33:00,Extremely likely,Both the reception team and Dr PERSON were excellent Extremely helpful and knowledgeable about my issue,,The Chelsea Practice,positive,0.9356457591056824,neutral,0.0,16.0,1,5.0,Reception Staff Interaction,
-2024-03-28 18:41:00,Likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,2.0,3,4.0,,
-2024-03-28 18:41:00,Extremely likely,Because of better service and Excellence,,Earls Court Surgery,positive,0.9041037559509276,neutral,0.0,6.0,2,5.0,Patient Respect,
-2024-03-28 19:14:00,Extremely likely,From the reception team to the nurses and Drs they are kind and helpful,,The Chelsea Practice,positive,0.9501428604125975,neutral,0.0,14.0,1,5.0,Staff Empathy and Compassion,
-2024-03-28 19:17:00,Extremely likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,1.0,0,5.0,,
-2024-03-28 19:55:00,Likely,need more doctor for a choice,,Earls Court Surgery,neutral,0.7848932147026062,neutral,0.0,6.0,4,4.0,Appointment Availability,
-2024-03-28 20:19:00,Extremely likely,Very accomodating helpful and friendly staff,,Earls Court Surgery,positive,0.9673415422439576,neutral,0.0,6.0,0,5.0,Staff Professionalism,
-2024-03-28 20:45:00,Likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,0.0,0,4.0,,
-2024-03-28 21:04:00,Extremely likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,0.0,0,5.0,,
-2024-03-28 21:30:00,Extremely likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,3.0,1,5.0,,
-2024-03-28 21:31:00,Extremely likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,0.0,0,5.0,,
-2024-03-28 21:48:00,Likely,Nice doctors and a choice of male or female,No everyone was pleasant and helpful,Earls Court Surgery,positive,0.9200289845466614,positive,0.8919086456298828,9.0,6,4.0,Treatment Quality,Patient Respect
-2024-03-28 22:34:00,Extremely likely,,,The Chelsea Practice,neutral,0.0,neutral,0.0,0.0,0,5.0,,
-2024-03-29 00:12:00,Extremely likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,2.0,0,5.0,,
-2024-03-29 05:32:00,Extremely likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,3.0,2,5.0,,
-2024-03-29 05:50:00,Likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,4.0,3,4.0,,
-2024-03-29 06:55:00,Extremely likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,5.0,0,5.0,,
-2024-03-29 07:20:00,Extremely likely,,,The Chelsea Practice,neutral,0.0,neutral,0.0,3.0,0,5.0,,
+2024-03-28 18:33:55,Extremely likely,Both the reception team and Dr PERSON were excellent Extremely helpful and knowledgeable about my issue,,The Chelsea Practice,positive,0.9356457591056824,neutral,0.0,16.0,1,5.0,Reception Staff Interaction,
+2024-03-28 18:41:06,Likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,2.0,3,4.0,,
+2024-03-28 18:41:31,Extremely likely,Because of better service and Excellence,,Earls Court Surgery,positive,0.9041037559509277,neutral,0.0,6.0,2,5.0,Patient Respect,
+2024-03-28 19:14:36,Extremely likely,From the reception team to the nurses and Drs they are kind and helpful,,The Chelsea Practice,positive,0.9501428604125977,neutral,0.0,14.0,1,5.0,Staff Empathy and Compassion,
+2024-03-28 19:17:28,Extremely likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,1.0,0,5.0,,
+2024-03-28 19:55:43,Likely,need more doctor for a choice,,Earls Court Surgery,neutral,0.7848932147026062,neutral,0.0,6.0,4,4.0,Appointment Availability,
+2024-03-28 20:19:05,Extremely likely,Very accomodating helpful and friendly staff,,Earls Court Surgery,positive,0.9673415422439575,neutral,0.0,6.0,0,5.0,Staff Professionalism,
+2024-03-28 20:45:16,Likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,0.0,0,4.0,,
+2024-03-28 21:04:10,Extremely likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,0.0,0,5.0,,
+2024-03-28 21:30:30,Extremely likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,3.0,1,5.0,,
+2024-03-28 21:31:06,Extremely likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,0.0,0,5.0,,
+2024-03-28 21:48:01,Likely,Nice doctors and a choice of male or female,No everyone was pleasant and helpful,Earls Court Surgery,positive,0.9200289845466614,positive,0.8919086456298828,9.0,6,4.0,Treatment Quality,Patient Respect
+2024-03-28 22:34:37,Extremely likely,,,The Chelsea Practice,neutral,0.0,neutral,0.0,0.0,0,5.0,,
+2024-03-29 00:12:13,Extremely likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,2.0,0,5.0,,
+2024-03-29 05:32:18,Extremely likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,3.0,2,5.0,,
+2024-03-29 05:50:47,Likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,4.0,3,4.0,,
+2024-03-29 06:55:14,Extremely likely,,,Earls Court Surgery,neutral,0.0,neutral,0.0,5.0,0,5.0,,
+2024-03-29 07:20:36,Extremely likely,,,The Chelsea Practice,neutral,0.0,neutral,0.0,3.0,0,5.0,,
 2024-03-29 07:41:26,Extremely likely,They got my time am appreciative of their humanity,Well home visit but as am far away it is ok they blessing enough as they are,Earls Court Surgery,positive,0.9263612627983093,positive,0.7163344025611877,9.0,17,5.0,Patient Respect,Follow-up and Continuity of Care
-2024-03-29 07:56:03,Extremely likely,I recommend services provided received at Earls Court Surgery for decades,More concern regarding my current worsening ongoing mental health conditions since 25 04 2014,Earls Court Surgery,neutral,0.49646639823913574,negative,0.7651550769805908,10.0,12,5.0,Follow-up and Continuity of Care,Follow-up and Continuity of Care
+2024-03-29 07:56:03,Extremely likely,I recommend services provided received at Earls Court Surgery for decades,More concern regarding my current worsening ongoing mental health conditions since 25 04 2014,Earls Court Surgery,neutral,0.49646639823913574,negative,0.7651550769805908,10.0,12,5.0,Follow-up and Continuity of Care,Mental Health Support
 2024-03-29 08:11:18,Extremely likely,,In my opinion it is better when one as a patient becomes familiar with a GP seeing a different one each time I do not feel that it helps to build a better relationship,The Chelsea Practice,neutral,0.0,neutral,0.6513898372650146,4.0,34,5.0,,Follow-up and Continuity of Care
 2024-03-29 10:14:29,Extremely likely,Helpful and we looked after well,They are all friendly from Reception Doctor s especially nurse PERSON she is the best,Earls Court Surgery,positive,0.9164173007011414,positive,0.9781925678253174,6.0,14,5.0,Patient Respect,Reception Staff Interaction
 2024-03-29 10:14:36,Extremely likely,My doctor is very welcoming and helpful Thanks,We got what we need so far,Earls Court Surgery,positive,0.9795525670051575,positive,0.7217476963996887,8.0,7,5.0,Patient Respect,Test Results
