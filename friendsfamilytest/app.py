@@ -1542,7 +1542,7 @@ Below the chart is a multi-select field where you can choose to filter and revie
                     elif sentiment == "neutral":
                         text_color = "gray"
                     else:
-                        text_color = "blue"
+                        text_color = "black"
 
                     if str(text).lower() != "nan":
                         st.markdown(f"- :{text_color}[{str(text)}] ")
@@ -1615,7 +1615,7 @@ Below the chart is a multi-select field where you can choose to filter and revie
                     elif sentiment == "neutral":
                         text_color = "gray"
                     else:
-                        text_color = "blue"
+                        text_color = "black"
 
                     if str(text).lower() != "nan":
                         st.markdown(f"- :{text_color}[{str(text)}] ")
