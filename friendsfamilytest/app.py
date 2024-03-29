@@ -1017,7 +1017,7 @@ elif page == "PCN Dashboard":
                 "negative": "#d7662a",
                 "neutral": "#d7d8d7",
             }
-            hue_order = ["positive", "neutral", "negative"]
+            hue_order = ["neutral", "negative", "positive"]
 
             # Create a cross-tabulation of feedback labels and sentiment categories
             crosstab = pd.crosstab(data["feedback_labels"], data["sentiment_free_text"])
@@ -1066,7 +1066,7 @@ elif page == "PCN Dashboard":
                 "negative": "#f3aa49",
                 "neutral": "#ece7e3",
             }
-            hue_order = ["positive", "neutral", "negative"]
+            hue_order = ["neutral", "negative", "positive"]
 
             # Create a cross-tabulation of feedback labels and sentiment categories
             crosstab = pd.crosstab(
@@ -1464,7 +1464,7 @@ Below the chart is a multi-select field where you can choose to filter and revie
 
     if tab_selector == "Feedback Topic Counts":
         palette = {"positive": "#2e5f77", "negative": "#d7662a", "neutral": "#d7d8d7"}
-        hue_order = ["positive", "neutral", "negative"]
+        hue_order = ["neutral", "negative", "positive"]
 
         # Create a cross-tabulation of feedback labels and sentiment categories
         crosstab = pd.crosstab(
@@ -1808,7 +1808,7 @@ The length of each bar signifies the count of feedback entries that fall into th
 
         # Define the palette conditionally based on the category names
         palette = {"positive": "#90bfca", "negative": "#f3aa49", "neutral": "#ece7e3"}
-        hue_order = ["positive", "neutral", "negative"]
+        hue_order = ["neutral", "negative", "positive"]
 
         # Create a cross-tabulation of feedback labels and sentiment categories
         crosstab = pd.crosstab(
