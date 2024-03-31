@@ -66,7 +66,6 @@ def word_count(df):
     return df
 
 
-
 @time_it
 def check_column_length(dataframe, column_name, word_count_length):
     # Iterate over each entry in the specified column
@@ -411,7 +410,7 @@ if __name__ == "__main__":
         data = add_rating_score(data)
 
         data = clean_data(data)
-        
+
         logger.info("🫥 Annonymize with Transformer")
         data["free_text"] = data["free_text"].apply(anonymize_names_with_transformers)
         data["do_better"] = data["do_better"].apply(anonymize_names_with_transformers)
