@@ -12,6 +12,7 @@ from openai import OpenAI
 import streamlit_shadcn_ui as ui
 import requests
 import plotly.graph_objects as go
+import plotly.express as px
 
 client = OpenAI()
 
@@ -942,11 +943,29 @@ elif page == "PCN Dashboard":
             default_checked=False, label="Time Series", key="switch_dash_pcn"
         )
         if toggle:
-            st.markdown(
-                "**Feedback Classification - Time Series** - Brompton Health PCN"
-            )
-            data["time"] = pd.to_datetime(data["time"])
 
+            radio_options = [
+                {"label": "All", "value": "all", "id": "r7"},
+                {"label": "Negative", "value": "neg", "id": "r8"},
+                {"label": "Neutral + Positive", "value": "pos", "id": "r9"},
+            ]
+            radio_value = ui.radio_group(
+                options=radio_options, default_value="all", key="radio3"
+            )
+
+            if radio_value == "pos":
+                data = data[
+                    (
+                        (data["sentiment_free_text"] == "neutral")
+                        | (data["sentiment_free_text"] == "positive")
+                    )
+                ]
+            elif radio_value == "neg":
+                data = data[(data["sentiment_free_text"] == "negative")]
+            else:
+                data = data
+
+            data["time"] = pd.to_datetime(data["time"])
             # Setting the 'time' column as the index
             data.set_index("time", inplace=True)
 
@@ -959,30 +978,41 @@ elif page == "PCN Dashboard":
                 .unstack(fill_value=0)
             )
 
-            # Converting the period index back to a timestamp for compatibility with Seaborn
+            # Converting the period index back to a timestamp for compatibility with Plotly
             monthly_feedback_counts.index = monthly_feedback_counts.index.to_timestamp()
 
-            # Plotting the data
-            plt.figure(figsize=(12, 8))
-            sns.lineplot(data=monthly_feedback_counts, dashes=False, linewidth=2)
-            plt.grid(True)
-            plt.gca().spines["right"].set_visible(False)
-            plt.gca().spines["top"].set_visible(False)
-            plt.title("Time Series of Feedback Labels (Monthly Aggregation)")
-            plt.ylabel("Count of Feedback Labels")
-            plt.xlabel("Month")
-            plt.xticks(rotation=45)
-            plt.tight_layout()
-            plt.legend(
-                title="Feedback Labels", bbox_to_anchor=(1.05, 1), loc="upper left"
+            # Plotting the data using Plotly Express
+            fig1 = px.line(
+                monthly_feedback_counts,
+                x=monthly_feedback_counts.index,
+                y=monthly_feedback_counts.columns,
+                title="Time Series of Feedback Labels (Monthly Aggregation)",
+                labels={
+                    "x": "Month",
+                    "value": "Count of Feedback Labels",
+                    "variable": "Feedback Labels",
+                },
             )
-            st.pyplot(plt)
+
+            # Updating the layout
+            fig1.update_layout(
+                width=900,
+                legend=dict(
+                    title="Feedback Labels", x=1.05, y=1, xanchor="left", yanchor="top"
+                ),
+                xaxis=dict(
+                    gridcolor="lightgray", showline=True, linewidth=1, linecolor="black"
+                ),
+                yaxis=dict(
+                    gridcolor="lightgray", showline=True, linewidth=1, linecolor="black"
+                ),
+                plot_bgcolor="white",
+            )
+
+            # Displaying the plot in Streamlit
+            st.plotly_chart(fig1)
 
             st.markdown("---")
-
-            st.markdown(
-                "**Improvement Suggestions Classification - Time Series** - Brompton Health PCN"
-            )
 
             # Grouping by month and 'improvement_labels' and then counting the occurrences
             monthly_improvement_counts = (
@@ -991,26 +1021,45 @@ elif page == "PCN Dashboard":
                 .unstack(fill_value=0)
             )
 
-            # Converting the period index back to a timestamp for compatibility with Seaborn
+            # Converting the period index back to a timestamp for compatibility with Plotly
             monthly_improvement_counts.index = (
                 monthly_improvement_counts.index.to_timestamp()
             )
 
-            # Plotting the data for 'improvement_labels'
-            plt.figure(figsize=(12, 8))
-            sns.lineplot(data=monthly_improvement_counts, dashes=False, linewidth=2)
-            plt.grid(True)
-            plt.gca().spines["right"].set_visible(False)
-            plt.gca().spines["top"].set_visible(False)
-            plt.title("Time Series of Improvement Labels (Monthly Aggregation)")
-            plt.ylabel("Count of Improvement Labels")
-            plt.xlabel("Month")
-            plt.xticks(rotation=45)
-            plt.tight_layout()
-            plt.legend(
-                title="Improvement Labels", bbox_to_anchor=(1.05, 1), loc="upper left"
+            # Plotting the data for 'improvement_labels' using Plotly Express
+            fig2 = px.line(
+                monthly_improvement_counts,
+                x=monthly_improvement_counts.index,
+                y=monthly_improvement_counts.columns,
+                title="Time Series of Improvement Labels (Monthly Aggregation)",
+                labels={
+                    "x": "Month",
+                    "value": "Count of Improvement Labels",
+                    "variable": "Improvement Labels",
+                },
             )
-            st.pyplot(plt)
+
+            # Updating the layout
+            fig2.update_layout(
+                width=900,
+                legend=dict(
+                    title="Improvement Labels",
+                    x=1.05,
+                    y=1,
+                    xanchor="left",
+                    yanchor="top",
+                ),
+                xaxis=dict(
+                    gridcolor="lightgray", showline=True, linewidth=1, linecolor="black"
+                ),
+                yaxis=dict(
+                    gridcolor="lightgray", showline=True, linewidth=1, linecolor="black"
+                ),
+                plot_bgcolor="white",
+            )
+
+            # Displaying the plot in Streamlit
+            st.plotly_chart(fig2)
         else:
             palette = {
                 "positive": "#2e5f77",
@@ -1390,7 +1439,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
             with st.container(height=500, border=True):
                 for _, row in neg1.iterrows():
                     free_text = row["free_text"]
-                    cat = row['feedback_labels']
+                    cat = row["feedback_labels"]
                     time_ = row["time"]
                     rating = row["rating"]
                     score = row["sentiment_score_free_text"]
@@ -1419,7 +1468,7 @@ Select Patient feedback to review, this page only displays feedback that on Sent
             with st.container(height=500, border=True):
                 for _, row in neg2.iterrows():
                     do_better = row["do_better"]
-                    cat = row['improvement_labels']
+                    cat = row["improvement_labels"]
                     time_ = row["time"]
                     rating = row["rating"]
                     score = row["sentiment_score_do_better"]
@@ -1438,31 +1487,121 @@ elif page == "Feedback Classification":
     st.title("Feedback Classification")
     st.markdown("Responses to **FFT Q1**: Please tell us why you feel this way?")
 
-    toggle = ui.switch(
-        default_checked=False, label="Explain this page.", key="switch_dash"
-    )
+    toggle = ui.switch(default_checked=False, label="Time Series", key="switch_dash")
     if toggle:
-        st.markdown(
-            """Responses to FFT Q1: Please tell us why you feel this way? This plot represents positive and negative response.
-            
-1. **Bar Chart**:
-This bar chart illustrates the range of emotions captured in the FFT feedback, as categorized by a sentiment analysis model trained on the `go_emotions` dataset. Each bar represents one of the 27 emotion labels that the model can assign, showing how often each emotion was detected in the patient feedback.
-The **'neutral' category**, which has been assigned the most counts, includes instances where patients did not provide any textual feedback, defaulting to a 'neutral' classification. Other emotions, such as 'admiration' and 'approval', show varying lower counts, reflecting the variety of sentiments expressed by patients regarding their care experiences.
 
-2. **Multi-select Input Field**:
-Below the chart is a multi-select field where you can choose to filter and review the feedback based on these emotion labels. This feature allows you to delve deeper into the qualitative data, understanding the nuances behind the ratings patients have given and potentially uncovering areas for improvement in patient experience."""
+        radio_options = [
+            {"label": "All", "value": "all", "id": "r1"},
+            {"label": "Negative", "value": "neg", "id": "r2"},
+            {"label": "Neutral + Positive", "value": "pos", "id": "r3"},
+        ]
+        radio_value = ui.radio_group(
+            options=radio_options, default_value="all", key="radio1"
         )
 
-    tab_selector = ui.tabs(
-        options=[
-            "Feedback Topic Counts",
-            "Feedback Topic Analysis over Time",
-        ],
-        default_value="Feedback Topic Counts",
-        key="tab_feedback",
-    )
+        if radio_value == "pos":
+            filtered_data = filtered_data[
+                (
+                    (filtered_data["sentiment_free_text"] == "neutral")
+                    | (filtered_data["sentiment_free_text"] == "positive")
+                )
+            ]
+        elif radio_value == "neg":
+            filtered_data = filtered_data[
+                (filtered_data["sentiment_free_text"] == "negative")
+            ]
+        else:
+            filtered_data = filtered_data
 
-    if tab_selector == "Feedback Topic Counts":
+        filtered_data["time"] = pd.to_datetime(filtered_data["time"])
+
+        # Setting the 'time' column as the index
+        filtered_data.set_index("time", inplace=True)
+
+        # Grouping by month and 'feedback_labels' and then counting the occurrences
+        # Converting the time index to a period index for monthly resampling
+        filtered_data.index = filtered_data.index.to_period("M")
+        monthly_feedback_counts = (
+            filtered_data.groupby([filtered_data.index, "feedback_labels"])
+            .size()
+            .unstack(fill_value=0)
+        )
+
+        # Converting the period index back to a timestamp for compatibility with Seaborn
+        monthly_feedback_counts.index = monthly_feedback_counts.index.to_timestamp()
+
+        fig = px.line(
+            monthly_feedback_counts,
+            x=monthly_feedback_counts.index,
+            y=monthly_feedback_counts.columns,
+            title="Time Series of Feedback Topics (Monthly Aggregation)",
+            labels={
+                "x": "Month",
+                "value": "Count of Feedback Labels",
+                "variable": "Feedback Labels",
+            },
+        )
+
+        # Updating the layout with increased width
+        fig.update_layout(
+            width=900,  # Adjust the width value as needed
+            legend=dict(
+                title="Feedback Labels", x=1.05, y=1, xanchor="left", yanchor="top"
+            ),
+            xaxis=dict(
+                gridcolor="lightgray", showline=True, linewidth=1, linecolor="black"
+            ),
+            yaxis=dict(
+                gridcolor="lightgray", showline=True, linewidth=1, linecolor="black"
+            ),
+            plot_bgcolor="white",
+        )
+
+        # Displaying the plot in Streamlit
+        st.plotly_chart(fig)
+
+        st.markdown("---")
+        # View Patient Feedback
+        st.subheader("View Patient Feedback")
+        class_list = list(filtered_data["feedback_labels"].unique())
+        cleaned_class_list = [x for x in class_list if not pd.isna(x)]
+        selected_ratings = st.multiselect(
+            "Select Feedback Categories:",
+            cleaned_class_list,
+            help="Feedback in orange have a negative sentiment.",
+        )
+
+        # Filter the data based on the selected classifications
+        filtered_classes = filtered_data[
+            filtered_data["feedback_labels"].isin(selected_ratings)
+        ]
+
+        if not selected_ratings:
+            ui.badges(
+                badge_list=[("Please select at least one classification.", "outline")],
+                class_name="flex gap-2",
+                key="badges10",
+            )
+        else:
+            for rating in selected_ratings:
+                specific_class = filtered_classes[
+                    filtered_classes["feedback_labels"] == rating
+                ]
+                st.subheader(f"{rating.capitalize()} ({str(specific_class.shape[0])})")
+                for index, row in specific_class.iterrows():
+                    text = row["free_text"]
+                    sentiment = row["sentiment_free_text"]
+                    if sentiment == "negative":
+                        text_color = "orange"
+                    elif sentiment == "neutral":
+                        text_color = "gray"
+                    else:
+                        text_color = "black"
+
+                    if str(text).lower() != "nan":
+                        st.markdown(f"- :{text_color}[{str(text)}] ")
+
+    else:
         palette = {"positive": "#2e5f77", "negative": "#d7662a", "neutral": "#d7d8d7"}
         hue_order = ["negative", "neutral", "positive"]
 
@@ -1507,79 +1646,6 @@ Below the chart is a multi-select field where you can choose to filter and revie
 
         st.markdown("---")
 
-        # View Patient Feedback
-        st.subheader("View Patient Feedback")
-        class_list = list(filtered_data["feedback_labels"].unique())
-        cleaned_class_list = [x for x in class_list if not pd.isna(x)]
-        selected_ratings = st.multiselect(
-            "Select Feedback Categories:",
-            cleaned_class_list,
-            help="Feedback in orange have a negative sentiment.",
-        )
-
-        # Filter the data based on the selected classifications
-        filtered_classes = filtered_data[
-            filtered_data["feedback_labels"].isin(selected_ratings)
-        ]
-
-        if not selected_ratings:
-            ui.badges(
-                badge_list=[("Please select at least one classification.", "outline")],
-                class_name="flex gap-2",
-                key="badges10",
-            )
-        else:
-            for rating in selected_ratings:
-                specific_class = filtered_classes[
-                    filtered_classes["feedback_labels"] == rating
-                ]
-                st.subheader(f"{rating.capitalize()} ({str(specific_class.shape[0])})")
-                for index, row in specific_class.iterrows():
-                    text = row["free_text"]
-                    sentiment = row["sentiment_free_text"]
-                    if sentiment == "negative":
-                        text_color = "orange"
-                    elif sentiment == "neutral":
-                        text_color = "gray"
-                    else:
-                        text_color = "black"
-
-                    if str(text).lower() != "nan":
-                        st.markdown(f"- :{text_color}[{str(text)}] ")
-
-    if tab_selector == "Feedback Topic Analysis over Time":
-        filtered_data["time"] = pd.to_datetime(filtered_data["time"])
-
-        # Setting the 'time' column as the index
-        filtered_data.set_index("time", inplace=True)
-
-        # Grouping by month and 'feedback_labels' and then counting the occurrences
-        # Converting the time index to a period index for monthly resampling
-        filtered_data.index = filtered_data.index.to_period("M")
-        monthly_feedback_counts = (
-            filtered_data.groupby([filtered_data.index, "feedback_labels"])
-            .size()
-            .unstack(fill_value=0)
-        )
-
-        # Converting the period index back to a timestamp for compatibility with Seaborn
-        monthly_feedback_counts.index = monthly_feedback_counts.index.to_timestamp()
-
-        # Plotting the data
-        plt.figure(figsize=(12, 10))
-        sns.lineplot(data=monthly_feedback_counts, dashes=False, linewidth=2)
-        plt.gca().spines["right"].set_visible(False)
-        plt.gca().spines["top"].set_visible(False)
-        plt.grid(True)
-        plt.title("Time Series of Feedback Topics (Monthly Aggregation)")
-        plt.ylabel("Count of Feedback Labels")
-        plt.xlabel("Month")
-        plt.xticks(rotation=45)
-        plt.tight_layout()
-        plt.legend(title="Feedback Labels", bbox_to_anchor=(1.05, 1), loc="upper left")
-        st.pyplot(plt)
-
-        st.markdown("---")
         # View Patient Feedback
         st.subheader("View Patient Feedback")
         class_list = list(filtered_data["feedback_labels"].unique())
@@ -1772,28 +1838,133 @@ elif page == "Improvement Suggestions":
         "Responses to **FFT Q2**: Is there anything that would have made your experience better?"
     )
 
-    toggle = ui.switch(
-        default_checked=False, label="Explain this page.", key="switch_dash"
-    )
+    toggle = ui.switch(default_checked=False, label="Time Series", key="switch_dash")
     if toggle:
-        st.markdown(
-            """1. This **horizontal bar chart** provides an analysis of patient feedback addressing areas for potential improvement in healthcare services. Each bar represents a unique category of improvement suggestion derived from patient feedback using zero-shot classification with the `facebook/bart-large-mnli` model. Prior to classification, one-word responses are filtered out to ensure meaningful data is processed.
-The category **"No Improvement Suggestion"** includes feedback that did not suggest any specific changes, which could be interpreted as a form of passive satisfaction. Similarly, the **"Overall Patient Satisfaction"** category likely captures comments that are generally positive, without indicating a need for improvement.
-The length of each bar signifies the count of feedback entries that fall into the corresponding category, providing clear insight into common themes within patient suggestions. For instance, categories like "Reception Services" and "Ambiance of Facility" appear frequently, indicating areas where patients have more frequently suggested improvements.
 
-2. Below the chart is a **multi-select input field** allowing for a more granular exploration of the feedback. This tool enables users to select specific categories and review the actual comments associated with them, aiding healthcare providers in understanding patient perspectives in greater detail and potentially guiding quality improvement initiatives."""
+        radio_options = [
+            {"label": "All", "value": "all", "id": "r4"},
+            {"label": "Negative", "value": "neg", "id": "r5"},
+            {"label": "Neutral + Positive", "value": "pos", "id": "r6"},
+        ]
+        radio_value = ui.radio_group(
+            options=radio_options, default_value="all", key="radio2"
         )
 
-    tab_selector = ui.tabs(
-        options=[
-            "Improvement Topic Counts",
-            "Improvement Topic Analysis over Time",
-        ],
-        default_value="Improvement Topic Counts",
-        key="tab_improvement",
-    )
+        if radio_value == "pos":
+            filtered_data = filtered_data[
+                (
+                    (filtered_data["sentiment_do_better"] == "neutral")
+                    | (filtered_data["sentiment_do_better"] == "positive")
+                )
+            ]
+        elif radio_value == "neg":
+            filtered_data = filtered_data[
+                (filtered_data["sentiment_do_better"] == "negative")
+            ]
+        else:
+            filtered_data = filtered_data
 
-    if tab_selector == "Improvement Topic Counts":
+        filtered_data["time"] = pd.to_datetime(filtered_data["time"])
+
+        # Setting the 'time' column as the index
+        filtered_data.set_index("time", inplace=True)
+
+        # Grouping by month and 'feedback_labels' and then counting the occurrences
+        # Converting the time index to a period index for monthly resampling
+        filtered_data.index = filtered_data.index.to_period("M")
+        monthly_feedback_counts = (
+            filtered_data.groupby([filtered_data.index, "improvement_labels"])
+            .size()
+            .unstack(fill_value=0)
+        )
+
+        # Converting the period index back to a timestamp for compatibility with Seaborn
+        monthly_feedback_counts.index = monthly_feedback_counts.index.to_timestamp()
+
+        fig = px.line(
+            monthly_feedback_counts,
+            x=monthly_feedback_counts.index,
+            y=monthly_feedback_counts.columns,
+            title="Time Series of Improvement Topics (Monthly Aggregation)",
+            labels={
+                "x": "Month",
+                "value": "Count of Improvement Labels",
+                "variable": "Improvement Labels",
+            },
+        )
+
+        # Updating the layout
+        fig.update_layout(
+            width=900,
+            legend=dict(
+                title="Improvement Labels", x=1.05, y=1, xanchor="left", yanchor="top"
+            ),
+            xaxis=dict(
+                gridcolor="lightgray", showline=True, linewidth=1, linecolor="black"
+            ),
+            yaxis=dict(
+                gridcolor="lightgray", showline=True, linewidth=1, linecolor="black"
+            ),
+            plot_bgcolor="white",
+        )
+
+        # Displaying the plot in Streamlit
+        st.plotly_chart(fig)
+
+        st.markdown("---")
+        improvement_data = filtered_data[
+            (filtered_data["improvement_labels"] != "No Improvement Suggestion")
+        ]
+        # Calculate value counts
+        label_counts = improvement_data["improvement_labels"].value_counts(
+            ascending=False
+        )  # Use ascending=True to match the order in your image
+
+        # Convert the Series to a DataFrame
+        label_counts_df = label_counts.reset_index()
+        label_counts_df.columns = ["Improvement Labels", "Counts"]
+
+        st.subheader("View Patient Improvement Suggestions")
+        improvement_list = [label for label in label_counts_df["Improvement Labels"]]
+
+        selected_ratings = st.multiselect(
+            "Select Categories:",
+            improvement_list,
+            help="Improvement Suggestions in orange have a negative sentiment.",
+        )
+
+        # Filter the data based on the selected classifications
+        filtered_classes = improvement_data[
+            improvement_data["improvement_labels"].isin(selected_ratings)
+        ]
+
+        if not selected_ratings:
+            ui.badges(
+                badge_list=[("Please select at least one classification.", "outline")],
+                class_name="flex gap-2",
+                key="badges10",
+            )
+        else:
+            for rating in selected_ratings:
+                specific_class = filtered_classes[
+                    filtered_classes["improvement_labels"] == rating
+                ]
+                st.subheader(
+                    f"{str(rating).capitalize()} ({str(specific_class.shape[0])})"
+                )
+                for index, row in specific_class.iterrows():
+                    text = row["do_better"]
+                    text = text.replace("[PERSON]", "PERSON")
+                    sentiment = row["sentiment_do_better"]
+                    if sentiment == "positive" or sentiment == "neutral":
+                        text_color = "black"
+                    else:
+                        text_color = "orange"
+
+                    if str(text).lower() != "nan":
+                        st.markdown(f"- :{text_color}[{str(text)}] ")
+
+    else:
         improvement_data = filtered_data[
             (filtered_data["improvement_labels"] != "No Improvement Suggestion")
         ]
@@ -1850,91 +2021,6 @@ The length of each bar signifies the count of feedback entries that fall into th
         st.plotly_chart(fig)
 
         st.markdown("---")
-
-        st.subheader("View Patient Improvement Suggestions")
-        improvement_list = [label for label in label_counts_df["Improvement Labels"]]
-
-        selected_ratings = st.multiselect(
-            "Select Categories:",
-            improvement_list,
-            help="Improvement Suggestions in orange have a negative sentiment.",
-        )
-
-        # Filter the data based on the selected classifications
-        filtered_classes = improvement_data[
-            improvement_data["improvement_labels"].isin(selected_ratings)
-        ]
-
-        if not selected_ratings:
-            ui.badges(
-                badge_list=[("Please select at least one classification.", "outline")],
-                class_name="flex gap-2",
-                key="badges10",
-            )
-        else:
-            for rating in selected_ratings:
-                specific_class = filtered_classes[
-                    filtered_classes["improvement_labels"] == rating
-                ]
-                st.subheader(
-                    f"{str(rating).capitalize()} ({str(specific_class.shape[0])})"
-                )
-                for index, row in specific_class.iterrows():
-                    text = row["do_better"]
-                    text = text.replace("[PERSON]", "PERSON")
-                    sentiment = row["sentiment_do_better"]
-                    if sentiment == "positive" or sentiment == "neutral":
-                        text_color = "black"
-                    else:
-                        text_color = "orange"
-
-                    if str(text).lower() != "nan":
-                        st.markdown(f"- :{text_color}[{str(text)}] ")
-
-    if tab_selector == "Improvement Topic Analysis over Time":
-        filtered_data["time"] = pd.to_datetime(filtered_data["time"])
-
-        # Setting the 'time' column as the index
-        filtered_data.set_index("time", inplace=True)
-
-        # Grouping by month and 'feedback_labels' and then counting the occurrences
-        # Converting the time index to a period index for monthly resampling
-        filtered_data.index = filtered_data.index.to_period("M")
-        monthly_feedback_counts = (
-            filtered_data.groupby([filtered_data.index, "improvement_labels"])
-            .size()
-            .unstack(fill_value=0)
-        )
-
-        # Converting the period index back to a timestamp for compatibility with Seaborn
-        monthly_feedback_counts.index = monthly_feedback_counts.index.to_timestamp()
-
-        # Plotting the data
-        plt.figure(figsize=(12, 10))
-        sns.lineplot(data=monthly_feedback_counts, dashes=False, linewidth=2)
-        plt.gca().spines["right"].set_visible(False)
-        plt.gca().spines["top"].set_visible(False)
-        plt.grid(True)
-        plt.title("Time Series of Improvement Topics (Monthly Aggregation)")
-        plt.ylabel("Count of Improvement Labels")
-        plt.xlabel("Month")
-        plt.xticks(rotation=45)
-        plt.tight_layout()
-        plt.legend(title="Feedback Labels", bbox_to_anchor=(1.05, 1), loc="upper left")
-        st.pyplot(plt)
-
-        st.markdown("---")
-        improvement_data = filtered_data[
-            (filtered_data["improvement_labels"] != "No Improvement Suggestion")
-        ]
-        # Calculate value counts
-        label_counts = improvement_data["improvement_labels"].value_counts(
-            ascending=False
-        )  # Use ascending=True to match the order in your image
-
-        # Convert the Series to a DataFrame
-        label_counts_df = label_counts.reset_index()
-        label_counts_df.columns = ["Improvement Labels", "Counts"]
 
         st.subheader("View Patient Improvement Suggestions")
         improvement_list = [label for label in label_counts_df["Improvement Labels"]]
