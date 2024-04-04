@@ -555,7 +555,7 @@ elif page == "PCN Dashboard":
             ordered_percentage_pivot_data = percentage_pivot_data[column_order]
 
             # Create the heatmap with the ordered columns
-            plt.figure(figsize=(12, 10))
+            plt.figure(figsize=(12, 9))
             ordered_percentage_heatmap = sns.heatmap(
                 ordered_percentage_pivot_data,
                 annot=True,
@@ -2285,6 +2285,8 @@ elif page == "Feedback Timeline":
         for _, row in filtered_data.iterrows():
             free_text = row["free_text"]
             do_better = row["do_better"]
+            feedback_labels = row['feedback_labels']
+            imp_labels = row['improvement_labels']
             time = row["time"]
             rating = row["rating"]
 
@@ -2292,5 +2294,7 @@ elif page == "Feedback Timeline":
                 st.markdown(f"**{rating}** `{time}`")
                 if str(free_text) not in ["nan"]:
                     st.markdown("🗣️ " + str(free_text))
+                    st.markdown(f"`{feedback_labels}`")
                     if str(do_better) not in ["nan"]:
                         st.markdown("💡 " + str(do_better))
+                        st.markdown(f"`{imp_labels}`")
