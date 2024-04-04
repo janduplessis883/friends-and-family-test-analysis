@@ -1805,7 +1805,7 @@ We employ several machine learning techniques for analysis:
 
     debug_toggle = ui.switch(default_checked=False, label="Debug", key="debug")
     if debug_toggle:
-        st.dataframe(data.tail(50))
+        st.dataframe(data.tail(100))
 
     st.markdown("---")
 
