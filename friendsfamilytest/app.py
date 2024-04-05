@@ -1779,6 +1779,7 @@ Explore the AI MedReview dashboard today and experience the transformative power
 
 Visit [AI MedReview on GitHub](https://github.com/janduplessis883/friends-and-family-test-analysis), where collaboration and contributions are warmly welcomed."""
     )
+    st.write("")
     fig, ax = plt.subplots(figsize=(10, 5))
     sns.countplot(y="surgery", data=data, color="#59646b")
     for p in ax.patches:
@@ -1806,7 +1807,7 @@ Visit [AI MedReview on GitHub](https://github.com/janduplessis883/friends-and-fa
 
     debug_toggle = ui.switch(default_checked=False, label="Debug", key="debug")
     if debug_toggle:
-        st.dataframe(data.tail(100))
+        st.dataframe(data.tail(50))
 
     st.markdown("---")
 
