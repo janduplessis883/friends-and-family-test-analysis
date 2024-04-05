@@ -1773,7 +1773,7 @@ The data we use comes from a GP surgery in West London, showing how this tool ca
 
 We employ several machine learning techniques for analysis:
 
-1. **Sentiment Analysis:** Using Huggingface's 'cardiffnlp/twitter-roberta-base-sentiment-latest' model, we determine the emotional tone of the feedback.
+1. **Sentiment Analysis:** Using Huggingface's `cardiffnlp/twitter-roberta-base-sentiment-latest` model, we determine the emotional tone of the feedback.
 2. HuggingFace BERT-based **named entity recognition (NER)** model, specifically the `dbmdz/bert-large-cased-finetuned-conll03-english pre-trained model`, to identify and anonymize any personally identifiable information (PII) that may appear in user reviews and comments.
 3. **Zero-shot Classification** By carefully specifying our target classification labels, we were able to achieve a classification accuracy of 0.91 on user input, despite the model not being explicitly trained on healthcare-related data. This impressive performance demonstrates the versatility and generalization abilities of the `BART-large-mnli` architecture.  
 
