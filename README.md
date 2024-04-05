@@ -1,24 +1,22 @@
 ![Image](https://github.com/janduplessis883/friends-and-family-test-analysis/blob/master/images/fftestabout.png?raw=true)
 
 ## Friends & Family Test Dashboard for Primary Care
-Welcome to my new dashboard, aimed at enhancing how healthcare providers understand and use patient feedback. This tool focuses on the Friends and Family Test (FFT), which is essential for collecting patients' views on healthcare services. Our approach uses advanced text classification and sentiment analysis to organize and interpret this feedback more effectively.
+Revolutionizing Patient Feedback Analysis in Healthcare
 
-Here's the core idea: Instead of just counting responses, the dashboard analyzes the sentiments behind them—whether positive, negative, or neutral. It assigns a detailed score to each piece of feedback, allowing for a more nuanced understanding of patient satisfaction. This method helps identify specific areas needing improvement and those that are performing well, based on real patient experiences.
+Welcome to AI MedReview, your powerful new dashboard for elevating healthcare providers' understanding and utilization of patient feedback. Our cutting-edge solution focuses on the essential Friends and Family Test (FFT), empowering you to extract deeper insights from this invaluable data source.
+At the core of AI MedReview lies a transformative approach that goes beyond mere quantitative metrics. By leveraging advanced natural language processing and machine learning techniques, we unlock the nuanced sentiments behind patient responses. Our dashboard assigns detailed scores to each piece of feedback, painting a more comprehensive picture of patient satisfaction levels.
 
-For healthcare providers, this tool offers a more insightful way to look at patient feedback. It doesn’t just provide data; it offers a clearer picture of how patients feel about their care. This can help highlight excellence in services and pinpoint areas for potential improvements.
+Through sentiment analysis powered by Hugging Face's `cardiffnlp/twitter-roberta-base-sentiment-latest model`, we precisely determine the emotional tone of patient comments, be it positive, negative, or neutral. This level of granular understanding enables you to celebrate areas of excellence and swiftly identify opportunities for improvement.
 
-The data we use comes from a GP surgery in West London, showing how this tool can be applied in a real healthcare setting.
+But we don't stop there. To protect patient privacy, we employ robust named entity recognition (NER) capabilities, utilizing the Hugging Face `dbmdz/bert-large-cased-finetuned-conll03-english model`. This ensures any personally identifiable information (PII) is seamlessly anonymized, safeguarding the confidentiality of your valuable data.
 
-We employ several machine learning techniques for analysis:
+Furthermore, our innovative zero-shot classification approach, powered by the Facebook `BART-large-mnli` architecture, allows us to categorize patient feedback with remarkable accuracy – even without specialized healthcare training data. By carefully curating our classification labels, we achieved a striking 0.91 accuracy, demonstrating the remarkable versatility of this model.
 
-1. **Sentiment Analysis:** Using Huggingface's 'cardiffnlp/twitter-roberta-base-sentiment-latest' model, we determine the emotional tone of the feedback.
-2. **Text Classification** of Patient Feedback: To categorize feedback into different emotional themes, we use the 'SamLowe/roberta-base-go_emotions' model from Huggingface.
-3. **Zero-shot Classification** of Patient Improvement Suggestions: The 'facebook/bart-large-mnli' model helps us identify and classify suggestions for improving patient care, even when the model hasn’t been specifically trained on healthcare data.
-4. **Fine-tuned Zero-shot Calssification with FitSet** Classification of GP Reviews achieved with SetFit Algorithm. SetFit first fine-tunes a Sentence Transformer model on a small number of labeled examples (8 per class). This is followed by training a classifier head on the embeddings generated from the fine-tuned Sentence Transformer. https://huggingface.co/blog/setfit
+This comprehensive suite of advanced analytics empowers healthcare providers like yourself to move beyond mere data presentation and unlock a clearer, more actionable understanding of patient experiences. Armed with these insights, you can drive continuous improvements, elevate service quality, and enhance patient outcomes.
 
-Developed by [janduplessis883](https://github.com/janduplessis883/friends-and-family-test-analysis)
+Explore the AI MedReview dashboard today and experience the transformative power of data-driven decision-making in healthcare. Join us on our mission to revolutionize the way patient feedback is leveraged to deliver exceptional care.
 
-Collaboration welcomed!
+Visit ![AI MedReview on GitHub](https://github.com/janduplessis883/friends-and-family-test-analysis), where collaboration and contributions are warmly welcomed.
 
 
 # [View the Streamlit App](https://friends-and-family-test-analysis-pqev4j3c9katnrlv8kktnb.streamlit.app/)
