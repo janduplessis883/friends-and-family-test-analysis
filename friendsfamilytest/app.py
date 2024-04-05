@@ -429,7 +429,8 @@ if page == "Surgery Dashboard":
 elif page == "PCN Dashboard":
 
     st.title("Brompton Health PCN")
-    st.markdown("**Friends & Family Test Analysis** (FFT)")
+    st.markdown("""The **Brompton Health Primary Care Network (PCN) Dashboard** provides a centralized platform for aggregating and analyzing the collective patient feedback data received by our member practices.  
+                By consolidating the valuable insights gleaned from the **Friends and Family Test (FFT)**, we gain a holistic understanding of trends and patterns emerging across our network.""")
 
     tab_selector = ui.tabs(
         options=[
