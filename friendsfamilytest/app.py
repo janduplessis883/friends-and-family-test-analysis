@@ -1775,8 +1775,8 @@ We employ several machine learning techniques for analysis:
 
 1. **Sentiment Analysis:** Using Huggingface's 'cardiffnlp/twitter-roberta-base-sentiment-latest' model, we determine the emotional tone of the feedback.
 2. HuggingFace BERT-based **named entity recognition (NER)** model, specifically the `dbmdz/bert-large-cased-finetuned-conll03-english pre-trained model`, to identify and anonymize any personally identifiable information (PII) that may appear in user reviews and comments.
-3. Our platform utilizes advanced natural language processing techniques to categorize free-text feedback and patient improvement suggestions, even without specialized training data. We leveraged the impressive zero-shot classification capabilities of the Facebook BART-large-mnli model, a powerful language model pre-trained on a large corpus of text.
-4. **Zero-shot Classification** By carefully specifying our target classification labels, we were able to achieve a classification accuracy of 0.91 on user input, despite the model not being explicitly trained on healthcare-related data. This impressive performance demonstrates the versatility and generalization abilities of the `BART-large-mnli` architecture..
+3. **Zero-shot Classification** By carefully specifying our target classification labels, we were able to achieve a classification accuracy of 0.91 on user input, despite the model not being explicitly trained on healthcare-related data. This impressive performance demonstrates the versatility and generalization abilities of the `BART-large-mnli` architecture.  
+
 Visit [**AI MedReview**](https://github.com/janduplessis883/friends-and-family-test-analysis) on GitHub, collaboration welcomed."""
     )
     fig, ax = plt.subplots(figsize=(10, 5))
