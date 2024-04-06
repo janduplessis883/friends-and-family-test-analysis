@@ -15,7 +15,13 @@ scikit-learn==1.2.1
 google-auth
 db-dtypes
 pyarrow
-
+bokeh==2.4.2
+distributed==2021.5.0
+dateparser==1.1.1
+dask[complete]==2021.5.0
+fastparquet==0.4.1
+httpcore==1.0.4
+nlpaug==1.0.1
 
 # prevent bq 3+ db-dtypes package error when running training from bq
 ipython
@@ -25,12 +31,7 @@ prefect==2.8.1
 psycopg2-binary
 
 # API
-fastapi
-pytz
-uvicorn
-# tests
-httpx
-pytest-asyncio
+
 
 # jupiter notebook
 notebook
@@ -46,17 +47,13 @@ openai
 wordcloud
 streamlit==1.32.0
 sentencepiece
-textblob
-nltk
 requests
 black
 skimpy
 streamlit-shadcn-ui
-cronitor
 loguru
 schedule
 wordcloud
 requests
 nlpretext
 plotly
-
