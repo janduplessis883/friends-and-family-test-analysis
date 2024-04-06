@@ -54,3 +54,4 @@ Updated supporting documentation. Including detail of the new **FFT Friends & Fa
 For detailed insights and guidance, click the button below to visit our dedicated Notion page.
             """)
 ui.link_button(text="Go To Notion Support Page", url="https://janduplessis.notion.site/AI-MedReview-v2-9c62df309c87463584b4d89252508d07?pvs=4", key="link_btn2")
+
