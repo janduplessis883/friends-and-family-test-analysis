@@ -1,20 +1,5 @@
 import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
-from wordcloud import WordCloud
-import seaborn as sns
-from datetime import datetime, timedelta
-from datetime import date
-from matplotlib.patches import Patch
-import time
-from openai import OpenAI
 import streamlit_shadcn_ui as ui
-import requests
-import plotly.graph_objects as go
-import plotly.express as px
-
-client = OpenAI()
 
 from utils import *
 
@@ -37,7 +22,6 @@ html = """
 # Using the markdown function with HTML to center the text
 ui.badges(badge_list=[("NEW", "destructive")], class_name="flex gap-2", key="badges1")
 st.markdown(html, unsafe_allow_html=True)
-
 
 
 st.markdown("""We've fine-tuned our platform for rapid performance, ensuring a swift and seamless experience. Now, we're excited to announce that AI MedReview v2 supports multiple Primary Care Networks (PCNs)! PDF Report coming soon.
